@@ -1,7 +1,10 @@
 <template lang="pug">
 
 q-page.page(padding)
-  section
+  section.full-width.column.wrap.justify-center.items-center.content-center
+    h1.title List of Received Application
+    span.subheader on
+    span.header {{ properDate }}
     table.table-custom
       thead
         tr
@@ -56,12 +59,49 @@ let _tabledata = useTableData
 let _listyear = useListYear
 let _listdate = useListDate
 
+const properDate = date.formatDate(_listdate.value, "MMMM DD, YYYY")
+
+const detectWeekend = (date) => {
+
+}
+
 const updatePage = (page) => {
   _currentpage.value = page
-  router.push(page, () => {})
+  router.push(page)
 }
 
 const gotoHome = () => {
   updatePage('/')
 }
 </script>
+
+<style lang="sass" scoped>
+.subheader
+  font-family: 'LexendBold'
+  width: 100%
+  text-align: center
+  font-size: 1.2rem
+  color: $text
+.header
+  font-family: 'LexendBold'
+  width: 100%
+  text-align: center
+  font-size: 1.4rem
+  color: $text
+  padding: 0 0 2rem 0
+
+@media screen and (min-width: 1023px)
+  .subheader
+    font-family: 'LexendBold'
+    width: 100%
+    text-align: center
+    font-size: 1.4rem
+    color: $text
+  .header
+    font-family: 'LexendBold'
+    width: 100%
+    text-align: center
+    font-size: 1.6rem
+    color: $text
+    padding: 0 0 2rem 0
+</style>
