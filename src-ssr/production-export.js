@@ -1,17 +1,24 @@
 /**
- * Start the SSR server or export your handler for serverless use
- * or export whatever else fits your needs.
+ * The "listenResult" param for the "close()" definition below
+ * is what you return here.
  *
- * https://v2.quasar.dev/quasar-cli/developing-ssr/ssr-production-export
- *
- * This file is used ONLY on production.
+ * For production, you can instead export your
+ * handler for serverless use or whatever else fits your needs.
  */
+export async function listen({ app, port, isReady, ssrHandler }) {
+  if (process.env.DEV) {
+    await isReady();
+    return await app.listen(port, () => {
+      if (process.env.PROD) {
+        console.log("Server listening at port " + port);
+      }
+    });
+  } else {
+    // in production
+    // "ssrHandler" is a prebuilt handler which already
+    // waits for all the middlewares to run before serving clients
 
-import { ssrProductionExport } from 'quasar/wrappers'
-
-export default ssrProductionExport(async ({ app, port, isReady }) => {
-  await isReady()
-  return app.listen(port, () => {
-    console.log('Server listening at port ' + port)
-  })
-})
+    // whatever you return here is equivalent to module.exports.<key> = <value>
+    return { handler: ssrHandler };
+  }
+}
