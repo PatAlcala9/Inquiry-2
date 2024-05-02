@@ -11,7 +11,7 @@
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev",
     "build": "quasar build",
-    "ssr": "quasar build -m ssr"
+    "ssr": "node build/index.js && quasar build -m ssr"
   },
   "dependencies": {
     "@quasar/extras": "^1.16.11",
