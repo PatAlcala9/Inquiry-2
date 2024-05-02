@@ -38,6 +38,7 @@
     "prettier": "^2.5.1",
     "pug": "^3.0.2",
     "pug-plain-loader": "^1.1.0",
+    "vercel-quasar": "^0.5.1",
     "zlib": "^1.0.5"
   },
   "browserslist": [
