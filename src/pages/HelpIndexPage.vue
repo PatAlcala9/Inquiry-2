@@ -1,4 +1,5 @@
 <template lang="pug">
+
 q-page.page(padding)
   q-resize-observer(@resize="onResize")
 
@@ -44,51 +45,51 @@ q-page.page(padding)
 <script>
 export default {
   preFetch({ redirect }) {
-    let _currentpage = useCurrentPage;
+    let _currentpage = useCurrentPage
 
     if (_currentpage.value === undefined) {
-      redirect({ path: "/" });
+      redirect({ path: '/' })
     }
   },
-};
+}
 </script>
 
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { useQuasar } from "quasar";
-import { useCurrentPage } from "stores/currentpage";
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
+import { useCurrentPage } from 'stores/currentpage'
 
-const router = useRouter();
-const quasar = useQuasar();
-let _currentpage = useCurrentPage;
+const router = useRouter()
+const quasar = useQuasar()
+let _currentpage = useCurrentPage
 
-let screenWidth = ref(null);
+let screenWidth = ref(null)
 
 const gotoApplicationHelp = () => {
-  _currentpage.value = "helpapplication";
-  router.push("helpapplication");
-};
+  _currentpage.value = 'helpapplication'
+  router.push('helpapplication')
+}
 
 const gotoNameHelp = () => {
-  _currentpage.value = "helpname";
-  router.push("helpname");
-};
+  _currentpage.value = 'helpname'
+  router.push('helpname')
+}
 
 const onResize = () => {
-  screenWidth.value = quasar.screen.width;
-};
+  screenWidth.value = quasar.screen.width
+}
 
 const gotoHome = () => {
-  updatePage("/");
+  updatePage('/')
   // window.location.reload()
   // window.location.reload()
-};
+}
 
 const updatePage = (page) => {
-  _currentpage.value = page;
-  router.push(page, () => {});
-};
+  _currentpage.value = page
+  router.push(page, () => {})
+}
 </script>
 
 <style lang="sass" scoped>

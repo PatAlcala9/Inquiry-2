@@ -6,7 +6,7 @@ q-page.page
     q-btn(rounded class="button" label="Return" @click="defaultMode")
 
   div.body(v-else)
-    img.logo(src="../assets/ocbologo.svg" alt="OCBO Logo")
+    img.logo(src="../assets/ocbologo2.png" alt="OCBO Logo")
     h1.main-title OCBO Inquiry
     q-input.searchbar(icon="search" outlined rounded v-model="searched" placeholder="Search Here" @keydown.enter="callserver" bg-color="white")
       template(v-slot:prepend)
