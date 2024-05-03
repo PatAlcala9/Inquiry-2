@@ -1,6 +1,6 @@
 <template lang="pug">
 
-q-page.padding
+q-page.page(padding)
   section.page-title-group
     div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
         label.owner-label.light Owner's Name:

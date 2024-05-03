@@ -1,8 +1,10 @@
 <template lang="pug">
+
 q-page(padding)
-  div(class="flex flex-center")
-    span(class="main-title2 title") No {{division}} Application Found
-    q-btn(rounded class="button" label="Return" to="/")
+  div.flex.flex-centerflex.flex-center
+    span.main-title2.title No {{division}} Application Found
+    q-btn.button(rounded label="Return" to="/")
+
 </template>
 
 <script>

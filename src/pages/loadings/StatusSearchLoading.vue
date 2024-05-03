@@ -8,8 +8,8 @@ q-page.padding.flex.flex-center.page
     span.loading-division {{_division.value}} Application
     span.loading-value {{_searchvalue.value}}
 
-    div(class="fit column items-center")
-      q-btn(rounded class="button" @click="gotoHome") Cancel
+    div.fit.column.items-center
+      q-btn.button(rounded @click="gotoHome") Cancel
 
 </template>
 

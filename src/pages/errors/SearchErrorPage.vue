@@ -1,6 +1,6 @@
 <template lang="pug">
 
-q-page(padding).flex.flex-center
+q-page.flex.flex-center(padding)
   div.fit.column.items-center.justify-center.text-center.content-center
     span.title {{_errormessage.value}}
     span.subtitle.text-center {{_errorsubmessage.value}}

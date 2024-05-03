@@ -1,12 +1,14 @@
 <template lang="pug">
+  
 q-page.padding.flex.flex-center.page
   div.full-width.column.items-center.justify-center.text-center
     span.loading-title Searching for the name
     span.loading-value {{_searchvalue.value.toUpperCase()}}
     span.loading-division Please wait
 
-    div(class="fit column items-center")
-      q-btn(rounded class="button" @click="gotoHome") Cancel
+    div.fit.column.items-center
+      q-btn.button(rounded @click="gotoHome") Cancel
+
 </template>
 
 <script>
