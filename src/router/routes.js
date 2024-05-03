@@ -19,6 +19,9 @@ const routes = [
       { path: '/listgenerateapprove', component: () => import('pages/loadings/ListGenerateApproveLoading.vue') },
       { path: '/listgeneratereceived', component: () => import('pages/loadings/ListGenerateDailyReceivedLoading.vue') },
 
+      { path: '/searcherror', component: () => import('pages/errors/SearchErrorPage.vue') },
+      { path: '/statuserror', component: () => import('pages/errors/StatusCheckErrorPage.vue') },
+
       { path: '/noconnection', component: () => import('pages/NoConnectionPage.vue') },
     ],
   },

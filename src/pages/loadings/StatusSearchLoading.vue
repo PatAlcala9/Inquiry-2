@@ -28,9 +28,11 @@ export default {
 <script setup>
 import { ref } from 'vue'
 import { api } from 'boot/axios'
+import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
+
 import { useSearchValue } from 'stores/searchvalue'
 import { useDivision } from 'stores/division'
-import { useRouter } from 'vue-router'
 import { useApplicationNo } from 'stores/applicationno'
 import { useTableData } from 'stores/tabledata'
 import { useOwnername } from 'stores/ownername'
@@ -40,6 +42,8 @@ import { useErrorMessage } from 'stores/errormessage'
 import { useCurrentPage } from 'stores/currentpage'
 
 const router = useRouter()
+const quasar = useQuasar()
+
 let _searchvalue = useSearchValue
 let _division = useDivision
 let _applicationno = useApplicationNo
@@ -57,9 +61,10 @@ const searchData = async () => {
   try {
     let response
     const connection = await api.get('/api/CheckConnection')
-    const connected = connection.data || null
+    const data = connection.data || null
+    const result = data !== null ? data.result : null
 
-    if (connected === 'OK') {
+    if (result !== null) {
       if (_division.value === 'Building') {
         response = await api.get('/api/CheckBuilding/' + searched, {
           signal: controller.signal,
@@ -87,20 +92,27 @@ const searchData = async () => {
       }
 
       const data = response.data.length !== 0 ? response.data : null
+      const result = data !== null ? data.result : null
 
-      if (data !== null) {
-        if (data.length > 0) {
-          const result = data[0].result
+      if (result !== null) {
+        if (result.length > 0) {
+          // const result2 = result[0].result
+          // console.log(result2)
+          // quasar.dialog({title: result})
+          // console.log(result)
 
-          if (result > 0) {
-            _applicationno.value = searched
-            await getOwnerDetails()
-            await getTableData()
+          _applicationno.value = searched
+          await getOwnerDetails()
+          await getTableData()
+          // if (result2 > 0) {
+          //   _applicationno.value = searched
+          //   await getOwnerDetails()
+          //   await getTableData()
 
-            updatePage('statuscheck')
-          } else {
-            updatePage('statsearcherrorus')
-          }
+          updatePage('statuscheck')
+          // } else {
+          //   updatePage('statsearcherror')
+          // }
         } else {
           updatePage('searcherror')
         }
@@ -138,7 +150,8 @@ const getOwnerDetails = async () => {
     const data = response.data.length !== 0 ? response.data : null
 
     if (data !== null) {
-      const result = data[0] || null
+      const result = data || null
+
       if (result !== null) {
         const fname = result.result
         const mname = result.result2
@@ -180,14 +193,33 @@ const getTableData = async () => {
     let tempData = []
 
     if (data !== null) {
-      data.forEach((element) => {
-        if (element.result !== null && element.result2 !== null) {
-          tempData.push(element)
-        }
-      })
+      // console.log(data)
+      // data.forEach((element) => {
+      //   if (element.result !== null && element.result2 !== null) {
+      //     console.log('yeah')
+      //     tempData.push(data)
+      //   }
+      // })
+      console.log(data.result.length)
 
+      // data.map((element) => {
+      //   if (element.result !== null && element.result2 !== null) {
+      //     console.log(element)
+      //     // tempData.push(data)
+      //   }
+      // })
+
+      for(let i = 0; i <= data.result.length; i++) {
+        if (data.result !== null && data.result2 !== null) {
+          tempData.push(data)
+        }
+      }
+
+
+      // const tempData = data.filter((element) => element.result !== null && element.result2 !== null).map((element) => element)
+      // console.log(tempData)
       _tabledata.value = tempData
-      _lateststatus.value = data[0].result2
+      _lateststatus.value = data.result2[0]
 
       // ready.value = true
     }

@@ -36,8 +36,8 @@ q-page.padding
             th Status
         tbody
           tr(v-for="data in tableData" :key="data")
-            td {{data.result.toUpperCase()}}
-            td {{data.result2.toUpperCase()}}
+            td {{data.result}}
+            td {{data.result2}}
 
   div.button-area.full-width.column.no-wrap.justify-center.items-center.content-start
   //-   q-btn(rounded class="button" label="Back" @click="gotoHome")
@@ -90,8 +90,8 @@ let ready = ref(null)
 
 const gotoHome = () => {
   // controller.abort()
-  // updatePage('/')
-  window.location.reload()
+  updatePage('/')
+  // window.location.reload()
 }
 
 const updatePage = (page) => {

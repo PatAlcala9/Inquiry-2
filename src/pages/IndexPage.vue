@@ -539,7 +539,7 @@ h1, h2
   height: auto
   margin-top: 1.3rem
   opacity: 0.8
-  filter: grayscale(90%) invert(90%) sepia(90%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%)
+  // filter: grayscale(90%) invert(90%) sepia(90%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%)
 
 
 .body
