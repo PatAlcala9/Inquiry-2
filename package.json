@@ -1,8 +1,8 @@
 {
   "name": "inquiry-2",
   "version": "0.0.1",
-  "description": "A Quasar Project",
-  "productName": "Quasar App",
+  "description": "All-in-One Inquiry for Office of the City Building Official",
+  "productName": "OCBO Inquiry",
   "author": "PatCode9 <patrick_alv@yahoo.com>",
   "private": true,
   "scripts": {
