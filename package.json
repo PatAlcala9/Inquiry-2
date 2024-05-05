@@ -30,6 +30,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.13.14",
     "@quasar/app-webpack": "^3.12.8",
+    "@vue/language-plugin-pug": "^2.0.16",
     "compression-webpack-plugin": "^11.0.0",
     "eslint": "^8.11.0",
     "eslint-config-prettier": "^8.1.0",

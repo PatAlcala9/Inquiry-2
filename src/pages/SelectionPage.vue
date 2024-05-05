@@ -4,7 +4,7 @@ q-page.page.padding.column.wrap.justify-center.items-center.content-center.text-
   section.page-title-group.column.wrap.justify-center.items-center.content-center.text-center(v-if="_division.value !== 'Unidentified'")
     span.division {{_division.value}} Application
     span.search-value {{_searchvalue.value}}
-    span.select-message Please select which to inquire
+    span.select-message Please select which information you wish to inquire
 
     div.grid
       q-btn.one.select-button(rounded @click="gotoStatusSearch") Track Application
@@ -40,6 +40,7 @@ import { ref } from 'vue'
 import { useSearchValue } from 'stores/searchvalue'
 import { useDivision } from 'stores/division'
 import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
 import { useListType } from 'stores/listtype'
 import { useApplicationNo } from 'stores/applicationno'
 import { useTableData } from 'stores/tabledata'
@@ -49,7 +50,8 @@ import { useLatestStatus } from 'stores/lateststatus'
 import { useErrorMessage } from 'stores/errormessage'
 import { useCurrentPage } from 'stores/currentpage'
 
-let router = useRouter()
+const router = useRouter()
+const quasar = useQuasar()
 let _currentpage = useCurrentPage
 let _searchvalue = useSearchValue
 let _division = useDivision
@@ -122,7 +124,7 @@ const gotoHome = () => {
 
 .select-message
   font-size: 1.8rem
-  font-family: 'Poppins'
+  font-family: 'LexendBold'
   padding: 2rem
 
 .grid

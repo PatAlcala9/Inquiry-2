@@ -1,14 +1,14 @@
 <template lang="pug">
 
 q-page.page
-  div.body(v-if="error")
-    h2(class="main-title" v-if="error") {{errorMessage}}
-    q-btn(rounded class="button" label="Return" @click="defaultMode")
+  //- div.body(v-if="error")
+  //-   h2(class="main-title" v-if="error") {{errorMessage}}
+  //-   q-btn(rounded class="button" label="Return" @click="defaultMode")
 
-  div.body(v-else)
+  div.body
     img.logo(src="../assets/ocbologo2.png" alt="OCBO Logo")
     h1.main-title OCBO Inquiry
-    q-input.searchbar(icon="search" outlined rounded v-model="searched" placeholder="Search Here" @keydown.enter="callserver" bg-color="white")
+    q-input.searchbar(icon="search" outlined rounded v-model="searched" placeholder="Search Here" @keydown.enter="callserver" bg-color="white" input-style="letter-spacing: 1px")
       template(v-slot:prepend)
         q-icon(name="search")
 
@@ -61,6 +61,8 @@ let tableEmpty = ref(false)
 let tableEmptyO = ref(false)
 let tableEmptyE = ref(false)
 let online = ref(false)
+
+
 
 // const columns = [
 //   {
@@ -155,6 +157,8 @@ let dataE = []
 const commands = '--help'
 const listCommand = '--list'
 const graphCommand = '--graph'
+
+const commandList = ['--list', '--print', '--count', '--graph', '--chart']
 
 let done = ref(false)
 
@@ -541,7 +545,6 @@ h1, h2
   opacity: 0.8
   // filter: grayscale(90%) invert(90%) sepia(90%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%)
 
-
 .body
   display: flex
   flex-direction: column
@@ -551,15 +554,18 @@ h1, h2
   align-content: center
 
 .searchbar
-  width: 90%
+  width: 85%
   font-size: 1.2rem
-  font-family: Arial, 'Poppins', sans-serif
+  font-family: 'Lexend', Arial, 'Poppins', sans-serif
   margin-top: -2rem
 
-.searchbar:hover
-  border-radius: 2rem
-  box-shadow: 4px 8px 41px 2px rgba(14, 84, 160, 0.87)
-  overflow: hidden
+  &:hover
+    border-radius: 2rem
+    box-shadow: 4px 8px 41px 2px rgba(14, 84, 160, 0.87)
+    overflow: hidden
+
+.sample
+  letter-spacing: 22px !important
 
 .button
   display: none
@@ -592,6 +598,7 @@ h1, h2
 .help-info
   margin-top: 1.5rem
   font-family: 'Poppins'
+  font-family: 'Lexend'
   color: rgba(255, 255, 255, 0.8)
   font-size: 1.1rem
 
@@ -602,7 +609,7 @@ h1, h2
 
 
 //**Tablet */
-@media screen and (min-width: 900px)
+@media screen and (min-width: 1023px)
   .logo
     width: 11rem
     height auto

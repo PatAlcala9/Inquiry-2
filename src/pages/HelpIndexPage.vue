@@ -3,18 +3,19 @@
 q-page.page(padding)
   q-resize-observer(@resize="onResize")
 
-  h2.main-title2.center-text Help Page
+  h1.main-title2.center-text Help Page
+  //- component(:is="INQPageTitle" text="Sample")
+  //- inq-pagetitle(text="Sample2")
 
   div.flex.flex-center(v-if="screenWidth < 1280")
     q-list.list(bordered separator)
       q-item.list-item(clickable v-ripple @click="gotoApplicationHelp")
-        q-item-section.list-section Inquire Application Status
+        q-item-section.list-section Application Status
 
       q-item.list-item(clickable v-ripple @click="gotoNameHelp")
-        q-item-section Inquire Name if exist
-
+        q-item-section Name Record
       q-item.list-item(clickable v-ripple)
-        q-item-section Inquire Approved Permits
+        q-item-section Approved Permits
 
   div.fit.column.justify-center.items-center.content-center(v-else)
 
@@ -24,14 +25,14 @@ q-page.page(padding)
           q-item-section Application Status
       q-list.list(bordered separator)
         q-item.list-item(clickable v-ripple @click="gotoNameHelp")
-          q-item-section Name exist Inquiry
+          q-item-section Name Record
     div.fit.row.justify-center.items-center.content-center
       q-list.list(bordered separator)
         q-item.list-item(clickable v-ripple)
           q-item-section Approved Permits
       q-list.list(bordered separator)
         q-item.list-item(clickable v-ripple)
-          q-item-section Blank
+          q-item-section
 
   div(v-if="$q.screen.width <= 500")
     div.full-width.column.no-wrap.justify-center.items-center.content-start
@@ -59,11 +60,14 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { useCurrentPage } from 'stores/currentpage'
+import { useApplicationNo } from 'stores/applicationno'
+
+// import INQPageTitle from 'components/INQPageTitle.vue'
 
 const router = useRouter()
 const quasar = useQuasar()
 let _currentpage = useCurrentPage
-
+let _applicationno = useApplicationNo
 let screenWidth = ref(null)
 
 const gotoApplicationHelp = () => {
@@ -86,20 +90,26 @@ const gotoHome = () => {
   // window.location.reload()
 }
 
+// const updateBlank = () => {
+//   return _global.applicationNo
+// }
+
 const updatePage = (page) => {
   _currentpage.value = page
   router.push(page, () => {})
 }
+
 </script>
 
 <style lang="sass" scoped>
 .main-title2
-  font-family: "PoppinsBold"
+  font-family: "LexendBold"
   font-size: 3.1rem
 
 .list
-  font-family: "Poppins"
-  font-size: 1.6rem
+  font-family: "LexendBold"
+  font-size: 1.4rem
+  // font-weight: 800
   color: white
   border: none
   text-align: center
@@ -126,7 +136,7 @@ const updatePage = (page) => {
 
 @media screen and (min-width: 1280px)
   .list
-    font-family: "PoppinsBold"
+    font-family: "LexendBold"
     width: 16rem
     margin: 1.5rem
 
