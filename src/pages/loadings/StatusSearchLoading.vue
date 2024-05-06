@@ -34,12 +34,13 @@ import { useQuasar } from 'quasar'
 import { useSearchValue } from 'stores/searchvalue'
 import { useDivision } from 'stores/division'
 import { useApplicationNo } from 'stores/applicationno'
-import { useTableData } from 'stores/tabledata'
 import { useOwnername } from 'stores/ownername'
 import { useOwneraddress } from 'stores/owneraddress'
 import { useLatestStatus } from 'stores/lateststatus'
 import { useErrorMessage } from 'stores/errormessage'
 import { useCurrentPage } from 'stores/currentpage'
+
+import { useTableData } from 'stores/tabledata'
 
 const router = useRouter()
 const quasar = useQuasar()
@@ -47,12 +48,12 @@ const quasar = useQuasar()
 let _searchvalue = useSearchValue
 let _division = useDivision
 let _applicationno = useApplicationNo
-let _tabledata = useTableData
 let _ownername = useOwnername
 let _owneraddress = useOwneraddress
 let _lateststatus = useLatestStatus
 let _errormessage = useErrorMessage
 let _currentpage = useCurrentPage
+let _tabledata = useTableData
 
 const controller = new AbortController()
 
@@ -190,41 +191,34 @@ const getTableData = async () => {
       signal: controller.signal,
     })
     const data = response.data.length !== 0 ? response.data : null
-    let tempData = []
 
     if (data !== null) {
-      // console.log(data)
       // data.forEach((element) => {
       //   if (element.result !== null && element.result2 !== null) {
-      //     console.log('yeah')
-      //     tempData.push(data)
+      //     tempData.push(data.result[0], data.result2[0], 'open')
       //   }
       // })
-      console.log(data.result.length)
 
       // data.map((element) => {
       //   if (element.result !== null && element.result2 !== null) {
-      //     console.log(element)
-      //     // tempData.push(data)
+      //     tempData.push(data)
       //   }
       // })
 
-      for(let i = 0; i <= data.result.length; i++) {
-        if (data.result !== null && data.result2 !== null) {
-          tempData.push(data)
-        }
-      }
-
+      // for(let i = 0; i <= data.result.length; i++) {
+      //   if (data.result[i] !== null && data.result2[i] !== null) {
+      //     tempData.push(data)
+      //   }
+      // }
 
       // const tempData = data.filter((element) => element.result !== null && element.result2 !== null).map((element) => element)
-      // console.log(tempData)
-      _tabledata.value = tempData
+      _tabledata.value = data
       _lateststatus.value = data.result2[0]
 
       // ready.value = true
     }
   } catch {
-    _tabledata.value = []
+    _tabledata.value = {}
     _lateststatus.value = null
     // ready.value = true
   }

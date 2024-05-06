@@ -35,9 +35,10 @@ q-page.page(padding)
             th Date
             th Status
         tbody
-          tr(v-for="data in tableData" :key="data")
-            td {{data.result}}
-            td {{data.result2}}
+          tr(v-for="(item, index) in tableData.result" :key="item")
+            td {{item}}
+            td {{tableData.result2[index]}}
+            //- td {{tableData.result2[index]}}
 
   div.button-area.full-width.column.no-wrap.justify-center.items-center.content-start
   //-   q-btn(rounded class="button" label="Back" @click="gotoHome")
@@ -85,6 +86,7 @@ let ownername = ref(_ownername.value)
 let address = ref(_owneraddress.value)
 
 let tableData = ref(_tabledata.value)
+console.log(tableData)
 let latestStatus = ref(_lateststatus.value)
 let ready = ref(null)
 

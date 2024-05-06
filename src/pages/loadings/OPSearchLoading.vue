@@ -1,5 +1,5 @@
 <template lang="pug">
-  
+
 q-page.padding.flex.flex-center.page
   div.column.items-center.text-center
     span.loading-title Generating List
@@ -51,35 +51,37 @@ let _owneraddress = useOwneraddress
 
 const controller = new AbortController()
 
-let occupancyid = 0
-const getIDByOccupancyApplication = async () => {
-  try {
-    const response = await api.get('/api/GetIDByOccupancyApplication/' + _searchvalue.value)
-    const data = response.data.length !== 0 ? response.data : null
-    occupancyid = data.result || 0
-  } catch {
-    occupancyid = 0
-  }
-}
+// let occupancyid = 0
+// const getIDByOccupancyApplication = async () => {
+//   try {
+//     const response = await api.get('/api/GetIDByOccupancyApplication/' + _searchvalue.value)
+//     const data = response.data.length !== 0 ? response.data : null
+//     occupancyid = data.result || 0
+//   } catch {
+//     occupancyid = 0
+//   }
+// }
 
-let electricalid = 0
-const getIDByElectricalApplication = async () => {
-  try {
-    const response = await api.get('/api/GetIDByElectricalApplication/' + _searchvalue.value)
-    const data = response.data.length !== 0 ? response.data : null
-    electricalid = data.result || 0
-  } catch {
-    electricalid = 0
-  }
-}
+// let electricalid = 0
+// const getIDByElectricalApplication = async () => {
+//   try {
+//     const response = await api.get('/api/GetIDByElectricalApplication/' + _searchvalue.value)
+//     const data = response.data.length !== 0 ? response.data : null
+//     electricalid = data.result || 0
+//   } catch {
+//     electricalid = 0
+//   }
+// }
 
 const getOrderofPayment = async () => {
   let response
+
   try {
     const connection = await api.get('/api/CheckConnection')
-    const connected = connection.data || null
+    const data = connection.data || null
+    const result = data !== null ? data.result : null
 
-    if (connected === 'OK') {
+    if (result !== null) {
       if (_division.value === 'Building') {
         response = await api.get('/api/GetOrderofPayment/' + _searchvalue.value, {
           signal: controller.signal,
@@ -150,19 +152,15 @@ const getOwnerDetails = async () => {
     const data = response.data.length !== 0 ? response.data : null
 
     if (data !== null) {
-      const result = data[0] || null
+      const fname = data.result
+      const mname = data.result2
+      const lname = data.result3
+      const addressresult = data.result4
+      const ffname = fname === undefined ? lname : fname + ' ' + mname + '. ' + lname
 
-      if (result !== null) {
-        const fname = result.result
-        const mname = result.result2
-        const lname = result.result3
-        const addressresult = result.result4
-        const ffname = fname + ' ' + mname + ' ' + lname
-
-        _applicationno.value = _searchvalue.value
-        _ownername.value = ffname || '--No Name found on Database--'
-        _owneraddress.value = addressresult || '--No Address found on Database--'
-      }
+      _applicationno.value = _searchvalue.value
+      _ownername.value = ffname || '--No Name found on Database--'
+      _owneraddress.value = addressresult || '--No Address found on Database--'
     }
   } catch {
     _ownername.value = '--No Name found on Database--'
@@ -172,8 +170,8 @@ const getOwnerDetails = async () => {
 
 const gotoHome = () => {
   controller.abort()
-  // updatePage('/')
-  window.location.reload()
+  updatePage('/')
+  // window.location.reload()
 }
 
 const updatePage = (page) => {

@@ -1,41 +1,19 @@
-# Quasar App (inquiry-2)
+# OCBO Inquiry
 
-A Quasar Project
+### Overview
 
-## Install the dependencies
-```bash
-yarn
-# or
-npm install
-```
+The OCBO Inquiry site is a web application that allows citizens to inquire about their submitted applications to the Office of the City Building Official (OCBO).
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
-```bash
-quasar dev
-```
+Furthermore, OCBO Inquiry can also be used by the Officer-in-Charge to inquire about the received applications, on-going applications, and summarized annual permits.
 
+### Features
 
-### Lint the files
-```bash
-yarn lint
-# or
-npm run lint
-```
+* User-friendly design to search for application status and permits.
+* Ability to analyzed and categorized applications based on their types (Building, Occupancy, Electrical) automatically.
+* Generates PDF based on the required information.
+* Flexible commands to create a list or graph of required information
 
+### Technologies Used
 
-### Format the files
-```bash
-yarn format
-# or
-npm run format
-```
-
-
-
-### Build the app for production
-```bash
-quasar build
-```
-
-### Customize the configuration
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js).
+* Front-end: HTML, CSS, JavaScript, VueJS, Quasar
+* Back-end: Go
