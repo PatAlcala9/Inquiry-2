@@ -83,7 +83,7 @@ const getOrderofPayment = async () => {
 
     if (result !== null) {
       if (_division.value === 'Building') {
-        response = await api.get('/api/GetOrderofPayment/' + _searchvalue.value, {
+        response = await api.get('/api/GetOrderofPaymentBuilding/' + _searchvalue.value, {
           signal: controller.signal,
         })
       } else if (_division.value === 'Occupancy') {

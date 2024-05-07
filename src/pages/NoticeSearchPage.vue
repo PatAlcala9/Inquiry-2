@@ -25,18 +25,25 @@ q-page.page(padding)
 
     section(v-if="$q.screen.width <= 899")
       div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
-        span.table-title Order of Payment
+        span.table-title Inspections
 
       div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="data in _tabledata.value" :key="data")
-        // result1 = Amount
-        // result2 = is_approve
-        // result3 = for_approval
-        // result4 = is_paid
-        // result5 = orNo
-        // result6 = accountdescription
-
-        span.table-data-mobile-desc {{data.result6}}
-        span.table-data-mobile-amount &#8369; {{Intl.NumberFormat('en-IN').format(data.result)}}
+        // result = progressflow
+        // result2 = timeIn
+        // result3 = dateIn
+        // result4 = dateOut
+        // result5 = dateReturn
+        // result6 = accomplish
+        // result7 = processby
+        span.table-data-mobile-desc {{data.result}}
+        span.table-data-mobile-desc Date In
+        span.table-data-mobile-amount {{date.formatDate(data.result2, 'MMMM D, YYYY')}}
+        span.table-data-mobile-desc Day Out
+        span.table-data-mobile-amount {{date.formatDate(data.result3, 'MMMM D, YYYY')}}
+        span.table-data-mobile-desc Date Return
+        span.table-data-mobile-amount {{date.formatDate(data.result4, 'MMMM D, YYYY')}}
+        span.table-data-mobile-desc Accomplished
+        span.table-data-mobile-amount {{data.result5 === 1 ? 'YES' : 'NO'}}
         br
 
     section.table-area.full-width.column.content-center.items-center.justify-center(v-else)
@@ -44,13 +51,17 @@ q-page.page(padding)
         thead
           tr
             th Description
-            th Amount
-            th Paid
+            th Date In
+            th Date Out
+            th Date Return
+            th Accomplished
         tbody
-          tr(v-for="(item, index) in _tabledata.value.result" :key="item")
-            td {{item}}
-            td &#8369; {{Intl.NumberFormat('en-IN').format(_tabledata.value.result2[index])}}
-            td {{_tabledata.value.result3[index] === '1' ? 'YES' : 'NO'}}
+          tr(v-for="data in _tabledata.value" :key="data")
+            td {{data.result}}
+            td {{date.formatDate(data.result2, 'MMMM D, YYYY')}}
+            td {{date.formatDate(data.result3, 'MMMM D, YYYY')}}
+            td {{date.formatDate(data.result4, 'MMMM D, YYYY')}}
+            td {{data.result5 === 1 ? 'YES' : 'NO'}}
 
   //- div.full-width.column.no-wrap.justify-center.items-center.content-start
   //-   q-btn.button(rounded @click="gotoHome") Back
@@ -80,6 +91,8 @@ import { useTableData } from 'stores/tabledata'
 import { useOwnername } from 'stores/ownername'
 import { useOwneraddress } from 'stores/owneraddress'
 import { useCurrentPage } from 'stores/currentpage'
+import { date } from 'quasar'
+// import dayjs from 'dayjs'
 
 const router = useRouter()
 let _applicationno = useApplicationNo
@@ -120,6 +133,7 @@ label
   @extend .owner-label
 
 .owner-name
+  font-family: 'LexendBold'
   font-size: 1.6rem
   margin-top: -1rem
   text-align: center
@@ -136,9 +150,11 @@ label
   font-family: 'PoppinsBold'
   font-size: 1.2rem
 
+
 .table-data-mobile-amount
-  font-size: 2rem
+  font-size: 1.6rem
   color: yellow
+  padding-bottom: 1rem
 
 .table-area
   margin-top: 2rem

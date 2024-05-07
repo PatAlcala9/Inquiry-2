@@ -1,5 +1,5 @@
 <template lang="pug">
-  
+
 q-page.padding.flex.flex-center.page
   div.column.items-center.text-center
     span.loading-title Generating List
@@ -110,7 +110,7 @@ const getOwnerDetails = async () => {
         const mname = result.result2
         const lname = result.result3
         const addressresult = result.result4
-        const ffname = fname + ' ' + mname + ' ' + lname
+        const ffname = fname === undefined ? lname : fname + ' ' + mname + '. ' + lname
 
         _ownername.value = ffname || '--No Name found on Database--'
         _owneraddress.value = addressresult || '--No Address found on Database--'

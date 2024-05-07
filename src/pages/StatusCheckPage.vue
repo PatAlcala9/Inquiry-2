@@ -86,7 +86,6 @@ let ownername = ref(_ownername.value)
 let address = ref(_owneraddress.value)
 
 let tableData = ref(_tabledata.value)
-console.log(tableData)
 let latestStatus = ref(_lateststatus.value)
 let ready = ref(null)
 
@@ -102,9 +101,9 @@ const updatePage = (page) => {
 }
 </script>
 
-<style scoped lang="sass">
+<style lang="sass" scoped>
 label
-  font-family: 'PoppinsBold'
+  font-family: 'LexendBold'
 
 .owner-group
   padding-bottom: 2em
@@ -120,7 +119,6 @@ label
   @extend .owner-label
 
 .owner-name
-  font-family: 'Poppins'
   font-size: 1.6rem
   margin-top: -1rem
   text-align: center
@@ -143,7 +141,7 @@ label
   margin-bottom: 1rem
 
 .light
-  font-family: "PoppinsLight"
+  font-family: "Lexend"
 
 .table-area
   margin-top: 2rem
@@ -153,7 +151,7 @@ label
   margin-bottom: 2rem
   padding-left: 4rem
   padding-right: 4rem
-  font-family: "PoppinsBold"
+  font-family: "LexendBold"
   font-size: 2rem
   color: white
 
@@ -161,7 +159,7 @@ label
   margin: 2rem 0 1.5rem 0
   padding-left: 1rem
   padding-right: 1rem
-  font-family: "PoppinsBold"
+  font-family: "LexendBold"
   font-size: 1.5rem
   color: white
   text-align: center
@@ -212,9 +210,9 @@ label
     width: 250px
     margin: 2rem 0 0 0
 
-  .owner-name
-    font-family: 'PoppinsBold'
-    font-size: 2rem
-  .address-name
-    @extend .owner-name
+  // .owner-name
+  //   font-family: 'LexendBold'
+  //   font-size: 2rem
+  // .address-name
+  //   @extend .owner-name
 </style>

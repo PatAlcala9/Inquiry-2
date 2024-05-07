@@ -1,5 +1,5 @@
 <template lang="pug">
-  
+
 q-page.padding.flex.flex-center.page
   div.column.items-center.text-center
     span.loading-title Generating List
@@ -51,29 +51,40 @@ let _owneraddress = useOwneraddress
 
 const controller = new AbortController()
 
+// const checkConnection = async () => {
+//   const response = await api.get('/api/CheckConnection')
+//   const data = connection.data || null
+//   return data !== null ? data.result : null
+// }
+
 const getProgressFlow = async () => {
-  let data = null
+  try {
+    let data = null
 
-  if (_division.value === 'Building') {
-    const response = await api.get('/api/GetProgressFlow/' + _searchvalue.value)
-    data = response.data.length !== 0 ? response.data : null
-  } else if (_division.value === 'Occupancy') {
-    const response = await api.get('/api/GetProgressFlowOccupancy/' + _searchvalue.value)
-    data = response.data.length !== 0 ? response.data : null
-  } else if (_division.value === 'Signage') {
-    // const response = await api.get('/api/GetProgressFlowOccupancy/' + _searchvalue.value)
-    data = null
-  } else if (_division.value === 'Electrical') {
-    const response = await api.get('/api/GetProgressFlowElectrical/' + _searchvalue.value)
-    data = response.data.length !== 0 ? response.data : null
-  } else if (_division.value === 'Mechanical') {
-    // const response = await api.get('/api/GetProgressFlowOccupancy/' + _searchvalue.value)
-    data = null
-  }
+    if (_division.value === 'Building') {
+      const response = await api.get('/api/GetProgressFlow/' + _searchvalue.value)
+      data = response.data.length !== 0 ? response.data : null
+      console.log(data)
+    } else if (_division.value === 'Occupancy') {
+      const response = await api.get('/api/GetProgressFlowOccupancy/' + _searchvalue.value)
+      data = response.data.length !== 0 ? response.data : null
+    } else if (_division.value === 'Signage') {
+      // const response = await api.get('/api/GetProgressFlowOccupancy/' + _searchvalue.value)
+      data = null
+    } else if (_division.value === 'Electrical') {
+      const response = await api.get('/api/GetProgressFlowElectrical/' + _searchvalue.value)
+      data = response.data.length !== 0 ? response.data : null
+    } else if (_division.value === 'Mechanical') {
+      // const response = await api.get('/api/GetProgressFlowOccupancy/' + _searchvalue.value)
+      data = null
+    }
 
-  if (data !== null) {
-    _applicationno.value = _searchvalue.value
-    _tabledata.value = data
+    if (data !== null) {
+      _applicationno.value = _searchvalue.value
+      _tabledata.value = data
+    }
+  } catch {
+    updatePage('noconnection')
   }
 }
 
@@ -93,36 +104,44 @@ const getOwnerDetails = async () => {
   }
 
   try {
-    const response = await api.get('/api/GetOwnerName' + method + '/' + _searchvalue.value, {
-      signal: controller.signal,
-    })
-    const data = response.data.length !== 0 ? response.data : null
+    const connection = await api.get('/api/CheckConnection')
+    const connData = connection.data || null
+    const result = connData !== null ? connData.result : null
 
-    if (data !== null) {
-      const result = data[0] || null
+    if (result !== null) {
+      const response = await api.get('/api/GetOwnerName' + method + '/' + _searchvalue.value, {
+        signal: controller.signal,
+      })
 
-      if (result !== null) {
-        const fname = result.result
-        const mname = result.result2
-        const lname = result.result3
-        const addressresult = result.result4
-        const ffname = fname + ' ' + mname + ' ' + lname
+      const data = response.data.length !== 0 ? response.data : null
 
-        _applicationno.value = _searchvalue.value
-        _ownername.value = ffname || '--No Name found on Database--'
-        _owneraddress.value = addressresult || '--No Address found on Database--'
+      if (data !== null) {
+        const result = data || null
+
+        if (result !== null) {
+          const fname = data.result
+          const mname = data.result2
+          const lname = data.result3
+          const addressresult = data.result4
+          const ffname = fname === undefined ? lname : fname + ' ' + mname + '. ' + lname
+
+          _applicationno.value = _searchvalue.value
+          _ownername.value = ffname || '--No Name found on Database--'
+          _owneraddress.value = addressresult || '--No Address found on Database--'
+        }
       }
+    } else {
+      updatePage('noconnection')
     }
   } catch {
-    _ownername.value = '--No Name found on Database--'
-    _owneraddress.value = '--No Address found on Database--'
+    updatePage('noconnection')
   }
 }
 
 const gotoHome = () => {
   controller.abort()
-  // updatePage('/')
-  window.location.reload()
+  updatePage('/')
+  // window.location.reload()
 }
 
 const updatePage = (page) => {

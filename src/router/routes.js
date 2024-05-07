@@ -7,6 +7,7 @@ const routes = [
       { path: '/selection', component: () => import('pages/SelectionPage.vue') },
       { path: '/statuscheck', component: () => import('pages/StatusCheckPage.vue') },
       { path: '/opcheck', component: () => import('pages/OPSearchPage.vue') },
+      { path: '/noticecheck', component: () => import('pages/NoticeSearchPage.vue') },
 
       { path: '/helpindex', component: () => import('pages/HelpIndexPage.vue') },
       { path: '/helpapplication', component: () => import('pages/helps/ApplicationHelpPage.vue') },

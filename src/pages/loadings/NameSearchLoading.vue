@@ -1,5 +1,5 @@
 <template lang="pug">
-  
+
 q-page.padding.flex.flex-center.page
   div.full-width.column.items-center.justify-center.text-center
     span.loading-title Searching for the name
@@ -43,9 +43,10 @@ const controller = new AbortController()
 const getClientList = async () => {
   try {
     const connection = await api.get('/api/CheckConnection')
-    const connected = connection.data || null
+    const data = connection.data || null
+    const result = data !== null ? data.result : null
 
-    if (connected === 'OK') {
+    if (result !== null) {
       const response = await api.get('/api/GetListofClients/' + _searchvalue.value.toUpperCase(), {
         signal: controller.signal,
       })
