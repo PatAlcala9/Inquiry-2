@@ -62,7 +62,20 @@ let tableEmptyO = ref(false)
 let tableEmptyE = ref(false)
 let online = ref(false)
 
-
+const monthsList = [
+  'JANUARY',
+  'FEBRUARY',
+  'MARCH',
+  'APRIL',
+  'MAY',
+  'JUNE',
+  'JULY',
+  'AUGUST',
+  'SEPTEMBER',
+  'OCTOBER',
+  'NOVEMBER',
+  'DECEMBER'
+]
 
 // const columns = [
 //   {
@@ -157,8 +170,9 @@ let dataE = []
 const commands = '--help'
 const listCommand = '--list'
 const graphCommand = '--graph'
-
-const commandList = ['--list', '--print', '--count', '--graph', '--chart']
+const printCommand = '--print'
+const countCommand = '--count'
+const chartCommand = '--chart'
 
 let done = ref(false)
 
@@ -333,7 +347,8 @@ const callserver = async () => {
           _listtype.value = 'Daily Received'
           _division.value = 'Building'
 
-          const searchedDate = searched.value.substring(45)
+          const searchedDate = searched.value.substring(36)
+          console.log('searchedDate', searchedDate)
 
           if (searchedDate === 'today') {
             const today = Date.now()
@@ -346,7 +361,8 @@ const callserver = async () => {
             const formattedDate = date.formatDate(yesterday, 'YYYY-MM-DD')
             _listdate.value = formattedDate
             updatePage('listgeneratereceived')
-          } else if (searchedDate.substring(0, 2) === '20' && searchedDate.length === 10) {
+          } else if (monthsList.includes(searchedDate.toUpperCase())) {
+            
             _listdate.value = searchedDate
             updatePage('listgeneratereceived')
           } else {
@@ -407,7 +423,7 @@ const callserver = async () => {
         }
       } else {
         _errormessage.value = 'Invalid Command'
-        _errorsubmessage.value = 'Please specify to be listed'
+        _errorsubmessage.value = `Items to be listed aren't specified`
         updatePage('searcherror')
       }
       // if (

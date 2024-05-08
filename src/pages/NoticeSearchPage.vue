@@ -27,23 +27,13 @@ q-page.page(padding)
       div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
         span.table-title Inspections
 
-      div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="data in _tabledata.value" :key="data")
-        // result = progressflow
-        // result2 = timeIn
-        // result3 = dateIn
-        // result4 = dateOut
-        // result5 = dateReturn
-        // result6 = accomplish
-        // result7 = processby
-        span.table-data-mobile-desc {{data.result}}
-        span.table-data-mobile-desc Date In
-        span.table-data-mobile-amount {{date.formatDate(data.result2, 'MMMM D, YYYY')}}
-        span.table-data-mobile-desc Day Out
-        span.table-data-mobile-amount {{date.formatDate(data.result3, 'MMMM D, YYYY')}}
-        span.table-data-mobile-desc Date Return
-        span.table-data-mobile-amount {{date.formatDate(data.result4, 'MMMM D, YYYY')}}
-        span.table-data-mobile-desc Accomplished
-        span.table-data-mobile-amount {{data.result5 === 1 ? 'YES' : 'NO'}}
+      div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="(item, index) in _tabledata.value.result" :key="item")
+        span.table-data-mobile-desc {{item}}
+        span.table-data-mobile-label Date In
+        span.table-data-mobile-info {{date.formatDate(_tabledata.value.result2[index], 'MMMM D, YYYY')}}
+        span.table-data-mobile-label Day Out
+        span.table-data-mobile-info {{date.formatDate(_tabledata.value.result3[index], 'MMMM D, YYYY')}}
+        span.table-data-mobile-info.last {{_tabledata.value.result4[index] === 1 ? 'ACCOMPLISHED' : 'UNACCOMPLISHED'}}
         br
 
     section.table-area.full-width.column.content-center.items-center.justify-center(v-else)
@@ -101,8 +91,6 @@ let _currentpage = useCurrentPage
 
 // const controller = new AbortController()
 
-console.log('_tabledata', _tabledata.value)
-
 const updatePage = (page) => {
   _currentpage.value = page
   router.push(page, () => {})
@@ -142,23 +130,35 @@ label
   @extend .owner-name
 
 .table-title
-  font-family: 'PoppinsBold'
+  font-family: 'LexendBold'
   font-size: 1.4rem
   padding: 2rem
 
 .table-data-mobile-desc
-  font-family: 'PoppinsBold'
+  font-family: "LexendBold"
+  font-size: 0.9rem
+  color: $text
+  background-color: $button
+  width: 60%
+  padding: 0.3rem
+  text-align: center
+  border-radius: 1rem
+
+.table-data-mobile-label
+  font-family: "LexendBold"
+  font-size: 0.9rem
+  color: $text
+
+.table-data-mobile-info
+  font-family: "LexendBold"
   font-size: 1.2rem
+  color: $text
+  text-align: center
 
 
-.table-data-mobile-amount
-  font-size: 1.6rem
-  color: yellow
-  padding-bottom: 1rem
 
 .table-area
   margin-top: 2rem
 
-.table-custom
-  color: #000000
+
 </style>

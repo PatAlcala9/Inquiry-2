@@ -21,13 +21,13 @@ q-page.page(padding)
   div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
     span Status Breakdown
 
-  //- section(v-if="$q.screen.width <= 899")
-  //-   section
-  //-     div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center(v-for="(item, index) in tableData.result" :key="item")
-  //-       span.table-data-mobile-date {{item.toUpperCase()}}
-  //-       span.table-data-mobile-status {{tableData.result2[index].toUpperCase()}}
+  section(v-if="$q.screen.width <= 899")
+    section
+      div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center(v-for="(item, index) in tableData.result" :key="item")
+        span.table-data-mobile-date {{item.toUpperCase()}}
+        span.table-data-mobile-status.last {{tableData.result2[index].toUpperCase()}}
 
-  section
+  section(v-else)
     section.table-area.full-width.column.content-center.items-center.justify-center
       table.table-custom
         thead

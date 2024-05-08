@@ -2,11 +2,11 @@
 
 q-page.padding
   div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
-      label.owner-label.light Owner's Name:
+      label.owner-label Owner's Name:
       br
       label.owner-name.secondary-title {{_ownername.value}}
   div.address-group.full-width.column.no-wrap.justify-center.items-center.content-start
-      label.address-label.light Address:
+      label.address-label Address:
       br
       label.address-name.secondary-title {{_owneraddress.value}}
 
@@ -17,8 +17,8 @@ q-page.padding
           span(v-if="_tabledata.value.length > 1") Permits
           span(v-else) Permit
 
-        div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center(v-for="data in _tabledata.value" :key="data")
-          span.table-data-mobile-date {{data.result}}
+        div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center(v-for="(item, index) in _tabledata.value.result" :key="item")
+          span.table-data-mobile-date.last {{item}}
 
     section(v-else)
       section.table-area.full-width.column.content-center.items-center.justify-center
@@ -27,15 +27,15 @@ q-page.padding
             tr
               th Permit
           tbody
-            tr(v-for="data in _tabledata.value" :key="data")
-              td {{data.result}}
+            tr(v-for="(item, index) in _tabledata.value.result" :key="item")
+              td {{item}}
 
   div(v-else)
     section.flex.flex-center
       span.empty-table-message No Permit Found
 
   div.button-area.full-width.column.no-wrap.justify-center.items-center.content-start
-    q-btn(rounded class="button" label="Back" @click="gotoHome")
+    q-btn.button-back(rounded label="Back" @click="gotoHome")
 
 </template>
 
@@ -80,8 +80,8 @@ let _listyear = useListYear
 
 const gotoHome = () => {
   // controller.abort()
-  // updatePage('/')
-  window.location.reload()
+  updatePage('/')
+  // window.location.reload()
 }
 
 const updatePage = (page) => {
@@ -92,7 +92,7 @@ const updatePage = (page) => {
 
 <style scoped lang="sass">
 label
-  font-family: 'PoppinsBold'
+  font-family: 'LexendBold'
 
 .owner-group
   padding-bottom: 2em
@@ -108,10 +108,10 @@ label
   @extend .owner-label
 
 .owner-name
-  font-family: 'Poppins'
   font-size: 1.6rem
   margin-top: -1rem
   text-align: center
+
 
 .address-name
   @extend .owner-name
@@ -121,7 +121,7 @@ label
   margin-top: 1.5em
 
 .fetching
-  font-family: "Poppins"
+  font-family: "Lexend"
   width: 100%
   text-align: center
   color: #ffffff
@@ -131,7 +131,7 @@ label
   margin-bottom: 1rem
 
 .light
-  font-family: "PoppinsLight"
+  font-family: "Lexend"
 
 .table-area
   margin-top: 2rem

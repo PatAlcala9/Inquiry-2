@@ -30,7 +30,7 @@ q-page.page(padding)
       div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="(item, index) in _tabledata.value.result" :key="item")
         span.table-data-mobile-desc {{item}}
         span.table-data-mobile-amount &#8369; {{Intl.NumberFormat('en-IN').format(_tabledata.value.result2[index])}}
-        span.table-data-mobile-paid {{_tabledata.value.result3[index] === '1' ? 'PAID' : 'UNPAID'}}
+        span.table-data-mobile-paid.last {{_tabledata.value.result3[index] === '1' ? 'PAID' : 'UNPAID'}}
         br
 
     section.table-area.full-width.column.content-center.items-center.justify-center(v-else)
@@ -152,10 +152,8 @@ label
   font-size: 1rem
   color: $text
   text-align: center
-  margin-bottom: 1rem
 
 .table-area
   margin-top: 2rem
-
 
 </style>

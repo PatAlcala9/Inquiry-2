@@ -57,14 +57,33 @@ const getIDByApplication = async () => {
   const data = response.data.length !== 0 ? response.data : null
 
   if (data !== null) {
-    const result = data[0].result
+    const result = data.result
     receivingid = result
   }
 }
 
 const getPermitsByID = async () => {
-  const response = await api.get('/api/GetPermitsByID/' + receivingid)
+  const response = await api.get('/api/GetPermitsBuilding/' + _searchvalue.value)
   const data = response.data.length !== 0 ? response.data : null
+  console.log('data', data)
+  if (data !== null) {
+    // data.forEach((element) => {
+    //   if (element.result !== null && element.result2 !== null) {
+    //     tempData.push(element)
+    //   }
+    // })
+
+    _tabledata.value = data
+  } else {
+    _tabledata.value = null
+  }
+}
+
+const getPermitsBuilding = async () => {
+  const response = await api.get('/api/GetPermitsBuilding/' + _searchvalue.value)
+  const data = response.data.length !== 0 ? response.data : null
+  const result = data !== null ? data.result : null
+
   let tempData = []
 
   if (data !== null) {
@@ -97,30 +116,39 @@ const getOwnerDetails = async () => {
   }
 
   try {
-    const response = await api.get('/api/GetOwnerName' + method + '/' + _searchvalue.value, {
-      signal: controller.signal,
-    })
-    const data = response.data.length !== 0 ? response.data : null
-    console.log('data:', data)
-    if (data !== null) {
-      const result = data[0].length !== 0 ? data[0] : null
-      console.log('result:', result)
-      if (result !== null) {
-        const fname = result.result
-        const mname = result.result2
-        const lname = result.result3
-        const addressresult = result.result4
+    const connection = await api.get('/api/CheckConnection')
+    const connData = connection.data || null
+    const result = connData !== null ? connData.result : null
+
+    if (result !== null) {
+      const response = await api.get('/api/GetOwnerName' + method + '/' + _searchvalue.value, {
+        signal: controller.signal,
+      })
+      const data = response.data.length !== 0 ? response.data : null
+
+      if (data !== null) {
+        const fname = data.result
+        const mname = data.result2
+        const lname = data.result3
+        const addressresult = data.result4
         const ffname = fname === undefined ? lname : fname + ' ' + mname + '. ' + lname
 
         _ownername.value = ffname || '--No Name found on Database--'
         _owneraddress.value = addressresult || '--No Address found on Database--'
 
-        console.log('_ownername:', _ownername.value)
+        await getIDByApplication()
+        await getPermitsByID()
+        updatePage('permitcheck')
+      } else {
+
+        updatePage('noconnection')
       }
     }
   } catch {
-    _ownername.value = '--No Name found on Database--'
-    _owneraddress.value = '--No Address found on Database--'
+    // _ownername.value = '--No Name found on Database--'
+    // _owneraddress.value = '--No Address found on Database--'
+    console.log('nope')
+    updatePage('noconnection')
   }
 }
 
@@ -142,11 +170,6 @@ const loadCurrentPage = () => {
 ;(async () => {
   loadCurrentPage()
   await getOwnerDetails()
-  await getIDByApplication()
-  await getPermitsByID()
-  updatePage('permitcheck')
-
-  console.log('tabledata:', _tabledata.value)
 })()
 </script>
 

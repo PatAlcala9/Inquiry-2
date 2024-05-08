@@ -6,12 +6,13 @@ q-page.padding.flex.flex-center.page
     span.loading-type {{_listtype.value.toUpperCase()}}
     span.minor for
     span.loading-division {{_division.value}} Applications
-    span.loading-division for the year {{_listyear.value}}
+    span.minor on
+    span.loading-division {{properDate}}
 
     span.loading-division(v-if="percentage > 0") {{percentage}} %
 
     div.fit.column.items-center
-      q-btn.button(rounded @click="gotoHome") Cancel
+      q-btn.button-back(rounded @click="gotoHome") Cancel
 
 </template>
 
@@ -37,8 +38,11 @@ import { useTableData } from 'stores/tabledata'
 import { useListYear } from 'stores/listyear'
 import { useListDate } from 'stores/listdate'
 import { ref } from 'vue'
+import { date } from 'quasar'
 
 const router = useRouter()
+// const quasar = useQuasar()
+
 let _listtype = useListType
 let _division = useDivision
 let _currentpage = useCurrentPage
@@ -47,6 +51,7 @@ let _listyear = useListYear
 let _listdate = useListDate
 
 let percentage = ref(0)
+const properDate = date.formatDate(_listdate.value, "MMMM DD, YYYY")
 
 const controller = new AbortController()
 
@@ -78,8 +83,8 @@ const getDailyReceivedElectrical = async () => {
 
 const gotoHome = () => {
   controller.abort()
-  // // updatePage('/')
-  window.location.reload()
+  updatePage('/')
+  // window.location.reload()
 }
 
 const updatePage = (page) => {
@@ -100,41 +105,40 @@ const loadCurrentPage = () => {
 <style lang="sass" scoped>
 
 .loading-title
-  font-size: 2.3rem
-  font-family: 'PoppinsBold'
+  font-family: 'LexendBold'
+  font-size: 1.8rem
 
 .loading-type
   font-size: 1.8rem
-  font-family: 'Poppins'
+  font-family: 'Lexend'
 
 .minor
-  padding: 2rem
+  padding: 1.2rem
 
 .loading-division
-  font-size: 2rem
-  font-family: 'PoppinsBold'
+  font-size: 1.8rem
+  font-family: 'LexendBold'
 
 .loading-value
   margin-top: 2rem
-  font-size: 2.4rem
-  font-family: 'PoppinsBold'
+  font-size: 2.2rem
+  font-family: 'LexendBold'
   color: yellow
 
 @media screen and (min-width: 900px)
   .loading-title
-    font-size: 3rem
+    font-size: 2rem
 
   .loading-type
-    font-size: 2.2rem
+    font-size: 1.8rem
 
   .minor
-    font-size: 1.8rem
-    padding: 2rem
+    font-size: 1.4rem
 
   .loading-division
-    font-size: 2.8rem
+    font-size: 2rem
 
   .loading-value
     margin-top: 3rem
-    font-size: 3.1rem
+    font-size: 2.6rem
 </style>
