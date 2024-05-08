@@ -609,7 +609,7 @@ h1, h2
 
 
 //**Tablet */
-@media screen and (min-width: 1023px)
+@media screen and (min-width: 900px)
   .logo
     width: 11rem
     height auto

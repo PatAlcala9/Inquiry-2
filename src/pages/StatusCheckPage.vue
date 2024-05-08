@@ -21,13 +21,13 @@ q-page.page(padding)
   div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
     span Status Breakdown
 
-  section(v-if="$q.screen.width <= 899")
-    section
-      div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center(v-for="data in tableData" :key="data")
-        span.table-data-mobile-date {{data.result.toUpperCase()}}
-        span.table-data-mobile-status {{data.result2.toUpperCase()}}
+  //- section(v-if="$q.screen.width <= 899")
+  //-   section
+  //-     div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center(v-for="(item, index) in tableData.result" :key="item")
+  //-       span.table-data-mobile-date {{item.toUpperCase()}}
+  //-       span.table-data-mobile-status {{tableData.result2[index].toUpperCase()}}
 
-  section(v-else)
+  section
     section.table-area.full-width.column.content-center.items-center.justify-center
       table.table-custom
         thead
@@ -112,15 +112,15 @@ label
   @extend .owner-group
 
 .owner-label
-  font-size: 1.2rem
+  font-size: 1rem
   color: #ffffff
 
 .address-label
   @extend .owner-label
 
 .owner-name
-  font-size: 1.6rem
-  margin-top: -1rem
+  font-size: 1.2rem
+  margin-top: -0.5rem
   text-align: center
 
 .address-name
@@ -131,7 +131,7 @@ label
   margin-top: 1.5em
 
 .fetching
-  font-family: "Poppins"
+  font-family: "Lexend"
   width: 100%
   text-align: center
   color: #ffffff
@@ -152,8 +152,8 @@ label
   padding-left: 4rem
   padding-right: 4rem
   font-family: "LexendBold"
-  font-size: 2rem
-  color: white
+  font-size: 1.2rem
+  color: $text
 
 .table-title-group-mobile
   margin: 2rem 0 1.5rem 0
@@ -173,8 +173,8 @@ label
   padding-right: 1rem
 
 .table-data
-  font-family: "Poppins"
-  font-size: 1.2rem
+  font-family: "Lexend"
+  font-size: 0.9rem
   color: #0f3057
   padding: 0.3rem
   text-align: center
@@ -183,14 +183,19 @@ label
   background-color: rgba(255,255,255,0.8)
 
 .table-data-mobile-date
-  font-family: "PoppinsBold"
-  font-size: 1.2rem
-  color: yellow
+  font-family: "LexendBold"
+  font-size: 0.9rem
+  color: $text
+  background-color: $button
+  width: 60%
+  padding: 0.3rem
+  text-align: center
+  border-radius: 1rem
 
 .table-data-mobile-status
-  font-family: "PoppinsBold"
-  font-size: 1.3rem
-  color: white
+  font-family: "LexendBold"
+  font-size: 1rem
+  color: $text
   text-align: center
   margin-bottom: 1rem
 
@@ -200,10 +205,10 @@ label
 .button-back-area
   padding-top: 2rem
 
-@media screen and (min-width: 400px)
-  .button
-    margin: 2rem
-    width: 90%
+// @media screen and (min-width: 400px)
+//   .button
+//     margin: 2rem
+//     width: 90%
 
 @media screen and (min-width: 900px)
   .button

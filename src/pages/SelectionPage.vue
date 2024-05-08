@@ -10,7 +10,7 @@ q-page.page.padding.column.wrap.justify-center.items-center.content-center.text-
       q-btn.one.select-button(rounded @click="gotoStatusSearch") Track Application
       q-btn.two.select-button(rounded @click="gotoOPSearch" label="Order of Payment (Fees)")
       q-btn.three.select-button(rounded @click="gotoNoticeSearch") Inspection Details
-      q-btn.four.select-button(rounded @click="gotoPermitSearch") My Permits
+      q-btn.four.select-button(rounded @click="gotoPermitSearch") Permits Details
 
   section.column.wrap.justify-center.items-center.content-center.text-center(v-else)
     span.division {{_division.value}} Application
@@ -18,7 +18,7 @@ q-page.page.padding.column.wrap.justify-center.items-center.content-center.text-
     span.select-message Invalid Search
 
   div.fit.column.items-center.cancel-button
-    q-btn.button(rounded @click="gotoHome") Cancel
+    q-btn.button-back(rounded @click="gotoHome") Cancel
 
 </template>
 
@@ -113,17 +113,17 @@ const gotoHome = () => {
   color: #ffffff
 
 .division
-  font-size: 2rem
-  font-family: 'PoppinsBold'
+  font-size: 1.6rem
+  font-family: 'LexendBold'
 
 .search-value
-  margin-top: 2rem
-  font-size: 2.4rem
-  font-family: 'PoppinsBold'
+  margin-top: 1.2rem
+  font-size: 1.8rem
+  font-family: 'LexendBold'
   color: yellow
 
 .select-message
-  font-size: 1.8rem
+  font-size: 1.2rem
   font-family: 'LexendBold'
   padding: 2rem
 
@@ -155,9 +155,9 @@ const gotoHome = () => {
 
 .select-button
   width: 90%
-  font-size: 1.2rem
-  font-family: 'PoppinsBold'
-  height: 6rem
+  font-size: 1rem
+  font-family: 'LexendBold'
+  height: 5.2rem
   margin-top: 1.2rem
   box-shadow: -12px 11px 16px -5px rgba(13, 5, 100, 0.45)
   border: 3px solid rgba(14,84,160,1)

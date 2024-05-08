@@ -62,9 +62,8 @@ const getProgressFlow = async () => {
     let data = null
 
     if (_division.value === 'Building') {
-      const response = await api.get('/api/GetProgressFlow/' + _searchvalue.value)
+      const response = await api.get('/api/GetProgressFlowBuilding/' + _searchvalue.value)
       data = response.data.length !== 0 ? response.data : null
-      console.log(data)
     } else if (_division.value === 'Occupancy') {
       const response = await api.get('/api/GetProgressFlowOccupancy/' + _searchvalue.value)
       data = response.data.length !== 0 ? response.data : null

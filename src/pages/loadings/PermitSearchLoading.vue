@@ -153,41 +153,41 @@ const loadCurrentPage = () => {
 <style lang="sass" scoped>
 
 .loading-title
-  font-size: 2.3rem
-  font-family: 'PoppinsBold'
+  font-size: 1.6rem
+  font-family: 'LexendBold'
 
 .loading-type
-  font-size: 1.8rem
-  font-family: 'Poppins'
+  font-size: 1.2rem
+  font-family: 'Lexend'
 
 .minor
-  padding: 2rem
+  padding: 1.2rem
 
 .loading-division
-  font-size: 2rem
-  font-family: 'PoppinsBold'
+  font-size: 1.4rem
+  font-family: 'LexendBold'
 
 .loading-value
-  margin-top: 2rem
-  font-size: 2.4rem
-  font-family: 'PoppinsBold'
+  margin-top: 1.6rem
+  font-size: 1.8rem
+  font-family: 'LexendBold'
   color: yellow
 
 @media screen and (min-width: 900px)
   .loading-title
-    font-size: 3rem
-
-  .loading-type
     font-size: 2.2rem
 
-  .minor
+  .loading-type
     font-size: 1.8rem
-    padding: 2rem
+
+  .minor
+    font-size: 1.6rem
+    padding: 1.6rem
 
   .loading-division
-    font-size: 2.8rem
+    font-size: 2.2rem
 
   .loading-value
-    margin-top: 3rem
-    font-size: 3.1rem
+    margin-top: 2rem
+    font-size: 2.6rem
 </style>

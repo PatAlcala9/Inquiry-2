@@ -52,16 +52,14 @@ q-page.page(padding)
           tr
             th Description
             th Date In
-            th Date Out
             th Date Return
             th Accomplished
         tbody
-          tr(v-for="data in _tabledata.value" :key="data")
-            td {{data.result}}
-            td {{date.formatDate(data.result2, 'MMMM D, YYYY')}}
-            td {{date.formatDate(data.result3, 'MMMM D, YYYY')}}
-            td {{date.formatDate(data.result4, 'MMMM D, YYYY')}}
-            td {{data.result5 === 1 ? 'YES' : 'NO'}}
+          tr(v-for="(item, index) in _tabledata.value.result" :key="item")
+            td {{item}}
+            td {{date.formatDate(_tabledata.value.result2[index], 'MMMM D, YYYY')}}
+            td {{date.formatDate(_tabledata.value.result3[index], 'MMMM D, YYYY')}}
+            td {{_tabledata.value.result4[index] === 1 ? 'YES' : 'NO'}}
 
   //- div.full-width.column.no-wrap.justify-center.items-center.content-start
   //-   q-btn.button(rounded @click="gotoHome") Back
@@ -102,6 +100,8 @@ let _owneraddress = useOwneraddress
 let _currentpage = useCurrentPage
 
 // const controller = new AbortController()
+
+console.log('_tabledata', _tabledata.value)
 
 const updatePage = (page) => {
   _currentpage.value = page
