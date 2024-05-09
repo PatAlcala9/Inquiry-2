@@ -17,18 +17,27 @@ q-page.padding
           span(v-if="_tabledata.value.length > 1") Permits
           span(v-else) Permit
 
-        div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center(v-for="(item, index) in _tabledata.value.result" :key="item")
-          span.table-data-mobile-date.last {{item}}
+        div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="(item, index) in _tabledata.value.result" :key="item")
+          span.table-data-mobile-desc {{item}}
+          span.table-data-mobile-info Block {{_tabledata.value.result2[index]}} Lot {{_tabledata.value.result3[index]}}
+          span.table-data-mobile-info.last {{_tabledata.value.result4[index]}}
 
     section(v-else)
       section.table-area.full-width.column.content-center.items-center.justify-center
         table.table-custom
           thead
             tr
-              th Permit
+              th(v-if="_tabledata.value.result.length > 1") Permits
+              th(v-else) Permit
+              th Block
+              th Lot
+              th Address
           tbody
             tr(v-for="(item, index) in _tabledata.value.result" :key="item")
               td {{item}}
+              td {{_tabledata.value.result2[index]}}
+              td {{_tabledata.value.result3[index]}}
+              td {{_tabledata.value.result4[index]}}
 
   div(v-else)
     section.flex.flex-center
@@ -141,7 +150,7 @@ label
   margin-bottom: 2rem
   padding-left: 4rem
   padding-right: 4rem
-  font-family: "PoppinsBold"
+  font-family: "LexendBold"
   font-size: 2rem
   color: white
 
@@ -149,7 +158,7 @@ label
   margin: 2rem 0 1.5rem 0
   padding-left: 1rem
   padding-right: 1rem
-  font-family: "PoppinsBold"
+  font-family: "LexendBold"
   font-size: 1.5rem
   color: white
   text-align: center
@@ -163,7 +172,7 @@ label
   padding-right: 1rem
 
 .table-data
-  font-family: "Poppins"
+  font-family: "Lexend"
   font-size: 1.2rem
   color: #0f3057
   padding: 0.3rem
@@ -172,23 +181,27 @@ label
   width: 50%
   background-color: rgba(255,255,255,0.8)
 
-.table-data-mobile-date
-  font-family: "PoppinsBold"
-  font-size: 1.2rem
-  color: yellow
-
-.table-data-mobile-status
-  font-family: "PoppinsBold"
-  font-size: 1.3rem
-  color: white
+.table-data-mobile-desc
+  font-family: "LexendBold"
+  font-size: 0.9rem
+  color: $text
+  background-color: $button
+  width: 60%
+  padding: 0.3rem
   text-align: center
-  margin-bottom: 1rem
+  border-radius: 1rem
+
+.table-data-mobile-info
+  font-family: "LexendBold"
+  font-size: 1rem
+  color: $text
+  text-align: center
 
 .button-area
   padding-bottom: 2rem
 
 .empty-table-message
-  font-family: "PoppinsBold"
+  font-family: "LexendBold"
   color: yellow
   font-size: 2rem
   padding-top: 3rem
@@ -205,8 +218,9 @@ label
     margin: 2rem 0 0 0
 
   .owner-name
-    font-family: 'PoppinsBold'
+    font-family: 'LexendBold'
     font-size: 2rem
+
   .address-name
     @extend .owner-name
 </style>

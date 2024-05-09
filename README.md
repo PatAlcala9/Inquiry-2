@@ -1,3 +1,5 @@
+![OCBO Inquiry Logo](src/assets/images/inq_logo.webp)
+
 # OCBO Inquiry
 
 ### Overview

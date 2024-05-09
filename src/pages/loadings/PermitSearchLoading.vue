@@ -65,7 +65,7 @@ const getIDByApplication = async () => {
 const getPermitsByID = async () => {
   const response = await api.get('/api/GetPermitsBuilding/' + _searchvalue.value)
   const data = response.data.length !== 0 ? response.data : null
-  console.log('data', data)
+
   if (data !== null) {
     // data.forEach((element) => {
     //   if (element.result !== null && element.result2 !== null) {
