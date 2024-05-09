@@ -18,9 +18,10 @@ q-page.padding
           span(v-else) Permit
 
         div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="(item, index) in _tabledata.value.result" :key="item")
-          span.table-data-mobile-desc {{item}}
-          span.table-data-mobile-info Block {{_tabledata.value.result2[index]}} Lot {{_tabledata.value.result3[index]}}
-          span.table-data-mobile-info.last {{_tabledata.value.result4[index]}}
+          span.table-data-mobile-desc.last(v-if="_tabledata.value.result4 !== undefined") {{item}}
+          span.table-data-mobile-desc(v-else) {{item}}
+          span.table-data-mobile-info(v-if="_tabledata.value.result4 !== undefined") Block {{_tabledata.value.result2[index]}} Lot {{_tabledata.value.result3[index]}}
+          span.table-data-mobile-info.last(v-if="_tabledata.value.result4 !== undefined") {{_tabledata.value.result4[index]}}
 
     section(v-else)
       section.table-area.full-width.column.content-center.items-center.justify-center
@@ -29,15 +30,15 @@ q-page.padding
             tr
               th(v-if="_tabledata.value.result.length > 1") Permits
               th(v-else) Permit
-              th Block
-              th Lot
-              th Address
+              th(v-if="_tabledata.value.result4 !== undefined") Block
+              th(v-if="_tabledata.value.result4 !== undefined") Lot
+              th(v-if="_tabledata.value.result4 !== undefined") Address
           tbody
             tr(v-for="(item, index) in _tabledata.value.result" :key="item")
               td {{item}}
-              td {{_tabledata.value.result2[index]}}
-              td {{_tabledata.value.result3[index]}}
-              td {{_tabledata.value.result4[index]}}
+              td(v-if="_tabledata.value.result4 !== undefined") {{_tabledata.value.result2[index]}}
+              td(v-if="_tabledata.value.result4 !== undefined") {{_tabledata.value.result3[index]}}
+              td(v-if="_tabledata.value.result4 !== undefined") {{_tabledata.value.result4[index]}}
 
   div(v-else)
     section.flex.flex-center

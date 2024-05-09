@@ -74,7 +74,7 @@ const monthsList = [
   'SEPTEMBER',
   'OCTOBER',
   'NOVEMBER',
-  'DECEMBER'
+  'DECEMBER',
 ]
 
 // const columns = [
@@ -343,11 +343,11 @@ const callserver = async () => {
         //   updatePage('searcherror')
         // }
       } else if (searched.value.includes(' received')) {
-        if (searched.value.includes(' --division building')) {
+        if (searched.value.includes(' building')) {
           _listtype.value = 'Daily Received'
           _division.value = 'Building'
 
-          const searchedDate = searched.value.substring(36)
+          const searchedDate = searched.value.substring(25)
           console.log('searchedDate', searchedDate)
 
           if (searchedDate === 'today') {
@@ -361,10 +361,21 @@ const callserver = async () => {
             const formattedDate = date.formatDate(yesterday, 'YYYY-MM-DD')
             _listdate.value = formattedDate
             updatePage('listgeneratereceived')
-          } else if (monthsList.includes(searchedDate.toUpperCase())) {
-            
-            _listdate.value = searchedDate
-            updatePage('listgeneratereceived')
+          } else if (monthsList.some((month) => searchedDate.toUpperCase().includes(month))) {
+            const matchingMonth = monthsList.filter((month) => searchedDate.toUpperCase().includes(month.toUpperCase()))
+            const days = Array.from({ length: 30 }, (_, index) => (index + 1).toString())
+
+            if (days.some((day) => searchedDate.substring(matchingMonth[0].length + 1, matchingMonth[0].length + 3).trim() === day)) {
+              // const matchingDay = days.filter((day) => searchedDate.substring(matchingMonth[0].length + 1, matchingMonth[0].length + 3).trim() === day)
+              // const year = searchedDate.substring(parseInt(matchingMonth[0].length + 1) + parseInt(matchingDay[0].length + 1))
+              // console.log('year', year)
+              _listdate.value = searchedDate
+              updatePage('listgeneratereceived')
+            } else {
+              _errormessage.value = 'Invalid Command'
+              _errorsubmessage.value = 'Invalid Date Format'
+              updatePage('searcherror')
+            }
           } else {
             _errormessage.value = 'Invalid Command'
             _errorsubmessage.value = 'Invalid Date Format'
