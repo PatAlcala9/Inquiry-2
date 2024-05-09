@@ -131,7 +131,7 @@ const getOwnerDetails = async () => {
         const mname = data.result2
         const lname = data.result3
         const addressresult = data.result4
-        const ffname = fname === undefined ? lname : fname + ' ' + mname + '. ' + lname
+        const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
 
         _ownername.value = ffname || '--No Name found on Database--'
         _owneraddress.value = addressresult || '--No Address found on Database--'
