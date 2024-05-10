@@ -1,14 +1,19 @@
 <template lang="pug">
 
-q-page.padding
-  div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
-      label.owner-label Owner's Name:
-      br
-      label.owner-name.secondary-title {{_ownername.value}}
-  div.address-group.full-width.column.no-wrap.justify-center.items-center.content-start
-      label.address-label Address:
-      br
-      label.address-name.secondary-title {{_owneraddress.value}}
+q-page.page(padding)
+  section
+    div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
+        label.owner-label Application Number:
+        br
+        label.owner-name.secondary-title {{_applicationno.value}}
+    div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
+        label.owner-label Owner's Name:
+        br
+        label.owner-name.secondary-title {{_ownername.value}}
+    div.address-group.full-width.column.no-wrap.justify-center.items-center.content-start
+        label.address-label Address:
+        br
+        label.address-name.secondary-title {{_owneraddress.value}}
 
   div(v-if="_tabledata.value !== null")
     section(v-if="$q.screen.width <= 899")
