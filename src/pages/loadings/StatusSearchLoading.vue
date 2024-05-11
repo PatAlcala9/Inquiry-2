@@ -164,7 +164,16 @@ const getOwnerDetails = async () => {
         _owneraddress.value = addressresult || '--No Address found on Database--'
       }
     }
-  } catch {
+  } catch (error) {
+    console.log('error', error)
+    console.log('response', error.response)
+    console.log('data', error.response.data)
+    // console.log('dataJSON', JSON.parse(error.response.data))
+
+    // console.log(error.response.data)
+    // if (error.response.data.includes("no rows")) {
+    //   console.log("no rows, my dudes")
+    // }
     _ownername.value = '--No Name found on Database--'
     _owneraddress.value = '--No Address found on Database--'
   }
@@ -231,8 +240,8 @@ const updatePage = (page) => {
 
 const gotoHome = () => {
   controller.abort()
-  // updatePage('/')
-  window.location.reload()
+  updatePage('/')
+  // window.location.reload()
 }
 
 const loadCurrentPage = () => {
