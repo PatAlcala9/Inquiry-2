@@ -33,7 +33,7 @@ q-page.page(padding)
         span.table-data-mobile-info {{date.formatDate(_tabledata.value.result2[index], 'MMMM D, YYYY')}}
         span.table-data-mobile-label Day Out
         span.table-data-mobile-info {{date.formatDate(_tabledata.value.result3[index], 'MMMM D, YYYY')}}
-        span.table-data-mobile-info.last {{_tabledata.value.result4[index] === 1 ? 'ACCOMPLISHED' : 'UNACCOMPLISHED'}}
+        span.table-data-mobile-info.last {{_tabledata.value.result4[index] === '1' ? 'ACCOMPLISHED' : 'UNACCOMPLISHED'}}
         br
 
     section.table-area.full-width.column.content-center.items-center.justify-center(v-else)
@@ -49,7 +49,7 @@ q-page.page(padding)
             td {{item}}
             td {{date.formatDate(_tabledata.value.result2[index], 'MMMM D, YYYY')}}
             td {{date.formatDate(_tabledata.value.result3[index], 'MMMM D, YYYY')}}
-            td {{_tabledata.value.result4[index] === 1 ? 'YES' : 'NO'}}
+            td {{_tabledata.value.result4[index] === '1' ? 'YES' : 'NO'}}
 
   //- div.full-width.column.no-wrap.justify-center.items-center.content-start
   //-   q-btn.button(rounded @click="gotoHome") Back

@@ -51,53 +51,67 @@ let _owneraddress = useOwneraddress
 
 const controller = new AbortController()
 
-let receivingid = 0
-const getIDByApplication = async () => {
-  const response = await api.get('/api/GetIDByApplication/' + _searchvalue.value)
-  const data = response.data.length !== 0 ? response.data : null
+// let receivingid = 0
+// const getIDByApplication = async () => {
+//   const response = await api.get('/api/GetIDByApplication/' + _searchvalue.value)
+//   const data = response.data.length !== 0 ? response.data : null
 
-  if (data !== null) {
-    const result = data.result
-    receivingid = result
+//   if (data !== null) {
+//     const result = data.result
+//     receivingid = result
+//   }
+// }
+
+const getPermits = async () => {
+  try {
+    let data
+
+    if (_division.value === 'Building') {
+      const response = await api.get('/api/GetPermitsBuilding/' + _searchvalue.value)
+      data = response.data.length !== 0 ? response.data : null
+    } else if (_division.value === 'Occupancy') {
+      const response = await api.get('/api/GetPermitsOccupancy/' + _searchvalue.value)
+      data = response.data.length !== 0 ? response.data : null
+    } else if (_division.value === 'Signage') {
+      // const response = await api.get('/api/GetProgressFlowOccupancy/' + _searchvalue.value)
+      data = null
+    } else if (_division.value === 'Electrical') {
+      const response = await api.get('/api/GetProgressFlowElectrical/' + _searchvalue.value)
+      data = response.data.length !== 0 ? response.data : null
+    } else if (_division.value === 'Mechanical') {
+      // const response = await api.get('/api/GetProgressFlowOccupancy/' + _searchvalue.value)
+      data = null
+    }
+
+    if (data !== null) {
+      _tabledata.value = data
+    } else {
+      _tabledata.value = null
+    }
+  } catch {
+    updatePage('noconnection')
   }
 }
 
-const getPermitsByID = async () => {
-  const response = await api.get('/api/GetPermitsBuilding/' + _searchvalue.value)
-  const data = response.data.length !== 0 ? response.data : null
+// const getPermitsBuilding = async () => {
+//   const response = await api.get('/api/GetPermitsBuilding/' + _searchvalue.value)
+//   const data = response.data.length !== 0 ? response.data : null
+//   const result = data !== null ? data.result : null
 
-  if (data !== null) {
-    // data.forEach((element) => {
-    //   if (element.result !== null && element.result2 !== null) {
-    //     tempData.push(element)
-    //   }
-    // })
+//   let tempData = []
 
-    _tabledata.value = data
-  } else {
-    _tabledata.value = null
-  }
-}
+//   if (data !== null) {
+//     data.forEach((element) => {
+//       if (element.result !== null && element.result2 !== null) {
+//         tempData.push(element)
+//       }
+//     })
 
-const getPermitsBuilding = async () => {
-  const response = await api.get('/api/GetPermitsBuilding/' + _searchvalue.value)
-  const data = response.data.length !== 0 ? response.data : null
-  const result = data !== null ? data.result : null
-
-  let tempData = []
-
-  if (data !== null) {
-    data.forEach((element) => {
-      if (element.result !== null && element.result2 !== null) {
-        tempData.push(element)
-      }
-    })
-
-    _tabledata.value = tempData
-  } else {
-    _tabledata.value = null
-  }
-}
+//     _tabledata.value = tempData
+//   } else {
+//     _tabledata.value = null
+//   }
+// }
 
 const getOwnerDetails = async () => {
   const appno = _applicationno.value
@@ -136,18 +150,15 @@ const getOwnerDetails = async () => {
         _ownername.value = ffname || '--No Name found on Database--'
         _owneraddress.value = addressresult || '--No Address found on Database--'
 
-        await getIDByApplication()
-        await getPermitsByID()
+        await getPermits()
         updatePage('permitcheck')
       } else {
-
         updatePage('noconnection')
       }
     }
   } catch {
     // _ownername.value = '--No Name found on Database--'
     // _owneraddress.value = '--No Address found on Database--'
-    console.log('nope')
     updatePage('noconnection')
   }
 }

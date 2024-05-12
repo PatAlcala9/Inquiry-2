@@ -87,8 +87,8 @@ const getOrderofPayment = async () => {
           signal: controller.signal,
         })
       } else if (_division.value === 'Occupancy') {
-        await getIDByOccupancyApplication()
-        response = await api.get('/api/CheckOccupancy/' + occupancyid, {
+        // await getIDByOccupancyApplication()
+        response = await api.get('/api/GetOrderofPaymentOccupancy/' + _searchvalue.value, {
           signal: controller.signal,
         })
       } else if (_division.value === 'Signage') {
