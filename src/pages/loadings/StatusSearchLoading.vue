@@ -97,18 +97,9 @@ const searchData = async () => {
 
       if (result !== null) {
         if (result.length > 0) {
-          // const result2 = result[0].result
-          // console.log(result2)
-          // quasar.dialog({title: result})
-          // console.log(result)
-
           _applicationno.value = searched
           await getOwnerDetails()
           await getTableData()
-          // if (result2 > 0) {
-          //   _applicationno.value = searched
-          //   await getOwnerDetails()
-          //   await getTableData()
 
           updatePage('statuscheck')
           // } else {
@@ -202,34 +193,12 @@ const getTableData = async () => {
     const data = response.data.length !== 0 ? response.data : null
 
     if (data !== null) {
-      // data.forEach((element) => {
-      //   if (element.result !== null && element.result2 !== null) {
-      //     tempData.push(data.result[0], data.result2[0], 'open')
-      //   }
-      // })
-
-      // data.map((element) => {
-      //   if (element.result !== null && element.result2 !== null) {
-      //     tempData.push(data)
-      //   }
-      // })
-
-      // for(let i = 0; i <= data.result.length; i++) {
-      //   if (data.result[i] !== null && data.result2[i] !== null) {
-      //     tempData.push(data)
-      //   }
-      // }
-
-      // const tempData = data.filter((element) => element.result !== null && element.result2 !== null).map((element) => element)
       _tabledata.value = data
       _lateststatus.value = data.result2[0]
-
-      // ready.value = true
     }
   } catch {
     _tabledata.value = {}
     _lateststatus.value = null
-    // ready.value = true
   }
 }
 

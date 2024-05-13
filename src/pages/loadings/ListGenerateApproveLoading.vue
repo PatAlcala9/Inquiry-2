@@ -142,15 +142,7 @@ const getDataofElectricalApplicationRelease = async (item) => {
   }
 }
 
-const getDailyReceived = async (date) => {
-  const encodedDate = date.replace('/', '~')
-  const response = await api.get('/api/GetDailyReceived/' + encodedDate)
-  const data = response.data.length !== 0 ? response.data : null
 
-  if (data !== null) {
-    console.log(data)
-  }
-}
 
 const gotoHome = () => {
   controller.abort()

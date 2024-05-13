@@ -52,14 +52,15 @@ let _listdate = useListDate
 
 let percentage = ref(0)
 const properDate = date.formatDate(_listdate.value, "MMMM DD, YYYY")
+const formattedDate = date.formatDate(_listdate.value, "YYYY~MM~DD")
 
 const controller = new AbortController()
 
-const getDailyReceivedElectrical = async () => {
-  let data = null
+const getDailyReceived = async () => {
+  let data
 
   if (_division.value === 'Building') {
-    const response = await api.get('/api/GetDailyReceived/' + _listdate.value)
+    const response = await api.get('/api/GetDailyReceived/' + formattedDate)
     data = response.data.length !== 0 ? response.data : null
   } else if (_division.value === 'Occupancy') {
     const response = await api.get('/api/GetDailyReceivedOccupancy/' + _listdate.value)
@@ -98,7 +99,7 @@ const loadCurrentPage = () => {
 
 ;(async () => {
   loadCurrentPage()
-  await getDailyReceivedElectrical()
+  await getDailyReceived()
 })()
 </script>
 

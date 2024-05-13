@@ -348,7 +348,6 @@ const callserver = async () => {
           _division.value = 'Building'
 
           const searchedDate = searched.value.substring(25)
-          console.log('searchedDate', searchedDate)
 
           if (searchedDate === 'today') {
             const today = Date.now()

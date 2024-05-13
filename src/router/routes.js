@@ -9,6 +9,7 @@ const routes = [
       { path: '/opcheck', component: () => import('pages/OPSearchPage.vue') },
       { path: '/noticecheck', component: () => import('pages/NoticeSearchPage.vue') },
       { path: '/permitcheck', component: () => import('pages/PermitSearchPage.vue') },
+      { path: '/receivedlist', component: () => import('pages/ListDailyReceivedPage.vue') },
 
       { path: '/helpindex', component: () => import('pages/HelpIndexPage.vue') },
       { path: '/helpapplication', component: () => import('pages/helps/ApplicationHelpPage.vue') },
