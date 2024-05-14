@@ -97,8 +97,8 @@ const getOrderofPayment = async () => {
         // })
         return
       } else if (_division.value === 'Electrical') {
-        await getIDByElectricalApplication()
-        response = await api.get('/api/CheckElectrical/' + electricalid, {
+        // await getIDByElectricalApplication()
+        response = await api.get('/api/GetOrderofPaymentElectrical/' + _searchvalue.value, {
           signal: controller.signal,
         })
       } else if (_division.value === 'Mechanical') {

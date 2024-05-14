@@ -1,7 +1,13 @@
 <template lang="pug">
 
 q-page.page(padding)
-  div
+  div.fit.column.items-center.justify-center.text-center.content-center
+    span.error-title {{_errormessage.value}}
+    span.subtitle.text-center {{_errorsubmessage.value}}
+    br
+    section.column.items-center.text-center
+    span.footer If you need help,&nbsp;
+      a.link(@click="gotoHelp") click here
 
   div
     q-btn.button-back(rounded label="Back" @click="gotoHome")

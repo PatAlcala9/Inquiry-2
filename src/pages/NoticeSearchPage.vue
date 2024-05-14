@@ -43,13 +43,13 @@ q-page.page(padding)
             th Description
             th Date In
             th Date Return
-            th Accomplished
+            th(v-if="_division.value !== 'Electrical'") Accomplished
         tbody
           tr(v-for="(item, index) in _tabledata.value.result" :key="item")
             td {{item}}
             td {{date.formatDate(_tabledata.value.result2[index], 'MMMM D, YYYY')}}
             td {{date.formatDate(_tabledata.value.result3[index], 'MMMM D, YYYY')}}
-            td {{_tabledata.value.result4[index] === '1' ? 'YES' : 'NO'}}
+            td(v-if="_division.value !== 'Electrical'") {{_tabledata.value.result4[index] === '1' ? 'YES' : 'NO'}}
 
   //- div.full-width.column.no-wrap.justify-center.items-center.content-start
   //-   q-btn.button(rounded @click="gotoHome") Back
@@ -88,6 +88,7 @@ let _tabledata = useTableData
 let _ownername = useOwnername
 let _owneraddress = useOwneraddress
 let _currentpage = useCurrentPage
+let _division = useDivision
 
 // const controller = new AbortController()
 

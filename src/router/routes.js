@@ -25,6 +25,7 @@ const routes = [
 
       { path: '/searcherror', component: () => import('pages/errors/SearchErrorPage.vue') },
       { path: '/statuserror', component: () => import('pages/errors/StatusCheckErrorPage.vue') },
+      { path: '/error', component: () => import('pages/errors/ErrorPage.vue') },
 
       { path: '/noconnection', component: () => import('pages/NoConnectionPage.vue') },
     ],

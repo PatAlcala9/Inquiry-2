@@ -37,6 +37,8 @@ import { useApplicationNo } from 'stores/applicationno'
 import { useTableData } from 'stores/tabledata'
 import { useOwnername } from 'stores/ownername'
 import { useOwneraddress } from 'stores/owneraddress'
+import { useErrorMessage } from 'stores/errormessage'
+import { useErrorSubMessage } from 'stores/errorsubmessage'
 
 const router = useRouter()
 // let _listsubject = useListSubject
@@ -48,6 +50,8 @@ let _applicationno = useApplicationNo
 let _tabledata = useTableData
 let _ownername = useOwnername
 let _owneraddress = useOwneraddress
+let _errormessage = useErrorMessage
+let _errorsubmessage = useErrorSubMessage
 
 const controller = new AbortController()
 
@@ -76,7 +80,7 @@ const getPermits = async () => {
       // const response = await api.get('/api/GetProgressFlowOccupancy/' + _searchvalue.value)
       data = null
     } else if (_division.value === 'Electrical') {
-      const response = await api.get('/api/GetProgressFlowElectrical/' + _searchvalue.value)
+      const response = await api.get('/api/GetPermitsElectrical/' + _searchvalue.value)
       data = response.data.length !== 0 ? response.data : null
     } else if (_division.value === 'Mechanical') {
       // const response = await api.get('/api/GetProgressFlowOccupancy/' + _searchvalue.value)
@@ -85,11 +89,14 @@ const getPermits = async () => {
 
     if (data !== null) {
       _tabledata.value = data
+      return 'ok'
     } else {
       _tabledata.value = null
+      return 'nodata'
     }
   } catch {
-    updatePage('noconnection')
+    return 'noconnection'
+    // updatePage('noconnection')
   }
 }
 
@@ -150,8 +157,16 @@ const getOwnerDetails = async () => {
         _ownername.value = ffname || '--No Name found on Database--'
         _owneraddress.value = addressresult || '--No Address found on Database--'
 
-        await getPermits()
-        updatePage('permitcheck')
+        const permit = await getPermits()
+        if (permit === 'ok') {
+          updatePage('permitcheck')
+        } else if (permit === 'nodata') {
+          _errormessage.value = 'Failed to Inquire Permits'
+          _errorsubmessage.value = 'No Permits Found for ' + _searchvalue.value
+          updatePage('error')
+        } else {
+          updatePage('noconnection')
+        }
       } else {
         updatePage('noconnection')
       }
