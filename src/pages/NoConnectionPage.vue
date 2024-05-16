@@ -2,7 +2,7 @@
 
 q-page.fit.column.wrap.justify-center.items-center.content-center(padding)
   span.text No Connection on Server
-  q-btn.error-button.button(rounded label="Back" @click="gotoHome")
+  q-btn.button-back(rounded label="Back" @click="gotoHome")
 
 </template>
 
@@ -38,9 +38,9 @@ const updatePage = (page) => {
 
 <style lang="sass" scoped>
 .text
-  font-family: 'PoppinsBold'
+  font-family: 'LexendBold'
   font-size: 2.1rem
-  color: white
+  color: $text
   text-align: center
 
 .error-button
@@ -48,7 +48,6 @@ const updatePage = (page) => {
 
 @media screen and (min-width: 900px)
   .text
-    font-family: 'PoppinsBold'
     font-size: 3rem
-    color: white
+
 </style>

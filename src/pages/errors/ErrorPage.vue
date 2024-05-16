@@ -1,16 +1,10 @@
 <template lang="pug">
 
-q-page.page(padding)
-  div.fit.column.items-center.justify-center.text-center.content-center
-    span.error-title {{_errormessage.value}}
-    span.subtitle.text-center {{_errorsubmessage.value}}
-    br
-    section.column.items-center.text-center
-    span.footer If you need help,&nbsp;
-      a.link(@click="gotoHelp") click here
+q-page.fit.column.items-center.justify-center.text-center.content-center(padding)
+  span.error-title {{_errormessage.value}}
+  span.error-subtitle {{_errorsubmessage.value}}
 
-  div
-    q-btn.button-back(rounded label="Back" @click="gotoHome")
+  q-btn.button-back(rounded label="Back" @click="gotoHome")
 
 </template>
 
@@ -37,10 +31,34 @@ let _errormessage = useErrorMessage
 let _errorsubmessage = useErrorSubMessage
 let _currentpage = useCurrentPage
 
+const updatePage = (page) => {
+  _currentpage.value = page
+  router.push(page, () => {})
+}
+
 const gotoHome = () => {
   // controller.abort()
   updatePage('/')
   // window.location.reload()
 }
-
 </script>
+
+<style lang="sass" scoped>
+.error-title
+  font-family: 'LexendBold'
+  font-size: 2rem
+  color: $text
+
+.error-subtitle
+  font-family: 'LexendBold'
+  font-size: 2rem
+  color: $text
+
+@media screen and (min-width: 1023px)
+  .error-title
+    font-size: 3rem
+
+  .error-subtitle
+    font-size: 2rem
+    padding: 0 0 1rem 0
+</style>

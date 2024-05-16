@@ -1,6 +1,6 @@
 <template lang="pug">
 
-q-page.page
+q-page.page(padding)
   //- div.body(v-if="error")
   //-   h2(class="main-title" v-if="error") {{errorMessage}}
   //-   q-btn(rounded class="button" label="Return" @click="defaultMode")
@@ -8,7 +8,7 @@ q-page.page
   div.body
     img.logo(src="../assets/ocbologo2.png" alt="OCBO Logo")
     h1.main-title OCBO Inquiry
-    q-input.searchbar(icon="search" outlined rounded v-model="searched" placeholder="Search Here" @keydown.enter="callserver" bg-color="white" input-style="letter-spacing: 1px")
+    q-input.searchbar(icon="search" outlined rounded v-model="searched" placeholder="Search Here" @keydown.enter="callserver" bg-color="white" input-style="letter-spacing: 1px; font-size: 1.8rem; color: #002859")
       template(v-slot:prepend)
         q-icon(name="search")
 
@@ -349,12 +349,12 @@ const callserver = async () => {
 
           const searchedDate = searched.value.substring(25)
 
-          if (searchedDate === 'today') {
+          if (searchedDate.toUpperCase() === 'TODAY') {
             const today = Date.now()
             const formattedDate = date.formatDate(today, 'YYYY-MM-DD')
             _listdate.value = formattedDate
             updatePage('listgeneratereceived')
-          } else if (searchedDate === 'yesterday') {
+          } else if (searchedDate.toUpperCase() === 'YESTERDAY') {
             const today = Date.now()
             const yesterday = date.subtractFromDate(today, { hours: 24 })
             const formattedDate = date.formatDate(yesterday, 'YYYY-MM-DD')
@@ -362,23 +362,30 @@ const callserver = async () => {
             updatePage('listgeneratereceived')
           } else if (monthsList.some((month) => searchedDate.toUpperCase().includes(month))) {
             const matchingMonth = monthsList.filter((month) => searchedDate.toUpperCase().includes(month.toUpperCase()))
-            const days = Array.from({ length: 30 }, (_, index) => (index + 1).toString())
+            const days = Array.from({ length: 31 }, (_, index) => (index + 1).toString())
 
             if (days.some((day) => searchedDate.substring(matchingMonth[0].length + 1, matchingMonth[0].length + 3).trim() === day)) {
-              // const matchingDay = days.filter((day) => searchedDate.substring(matchingMonth[0].length + 1, matchingMonth[0].length + 3).trim() === day)
-              // const year = searchedDate.substring(parseInt(matchingMonth[0].length + 1) + parseInt(matchingDay[0].length + 1))
+              const matchingDay = days.filter((day) => searchedDate.substring(matchingMonth[0].length + 1, matchingMonth[0].length + 3).trim() === day)
+              const year = searchedDate.substring(parseInt(matchingMonth[0].length + 1) + parseInt(matchingDay[0].length + 1))
+
+              if (year > 0) {
+                _listdate.value = searchedDate
+                updatePage('listgeneratereceived')
+              } else {
+                _errormessage.value = 'Invalid Command'
+                _errorsubmessage.value = 'Please specify the year'
+                updatePage('error')
+              }
               // console.log('year', year)
-              _listdate.value = searchedDate
-              updatePage('listgeneratereceived')
             } else {
               _errormessage.value = 'Invalid Command'
-              _errorsubmessage.value = 'Invalid Date Format'
-              updatePage('searcherror')
+              _errorsubmessage.value = 'Please specify the day of the month'
+              updatePage('error')
             }
           } else {
             _errormessage.value = 'Invalid Command'
-            _errorsubmessage.value = 'Invalid Date Format'
-            updatePage('searcherror')
+            _errorsubmessage.value = 'Please specify a date with a proper format'
+            updatePage('error')
           }
         } else if (searched.value.includes(' --division occupancy')) {
           _listtype.value = 'Daily Received'
@@ -386,12 +393,12 @@ const callserver = async () => {
 
           const searchedDate = searched.value.substring(45)
 
-          if (searchedDate === 'today') {
+          if (searchedDate.toUpperCase() === 'TODAY') {
             const today = Date.now()
             const formattedDate = date.formatDate(today, 'YYYY-MM-DD')
             _listdate.value = formattedDate
             updatePage('listgeneratereceived')
-          } else if (searchedDate === 'yesterday') {
+          } else if (searchedDate.toUpperCase() === 'YESTERDAY') {
             const today = Date.now()
             const yesterday = date.subtractFromDate(today, { hours: 24 })
             const formattedDate = date.formatDate(yesterday, 'YYYY-MM-DD')
@@ -428,13 +435,13 @@ const callserver = async () => {
           } else {
             _errormessage.value = 'Invalid Command'
             _errorsubmessage.value = 'Invalid Date Format'
-            updatePage('searcherror')
+            updatePage('error')
           }
         }
       } else {
         _errormessage.value = 'Invalid Command'
         _errorsubmessage.value = `Items to be listed aren't specified`
-        updatePage('searcherror')
+        updatePage('error')
       }
       // if (
       //   searched.value === 'op' ||
@@ -581,7 +588,6 @@ h1, h2
 
 .searchbar
   width: 85%
-  font-size: 1.2rem
   font-family: 'Lexend', Arial, 'Poppins', sans-serif
   margin-top: -2rem
 
@@ -643,7 +649,6 @@ h1, h2
 
   .searchbar
     width: 550px
-    font-size: 1.7em
     border-radius: 15px
 
   .main-title
@@ -651,6 +656,7 @@ h1, h2
 
   .right-side
     width: 550px
+    padding: 0.5rem 0 0 0
 
   .help-info
     font-size: 1rem
