@@ -51,8 +51,8 @@ let _listyear = useListYear
 let _listdate = useListDate
 
 let percentage = ref(0)
-const properDate = date.formatDate(_listdate.value, "MMMM DD, YYYY")
-const formattedDate = date.formatDate(_listdate.value, "YYYY~MM~DD")
+const properDate = date.formatDate(_listdate.value, 'MMMM DD, YYYY')
+const formattedDate = date.formatDate(_listdate.value, 'YYYY~MM~DD')
 
 const controller = new AbortController()
 
@@ -124,7 +124,7 @@ const loadCurrentPage = () => {
   margin-top: 2rem
   font-size: 2.2rem
   font-family: 'LexendBold'
-  color: yellow
+  color: $yellow
 
 @media screen and (min-width: 900px)
   .loading-title

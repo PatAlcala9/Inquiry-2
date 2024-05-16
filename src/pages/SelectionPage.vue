@@ -110,7 +110,7 @@ const gotoHome = () => {
 
 <style lang="sass" scoped>
 .page
-  color: #ffffff
+  color: $text
 
 .division
   font-size: 1.6rem
@@ -120,7 +120,7 @@ const gotoHome = () => {
   margin-top: 1.2rem
   font-size: 1.8rem
   font-family: 'LexendBold'
-  color: yellow
+  color: $yellow
 
 .select-message
   font-size: 1.2rem
@@ -168,15 +168,21 @@ const gotoHome = () => {
   padding-top: 2rem
   padding-bottom: 3rem
 
-@media screen and (min-width: 900px)
+@media screen and (min-width: 1023px)
   .grid
     grid-template-columns: 1fr 1fr
     grid-template-rows: 1fr 1fr
     grid-template-areas: "one two" "three four"
 
   .search-value
-    margin-top: 2rem
-    font-size: 3rem
-    font-family: 'PoppinsBold'
-    color: yellow
+    margin: 1rem 0 0 0
+    font-size: 2.8rem
+    font-family: 'LexendBold'
+    color: $yellow
+
+  .select-message
+    font-size: 1.4rem
+
+  .select-button
+    font-size: 1.2rem
 </style>

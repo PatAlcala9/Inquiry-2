@@ -141,7 +141,7 @@ label
 .table-data-mobile-amount
   // font-family: 'LexendBold'
   // font-size: 1.6rem
-  // color: yellow
+  // color: $yellow
   font-family: "LexendBold"
   font-size: 1.6rem
   color: $text
@@ -155,5 +155,4 @@ label
 
 .table-area
   margin-top: 2rem
-
 </style>

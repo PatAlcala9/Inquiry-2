@@ -62,20 +62,7 @@ let tableEmptyO = ref(false)
 let tableEmptyE = ref(false)
 let online = ref(false)
 
-const monthsList = [
-  'JANUARY',
-  'FEBRUARY',
-  'MARCH',
-  'APRIL',
-  'MAY',
-  'JUNE',
-  'JULY',
-  'AUGUST',
-  'SEPTEMBER',
-  'OCTOBER',
-  'NOVEMBER',
-  'DECEMBER',
-]
+const monthsList = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER']
 
 // const columns = [
 //   {
@@ -376,7 +363,6 @@ const callserver = async () => {
                 _errorsubmessage.value = 'Please specify the year'
                 updatePage('error')
               }
-              // console.log('year', year)
             } else {
               _errormessage.value = 'Invalid Command'
               _errorsubmessage.value = 'Please specify the day of the month'

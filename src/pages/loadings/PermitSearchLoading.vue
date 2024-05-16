@@ -220,7 +220,7 @@ const loadCurrentPage = () => {
   margin-top: 1.6rem
   font-size: 1.8rem
   font-family: 'LexendBold'
-  color: yellow
+  color: $yellow
 
 @media screen and (min-width: 900px)
   .loading-title

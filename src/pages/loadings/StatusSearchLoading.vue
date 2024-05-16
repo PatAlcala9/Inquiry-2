@@ -254,7 +254,7 @@ h4, h2, h3
   margin-top: 2rem
   font-size: 2.4rem
   font-family: 'PoppinsBold'
-  color: yellow
+  color: $yellow
 
 .loading-type
   font-size: 1.8rem

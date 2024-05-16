@@ -85,7 +85,7 @@ const loadCurrentPage = () => {
   margin-top: 2rem
   font-size: 2.4rem
   font-family: 'PoppinsBold'
-  color: yellow
+  color: $yellow
 
 @media screen and (min-width: 900px)
   .loading-title

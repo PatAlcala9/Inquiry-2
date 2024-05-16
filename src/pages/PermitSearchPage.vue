@@ -208,7 +208,7 @@ label
 
 .empty-table-message
   font-family: "LexendBold"
-  color: yellow
+  color: $yellow
   font-size: 2rem
   padding-top: 3rem
   padding-bottom: 3rem
