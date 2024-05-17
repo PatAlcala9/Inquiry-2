@@ -37,6 +37,8 @@ import { useCurrentPage } from 'stores/currentpage'
 import { useTableData } from 'stores/tabledata'
 import { useListYear } from 'stores/listyear'
 import { useListDate } from 'stores/listdate'
+import { useErrorMessage } from 'stores/errormessage'
+import { useErrorSubMessage } from 'stores/errorsubmessage'
 import { ref } from 'vue'
 import { date } from 'quasar'
 
@@ -49,6 +51,8 @@ let _currentpage = useCurrentPage
 let _tabledata = useTableData
 let _listyear = useListYear
 let _listdate = useListDate
+let _errormessage = useErrorMessage
+let _errorsubmessage = useErrorSubMessage
 
 let percentage = ref(0)
 const properDate = date.formatDate(_listdate.value, 'MMMM DD, YYYY')
@@ -66,19 +70,25 @@ const getDailyReceived = async () => {
     const response = await api.get('/api/GetDailyReceivedOccupancy/' + _listdate.value)
     data = response.data.length !== 0 ? response.data : null
   } else if (_division.value === 'Signage') {
-    // const response = await api.get('/api/GetDailyReceivedElectrical/' + _listdate.value)
-    data = response.data.length !== 0 ? response.data : null
+    _errormessage.value = "Error on Generating List"
+    _errorsubmessage.value = "Signage Data is not found"
+    updatePage('error')
   } else if (_division.value === 'Electrical') {
     const response = await api.get('/api/GetDailyReceivedElectrical/' + _listdate.value)
     data = response.data.length !== 0 ? response.data : null
   } else if (_division.value === 'Mechanical') {
-    // const response = await api.get('/api/GetDailyReceivedElectrical/' + _listdate.value)
-    data = response.data.length !== 0 ? response.data : null
+    _errormessage.value = "Error on Generating List"
+    _errorsubmessage.value = "Mechanical Data is not found"
+    updatePage('error')
   }
 
-  if (data !== null) {
+  if (data.result.length > 0) {
     _tabledata.value = data
     updatePage('receivedlist')
+  } else {
+    _errormessage.value = "Error on Generating List"
+    _errorsubmessage.value = "No Received Data found on " + properDate + " at the moment"
+    updatePage('error')
   }
 }
 
