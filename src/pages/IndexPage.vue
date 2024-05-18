@@ -39,7 +39,9 @@ import { useListType } from 'stores/listtype'
 import { useDivision } from 'stores/division'
 import { useListYear } from 'stores/listyear'
 import { useListDate } from 'stores/listdate'
+import { useRSAKey } from 'stores/rsakey'
 import { date } from 'quasar'
+import { JSEncrypt } from 'jsencrypt'
 
 const router = useRouter()
 let _currentpage = useCurrentPage
@@ -52,6 +54,7 @@ let _listtype = useListType
 let _division = useDivision
 let _listyear = useListYear
 let _listdate = useListDate
+let _rsakey = useRSAKey()
 
 let helpInfo = ref('Need help? Click ')
 let searched = ref('')
@@ -549,6 +552,14 @@ const uploadSearch = (value) => {
 ;(async () => {
   reset()
   loadCurrentPage()
+  // const encrypt = new JSEncrypt()
+  // encrypt.setPublicKey(_rsakey.publickey)
+  // const encrypted = encrypt.encrypt('abc3211233a')
+
+  // encrypt.setPrivateKey(_rsakey.privatekey)
+  // var uncrypted = encrypt.decrypt(encrypted)
+
+  // console.log(uncrypted)
 })()
 </script>
 
