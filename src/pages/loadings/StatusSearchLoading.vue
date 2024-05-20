@@ -101,7 +101,6 @@ const searchData = async () => {
 
       const data = response.data.length !== 0 ? response.data : null
       const result = data !== null ? decrypt(data.result) : null
-
       if (result !== null) {
         if (result.length > 0) {
           _applicationno.value = searched
@@ -143,19 +142,24 @@ const getOwnerDetails = async () => {
   }
 
   try {
-    const response = await api.get('/api/GetOwnerName' + method + '/' + appno, {
+    const encryptedEndpoint = encrypt('GetOwnerName' + method)
+    const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+
+    const encryptedData = encrypt(_searchvalue.value)
+    const replacedData = encryptedData.replaceAll('/', '~')
+    // response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
+    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
       signal: controller.signal,
     })
     const data = response.data.length !== 0 ? response.data : null
-
     if (data !== null) {
       const result = data || null
 
       if (result !== null) {
-        const fname = result.result
-        const mname = result.result2
-        const lname = result.result3
-        const addressresult = result.result4
+        const fname = decrypt(result.result)
+        const mname = decrypt(result.result2)
+        const lname = decrypt(result.result3)
+        const addressresult = decrypt(result.result4)
         const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
 
         _ownername.value = ffname || '--No Name found on Database--'
@@ -194,14 +198,19 @@ const getTableData = async () => {
   }
 
   try {
-    const response = await api.get('/api/GetTableData' + method + '/' + appno, {
+    const encryptedEndpoint = encrypt('GetTableData' + method)
+    const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+
+    const encryptedData = encrypt(appno)
+    const replacedData = encryptedData.replaceAll('/', '~')
+    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
       signal: controller.signal,
     })
     const data = response.data.length !== 0 ? response.data : null
 
     if (data !== null) {
       _tabledata.value = data
-      _lateststatus.value = data.result2[0]
+      _lateststatus.value = decrypt(data.result2[0])
     }
   } catch {
     _tabledata.value = {}

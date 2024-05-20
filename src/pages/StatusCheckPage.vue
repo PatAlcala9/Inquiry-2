@@ -24,8 +24,8 @@ q-page.page(padding)
   section(v-if="$q.screen.width <= 899")
     section
       div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center(v-for="(item, index) in tableData.result" :key="item")
-        span.table-data-mobile-date {{item.toUpperCase()}}
-        span.table-data-mobile-status.last {{tableData.result2[index].toUpperCase()}}
+        span.table-data-mobile-date {{decrypt(item).toUpperCase()}}
+        span.table-data-mobile-status.last {{decrypt(tableData.result2[index]).toUpperCase()}}
 
   section(v-else)
     section.table-area.full-width.column.content-center.items-center.justify-center
@@ -36,8 +36,8 @@ q-page.page(padding)
             th Status
         tbody
           tr(v-for="(item, index) in tableData.result" :key="item")
-            td {{item}}
-            td {{tableData.result2[index]}}
+            td {{decrypt(item)}}
+            td {{decrypt(tableData.result2[index])}}
             //- td {{tableData.result2[index]}}
 
   div.button-area.full-width.column.no-wrap.justify-center.items-center.content-start
@@ -69,6 +69,7 @@ import { useOwnername } from 'stores/ownername'
 import { useOwneraddress } from 'stores/owneraddress'
 import { useLatestStatus } from 'stores/lateststatus'
 import { useCurrentPage } from 'stores/currentpage'
+import { decrypt } from 'assets/js/shield'
 
 const router = useRouter()
 let _applicationno = useApplicationNo
