@@ -42,6 +42,7 @@ import { useListDate } from 'stores/listdate'
 import { useRSAKey } from 'stores/rsakey'
 import { date } from 'quasar'
 import { JSEncrypt } from 'jsencrypt'
+import { encrypt, decrypt } from 'assets/js/shield'
 
 const router = useRouter()
 let _currentpage = useCurrentPage
@@ -559,7 +560,8 @@ const uploadSearch = (value) => {
   // encrypt.setPrivateKey(_rsakey.privatekey)
   // var uncrypted = encrypt.decrypt(encrypted)
 
-  // console.log(uncrypted)
+  // console.log('aaa', encrypt('aaa'))
+  // console.log('decrypt', decrypt('Piw50PYYQeYoBAaXYXNjdFnn6rhBLPnhe7Jle2YXdC1/AqdcBWw6vHXZcTO/EFwW7WAgL1cry7RQAkl+vWFnGWYrtw4s428+fhwi/mUbKEEdYnBA1GCQCQmjurFxpjqpdG/tpbU1HLw7WiPJGg1jrUymRwAf7j8eeFWJWRXEsKpb8I7icMlMnipjCJZSRTgzlM0D2q4RVeCe0ADcNB9IN5j0Ub96Bc+gz2L3kb6W0s/WX9ocEn5ZqqZ5YKVSFZG+4Gao6JyHMBd2LjvoDUcZFYLeI/q2ngoRGZoHvO4H175hMR5WFL1xbE/zL5jfJywV7gVoYnxMK85hXTv/9+Cr9w=='))
 })()
 </script>
 

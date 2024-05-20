@@ -39,8 +39,8 @@ import { useOwneraddress } from 'stores/owneraddress'
 import { useLatestStatus } from 'stores/lateststatus'
 import { useErrorMessage } from 'stores/errormessage'
 import { useCurrentPage } from 'stores/currentpage'
-
 import { useTableData } from 'stores/tabledata'
+import { encrypt, decrypt } from 'assets/js/shield'
 
 const router = useRouter()
 const quasar = useQuasar()
@@ -61,13 +61,20 @@ const searchData = async () => {
   const searched = _searchvalue.value
   try {
     let response
-    const connection = await api.get('/api/CheckConnection')
+    const encryptedEndpoint = encrypt('CheckConnection')
+    const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+    const connection = await api.get('/api/' + replacedEndpoint)
     const data = connection.data || null
-    const result = data !== null ? data.result : null
+    const result = data !== null ? decrypt(data.result) : null
 
     if (result !== null) {
       if (_division.value === 'Building') {
-        response = await api.get('/api/CheckBuilding/' + searched, {
+        const encryptedEndpoint = encrypt('CheckBuilding')
+        const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+
+        const encryptedData = encrypt(searched)
+        const replacedData = encryptedData.replaceAll('/', '~')
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
           signal: controller.signal,
         })
       } else if (_division.value === 'Occupancy') {
@@ -93,7 +100,7 @@ const searchData = async () => {
       }
 
       const data = response.data.length !== 0 ? response.data : null
-      const result = data !== null ? data.result : null
+      const result = data !== null ? decrypt(data.result) : null
 
       if (result !== null) {
         if (result.length > 0) {
