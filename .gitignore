@@ -36,3 +36,6 @@ yarn-error.log*
 # local .env files
 .env
 .env.local*
+
+# RSA
+security_keys
