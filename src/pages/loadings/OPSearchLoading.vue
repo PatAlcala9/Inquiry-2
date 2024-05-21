@@ -37,6 +37,7 @@ import { useApplicationNo } from 'stores/applicationno'
 import { useTableData } from 'stores/tabledata'
 import { useOwnername } from 'stores/ownername'
 import { useOwneraddress } from 'stores/owneraddress'
+import { encrypt, decrypt } from 'assets/js/shield'
 
 const router = useRouter()
 // let _listsubject = useListSubject
@@ -77,18 +78,28 @@ const getOrderofPayment = async () => {
   let response
 
   try {
-    const connection = await api.get('/api/CheckConnection')
+    const encryptedEndpoint = encrypt('CheckConnection')
+    const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+
+    const connection = await api.get('/api/' + replacedEndpoint)
     const data = connection.data || null
-    const result = data !== null ? data.result : null
+    const result = data !== null ? decrypt(data.result) : null
 
     if (result !== null) {
       if (_division.value === 'Building') {
-        response = await api.get('/api/GetOrderofPaymentBuilding/' + _searchvalue.value, {
+        const encryptedEndpoint = encrypt('GetOrderofPaymentBuilding')
+        const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+        const encryptedData = encrypt(_searchvalue.value)
+        const replacedData = encryptedData.replaceAll('/', '~')
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
           signal: controller.signal,
         })
       } else if (_division.value === 'Occupancy') {
-        // await getIDByOccupancyApplication()
-        response = await api.get('/api/GetOrderofPaymentOccupancy/' + _searchvalue.value, {
+        const encryptedEndpoint = encrypt('GetOrderofPaymentOccupancy')
+        const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+        const encryptedData = encrypt(_searchvalue.value)
+        const replacedData = encryptedData.replaceAll('/', '~')
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
           signal: controller.signal,
         })
       } else if (_division.value === 'Signage') {
@@ -97,8 +108,11 @@ const getOrderofPayment = async () => {
         // })
         return
       } else if (_division.value === 'Electrical') {
-        // await getIDByElectricalApplication()
-        response = await api.get('/api/GetOrderofPaymentElectrical/' + _searchvalue.value, {
+        const encryptedEndpoint = encrypt('GetOrderofPaymentElectrical')
+        const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+        const encryptedData = encrypt(_searchvalue.value)
+        const replacedData = encryptedData.replaceAll('/', '~')
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
           signal: controller.signal,
         })
       } else if (_division.value === 'Mechanical') {
@@ -113,6 +127,7 @@ const getOrderofPayment = async () => {
       }
 
       const data = response.data.length !== 0 ? response.data : null
+      console.log('data', data)
 
       if (data !== null) {
         _tabledata.value = data
@@ -146,16 +161,21 @@ const getOwnerDetails = async () => {
   }
 
   try {
-    const response = await api.get('/api/GetOwnerName' + method + '/' + _searchvalue.value, {
+    const encryptedEndpoint = encrypt('GetOwnerName' + method)
+    const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+
+    const encryptedData = encrypt(_searchvalue.value)
+    const replacedData = encryptedData.replaceAll('/', '~')
+    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
       signal: controller.signal,
     })
     const data = response.data.length !== 0 ? response.data : null
 
     if (data !== null) {
-      const fname = data.result
-      const mname = data.result2
-      const lname = data.result3
-      const addressresult = data.result4
+      const fname = decrypt(data.result)
+      const mname = decrypt(data.result2)
+      const lname = decrypt(data.result3)
+      const addressresult = decrypt(data.result4)
       const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
 
       _applicationno.value = _searchvalue.value

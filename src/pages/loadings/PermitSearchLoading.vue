@@ -39,6 +39,7 @@ import { useOwnername } from 'stores/ownername'
 import { useOwneraddress } from 'stores/owneraddress'
 import { useErrorMessage } from 'stores/errormessage'
 import { useErrorSubMessage } from 'stores/errorsubmessage'
+import { encrypt, decrypt } from 'assets/js/shield'
 
 const router = useRouter()
 // let _listsubject = useListSubject
@@ -71,16 +72,28 @@ const getPermits = async () => {
     let data
 
     if (_division.value === 'Building') {
-      const response = await api.get('/api/GetPermitsBuilding/' + _searchvalue.value)
+      const encryptedEndpoint = encrypt('GetPermitsBuilding')
+      const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+      const encryptedData = encrypt(_searchvalue.value)
+      const replacedData = encryptedData.replaceAll('/', '~')
+      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
       data = response.data.length !== 0 ? response.data : null
     } else if (_division.value === 'Occupancy') {
-      const response = await api.get('/api/GetPermitsOccupancy/' + _searchvalue.value)
+     const encryptedEndpoint = encrypt('GetPermitsOccupancy')
+      const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+      const encryptedData = encrypt(_searchvalue.value)
+      const replacedData = encryptedData.replaceAll('/', '~')
+      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
       data = response.data.length !== 0 ? response.data : null
     } else if (_division.value === 'Signage') {
       // const response = await api.get('/api/GetProgressFlowOccupancy/' + _searchvalue.value)
       data = null
     } else if (_division.value === 'Electrical') {
-      const response = await api.get('/api/GetPermitsElectrical/' + _searchvalue.value)
+      const encryptedEndpoint = encrypt('GetPermitsElectrical')
+      const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+      const encryptedData = encrypt(_searchvalue.value)
+      const replacedData = encryptedData.replaceAll('/', '~')
+      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
       data = response.data.length !== 0 ? response.data : null
     } else if (_division.value === 'Mechanical') {
       // const response = await api.get('/api/GetProgressFlowOccupancy/' + _searchvalue.value)
@@ -137,21 +150,28 @@ const getOwnerDetails = async () => {
   }
 
   try {
-    const connection = await api.get('/api/CheckConnection')
+    const encryptedEndpoint = encrypt('CheckConnection')
+    const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+
+    const connection = await api.get('/api/' + replacedEndpoint)
     const connData = connection.data || null
-    const result = connData !== null ? connData.result : null
+    const result = connData !== null ? decrypt(connData.result) : null
 
     if (result !== null) {
-      const response = await api.get('/api/GetOwnerName' + method + '/' + _searchvalue.value, {
+      const encryptedEndpoint = encrypt('GetOwnerName' + method)
+      const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+      const encryptedData = encrypt(_searchvalue.value)
+      const replacedData = encryptedData.replaceAll('/', '~')
+      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
         signal: controller.signal,
       })
       const data = response.data.length !== 0 ? response.data : null
 
       if (data !== null) {
-        const fname = data.result
-        const mname = data.result2
-        const lname = data.result3
-        const addressresult = data.result4
+        const fname = decrypt(data.result)
+        const mname = decrypt(data.result2)
+        const lname = decrypt(data.result3)
+        const addressresult = decrypt(data.result4)
         const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
 
         _ownername.value = ffname || '--No Name found on Database--'

@@ -23,10 +23,10 @@ q-page.page(padding)
           span(v-else) Permit
 
         div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="(item, index) in _tabledata.value.result" :key="item")
-          span.table-data-mobile-desc.last(v-if="_tabledata.value.result4 !== undefined") {{item}}
-          span.table-data-mobile-desc(v-else) {{item}}
-          span.table-data-mobile-info(v-if="_tabledata.value.result4 !== undefined") Block {{_tabledata.value.result2[index]}} Lot {{_tabledata.value.result3[index]}}
-          span.table-data-mobile-info.last(v-if="_tabledata.value.result4 !== undefined") {{_tabledata.value.result4[index]}}
+          span.table-data-mobile-desc.last(v-if="_tabledata.value.result4 !== undefined") {{decrypt(item)}}
+          span.table-data-mobile-desc(v-else) {{decrypt(item)}}
+          span.table-data-mobile-info(v-if="_tabledata.value.result4 !== undefined") Block {{decrypt(_tabledata.value.result2[index])}} Lot {{decrypt(_tabledata.value.result3[index])}}
+          span.table-data-mobile-info.last(v-if="_tabledata.value.result4 !== undefined") {{decrypt(_tabledata.value.result4[index])}}
 
     section(v-else)
       section.table-area.full-width.column.content-center.items-center.justify-center
@@ -40,10 +40,10 @@ q-page.page(padding)
               th(v-if="_tabledata.value.result4 !== undefined") Address
           tbody
             tr(v-for="(item, index) in _tabledata.value.result" :key="item")
-              td {{item}}
-              td(v-if="_tabledata.value.result4 !== undefined") {{_tabledata.value.result2[index]}}
-              td(v-if="_tabledata.value.result4 !== undefined") {{_tabledata.value.result3[index]}}
-              td(v-if="_tabledata.value.result4 !== undefined") {{_tabledata.value.result4[index]}}
+              td {{decrypt(item)}}
+              td(v-if="_tabledata.value.result4 !== undefined") {{decrypt(_tabledata.value.result2[index])}}
+              td(v-if="_tabledata.value.result4 !== undefined") {{decrypt(_tabledata.value.result3[index])}}
+              td(v-if="_tabledata.value.result4 !== undefined") {{decrypt(_tabledata.value.result4[index])}}
 
   div(v-else)
     section.flex.flex-center
@@ -79,6 +79,7 @@ import { useOwneraddress } from 'stores/owneraddress'
 import { useLatestStatus } from 'stores/lateststatus'
 import { useCurrentPage } from 'stores/currentpage'
 import { useListYear } from 'stores/listyear'
+import { decrypt } from 'assets/js/shield'
 
 const router = useRouter()
 let _applicationno = useApplicationNo

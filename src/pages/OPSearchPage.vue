@@ -28,9 +28,9 @@ q-page.page(padding)
         span.table-title Order of Payment
 
       div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="(item, index) in _tabledata.value.result" :key="item")
-        span.table-data-mobile-desc {{item}}
-        span.table-data-mobile-amount &#8369; {{Intl.NumberFormat('en-IN').format(_tabledata.value.result2[index])}}
-        span.table-data-mobile-paid.last {{_tabledata.value.result3[index] === '1' ? 'PAID' : 'UNPAID'}}
+        span.table-data-mobile-desc {{decrypt(item)}}
+        span.table-data-mobile-amount &#8369; {{Intl.NumberFormat('en-IN').format(decrypt(_tabledata.value.result2[index]))}}
+        span.table-data-mobile-paid.last {{decrypt(_tabledata.value.result3[index]) === '1' ? 'PAID' : 'UNPAID'}}
         br
 
     section.table-area.full-width.column.content-center.items-center.justify-center(v-else)
@@ -42,9 +42,9 @@ q-page.page(padding)
             th Paid
         tbody
           tr(v-for="(item, index) in _tabledata.value.result" :key="item")
-            td {{item}}
-            td &#8369; {{Intl.NumberFormat('en-IN').format(_tabledata.value.result2[index])}}
-            td {{_tabledata.value.result3[index] === '1' ? 'YES' : 'NO'}}
+            td {{decrypt(item)}}
+            td &#8369; {{Intl.NumberFormat('en-IN').format(decrypt(_tabledata.value.result2[index]))}}
+            td {{decrypt(_tabledata.value.result3[index]) === '1' ? 'YES' : 'NO'}}
 
   //- div.full-width.column.no-wrap.justify-center.items-center.content-start
   //-   q-btn.button(rounded @click="gotoHome") Back
@@ -74,6 +74,7 @@ import { useTableData } from 'stores/tabledata'
 import { useOwnername } from 'stores/ownername'
 import { useOwneraddress } from 'stores/owneraddress'
 import { useCurrentPage } from 'stores/currentpage'
+import { decrypt } from 'assets/js/shield'
 
 const router = useRouter()
 let _applicationno = useApplicationNo

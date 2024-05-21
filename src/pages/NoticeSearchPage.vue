@@ -28,12 +28,12 @@ q-page.page(padding)
         span.table-title Inspections
 
       div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="(item, index) in _tabledata.value.result" :key="item")
-        span.table-data-mobile-desc {{item}}
+        span.table-data-mobile-desc {{decrypt(item)}}
         span.table-data-mobile-label Date In
-        span.table-data-mobile-info {{date.formatDate(_tabledata.value.result2[index], 'MMMM D, YYYY')}}
+        span.table-data-mobile-info {{date.formatDate(decrypt(_tabledata.value.result2[index]), 'MMMM D, YYYY')}}
         span.table-data-mobile-label Day Out
-        span.table-data-mobile-info {{date.formatDate(_tabledata.value.result3[index], 'MMMM D, YYYY')}}
-        span.table-data-mobile-info.last {{_tabledata.value.result4[index] === '1' ? 'ACCOMPLISHED' : 'UNACCOMPLISHED'}}
+        span.table-data-mobile-info {{date.formatDate(decrypt(_tabledata.value.result3[index]), 'MMMM D, YYYY')}}
+        span.table-data-mobile-info.last {{decrypt(_tabledata.value.result4[index]) === '1' ? 'ACCOMPLISHED' : 'UNACCOMPLISHED'}}
         br
 
     section.table-area.full-width.column.content-center.items-center.justify-center(v-else)
@@ -46,10 +46,10 @@ q-page.page(padding)
             th(v-if="_division.value !== 'Electrical'") Accomplished
         tbody
           tr(v-for="(item, index) in _tabledata.value.result" :key="item")
-            td {{item}}
-            td {{date.formatDate(_tabledata.value.result2[index], 'MMMM D, YYYY')}}
-            td {{date.formatDate(_tabledata.value.result3[index], 'MMMM D, YYYY')}}
-            td(v-if="_division.value !== 'Electrical'") {{_tabledata.value.result4[index] === '1' ? 'YES' : 'NO'}}
+            td {{decrypt(item)}}
+            td {{date.formatDate(decrypt(_tabledata.value.result2[index]), 'MMMM D, YYYY')}}
+            td {{date.formatDate(decrypt(_tabledata.value.result3[index]), 'MMMM D, YYYY')}}
+            td(v-if="_division.value !== 'Electrical'") {{decrypt(_tabledata.value.result4[index]) === '1' ? 'YES' : 'NO'}}
 
   //- div.full-width.column.no-wrap.justify-center.items-center.content-start
   //-   q-btn.button(rounded @click="gotoHome") Back
@@ -80,7 +80,7 @@ import { useOwnername } from 'stores/ownername'
 import { useOwneraddress } from 'stores/owneraddress'
 import { useCurrentPage } from 'stores/currentpage'
 import { date } from 'quasar'
-// import dayjs from 'dayjs'
+import { decrypt } from 'assets/js/shield'
 
 const router = useRouter()
 let _applicationno = useApplicationNo

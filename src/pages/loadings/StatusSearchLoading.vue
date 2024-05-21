@@ -71,26 +71,41 @@ const searchData = async () => {
       if (_division.value === 'Building') {
         const encryptedEndpoint = encrypt('CheckBuilding')
         const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
-
         const encryptedData = encrypt(searched)
         const replacedData = encryptedData.replaceAll('/', '~')
         response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
           signal: controller.signal,
         })
       } else if (_division.value === 'Occupancy') {
-        response = await api.get('/api/CheckOccupancy/' + searched, {
+        const encryptedEndpoint = encrypt('CheckOccupancy')
+        const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+        const encryptedData = encrypt(searched)
+        const replacedData = encryptedData.replaceAll('/', '~')
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
           signal: controller.signal,
         })
       } else if (_division.value === 'Signage') {
-        response = await api.get('/api/CheckSignage/' + searched, {
+        const encryptedEndpoint = encrypt('CheckSignage')
+        const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+        const encryptedData = encrypt(searched)
+        const replacedData = encryptedData.replaceAll('/', '~')
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
           signal: controller.signal,
         })
       } else if (_division.value === 'Electrical') {
-        response = await api.get('/api/CheckElectrical/' + searched, {
+        const encryptedEndpoint = encrypt('CheckElectrical')
+        const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+        const encryptedData = encrypt(searched)
+        const replacedData = encryptedData.replaceAll('/', '~')
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
           signal: controller.signal,
         })
       } else if (_division.value === 'Mechanical') {
-        response = await api.get('/api/CheckMechanical/' + searched, {
+        const encryptedEndpoint = encrypt('CheckMechanical')
+        const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+        const encryptedData = encrypt(searched)
+        const replacedData = encryptedData.replaceAll('/', '~')
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
           signal: controller.signal,
         })
       } else if (_division.value === 'Unidentified') {
