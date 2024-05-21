@@ -41,6 +41,7 @@ import { useErrorMessage } from 'stores/errormessage'
 import { useErrorSubMessage } from 'stores/errorsubmessage'
 import { ref } from 'vue'
 import { date } from 'quasar'
+import { encrypt, decrypt } from 'assets/js/shield'
 
 const router = useRouter()
 // const quasar = useQuasar()
@@ -63,33 +64,68 @@ const controller = new AbortController()
 const getDailyReceived = async () => {
   let data
 
-  if (_division.value === 'Building') {
-    const response = await api.get('/api/GetDailyReceived/' + formattedDate)
-    data = response.data.length !== 0 ? response.data : null
-  } else if (_division.value === 'Occupancy') {
-    const response = await api.get('/api/GetDailyReceivedOccupancy/' + _listdate.value)
-    data = response.data.length !== 0 ? response.data : null
-  } else if (_division.value === 'Signage') {
-    _errormessage.value = "Error on Generating List"
-    _errorsubmessage.value = "Signage Data is not found"
-    updatePage('error')
-  } else if (_division.value === 'Electrical') {
-    const response = await api.get('/api/GetDailyReceivedElectrical/' + _listdate.value)
-    data = response.data.length !== 0 ? response.data : null
-  } else if (_division.value === 'Mechanical') {
-    _errormessage.value = "Error on Generating List"
-    _errorsubmessage.value = "Mechanical Data is not found"
-    updatePage('error')
-  }
+  const encryptedEndpoint = encrypt('CheckConnection')
+  const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+  const connection = await api.get('/api/' + replacedEndpoint)
+  const conn = connection.data || null
+  const result = conn !== null ? decrypt(conn.result) : null
 
-  if (data.result.length > 0) {
-    _tabledata.value = data
-    updatePage('receivedlist')
+  if (result !== null) {
+    if (_division.value === 'Building') {
+      const encryptedEndpoint = encrypt('GetDailyReceived')
+      const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+      const encryptedData = encrypt(formattedDate)
+      const replacedData = encryptedData.replaceAll('/', '~')
+      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+      data = response.data.length !== 0 ? response.data : null
+    } else if (_division.value === 'Occupancy') {
+      const encryptedEndpoint = encrypt('GetDailyReceivedOccupancy')
+      const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+      const encryptedData = encrypt(formattedDate)
+      const replacedData = encryptedData.replaceAll('/', '~')
+      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+      data = response.data.length !== 0 ? response.data : null
+    } else if (_division.value === 'Signage') {
+      _errormessage.value = 'Error on Generating List'
+      _errorsubmessage.value = 'Signage Data is not found'
+      updatePage('error')
+    } else if (_division.value === 'Electrical') {
+      const encryptedEndpoint = encrypt('GetDailyReceivedElectrical')
+      const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+      const encryptedData = encrypt(formattedDate)
+      const replacedData = encryptedData.replaceAll('/', '~')
+      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+      data = response.data.length !== 0 ? response.data : null
+    } else if (_division.value === 'Mechanical') {
+      _errormessage.value = 'Error on Generating List'
+      _errorsubmessage.value = 'Mechanical Data is not found'
+      updatePage('error')
+    }
+
+    if (data.result.length > 0) {
+      _tabledata.value = data
+      const tempApp = decrypt(data.result[0])
+      getLatestStatus(tempApp)
+      updatePage('receivedlist')
+    } else {
+      _errormessage.value = 'Error on Generating List'
+      _errorsubmessage.value = 'No Received Data found on ' + properDate + ' at the moment'
+      updatePage('error')
+    }
   } else {
-    _errormessage.value = "Error on Generating List"
-    _errorsubmessage.value = "No Received Data found on " + properDate + " at the moment"
-    updatePage('error')
+    updatePage('noconnection')
   }
+}
+
+const getLatestStatus = async (application) => {
+  const encryptedEndpoint = encrypt('GetLatestStatusBuilding')
+  const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+  const encryptedData = encrypt(application)
+  const replacedData = encryptedData.replaceAll('/', '~')
+  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+  const data = response.data.length !== 0 ? response.data : null
+
+  console.log('status', decrypt(data.result))
 }
 
 const gotoHome = () => {

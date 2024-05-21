@@ -15,10 +15,10 @@ q-page.page(padding)
           th Occupancy Type
       tbody
         tr(v-for="(item, index) in _tabledata.value.result" :key="item")
-          td {{item}}
-          td {{_tabledata.value.result2[index]}}
-          td {{_tabledata.value.result3[index]}}
-          td {{_tabledata.value.result4[index]}}
+          td {{decrypt(item)}}
+          td {{decrypt(_tabledata.value.result2[index])}}
+          td {{decrypt(_tabledata.value.result3[index])}}
+          td {{decrypt(_tabledata.value.result4[index])}}
           //- td {{_tabledata.value.result6[index]}}
 
   div.back-button.full-width.column.wrap.justify-center.items-center.content-center
@@ -48,6 +48,7 @@ import { useListYear } from 'stores/listyear'
 import { useListDate } from 'stores/listdate'
 import { ref } from 'vue'
 import { date } from 'quasar'
+import { decrypt } from 'assets/js/shield'
 
 const router = useRouter()
 // const quasar = useQuasar()
@@ -59,11 +60,9 @@ let _tabledata = useTableData
 let _listyear = useListYear
 let _listdate = useListDate
 
-const properDate = date.formatDate(_listdate.value, "MMMM DD, YYYY")
+const properDate = date.formatDate(_listdate.value, 'MMMM DD, YYYY')
 
-const detectWeekend = (date) => {
-
-}
+const detectWeekend = (date) => {}
 
 const updatePage = (page) => {
   _currentpage.value = page
@@ -89,6 +88,10 @@ const gotoHome = () => {
   font-size: 1.4rem
   color: $text
   padding: 0 0 2rem 0
+
+.table-custom
+  height: 50px
+  overflow: hidden
 
 @media screen and (min-width: 1023px)
   .subheader
