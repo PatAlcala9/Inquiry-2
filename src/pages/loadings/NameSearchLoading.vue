@@ -30,6 +30,7 @@ import { useSearchValue } from 'stores/searchvalue'
 import { useRouter } from 'vue-router'
 import { useTableData } from 'stores/tabledata'
 import { useCurrentPage } from 'stores/currentpage'
+import { encrypt, decrypt } from 'src/assets/js/shield'
 
 const router = useRouter()
 let _searchvalue = useSearchValue
@@ -42,31 +43,38 @@ const controller = new AbortController()
 
 const getClientList = async () => {
   try {
-    const connection = await api.get('/api/CheckConnection')
+    const encryptedEndpoint = encrypt('CheckConnection')
+    const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+
+    const connection = await api.get('/api/' + replacedEndpoint)
     const data = connection.data || null
-    const result = data !== null ? data.result : null
+    const result = data !== null ? decrypt(data.result) : null
 
     if (result !== null) {
-      const response = await api.get('/api/GetListofClients/' + _searchvalue.value.toUpperCase(), {
+      const encryptedEndpoint = encrypt('GetListofClients')
+      const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+      const encryptedData = encrypt(_searchvalue.value.toUpperCase())
+      const replacedData = encryptedData.replaceAll('/', '~')
+      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
         signal: controller.signal,
       })
       const data = response.data.length !== 0 ? response.data : null
-      let tempData = []
+      // let tempData = []
       if (data !== null) {
-        data.forEach((element) => {
-          if (element.result !== null && element.result2 !== null) {
-            tempData.push(element)
-          }
-        })
+        // data.forEach((element) => {
+        //   if (element.result !== null && element.result2 !== null) {
+        //     tempData.push(element)
+        //   }
+        // })
 
-        _tabledata.value = tempData
+        _tabledata.value = data
         found = true
       }
     } else {
       updatePage('noconnection')
     }
   } catch {
-    _tabledata.value = []
+    _tabledata.value = {}
     found = false
   }
 }
@@ -82,8 +90,8 @@ const updatePage = (page) => {
 
 const gotoHome = () => {
   controller.abort()
-  // updatePage('/')
-  window.location.reload()
+  updatePage('/')
+  // window.location.reload()
 }
 
 const loadCurrentPage = () => {
