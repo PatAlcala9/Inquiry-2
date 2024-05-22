@@ -39,6 +39,7 @@ import { useListYear } from 'stores/listyear'
 import { useListDate } from 'stores/listdate'
 import { useErrorMessage } from 'stores/errormessage'
 import { useErrorSubMessage } from 'stores/errorsubmessage'
+import { useListStatus } from 'stores/liststatus'
 import { ref } from 'vue'
 import { date } from 'quasar'
 import { encrypt, decrypt } from 'assets/js/shield'
@@ -54,6 +55,7 @@ let _listyear = useListYear
 let _listdate = useListDate
 let _errormessage = useErrorMessage
 let _errorsubmessage = useErrorSubMessage
+let _liststatus = useListStatus()
 
 let statusList = []
 
@@ -106,14 +108,13 @@ const getDailyReceived = async () => {
 
     if (data.result.length > 0) {
       _tabledata.value = data
-      const tempApp = (data.result)
+      const tempApp = data.result
 
-      tempApp.map((status) => {
-        statusList.push(getLatestStatus(decrypt(status)))
+      tempApp.map(async (status) => {
+        const stat = await getLatestStatus(decrypt(status))
+        _liststatus.addStatus(stat)
       })
 
-      console.log('statuslist', statusList)
-      
       updatePage('receivedlist')
     } else {
       _errormessage.value = 'Error on Generating List'
@@ -127,6 +128,17 @@ const getDailyReceived = async () => {
 
 const getLatestStatus = async (application) => {
   const encryptedEndpoint = encrypt('GetLatestStatusBuilding')
+  const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+  const encryptedData = encrypt(application)
+  const replacedData = encryptedData.replaceAll('/', '~')
+  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+  const data = response.data.length !== 0 ? response.data : null
+
+  return decrypt(data.result)
+}
+
+const getSumPaid = async () => {
+  const encryptedEndpoint = encrypt('GetSumPaid')
   const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
   const encryptedData = encrypt(application)
   const replacedData = encryptedData.replaceAll('/', '~')

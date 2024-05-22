@@ -8,12 +8,12 @@ q-page.page(padding)
 
     section.fit.row.wrap.justify-around.items-center.content-center
       div.summary--count
-        span.label Count
+        span.label Total Count
         span.content {{ rowCount }}
 
       div.summary--count
-        span.label Count
-        span.content {{ rowCount }}
+        span.label OP Released
+        span.content {{ opReleasedCount }}
 
       div.summary--count
         span.label Count
@@ -59,18 +59,21 @@ import { useTableData } from 'stores/tabledata'
 import { useListDate } from 'stores/listdate'
 import { date } from 'quasar'
 import { decrypt } from 'assets/js/shield'
+import { useListStatus } from 'stores/liststatus'
 
 const router = useRouter()
 
 let _currentpage = useCurrentPage
 let _tabledata = useTableData
 let _listdate = useListDate
+let _liststatus = useListStatus()
 
 const properDate = date.formatDate(_listdate.value, 'MMMM DD, YYYY')
 
 const detectWeekend = (date) => {}
 
 const rowCount = Object.values(_tabledata.value).map((arr) => arr.length)[0]
+const opReleasedCount = _liststatus.allStatus.filter((stat) => stat === 'ORDER OF PAYMENT RELEASED').length
 
 const updatePage = (page) => {
   _currentpage.value = page
