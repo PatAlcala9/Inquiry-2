@@ -7,7 +7,7 @@ q-page.page(padding)
 
   div.body
     img.logo(src="../assets/ocbologo2.png" alt="OCBO Logo")
-    h1.main-title OCBO Inquiry
+    h1.main-title OCBO Inquirys
     q-input.searchbar(icon="search" outlined rounded v-model="searched" placeholder="Search Here" @keydown.enter="callserver" bg-color="white" input-style="letter-spacing: 1px; font-size: 1.8rem; color: #002859")
       template(v-slot:prepend)
         q-icon(name="search")
