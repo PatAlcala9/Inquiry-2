@@ -55,6 +55,8 @@ let _listdate = useListDate
 let _errormessage = useErrorMessage
 let _errorsubmessage = useErrorSubMessage
 
+let statusList = []
+
 let percentage = ref(0)
 const properDate = date.formatDate(_listdate.value, 'MMMM DD, YYYY')
 const formattedDate = date.formatDate(_listdate.value, 'YYYY~MM~DD')
@@ -104,8 +106,14 @@ const getDailyReceived = async () => {
 
     if (data.result.length > 0) {
       _tabledata.value = data
-      const tempApp = decrypt(data.result[0])
-      getLatestStatus(tempApp)
+      const tempApp = (data.result)
+
+      tempApp.map((status) => {
+        statusList.push(getLatestStatus(decrypt(status)))
+      })
+
+      console.log('statuslist', statusList)
+      
       updatePage('receivedlist')
     } else {
       _errormessage.value = 'Error on Generating List'
@@ -125,7 +133,7 @@ const getLatestStatus = async (application) => {
   const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
   const data = response.data.length !== 0 ? response.data : null
 
-  console.log('status', decrypt(data.result))
+  return decrypt(data.result)
 }
 
 const gotoHome = () => {

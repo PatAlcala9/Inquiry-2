@@ -2,24 +2,38 @@
 
 q-page.page(padding)
   section.full-width.column.wrap.justify-center.items-center.content-center
-    h1.title List of Received Application
+    span.title List of Received Application
     span.subheader on
     span.header {{ properDate }}
-    table.table-custom
-      thead
-        tr
-          th Application No.
-          th Owner's Name
-          //- th Owner's Address
-          th Location
-          th Occupancy Type
-      tbody
-        tr(v-for="(item, index) in _tabledata.value.result" :key="item")
-          td {{decrypt(item)}}
-          td {{decrypt(_tabledata.value.result2[index])}}
-          td {{decrypt(_tabledata.value.result3[index])}}
-          td {{decrypt(_tabledata.value.result4[index])}}
-          //- td {{_tabledata.value.result6[index]}}
+
+    section.fit.row.wrap.justify-around.items-center.content-center
+      div.summary--count
+        span.label Count
+        span.content {{ rowCount }}
+
+      div.summary--count
+        span.label Count
+        span.content {{ rowCount }}
+
+      div.summary--count
+        span.label Count
+        span.content {{ rowCount }}
+
+    section.table-contain
+      table.table-custom
+        thead
+          tr
+            th Application No.
+            th Owner's Name
+            //- th Owner's Address
+            th Location
+            th Occupancy Type
+        tbody
+          tr(v-for="(item, index) in _tabledata.value.result" :key="item")
+            td {{decrypt(item)}}
+            td {{decrypt(_tabledata.value.result2[index])}}
+            td {{decrypt(_tabledata.value.result3[index])}}
+            td {{decrypt(_tabledata.value.result4[index])}}
 
   div.back-button.full-width.column.wrap.justify-center.items-center.content-center
     q-btn.button-back(rounded label="Back" @click="gotoHome")
@@ -38,31 +52,25 @@ export default {
 </script>
 
 <script setup>
-import { api } from 'boot/axios'
+// import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useListType } from 'stores/listtype'
-import { useDivision } from 'stores/division'
 import { useCurrentPage } from 'stores/currentpage'
 import { useTableData } from 'stores/tabledata'
-import { useListYear } from 'stores/listyear'
 import { useListDate } from 'stores/listdate'
-import { ref } from 'vue'
 import { date } from 'quasar'
 import { decrypt } from 'assets/js/shield'
 
 const router = useRouter()
-// const quasar = useQuasar()
 
-let _listtype = useListType
-let _division = useDivision
 let _currentpage = useCurrentPage
 let _tabledata = useTableData
-let _listyear = useListYear
 let _listdate = useListDate
 
 const properDate = date.formatDate(_listdate.value, 'MMMM DD, YYYY')
 
 const detectWeekend = (date) => {}
+
+const rowCount = Object.values(_tabledata.value).map((arr) => arr.length)[0]
 
 const updatePage = (page) => {
   _currentpage.value = page
@@ -72,6 +80,10 @@ const updatePage = (page) => {
 const gotoHome = () => {
   updatePage('/')
 }
+
+// ;(() => {
+//   countRows()
+// })()
 </script>
 
 <style lang="sass" scoped>
@@ -87,11 +99,30 @@ const gotoHome = () => {
   text-align: center
   font-size: 1.4rem
   color: $text
-  padding: 0 0 2rem 0
+  padding: 0 0 1rem 0
 
-.table-custom
-  height: 50px
-  overflow: hidden
+.table-contain
+  height: 500px
+  overflow-y: auto
+
+.summary--count
+  display: flex
+  flex-direction: column
+  flex-wrap: wrap
+  justify-content: center
+  align-items: center
+  align-content: center
+  // border: 1px solid white
+  border-radius: 2rem
+  padding: 2rem 3rem
+  margin: 0 0 1rem 0
+  background-color: $button2
+
+  & .label
+    font-size: 1.2rem
+    // margin: auto
+  & .content
+    font-size: 4.2rem
 
 @media screen and (min-width: 1023px)
   .subheader
@@ -106,5 +137,5 @@ const gotoHome = () => {
     text-align: center
     font-size: 1.6rem
     color: $text
-    padding: 0 0 2rem 0
+    padding: 0 0 1rem 0
 </style>
