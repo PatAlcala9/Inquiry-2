@@ -2,18 +2,21 @@ import { defineStore } from 'pinia';
 
 export const useListStatus = defineStore('liststatus', {
   state: () => ({
-    value: []
+    value: [],
   }),
 
   getters: {
-    allStatus (state) {
+    allStatus(state) {
       return state.value.map((status) => status.name)
-    }
+    },
   },
 
   actions: {
-    addStatus (text) {
+    addStatus(text) {
       this.value.push(text)
-    }
-  }
+    },
+    reset() {
+      this.value = []
+    },
+  },
 })

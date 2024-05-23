@@ -6,7 +6,7 @@ q-page.page(padding)
     span.subheader on
     span.header {{ properDate }}
 
-    section.fit.row.wrap.justify-around.items-center.content-center
+    section.fit.row.wrap.justify-between.items-center.content-center
       div.summary--count
         span.label Total Count
         span.content {{ rowCount }}
@@ -16,8 +16,8 @@ q-page.page(padding)
         span.content {{ opReleasedCount }}
 
       div.summary--count
-        span.label Count
-        span.content {{ rowCount }}
+        span.label Total Amount
+        span.content &#8369; {{ Intl.NumberFormat('en-IN').format(totalSum) }}
 
     section.table-contain
       table.table-custom
@@ -52,7 +52,7 @@ export default {
 </script>
 
 <script setup>
-// import { ref } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCurrentPage } from 'stores/currentpage'
 import { useTableData } from 'stores/tabledata'
@@ -60,6 +60,7 @@ import { useListDate } from 'stores/listdate'
 import { date } from 'quasar'
 import { decrypt } from 'assets/js/shield'
 import { useListStatus } from 'stores/liststatus'
+import { useListSumPaid } from 'stores/listsumpaid'
 
 const router = useRouter()
 
@@ -67,13 +68,19 @@ let _currentpage = useCurrentPage
 let _tabledata = useTableData
 let _listdate = useListDate
 let _liststatus = useListStatus()
+let _listsumpaid = useListSumPaid()
 
 const properDate = date.formatDate(_listdate.value, 'MMMM DD, YYYY')
 
 const detectWeekend = (date) => {}
 
-const rowCount = Object.values(_tabledata.value).map((arr) => arr.length)[0]
-const opReleasedCount = _liststatus.allStatus.filter((stat) => stat === 'ORDER OF PAYMENT RELEASED').length
+const rowCount = ref(Object.values(_tabledata.value).map((arr) => arr.length)[0])
+const opReleasedCount = ref(_liststatus.allStatus.filter((stat) => stat === 'ORDER OF PAYMENT RELEASED').length)
+const totalSum = ref(_listsumpaid.getTotal) 
+
+console.log('stats', _liststatus.allStatus)
+console.log('sums', _listsumpaid.getSums)
+console.log('sums_value', _listsumpaid.getValue)
 
 const updatePage = (page) => {
   _currentpage.value = page
@@ -122,10 +129,10 @@ const gotoHome = () => {
   background-color: $button2
 
   & .label
-    font-size: 1.2rem
+    font-size: 1rem
     // margin: auto
   & .content
-    font-size: 4.2rem
+    font-size: 2.8rem
 
 @media screen and (min-width: 1023px)
   .subheader

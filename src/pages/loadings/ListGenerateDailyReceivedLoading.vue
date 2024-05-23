@@ -40,6 +40,7 @@ import { useListDate } from 'stores/listdate'
 import { useErrorMessage } from 'stores/errormessage'
 import { useErrorSubMessage } from 'stores/errorsubmessage'
 import { useListStatus } from 'stores/liststatus'
+import { useListSumPaid } from 'stores/listsumpaid'
 import { ref } from 'vue'
 import { date } from 'quasar'
 import { encrypt, decrypt } from 'assets/js/shield'
@@ -56,6 +57,7 @@ let _listdate = useListDate
 let _errormessage = useErrorMessage
 let _errorsubmessage = useErrorSubMessage
 let _liststatus = useListStatus()
+let _listsumpaid = useListSumPaid()
 
 let statusList = []
 
@@ -108,11 +110,20 @@ const getDailyReceived = async () => {
 
     if (data.result.length > 0) {
       _tabledata.value = data
+      _liststatus.reset
+      _listsumpaid.reset
       const tempApp = data.result
 
-      tempApp.map(async (status) => {
-        const stat = await getLatestStatus(decrypt(status))
+      tempApp.map(async (application) => {
+        const decApp = decrypt(application)
+
+        console.log(decApp)
+        const stat = await getLatestStatus(decApp)
+        console.log('stat', stat)
+        const sum = await getSumPaid(decApp)
+        console.log('sum', sum)
         _liststatus.addStatus(stat)
+        _listsumpaid.addSum(sum)
       })
 
       updatePage('receivedlist')
@@ -137,15 +148,16 @@ const getLatestStatus = async (application) => {
   return decrypt(data.result)
 }
 
-const getSumPaid = async () => {
+const getSumPaid = async (application) => {
   const encryptedEndpoint = encrypt('GetSumPaid')
   const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
   const encryptedData = encrypt(application)
   const replacedData = encryptedData.replaceAll('/', '~')
   const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
   const data = response.data.length !== 0 ? response.data : null
+  const result = decrypt(data.result)
 
-  return decrypt(data.result)
+  return result !== '' ? result : 0
 }
 
 const gotoHome = () => {
