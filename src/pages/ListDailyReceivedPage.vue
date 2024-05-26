@@ -12,7 +12,11 @@ q-page.page(padding)
         span.content {{ rowCount }}
 
       div.summary--count
-        span.label OP Released
+        span.label Order of Payment Released
+        span.content {{ opReleasedCount }}
+
+      div.summary--count
+        span.label Permit Released
         span.content {{ opReleasedCount }}
 
       div.summary--count
@@ -76,11 +80,12 @@ const detectWeekend = (date) => {}
 
 const rowCount = ref(Object.values(_tabledata.value).map((arr) => arr.length)[0])
 const opReleasedCount = ref(_liststatus.allStatus.filter((stat) => stat === 'ORDER OF PAYMENT RELEASED').length)
-const totalSum = ref(_listsumpaid.getTotal) 
+const permitReleasedCount = ref(_liststatus.allStatus.filter((stat) => stat === 'PERMIT RELEASED').length)
+let totalSum = ref(0)
 
-console.log('stats', _liststatus.allStatus)
-console.log('sums', _listsumpaid.getSums)
-console.log('sums_value', _listsumpaid.getValue)
+const getTotalSum = () => {
+  totalSum.value = _listsumpaid.getTotal
+}
 
 const updatePage = (page) => {
   _currentpage.value = page
@@ -91,9 +96,9 @@ const gotoHome = () => {
   updatePage('/')
 }
 
-// ;(() => {
-//   countRows()
-// })()
+;(() => {
+  getTotalSum()
+})()
 </script>
 
 <style lang="sass" scoped>

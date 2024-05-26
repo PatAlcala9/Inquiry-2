@@ -110,18 +110,15 @@ const getDailyReceived = async () => {
 
     if (data.result.length > 0) {
       _tabledata.value = data
+      const tempApp = data.result
       _liststatus.reset
       _listsumpaid.reset
-      const tempApp = data.result
 
       tempApp.map(async (application) => {
         const decApp = decrypt(application)
 
-        console.log(decApp)
         const stat = await getLatestStatus(decApp)
-        console.log('stat', stat)
         const sum = await getSumPaid(decApp)
-        console.log('sum', sum)
         _liststatus.addStatus(stat)
         _listsumpaid.addSum(sum)
       })

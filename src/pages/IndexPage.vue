@@ -334,99 +334,101 @@ const callserver = async () => {
         //   updatePage('searcherror')
         // }
       } else if (searched.value.includes(' received')) {
+        let searchedDate
+
         if (searched.value.includes(' building')) {
           _listtype.value = 'Daily Received'
           _division.value = 'Building'
 
-          const searchedDate = searched.value.substring(25)
+          searchedDate = searched.value.substring(25)
+        } else if (searched.value.includes(' occupancy')) {
+          _listtype.value = 'Daily Received'
+          _division.value = 'Occupancy'
 
-          if (searchedDate.toUpperCase() === 'TODAY') {
-            const today = Date.now()
-            const formattedDate = date.formatDate(today, 'YYYY-MM-DD')
-            _listdate.value = formattedDate
-            updatePage('listgeneratereceived')
-          } else if (searchedDate.toUpperCase() === 'YESTERDAY') {
-            const today = Date.now()
-            const yesterday = date.subtractFromDate(today, { hours: 24 })
-            const formattedDate = date.formatDate(yesterday, 'YYYY-MM-DD')
-            _listdate.value = formattedDate
-            updatePage('listgeneratereceived')
-          } else if (monthsList.some((month) => searchedDate.toUpperCase().includes(month))) {
-            const matchingMonth = monthsList.filter((month) => searchedDate.toUpperCase().includes(month.toUpperCase()))
-            const days = Array.from({ length: 31 }, (_, index) => (index + 1).toString())
+          searchedDate = searched.value.substring(26)
 
-            if (days.some((day) => searchedDate.substring(matchingMonth[0].length + 1, matchingMonth[0].length + 3).trim() === day)) {
-              const matchingDay = days.filter((day) => searchedDate.substring(matchingMonth[0].length + 1, matchingMonth[0].length + 3).trim() === day)
-              const year = searchedDate.substring(parseInt(matchingMonth[0].length + 1) + parseInt(matchingDay[0].length + 1))
+          // if (searchedDate.toUpperCase() === 'TODAY') {
+          //   const today = Date.now()
+          //   const formattedDate = date.formatDate(today, 'YYYY-MM-DD')
+          //   _listdate.value = formattedDate
+          //   updatePage('listgeneratereceived')
+          // } else if (searchedDate.toUpperCase() === 'YESTERDAY') {
+          //   const today = Date.now()
+          //   const yesterday = date.subtractFromDate(today, { hours: 24 })
+          //   const formattedDate = date.formatDate(yesterday, 'YYYY-MM-DD')
+          //   _listdate.value = formattedDate
+          //   updatePage('listgeneratereceived')
+          // } else if (searchedDate.substring(0, 2) === '20' && searchedDate.length === 10) {
+          //   _listdate.value = searchedDate
+          //   updatePage('listgeneratereceived')
+          // } else {
+          //   _errormessage.value = 'Invalid Command'
+          //   _errorsubmessage.value = 'Invalid Date Format'
+          //   updatePage('searcherror')
+          // }
+        } else if (searched.value.includes(' electrical')) {
+          _listtype.value = 'Daily Received'
+          _division.value = 'Electrical'
 
-              if (year > 0) {
-                _listdate.value = searchedDate
-                updatePage('listgeneratereceived')
-              } else {
-                _errormessage.value = 'Invalid Command'
-                _errorsubmessage.value = 'Please specify the year'
-                updatePage('error')
-              }
+          searchedDate = searched.value.substring(27)
+
+          // if (searchedDate === 'today') {
+          //   const today = Date.now()
+          //   const formattedDate = date.formatDate(today, 'YYYY-MM-DD')
+          //   _listdate.value = formattedDate
+          //   updatePage('listgeneratereceived')
+          // } else if (searchedDate === 'yesterday') {
+          //   const today = Date.now()
+          //   const yesterday = date.subtractFromDate(today, { hours: 24 })
+          //   const formattedDate = date.formatDate(yesterday, 'YYYY-MM-DD')
+          //   _listdate.value = formattedDate
+          //   updatePage('listgeneratereceived')
+          // } else if (searchedDate.substring(0, 2) === '20' && searchedDate.length === 10) {
+          //   _listdate.value = searchedDate
+          //   updatePage('listgeneratereceived')
+          // } else {
+          //   _errormessage.value = 'Invalid Command'
+          //   _errorsubmessage.value = 'Invalid Date Format'
+          //   updatePage('error')
+          // }
+        }
+
+        if (searchedDate.toUpperCase() === 'TODAY') {
+          const today = Date.now()
+          const formattedDate = date.formatDate(today, 'YYYY-MM-DD')
+          _listdate.value = formattedDate
+          updatePage('listgeneratereceived')
+        } else if (searchedDate.toUpperCase() === 'YESTERDAY') {
+          const today = Date.now()
+          const yesterday = date.subtractFromDate(today, { hours: 24 })
+          const formattedDate = date.formatDate(yesterday, 'YYYY-MM-DD')
+          _listdate.value = formattedDate
+          updatePage('listgeneratereceived')
+        } else if (monthsList.some((month) => searchedDate.toUpperCase().includes(month))) {
+          const matchingMonth = monthsList.filter((month) => searchedDate.toUpperCase().includes(month.toUpperCase()))
+          const days = Array.from({ length: 31 }, (_, index) => (index + 1).toString())
+
+          if (days.some((day) => searchedDate.substring(matchingMonth[0].length + 1, matchingMonth[0].length + 3).trim() === day)) {
+            const matchingDay = days.filter((day) => searchedDate.substring(matchingMonth[0].length + 1, matchingMonth[0].length + 3).trim() === day)
+            const year = searchedDate.substring(parseInt(matchingMonth[0].length + 1) + parseInt(matchingDay[0].length + 1))
+
+            if (year > 0) {
+              _listdate.value = searchedDate
+              updatePage('listgeneratereceived')
             } else {
               _errormessage.value = 'Invalid Command'
-              _errorsubmessage.value = 'Please specify the day of the month'
+              _errorsubmessage.value = 'Please specify the year'
               updatePage('error')
             }
           } else {
             _errormessage.value = 'Invalid Command'
-            _errorsubmessage.value = 'Please specify a date with a proper format'
+            _errorsubmessage.value = 'Please specify the day of the month'
             updatePage('error')
           }
-        } else if (searched.value.includes(' --division occupancy')) {
-          _listtype.value = 'Daily Received'
-          _division.value = 'Occupancy'
-
-          const searchedDate = searched.value.substring(45)
-
-          if (searchedDate.toUpperCase() === 'TODAY') {
-            const today = Date.now()
-            const formattedDate = date.formatDate(today, 'YYYY-MM-DD')
-            _listdate.value = formattedDate
-            updatePage('listgeneratereceived')
-          } else if (searchedDate.toUpperCase() === 'YESTERDAY') {
-            const today = Date.now()
-            const yesterday = date.subtractFromDate(today, { hours: 24 })
-            const formattedDate = date.formatDate(yesterday, 'YYYY-MM-DD')
-            _listdate.value = formattedDate
-            updatePage('listgeneratereceived')
-          } else if (searchedDate.substring(0, 2) === '20' && searchedDate.length === 10) {
-            _listdate.value = searchedDate
-            updatePage('listgeneratereceived')
-          } else {
-            _errormessage.value = 'Invalid Command'
-            _errorsubmessage.value = 'Invalid Date Format'
-            updatePage('searcherror')
-          }
-        } else if (searched.value.includes(' --division electrical')) {
-          _listtype.value = 'Daily Received'
-          _division.value = 'Electrical'
-
-          const searchedDate = searched.value.substring(45)
-
-          if (searchedDate === 'today') {
-            const today = Date.now()
-            const formattedDate = date.formatDate(today, 'YYYY-MM-DD')
-            _listdate.value = formattedDate
-            updatePage('listgeneratereceived')
-          } else if (searchedDate === 'yesterday') {
-            const today = Date.now()
-            const yesterday = date.subtractFromDate(today, { hours: 24 })
-            const formattedDate = date.formatDate(yesterday, 'YYYY-MM-DD')
-            _listdate.value = formattedDate
-            updatePage('listgeneratereceived')
-          } else if (searchedDate.substring(0, 2) === '20' && searchedDate.length === 10) {
-            _listdate.value = searchedDate
-            updatePage('listgeneratereceived')
-          } else {
-            _errormessage.value = 'Invalid Command'
-            _errorsubmessage.value = 'Invalid Date Format'
-            updatePage('error')
-          }
+        } else {
+          _errormessage.value = 'Invalid Command'
+          _errorsubmessage.value = 'Please specify a date with a proper format'
+          updatePage('error')
         }
       } else {
         _errormessage.value = 'Invalid Command'
