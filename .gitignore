@@ -39,3 +39,4 @@ yarn-error.log*
 
 # RSA
 security_keys
+src/stores/rsakey.js
