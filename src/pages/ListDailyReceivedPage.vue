@@ -17,7 +17,7 @@ q-page.page(padding)
 
       div.summary--count
         span.label Permit Released
-        span.content {{ opReleasedCount }}
+        span.content {{ permitReleasedCount }}
 
       div.summary--count
         span.label Total Amount
@@ -56,7 +56,7 @@ export default {
 </script>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCurrentPage } from 'stores/currentpage'
 import { useTableData } from 'stores/tabledata'
@@ -79,12 +79,26 @@ const properDate = date.formatDate(_listdate.value, 'MMMM DD, YYYY')
 const detectWeekend = (date) => {}
 
 const rowCount = ref(Object.values(_tabledata.value).map((arr) => arr.length)[0])
-const opReleasedCount = ref(_liststatus.allStatus.filter((stat) => stat === 'ORDER OF PAYMENT RELEASED').length)
-const permitReleasedCount = ref(_liststatus.allStatus.filter((stat) => stat === 'PERMIT RELEASED').length)
+// const opReleasedCount = ref(
+//   _liststatus.allStatus.filter((stat) =>
+//     ['ORDER OF PAYMENT RELEASED', 'OR NUMBER VERIFIED', 'RECEIVED FOR PROCESSING', 'FOR BUILDING OFFICIAL APPROVAL', 'PERMIT APPROVE AND READY FOR RELEASE', 'PERMIT ALREADY RELEASE'].includes(stat)
+//   ).length
+// )
+const opReleasedCount = ref(0)
+
+const permitReleasedCount = ref(_liststatus.allStatusArray.filter((stat) => stat === 'PERMIT ALREADY RELEASE').length)
 let totalSum = ref(0)
 
 const getTotalSum = () => {
   totalSum.value = _listsumpaid.getTotal
+}
+
+const countOPReleased = async () => {
+  const filterArray = ['ORDER OF PAYMENT RELEASED', 'OR NUMBER VERIFIED', 'RECEIVED FOR PROCESSING', 'FOR BUILDING OFFICIAL APPROVAL', 'PERMIT APPROVE AND READY FOR RELEASE', 'PERMIT ALREADY RELEASE']
+  const newArray = _liststatus.allStatusArray.filter((item) => filterArray.includes(item))
+  opReleasedCount.value = newArray.length
+  console.log('newarray', newArray)
+  console.log('oldarray', _liststatus.allStatusArray)
 }
 
 const updatePage = (page) => {
@@ -96,7 +110,12 @@ const gotoHome = () => {
   updatePage('/')
 }
 
-;(() => {
+onMounted(async () => {
+
+})
+
+;(async () => {
+  await countOPReleased()
   getTotalSum()
 })()
 </script>

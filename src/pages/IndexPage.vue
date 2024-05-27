@@ -622,7 +622,7 @@ h1, h2
 .mobile-title
   margin-top: 2rem
   font-size: 1rem
-  font-family: 'PoppinsBold', sans-serif
+  font-family: 'LexendBold'
   opacity: 0.9
 
 .list
@@ -630,7 +630,7 @@ h1, h2
 
 .help-info
   margin-top: 1.5rem
-  font-family: 'Poppins'
+  // font-family: 'Poppins'
   font-family: 'Lexend'
   color: rgba(255, 255, 255, 0.8)
   font-size: 1.1rem
@@ -645,7 +645,7 @@ h1, h2
 @media screen and (min-width: 1023px)
   .logo
     width: 11rem
-    height auto
+    height: auto
     margin-top: 1.3rem
 
   .searchbar

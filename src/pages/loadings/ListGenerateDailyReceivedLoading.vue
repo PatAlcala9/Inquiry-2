@@ -118,6 +118,7 @@ const getDailyReceived = async () => {
         const decApp = decrypt(application)
 
         const stat = await getLatestStatus(decApp)
+        console.log('stat', stat)
         const sum = await getSumPaid(decApp)
         _liststatus.addStatus(stat)
         _listsumpaid.addSum(sum)
@@ -135,7 +136,17 @@ const getDailyReceived = async () => {
 }
 
 const getLatestStatus = async (application) => {
-  const encryptedEndpoint = encrypt('GetLatestStatusBuilding')
+  let encryptedEndpoint
+  if (_division.value === 'Building') {
+    encryptedEndpoint = encrypt('GetLatestStatusBuilding')
+  } else if (_division.value === 'Occupancy') {
+    encryptedEndpoint = encrypt('GetLatestStatusOccupancy')
+  } else if (_division.value === 'Electrical') {
+    encryptedEndpoint = encrypt('GetLatestStatusElectrical')
+  } else {
+    encryptedEndpoint = null
+  }
+
   const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
   const encryptedData = encrypt(application)
   const replacedData = encryptedData.replaceAll('/', '~')

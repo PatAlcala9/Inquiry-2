@@ -9,6 +9,9 @@ export const useListStatus = defineStore('liststatus', {
     allStatus(state) {
       return state.value.map((status) => status.name)
     },
+    allStatusArray(state) {
+      return state.value
+    }
   },
 
   actions: {
