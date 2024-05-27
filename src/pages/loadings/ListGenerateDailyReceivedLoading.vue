@@ -111,18 +111,27 @@ const getDailyReceived = async () => {
     if (data.result.length > 0) {
       _tabledata.value = data
       const tempApp = data.result
-      _liststatus.reset
-      _listsumpaid.reset
+      _liststatus.$patch({ value: [] })
+      _listsumpaid.$patch({ value: [] })
 
-      tempApp.map(async (application) => {
+      // tempApp.map(async (application) => {
+      //   const decApp = decrypt(application)
+
+      //   const stat = await getLatestStatus(decApp)
+      //   _liststatus.addStatus(stat)
+      //   const sum = await getSumPaid(decApp)
+      //   _listsumpaid.addSum(sum)
+      // })
+
+      for (let i = 0; i < tempApp.length; i++) {
+        const application = tempApp[i]
         const decApp = decrypt(application)
 
         const stat = await getLatestStatus(decApp)
-        console.log('stat', stat)
-        const sum = await getSumPaid(decApp)
         _liststatus.addStatus(stat)
+        const sum = await getSumPaid(decApp)
         _listsumpaid.addSum(sum)
-      })
+      }
 
       updatePage('receivedlist')
     } else {
@@ -166,6 +175,14 @@ const getSumPaid = async (application) => {
   const result = decrypt(data.result)
 
   return result !== '' ? result : 0
+}
+
+const countOPReleased = async () => {
+  const filterArray = ['ORDER OF PAYMENT RELEASED', 'OR NUMBER VERIFIED', 'RECEIVED FOR PROCESSING', 'FOR BUILDING OFFICIAL APPROVAL', 'PERMIT APPROVE AND READY FOR RELEASE', 'PERMIT ALREADY RELEASE']
+  const newArray = _liststatus.allStatusArray.filter((item) => filterArray.includes(item))
+  opReleasedCount.value = newArray.length
+  // console.log('newarray', newArray)
+  // console.log('oldarray', _liststatus.allStatusArray)
 }
 
 const gotoHome = () => {

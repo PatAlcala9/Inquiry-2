@@ -17,9 +17,6 @@ export const useListStatus = defineStore('liststatus', {
   actions: {
     addStatus(text) {
       this.value.push(text)
-    },
-    reset() {
-      this.value = []
-    },
+    }
   },
 })

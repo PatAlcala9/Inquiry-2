@@ -21,7 +21,7 @@ q-page.page(padding)
 
       div.summary--count
         span.label Total Amount
-        span.content &#8369; {{ Intl.NumberFormat('en-IN').format(totalSum) }}
+        span.content &#8369; {{ Intl.NumberFormat('en-IN').format(_listsumpaid.getTotal) }}
 
     section.table-contain
       table.table-custom
@@ -93,12 +93,14 @@ const getTotalSum = () => {
   totalSum.value = _listsumpaid.getTotal
 }
 
+console.log('total', _listsumpaid.getTotal)
+
 const countOPReleased = async () => {
   const filterArray = ['ORDER OF PAYMENT RELEASED', 'OR NUMBER VERIFIED', 'RECEIVED FOR PROCESSING', 'FOR BUILDING OFFICIAL APPROVAL', 'PERMIT APPROVE AND READY FOR RELEASE', 'PERMIT ALREADY RELEASE']
   const newArray = _liststatus.allStatusArray.filter((item) => filterArray.includes(item))
   opReleasedCount.value = newArray.length
   console.log('newarray', newArray)
-  console.log('oldarray', _liststatus.allStatusArray)
+  console.log('oldarray', _liststatus.allStatusArray.map(item => item))
 }
 
 const updatePage = (page) => {

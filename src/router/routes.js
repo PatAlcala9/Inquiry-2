@@ -10,6 +10,7 @@ const routes = [
       { path: '/noticecheck', component: () => import('pages/NoticeSearchPage.vue') },
       { path: '/permitcheck', component: () => import('pages/PermitSearchPage.vue') },
       { path: '/receivedlist', component: () => import('pages/ListDailyReceivedPage.vue') },
+      { path: '/namecheck', component: () => import('pages/NameCheckPage.vue') },
 
       { path: '/helpindex', component: () => import('pages/HelpIndexPage.vue') },
       { path: '/helpapplication', component: () => import('pages/helps/ApplicationHelpPage.vue') },
