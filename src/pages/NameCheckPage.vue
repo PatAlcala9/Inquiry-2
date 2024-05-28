@@ -1,50 +1,50 @@
 <template lang="pug">
 
 q-page(padding)
-  div(class="q-pa-md")
+  //- div(class="q-pa-md")
 
-    div(v-if="$q.screen.width <= 899")
-      div.full-width.column.no-wrap.justify-center.items-center.content-start
-        span.page-title Found for
-        span.page-searchvalue {{_searchvalue.value.toUpperCase()}}
-        span(class="secondary-title number") {{newRows.length}}
-        span(class="secondary-title sentence") {{sentence}}
-        q-input.searchbar(rounded outlined v-model="specific" placeholder="Search Specific" bg-color="white" )
-          template(v-slot:prepend)
-            q-icon(name="search")
+  div(v-if="$q.screen.width <= 899")
+    div.full-width.column.no-wrap.justify-center.items-center.content-start
+      span.page-title Found for
+      span.page-searchvalue {{_searchvalue.value.toUpperCase()}}
+      span(class="secondary-title number") {{_tabledata.value.result.length}}
+      span(class="secondary-title sentence") {{sentence}}
+      q-input.searchbar(rounded outlined v-model="specific" placeholder="Search Specific" bg-color="white" )
+        template(v-slot:prepend)
+          q-icon(name="search")
 
-      div.full-width.column.wrap.justify-center.items-center.content-center
+    div.full-width.column.wrap.justify-center.items-center.content-center
+      q-btn.button-back(rounded label="Back" @click="gotoHome" icon="arrow_back_ios")
+
+      section(v-if="_tabledata.value.result.length > 0")
+        div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-align(v-for="(item, index) in _tabledata.value.result" :key="data")
+          span.table-data-mobile-date {{decrypt(item).toUpperCase()}}
+          span.table-data-mobile-status {{decrypt(_tabledata.value.result2[index]).toUpperCase()}}
+          q-btn.table-button-mobile(rounded @click="getName(decrypt(_tabledata.value.result3[index]), decrypt(_tabledata.value.result4[index]))") Check
+
+  div(v-else)
+    div.full-width.column.content-center.items-center.justify-center
+      h3(class="secondary-title") {{_tabledata.value.result.length}} {{sentence}}
+      q-input.searchbar(rounded outlined v-model="specific" placeholder="Search Specific" bg-color="white" )
+        template(v-slot:prepend)
+          q-icon(name="search")
+
+      div.flex.flex-center
         q-btn.button-back(rounded label="Back" @click="gotoHome" icon="arrow_back_ios")
 
-        section(v-if="newRows.length > 0")
-          div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-align(v-for="data in newRows" :key="data")
-            span.table-data-mobile-date {{data.result.toUpperCase()}}
-            span.table-data-mobile-status {{data.result2.toUpperCase()}}
-            q-btn.table-button-mobile(rounded @click="getName(data.result3, data.result4)") Check
-
-    div(v-else)
-      div.full-width.column.content-center.items-center.justify-center
-        h3(class="secondary-title") {{newRows.length}} {{sentence}}
-        q-input.searchbar(rounded outlined v-model="specific" placeholder="Search Specific" bg-color="white" )
-          template(v-slot:prepend)
-            q-icon(name="search")
-
-        div.flex.flex-center
-          q-btn.button-back(rounded label="Back" @click="gotoHome" icon="arrow_back_ios")
-
-        section.full-width.column.content-center.items-center.justify-center(v-if="newRows.length > 0")
-          table.table-custom
-            thead
-              tr
-                th Name
-                th Address
-                th
-            tbody
-              tr(v-for="(item, index) in newRows" :key="item")
-                td {{data.result.toUpperCase()}}
-                td {{data.result2.toUpperCase()}}
-                td
-                  q-btn.table-button(rounded @click="getName(data.result3, data.result4)") Check
+      section.full-width.column.content-center.items-center.justify-center(v-if="_tabledata.value.result.length > 0")
+        table.table-custom
+          thead
+            tr
+              th Name
+              th Address
+              th
+          tbody
+            tr(v-for="(item, index) in _tabledata.value.result" :key="item")
+              td {{decrypt(item).toUpperCase()}}
+              td {{decrypt(_tabledata.value.result2[index]).toUpperCase()}}
+              td
+                q-btn.table-button(rounded @click="getName(decrypt(_tabledata.value.result3[index]), decrypt(_tabledata.value.result4[index]))") Check
 
 
   //- div(v-else class="fetching")
@@ -62,80 +62,80 @@ q-page(padding)
   //-   q-btn(rounded class="button" label="Back" @click="gotoHome")
 
 
-  q-dialog.dialog(full-width v-model="dialog" position="top")
-    q-card.card-dialog
-      q-card-section
-        section(v-if="searchComplete")
-          div.dialog-status-display.full-width.column.justify-center.content-center.items-center(v-if="idCount === 0")
-            span.card-dialog-status No Application Found
-            span.card-dialog-third for
-            br
-            section.full-width.column.justify-center.content-center.items-center(v-if="selectedFirstName !== 'empty'")
-              span.card-dialog-third Lastname:
-              span.card-dialog-secondary {{selectedLastName}}
-              span.card-dialog-third Firstname:
-              span.card-dialog-secondary {{selectedFirstName}}
-            section.full-width.column.justify-center.content-center.items-center(v-else)
-              span.card-dialog-third Company Name:
-              span.card-dialog-status {{selectedLastName}}
+  //- q-dialog.dialog(full-width v-model="dialog" position="top")
+  //-   q-card.card-dialog
+  //-     q-card-section
+  //-       section(v-if="searchComplete")
+  //-         div.dialog-status-display.full-width.column.justify-center.content-center.items-center(v-if="idCount === 0")
+  //-           span.card-dialog-status No Application Found
+  //-           span.card-dialog-third for
+  //-           br
+  //-           section.full-width.column.justify-center.content-center.items-center(v-if="selectedFirstName !== 'empty'")
+  //-             span.card-dialog-third Lastname:
+  //-             span.card-dialog-secondary {{selectedLastName}}
+  //-             span.card-dialog-third Firstname:
+  //-             span.card-dialog-secondary {{selectedFirstName}}
+  //-           section.full-width.column.justify-center.content-center.items-center(v-else)
+  //-             span.card-dialog-third Company Name:
+  //-             span.card-dialog-status {{selectedLastName}}
 
-          div.full-width.column.justify-center.items-center.content-center(v-else-if="idCount > 1" )
-            span.card-dialog-title Current Status
+  //-         div.full-width.column.justify-center.items-center.content-center(v-else-if="idCount > 1" )
+  //-           span.card-dialog-title Current Status
 
-            div(class="dialog-title-group")
-              span(class="card-dialog-title standard-font") Please select
-              span(class="card-dialog-title standard-font") which application
-              span(class="card-dialog-title standard-font") you want to check
+  //-           div(class="dialog-title-group")
+  //-             span(class="card-dialog-title standard-font") Please select
+  //-             span(class="card-dialog-title standard-font") which application
+  //-             span(class="card-dialog-title standard-font") you want to check
 
-            div(class="button-group")
-              q-btn.card-dialog-button(v-if="receivingid > 0" rounded size="lg" @click="openDialog2") Building
-              q-btn.card-dialog-button(v-if="occupancyid > 0" rounded size="lg" @click="openDialog3") Occupancy
-              q-btn.card-dialog-button(v-if="electricalid > 0" rounded size="lg" @click="openDialog4") Electrical
+  //-           div(class="button-group")
+  //-             q-btn.card-dialog-button(v-if="receivingid > 0" rounded size="lg" @click="openDialog2") Building
+  //-             q-btn.card-dialog-button(v-if="occupancyid > 0" rounded size="lg" @click="openDialog3") Occupancy
+  //-             q-btn.card-dialog-button(v-if="electricalid > 0" rounded size="lg" @click="openDialog4") Electrical
 
-          div(v-else)
-            section(v-if="receivingid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
-              span(class="card-dialog-title") Building Application Number:
-              span(class="card-dialog-status") {{applicationNo}}
-              br
-              span(class="card-dialog-title") Current Status:
-              span(class="card-dialog-status") {{lastStatusBuilding}}
-            section(v-else-if="occupancyid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
-              span(class="card-dialog-title") Occupancy Application Number:
-              span(class="card-dialog-status") {{applicationNo}}
-              br
-              span(class="card-dialog-title") Current Status:
-              span(class="card-dialog-status") {{lastStatusOccupancy}}
-            section(v-else-if="electricalid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
-              span(class="card-dialog-title") Electrical Application Number:
-              span(class="card-dialog-status") {{applicationNo}}
-              br
-              span(class="card-dialog-title") Current Status:
-              span(class="card-dialog-status") {{lastStatusElectrical}}
-            section(v-else)
-              span(class="card-dialog-title") No Application Found
+  //-         div(v-else)
+  //-           section(v-if="receivingid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
+  //-             span(class="card-dialog-title") Building Application Number:
+  //-             span(class="card-dialog-status") {{applicationNo}}
+  //-             br
+  //-             span(class="card-dialog-title") Current Status:
+  //-             span(class="card-dialog-status") {{lastStatusBuilding}}
+  //-           section(v-else-if="occupancyid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
+  //-             span(class="card-dialog-title") Occupancy Application Number:
+  //-             span(class="card-dialog-status") {{applicationNo}}
+  //-             br
+  //-             span(class="card-dialog-title") Current Status:
+  //-             span(class="card-dialog-status") {{lastStatusOccupancy}}
+  //-           section(v-else-if="electricalid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
+  //-             span(class="card-dialog-title") Electrical Application Number:
+  //-             span(class="card-dialog-status") {{applicationNo}}
+  //-             br
+  //-             span(class="card-dialog-title") Current Status:
+  //-             span(class="card-dialog-status") {{lastStatusElectrical}}
+  //-           section(v-else)
+  //-             span(class="card-dialog-title") No Application Found
 
-        section(v-else)
-          div.dialog-status-display.full-width.column.justify-center.content-center.items-center
-            span(class="card-dialog-status") Checking Data
-            span(class="card-dialog-third") Please Wait
+  //-       section(v-else)
+  //-         div.dialog-status-display.full-width.column.justify-center.content-center.items-center
+  //-           span(class="card-dialog-status") Checking Data
+  //-           span(class="card-dialog-third") Please Wait
 
-  q-dialog(class="dialog2" full-width v-model="dialog2" position="top")
-    q-card(class="card-dialog2")
-      div(class="button-group column items-center text-center")
-        span(class="card-dialog-title") Current Building Status
-        span(class="card-dialog-status") {{lastStatusBuilding}}
+  //- q-dialog(class="dialog2" full-width v-model="dialog2" position="top")
+  //-   q-card(class="card-dialog2")
+  //-     div(class="button-group column items-center text-center")
+  //-       span(class="card-dialog-title") Current Building Status
+  //-       span(class="card-dialog-status") {{lastStatusBuilding}}
 
-  q-dialog(class="dialog2" full-width v-model="dialog3" position="top")
-    q-card(class="card-dialog2")
-      div(class="button-group column items-center text-center")
-        span(class="card-dialog-title") Current Occupancy Status
-        span(class="card-dialog-status") {{lastStatusOccupancy}}
+  //- q-dialog(class="dialog2" full-width v-model="dialog3" position="top")
+  //-   q-card(class="card-dialog2")
+  //-     div(class="button-group column items-center text-center")
+  //-       span(class="card-dialog-title") Current Occupancy Status
+  //-       span(class="card-dialog-status") {{lastStatusOccupancy}}
 
-  q-dialog(class="dialog2" full-width v-model="dialog4" position="top")
-    q-card(class="card-dialog2")
-      div(class="button-group column items-center text-center")
-        span(class="card-dialog-title") Current Electrical Status
-        span(class="card-dialog-status") {{lastStatusElectrical}}
+  //- q-dialog(class="dialog2" full-width v-model="dialog4" position="top")
+  //-   q-card(class="card-dialog2")
+  //-     div(class="button-group column items-center text-center")
+  //-       span(class="card-dialog-title") Current Electrical Status
+  //-       span(class="card-dialog-status") {{lastStatusElectrical}}
 </template>
 
 <script>
@@ -157,6 +157,7 @@ import { useRouter } from 'vue-router'
 import { useTableData } from 'stores/tabledata'
 import { useCurrentPage } from 'stores/currentpage'
 import { useSearchValue } from 'stores/searchvalue'
+import { decrypt } from 'assets/js/shield'
 
 const router = useRouter()
 let _tabledata = useTableData
@@ -172,6 +173,8 @@ const newRows = computed(() => {
     return row.result !== '' && row.result.toUpperCase().indexOf(specific.value.toUpperCase()) != -1
   })
 })
+
+console.log(_tabledata.value.result.length)
 
 let selectedFirstName = ref(null)
 let selectedLastName = ref(null)
@@ -192,199 +195,199 @@ let dialog2 = ref(false)
 let dialog3 = ref(false)
 let dialog4 = ref(false)
 
-const getName = (lastname, firstname) => {
-  selectedLastName.value = lastname || null
-  selectedFirstName.value = firstname || null
+// const getName = (lastname, firstname) => {
+//   selectedLastName.value = lastname || null
+//   selectedFirstName.value = firstname || null
 
-  dialog.value = true
-  displayDetail()
-}
+//   dialog.value = true
+//   displayDetail()
+// }
 
-const displayDetail = async () => {
-  idCount.value = 0
-  searchComplete.value = false
+// const displayDetail = async () => {
+//   idCount.value = 0
+//   searchComplete.value = false
 
-  await searchByNameBuilding()
-  if (receivingid.value > 0) {
-    await getLastStatusBuilding()
-    await getApplicationByID()
-  }
+//   await searchByNameBuilding()
+//   if (receivingid.value > 0) {
+//     await getLastStatusBuilding()
+//     await getApplicationByID()
+//   }
 
-  await searchByNameOccupancy()
-  if (occupancyid.value > 0) {
-    await getLastStatusOccupancy()
-    await getOccupancyApplicationByID()
-  }
+//   await searchByNameOccupancy()
+//   if (occupancyid.value > 0) {
+//     await getLastStatusOccupancy()
+//     await getOccupancyApplicationByID()
+//   }
 
-  await searchByNameElectrical()
-  if (electricalid.value > 0) {
-    await getLastStatusElectrical()
-    await getElectricalApplicationByID()
-  }
+//   await searchByNameElectrical()
+//   if (electricalid.value > 0) {
+//     await getLastStatusElectrical()
+//     await getElectricalApplicationByID()
+//   }
 
-  await countIDs()
-}
+//   await countIDs()
+// }
 
-const searchByNameBuilding = async () => {
-  if (selectedLastName.value.includes('/')) {
-    const arraylastName = selectedLastName.value.split('/')
-    selectedLastName.value = arraylastName[0]
-  }
+// const searchByNameBuilding = async () => {
+//   if (selectedLastName.value.includes('/')) {
+//     const arraylastName = selectedLastName.value.split('/')
+//     selectedLastName.value = arraylastName[0]
+//   }
 
-  if (selectedFirstName.value === null) {
-    const tempFirstName = 'empty'
-    selectedFirstName.value = tempFirstName
-  }
+//   if (selectedFirstName.value === null) {
+//     const tempFirstName = 'empty'
+//     selectedFirstName.value = tempFirstName
+//   }
 
-  try {
-    const response = await api.get('/api/SearchByNameBuilding/' + selectedLastName.value + '/' + selectedFirstName.value)
-    const result = response.data.length !== 0 ? response.data : null
+//   try {
+//     const response = await api.get('/api/SearchByNameBuilding/' + selectedLastName.value + '/' + selectedFirstName.value)
+//     const result = response.data.length !== 0 ? response.data : null
 
-    if (result === null) {
-      receivingid.value = 0
-    } else {
-      receivingid.value = result[0].result
-    }
-  } catch {
-    receivingid.value = 0
-    lastStatusBuilding.value = 'Downloading Data'
-  }
-}
+//     if (result === null) {
+//       receivingid.value = 0
+//     } else {
+//       receivingid.value = result[0].result
+//     }
+//   } catch {
+//     receivingid.value = 0
+//     lastStatusBuilding.value = 'Downloading Data'
+//   }
+// }
 
-const getLastStatusBuilding = async () => {
-  const response = await api.get('/api/GetLastStatusBuilding/' + receivingid.value)
-  const result = response.data.length !== 0 ? response.data : null
+// const getLastStatusBuilding = async () => {
+//   const response = await api.get('/api/GetLastStatusBuilding/' + receivingid.value)
+//   const result = response.data.length !== 0 ? response.data : null
 
-  if (result === null) {
-    lastStatusBuilding.value = 'No Status Found'
-  } else {
-    lastStatusBuilding.value = result[0].result || 'No Status Found'
-  }
-}
+//   if (result === null) {
+//     lastStatusBuilding.value = 'No Status Found'
+//   } else {
+//     lastStatusBuilding.value = result[0].result || 'No Status Found'
+//   }
+// }
 
-const searchByNameOccupancy = async () => {
-  if (selectedLastName.value.includes('/')) {
-    const arraylastName = selectedLastName.value.split('/')
-    selectedLastName.value = arraylastName[0]
-  }
+// const searchByNameOccupancy = async () => {
+//   if (selectedLastName.value.includes('/')) {
+//     const arraylastName = selectedLastName.value.split('/')
+//     selectedLastName.value = arraylastName[0]
+//   }
 
-  if (selectedFirstName.value === null) {
-    const tempFirstName = 'empty'
-    selectedFirstName.value = tempFirstName
-  }
+//   if (selectedFirstName.value === null) {
+//     const tempFirstName = 'empty'
+//     selectedFirstName.value = tempFirstName
+//   }
 
-  try {
-    const response = await api.get('/api/SearchByNameOccupancy/' + selectedLastName.value + '/' + selectedFirstName.value)
-    const result = response.data.length !== 0 ? response.data : null
+//   try {
+//     const response = await api.get('/api/SearchByNameOccupancy/' + selectedLastName.value + '/' + selectedFirstName.value)
+//     const result = response.data.length !== 0 ? response.data : null
 
-    if (result === null) {
-      occupancyid.value = 0
-    } else {
-      occupancyid.value = result[0].result
-    }
-  } catch {
-    occupancyid.value = 0
-    lastStatusOccupancy.value = 'Downloading Data'
-  }
-}
+//     if (result === null) {
+//       occupancyid.value = 0
+//     } else {
+//       occupancyid.value = result[0].result
+//     }
+//   } catch {
+//     occupancyid.value = 0
+//     lastStatusOccupancy.value = 'Downloading Data'
+//   }
+// }
 
-const getLastStatusOccupancy = async () => {
-  const response = await api.get('/api/GetLastStatusOccupancy/' + occupancyid.value)
-  const result = response.data.length !== 0 ? response.data : null
+// const getLastStatusOccupancy = async () => {
+//   const response = await api.get('/api/GetLastStatusOccupancy/' + occupancyid.value)
+//   const result = response.data.length !== 0 ? response.data : null
 
-  if (result === null) {
-    lastStatusOccupancy.value = 'No Status Found'
-  } else {
-    lastStatusOccupancy.value = result[0].result || 'No Status Found'
-  }
-}
+//   if (result === null) {
+//     lastStatusOccupancy.value = 'No Status Found'
+//   } else {
+//     lastStatusOccupancy.value = result[0].result || 'No Status Found'
+//   }
+// }
 
-const searchByNameElectrical = async () => {
-  if (selectedLastName.value.includes('/')) {
-    const arraylastName = selectedLastName.value.split('/')
-    selectedLastName.value = arraylastName[0]
-  }
+// const searchByNameElectrical = async () => {
+//   if (selectedLastName.value.includes('/')) {
+//     const arraylastName = selectedLastName.value.split('/')
+//     selectedLastName.value = arraylastName[0]
+//   }
 
-  if (selectedFirstName.value === null) {
-    const tempFirstName = 'empty'
-    selectedFirstName.value = tempFirstName
-  }
+//   if (selectedFirstName.value === null) {
+//     const tempFirstName = 'empty'
+//     selectedFirstName.value = tempFirstName
+//   }
 
-  try {
-    const response = await api.get('/api/SearchByNameElectrical/' + selectedLastName.value + '/' + selectedFirstName.value)
-    const result = response.data.length !== 0 ? response.data : null
+//   try {
+//     const response = await api.get('/api/SearchByNameElectrical/' + selectedLastName.value + '/' + selectedFirstName.value)
+//     const result = response.data.length !== 0 ? response.data : null
 
-    if (result === null) {
-      electricalid.value = 0
-    } else {
-      electricalid.value = result[0].result
-    }
-  } catch {
-    electricalid.value = 0
-  }
-}
+//     if (result === null) {
+//       electricalid.value = 0
+//     } else {
+//       electricalid.value = result[0].result
+//     }
+//   } catch {
+//     electricalid.value = 0
+//   }
+// }
 
-const getLastStatusElectrical = async () => {
-  const response = await api.get('/api/GetLastStatusElectrical/' + electricalid.value)
+// const getLastStatusElectrical = async () => {
+//   const response = await api.get('/api/GetLastStatusElectrical/' + electricalid.value)
 
-  const result = response.data.length !== 0 ? response.data : null
+//   const result = response.data.length !== 0 ? response.data : null
 
-  if (result === null) {
-    lastStatusElectrical.value = 'No Status Found'
-  } else {
-    lastStatusElectrical.value = result[0].result || 'No Status Found'
-  }
-}
+//   if (result === null) {
+//     lastStatusElectrical.value = 'No Status Found'
+//   } else {
+//     lastStatusElectrical.value = result[0].result || 'No Status Found'
+//   }
+// }
 
-const countIDs = async () => {
-  const receivingCount = receivingid.value > 0 ? 1 : 0
-  const occupancyCount = occupancyid.value > 0 ? 1 : 0
-  const electricalCount = electricalid.value > 0 ? 1 : 0
-  const signageCount = signageid.value > 0 ? 1 : 0
-  const mechanicalCount = mechanicalid.value > 0 ? 1 : 0
-  const result = receivingCount + occupancyCount + electricalCount + signageCount + mechanicalCount
+// const countIDs = async () => {
+//   const receivingCount = receivingid.value > 0 ? 1 : 0
+//   const occupancyCount = occupancyid.value > 0 ? 1 : 0
+//   const electricalCount = electricalid.value > 0 ? 1 : 0
+//   const signageCount = signageid.value > 0 ? 1 : 0
+//   const mechanicalCount = mechanicalid.value > 0 ? 1 : 0
+//   const result = receivingCount + occupancyCount + electricalCount + signageCount + mechanicalCount
 
-  idCount.value = result
-  searchComplete.value = true
-}
+//   idCount.value = result
+//   searchComplete.value = true
+// }
 
-let applicationNo = ref(null)
+// let applicationNo = ref(null)
 
-const getApplicationByID = async () => {
-  const response = await api.get('/api/GetApplicationByID/' + receivingid.value)
-  const result = response.data || null
-  applicationNo.value = result[0].result || null
-}
+// const getApplicationByID = async () => {
+//   const response = await api.get('/api/GetApplicationByID/' + receivingid.value)
+//   const result = response.data || null
+//   applicationNo.value = result[0].result || null
+// }
 
-const getOccupancyApplicationByID = async () => {
-  const response = await api.get('/api/GetOccupancyApplicationByID/' + occupancyid.value)
-  const result = response.data || null
-  applicationNo.value = result[0].result || null
-}
+// const getOccupancyApplicationByID = async () => {
+//   const response = await api.get('/api/GetOccupancyApplicationByID/' + occupancyid.value)
+//   const result = response.data || null
+//   applicationNo.value = result[0].result || null
+// }
 
-const getElectricalApplicationByID = async () => {
-  const response = await api.get('/api/GetElectricalApplicationByID/' + electricalid.value)
-  const result = response.data || null
-  applicationNo.value = result[0].result || null
-}
+// const getElectricalApplicationByID = async () => {
+//   const response = await api.get('/api/GetElectricalApplicationByID/' + electricalid.value)
+//   const result = response.data || null
+//   applicationNo.value = result[0].result || null
+// }
 
-const openDialog2 = () => {
-  dialog.value = false
-  dialog2.value = true
-}
+// const openDialog2 = () => {
+//   dialog.value = false
+//   dialog2.value = true
+// }
 
-const openDialog3 = () => {
-  dialog.value = false
-  dialog2.value = false
-  dialog3.value = true
-}
+// const openDialog3 = () => {
+//   dialog.value = false
+//   dialog2.value = false
+//   dialog3.value = true
+// }
 
-const openDialog4 = () => {
-  dialog.value = false
-  dialog2.value = false
-  dialog3.value = false
-  dialog4.value = true
-}
+// const openDialog4 = () => {
+//   dialog.value = false
+//   dialog2.value = false
+//   dialog3.value = false
+//   dialog4.value = true
+// }
 
 const updatePage = (page) => {
   _currentpage.value = page
@@ -393,8 +396,8 @@ const updatePage = (page) => {
 
 const gotoHome = () => {
   // controller.abort();
-  // updatePage('/')
-  window.location.reload()
+  updatePage('/')
+  // window.location.reload()
 }
 </script>
 

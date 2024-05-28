@@ -66,7 +66,6 @@ const getClientList = async () => {
         //     tempData.push(element)
         //   }
         // })
-
         _tabledata.value = data
         found = true
       }
