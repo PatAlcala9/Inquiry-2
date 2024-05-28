@@ -2,7 +2,7 @@
 
 q-page.page(padding)
   section.full-width.column.wrap.justify-center.items-center.content-center
-    span.title List of Received Application
+    span.title List of Received {{ _division.value }} Application
     span.subheader on
     span.header {{ properDate }}
 
@@ -65,6 +65,7 @@ import { date } from 'quasar'
 import { decrypt } from 'assets/js/shield'
 import { useListStatus } from 'stores/liststatus'
 import { useListSumPaid } from 'stores/listsumpaid'
+import { useDivision } from 'stores/division'
 
 const router = useRouter()
 
@@ -73,6 +74,7 @@ let _tabledata = useTableData
 let _listdate = useListDate
 let _liststatus = useListStatus()
 let _listsumpaid = useListSumPaid()
+let _division = useDivision
 
 const properDate = date.formatDate(_listdate.value, 'MMMM DD, YYYY')
 

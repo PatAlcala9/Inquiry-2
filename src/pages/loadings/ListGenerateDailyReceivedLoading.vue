@@ -135,8 +135,28 @@ const getDailyReceived = async () => {
 
       updatePage('receivedlist')
     } else {
+      const today = new Date()
+      const searcheddate = new Date(properDate)
+      const dayOfWeek = searcheddate.getDay()
+      const dayOfYearToday = date.formatDate(today, 'DDD')
+      const dayOfYearSearched = date.formatDate(searcheddate, 'DDD')
+      // console.log('week', dayOfWeek)
+      // console.log('today', dayOfYearToday)
+      // console.log('searched', dayOfYearSearched)
+
       _errormessage.value = 'Error on Generating List'
-      _errorsubmessage.value = 'No Received Data found on ' + properDate + ' at the moment'
+
+      if (dayOfWeek === 6) {
+        _errorsubmessage.value = properDate + ' is Saturday, OCBO is closed on weekends'
+      } else if (dayOfWeek === 7) {
+        _errorsubmessage.value = properDate + ' is Sunday, OCBO is closed on weekends'
+      } else if (dayOfYearToday === dayOfYearSearched) {
+        _errorsubmessage.value = 'No current received data found at this moment'
+      } else if (dayOfYearToday < dayOfYearSearched) {
+        _errorsubmessage.value = 'Cannot generate data from the future'
+      } else {
+        _errorsubmessage.value = 'Error'
+      }
       updatePage('error')
     }
   } else {
