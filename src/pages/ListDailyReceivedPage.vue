@@ -2,7 +2,7 @@
 
 q-page.page(padding)
   section.full-width.column.wrap.justify-center.items-center.content-center
-    span.title List of Received {{ _division.value }} Application
+    span.title List of Received {{ _division.getValue }} Application
     span.subheader on
     span.header {{ properDate }}
 
@@ -56,7 +56,7 @@ export default {
 </script>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCurrentPage } from 'stores/currentpage'
 import { useTableData } from 'stores/tabledata'
@@ -74,7 +74,7 @@ let _tabledata = useTableData
 let _listdate = useListDate
 let _liststatus = useListStatus()
 let _listsumpaid = useListSumPaid()
-let _division = useDivision
+let _division = useDivision()
 
 const properDate = date.formatDate(_listdate.value, 'MMMM DD, YYYY')
 
@@ -89,20 +89,13 @@ const rowCount = ref(Object.values(_tabledata.value).map((arr) => arr.length)[0]
 const opReleasedCount = ref(0)
 
 const permitReleasedCount = ref(_liststatus.allStatusArray.filter((stat) => stat === 'PERMIT ALREADY RELEASE').length)
-let totalSum = ref(0)
-
-const getTotalSum = () => {
-  totalSum.value = _listsumpaid.getTotal
-}
-
-console.log('total', _listsumpaid.getTotal)
 
 const countOPReleased = async () => {
   const filterArray = ['ORDER OF PAYMENT RELEASED', 'OR NUMBER VERIFIED', 'RECEIVED FOR PROCESSING', 'FOR BUILDING OFFICIAL APPROVAL', 'PERMIT APPROVE AND READY FOR RELEASE', 'PERMIT ALREADY RELEASE']
   const newArray = _liststatus.allStatusArray.filter((item) => filterArray.includes(item))
   opReleasedCount.value = newArray.length
-  console.log('newarray', newArray)
-  console.log('oldarray', _liststatus.allStatusArray.map(item => item))
+  // console.log('newarray', newArray)
+  // console.log('oldarray', _liststatus.allStatusArray.map(item => item))
 }
 
 const updatePage = (page) => {
@@ -114,13 +107,9 @@ const gotoHome = () => {
   updatePage('/')
 }
 
-onMounted(async () => {
-
-})
-
 ;(async () => {
   await countOPReleased()
-  getTotalSum()
+  // getTotalSum()
 })()
 </script>
 

@@ -63,7 +63,7 @@ import { api } from 'boot/axios'
 import { useRouter } from 'vue-router'
 import { useApplicationNo } from 'stores/applicationno'
 import { useSearchValue } from 'stores/searchvalue'
-import { useDivision } from 'stores/division'
+// import { useDivision } from 'stores/division'
 import { useTableData } from 'stores/tabledata'
 import { useOwnername } from 'stores/ownername'
 import { useOwneraddress } from 'stores/owneraddress'
@@ -74,7 +74,7 @@ import { decrypt } from 'assets/js/shield'
 const router = useRouter()
 let _applicationno = useApplicationNo
 let _searchvalue = useSearchValue
-let _division = useDivision
+// let _division = useDivision()
 let _tabledata = useTableData
 let _ownername = useOwnername
 let _owneraddress = useOwneraddress

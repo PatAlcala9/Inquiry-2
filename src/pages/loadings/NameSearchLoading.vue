@@ -68,6 +68,8 @@ const getClientList = async () => {
         // })
         _tabledata.value = data
         found = true
+      } else {
+        
       }
     } else {
       updatePage('noconnection')
@@ -110,20 +112,20 @@ const loadCurrentPage = () => {
 
 .loading-title
   font-size: 2.3rem
-  font-family: 'PoppinsBold'
+  font-family: 'LexendBold'
 
 .loading-type
   font-size: 1.8rem
-  font-family: 'Poppins'
+  font-family: 'Lexend'
 
 .loading-division
   font-size: 2rem
-  font-family: 'PoppinsBold'
+  font-family: 'LexendBold'
   padding-top: 4rem
 
 .loading-value
   margin-top: 2rem
   font-size: 2.4rem
-  font-family: 'PoppinsBold'
+  font-family: 'LexendBold'
   color: $yellow
 </style>

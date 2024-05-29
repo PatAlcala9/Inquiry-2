@@ -2,8 +2,8 @@
 
 q-page.flex.flex-center(padding)
   div.fit.column.items-center.justify-center.text-center.content-center
-    span.error-title {{_errormessage.value}}
-    span.subtitle.text-center {{_errorsubmessage.value}}
+    span.error-title {{_errormessage.getMessage}}
+    span.subtitle.text-center {{_errormessage.getSubMessage}}
     br
     section.column.items-center.text-center
     span.footer If you need help,&nbsp;
@@ -27,13 +27,13 @@ export default {
 
 <script setup>
 import { useErrorMessage } from 'stores/errormessage'
-import { useErrorSubMessage } from 'stores/errorsubmessage'
+// import { useErrorSubMessage } from 'stores/errorsubmessage'
 import { useCurrentPage } from 'stores/currentpage'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-let _errormessage = useErrorMessage
-let _errorsubmessage = useErrorSubMessage
+let _errormessage = useErrorMessage()
+// let _errorsubmessage = useErrorSubMessage
 let _currentpage = useCurrentPage
 
 const gotoHome = () => {

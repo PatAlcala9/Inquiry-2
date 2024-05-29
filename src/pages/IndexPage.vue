@@ -48,11 +48,11 @@ const router = useRouter()
 let _currentpage = useCurrentPage
 let _applicationno = useApplicationNo
 let _searchvalue = useSearchValue
-let _errormessage = useErrorMessage
+let _errormessage = useErrorMessage()
 let _errorsubmessage = useErrorSubMessage
 // let _listsubject = useListSubject
 let _listtype = useListType
-let _division = useDivision
+let _division = useDivision()
 let _listyear = useListYear
 let _listdate = useListDate
 let _rsakey = useRSAKey()
@@ -195,7 +195,7 @@ const callserver = async () => {
       if (searched.value.includes(' approve')) {
         if (searched.value.includes(' --division building')) {
           _listtype.value = 'Approved Permit'
-          _division.value = 'Building'
+          _division.setBuilding()
           if (searched.value.includes(' --year 2020')) {
             _listyear.value = 2020
             updatePage('listgenerateapprove')
@@ -217,7 +217,7 @@ const callserver = async () => {
           }
         } else if (searched.value.includes(' --division occupancy')) {
           _listtype.value = 'Approved Permit'
-          _division.value = 'Occupancy'
+          _division.setOccupancy()
 
           if (searched.value.includes(' --year 2020')) {
             _listyear.value = 2020
@@ -240,7 +240,7 @@ const callserver = async () => {
           }
         } else if (searched.value.includes(' --division electrical')) {
           _listtype.value = 'Approved Permit'
-          _division.value = 'Electrical'
+          _division.setElectrical()
 
           if (searched.value.includes(' --year 2020')) {
             _listyear.value = 2020
@@ -263,7 +263,7 @@ const callserver = async () => {
           }
         } else if (searched.value.includes(' --division signage')) {
           _listtype.value = 'Approved Permit'
-          _division.value = 'Signage'
+          _division.setSignage()
 
           if (searched.value.includes(' --year 2020')) {
             _listyear.value = 2020
@@ -286,7 +286,7 @@ const callserver = async () => {
           }
         } else if (searched.value.includes(' --division mechanical')) {
           _listtype.value = 'Approved Permit'
-          _division.value = 'Mechanical'
+          _division.setMechanical()
 
           if (searched.value.includes(' --year 2020')) {
             _listyear.value = 2020
@@ -308,8 +308,9 @@ const callserver = async () => {
             updatePage('listgenerateapprove')
           }
         } else {
-          _errormessage.value = 'Invalid Command'
-          _errorsubmessage.value = 'Please specify a division'
+          _errormessage.updateMessage('Invalid Command')
+          _errormessage.updateSubMessage('Please specify a division')
+          // _errorsubmessage.value = 'Please specify a division'
           updatePage('searcherror')
         }
         // const newValue = searched.value.toString().substring(10)
@@ -338,12 +339,12 @@ const callserver = async () => {
 
         if (searched.value.includes(' building')) {
           _listtype.value = 'Daily Received'
-          _division.value = 'Building'
+          _division.setBuilding()
 
           searchedDate = searched.value.substring(25)
         } else if (searched.value.includes(' occupancy')) {
           _listtype.value = 'Daily Received'
-          _division.value = 'Occupancy'
+          _division.setOccupancy()
 
           searchedDate = searched.value.substring(26)
 
@@ -368,7 +369,7 @@ const callserver = async () => {
           // }
         } else if (searched.value.includes(' electrical')) {
           _listtype.value = 'Daily Received'
-          _division.value = 'Electrical'
+          _division.setElectrical()
 
           searchedDate = searched.value.substring(27)
 
@@ -416,23 +417,28 @@ const callserver = async () => {
               _listdate.value = searchedDate
               updatePage('listgeneratereceived')
             } else {
-              _errormessage.value = 'Invalid Command'
-              _errorsubmessage.value = 'Please specify the year'
+              console.log('yeah')
+              _errormessage.updateMessage('Invalid Command')
+              _errormessage.updateSubMessage('Please specify the year')
+              // _errorsubmessage.value = 'Please specify the year'
               updatePage('error')
             }
           } else {
-            _errormessage.value = 'Invalid Command'
-            _errorsubmessage.value = 'Please specify the day of the month'
+            _errormessage.updateMessage('Invalid Command')
+            _errormessage.updateSubMessage('Please specify the day of the month')
+            // _errorsubmessage.value = 'Please specify the day of the month'
             updatePage('error')
           }
         } else {
-          _errormessage.value = 'Invalid Command'
-          _errorsubmessage.value = 'Please specify a date with a proper format'
+          _errormessage.updateMessage('Invalid Command')
+          _errormessage.updateSubMessage('Please specify a date with a proper format')
+          // _errorsubmessage.value = 'Please specify a date with a proper format'
           updatePage('error')
         }
       } else {
-        _errormessage.value = 'Invalid Command'
-        _errorsubmessage.value = `Items to be listed aren't specified`
+        _errormessage.updateMessage('Invalid Command')
+        _errormessage.updateSubMessage(`Items to be listed aren't specified`)
+        // _errorsubmessage.value = `Items to be listed aren't specified`
         updatePage('error')
       }
       // if (
@@ -513,14 +519,15 @@ const callserver = async () => {
     } else if (commands.includes(searched.value)) {
       gotoHelp()
     } else {
-      if (searched.value.length === 1) {
-        _errormessage.value = 'Invalid Command'
-        _errorsubmessage.value = 'Please specify to be listed'
-        updatePage('searcherror')
+      if (searched.value.length < 3) {
+        _errormessage.updateMessage('Invalid Search')
+        _errormessage.updateSubMessage('Please be specific in your search')
+
+        updatePage('error')
       } else {
         _searchvalue.value = searched.value
         _currentpage.value = 'namesearch'
-        router.push('namesearch', () => {})
+        router.push('namesearch')
       }
     }
   }
@@ -545,7 +552,7 @@ const uploadApplication = () => {
 
 const updatePage = (page) => {
   _currentpage.value = page
-  router.push(page, () => {})
+  router.push(page)
 }
 
 const uploadSearch = (value) => {

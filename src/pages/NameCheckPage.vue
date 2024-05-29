@@ -30,7 +30,7 @@ q-page(padding)
           q-icon(name="search")
 
       div.flex.flex-center
-        q-btn.button-back(rounded label="Back" @click="gotoHome" icon="arrow_back_ios")
+        q-btn.button-back(rounded label="Back" @click="gotoHome")
 
       section.full-width.column.content-center.items-center.justify-center(v-if="_tabledata.value.result.length > 0")
         table.table-custom
@@ -164,17 +164,15 @@ let _tabledata = useTableData
 let _currentpage = useCurrentPage
 let _searchvalue = useSearchValue
 
-let rows = ref(_tabledata.value)
+// let rows = ref(_tabledata.value)
 let specific = ref('')
 let sentence = ' Applications'
 
-const newRows = computed(() => {
-  return rows.value.filter((row) => {
-    return row.result !== '' && row.result.toUpperCase().indexOf(specific.value.toUpperCase()) != -1
-  })
-})
-
-console.log(_tabledata.value.result.length)
+// const newRows = computed(() => {
+//   return rows.value.filter((row) => {
+//     return row.result !== '' && row.result.toUpperCase().indexOf(specific.value.toUpperCase()) != -1
+//   })
+// })
 
 let selectedFirstName = ref(null)
 let selectedLastName = ref(null)

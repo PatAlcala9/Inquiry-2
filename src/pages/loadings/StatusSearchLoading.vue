@@ -5,7 +5,7 @@ q-page.padding.flex.flex-center.page
     span.loading-title Generating List
     span.loading-type Application Status
     span.minor for
-    span.loading-division {{_division.value}} Application
+    span.loading-division {{_division.getValue}} Application
     span.loading-value {{_searchvalue.value}}
 
     div.fit.column.items-center
@@ -46,7 +46,7 @@ const router = useRouter()
 const quasar = useQuasar()
 
 let _searchvalue = useSearchValue
-let _division = useDivision
+let _division = useDivision()
 let _applicationno = useApplicationNo
 let _ownername = useOwnername
 let _owneraddress = useOwneraddress
@@ -68,7 +68,7 @@ const searchData = async () => {
     const result = data !== null ? decrypt(data.result) : null
 
     if (result !== null) {
-      if (_division.value === 'Building') {
+      if (_division.isBuilding) {
         const encryptedEndpoint = encrypt('CheckBuilding')
         const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
         const encryptedData = encrypt(searched)
@@ -76,7 +76,7 @@ const searchData = async () => {
         response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
           signal: controller.signal,
         })
-      } else if (_division.value === 'Occupancy') {
+      } else if (_division.isOccupancy) {
         const encryptedEndpoint = encrypt('CheckOccupancy')
         const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
         const encryptedData = encrypt(searched)
@@ -84,7 +84,7 @@ const searchData = async () => {
         response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
           signal: controller.signal,
         })
-      } else if (_division.value === 'Signage') {
+      } else if (_division.isSignage) {
         const encryptedEndpoint = encrypt('CheckSignage')
         const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
         const encryptedData = encrypt(searched)
@@ -92,7 +92,7 @@ const searchData = async () => {
         response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
           signal: controller.signal,
         })
-      } else if (_division.value === 'Electrical') {
+      } else if (_division.isElectrical) {
         const encryptedEndpoint = encrypt('CheckElectrical')
         const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
         const encryptedData = encrypt(searched)
@@ -100,7 +100,7 @@ const searchData = async () => {
         response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
           signal: controller.signal,
         })
-      } else if (_division.value === 'Mechanical') {
+      } else if (_division.isMechanical) {
         const encryptedEndpoint = encrypt('CheckMechanical')
         const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
         const encryptedData = encrypt(searched)
@@ -108,7 +108,7 @@ const searchData = async () => {
         response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
           signal: controller.signal,
         })
-      } else if (_division.value === 'Unidentified') {
+      } else {
         _errormessage.value = 'Invalid Search'
         updatePage('searcherror')
         return
@@ -144,15 +144,15 @@ const getOwnerDetails = async () => {
   const appno = _applicationno.value
   let method = ''
 
-  if (_division.value === 'Building') {
+  if (_division.isBuilding) {
     method = 'Bldg'
-  } else if (_division.value === 'Occupancy') {
+  } else if (_division.isOccupancy) {
     method = 'Occ'
-  } else if (_division.value === 'Signage') {
+  } else if (_division.isSignage) {
     method = 'Sign'
-  } else if (_division.value === 'Electrical') {
+  } else if (_division.isElectrical) {
     method = 'Elec'
-  } else if (_division.value === 'Mechanical') {
+  } else if (_division.isMechanical) {
     method = 'Mech'
   }
 
@@ -200,15 +200,15 @@ const getTableData = async () => {
   const appno = _applicationno.value
   let method = ''
 
-  if (_division.value === 'Building') {
+  if (_division.isBuilding) {
     method = 'Bldg'
-  } else if (_division.value === 'Occupancy') {
+  } else if (_division.isOccupancy) {
     method = 'Occ'
-  } else if (_division.value === 'Signage') {
+  } else if (_division.isSignage) {
     method = 'Sign'
-  } else if (_division.value === 'Electrical') {
+  } else if (_division.isElectrical) {
     method = 'Elec'
-  } else if (_division.value === 'Mechanical') {
+  } else if (_division.isMechanical) {
     method = 'Mech'
   }
 

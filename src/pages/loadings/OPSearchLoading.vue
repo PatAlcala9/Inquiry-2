@@ -5,7 +5,7 @@ q-page.padding.flex.flex-center.page
     span.loading-title Generating List
     span.loading-type {{_listtype.value.toUpperCase()}}
     span.minor for
-    span.loading-division {{_division.value}} Application
+    span.loading-division {{_division.getValue}} Application
     span.loading-value {{_searchvalue.value}}
 
     div.fit.column.items-center
@@ -33,6 +33,7 @@ import { useCurrentPage } from 'stores/currentpage'
 import { useListType } from 'stores/listtype'
 import { useSearchValue } from 'stores/searchvalue'
 import { useDivision } from 'stores/division'
+import { useErrorMessage } from 'stores/errormessage'
 import { useApplicationNo } from 'stores/applicationno'
 import { useTableData } from 'stores/tabledata'
 import { useOwnername } from 'stores/ownername'
@@ -44,7 +45,8 @@ const router = useRouter()
 let _listtype = useListType
 let _currentpage = useCurrentPage
 let _searchvalue = useSearchValue
-let _division = useDivision
+const _division = useDivision()
+const _errormessage = useErrorMessage()
 let _applicationno = useApplicationNo
 let _tabledata = useTableData
 let _ownername = useOwnername
@@ -86,7 +88,7 @@ const getOrderofPayment = async () => {
     const result = data !== null ? decrypt(data.result) : null
 
     if (result !== null) {
-      if (_division.value === 'Building') {
+      if (_division.isBuilding) {
         const encryptedEndpoint = encrypt('GetOrderofPaymentBuilding')
         const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
         const encryptedData = encrypt(_searchvalue.value)
@@ -94,7 +96,7 @@ const getOrderofPayment = async () => {
         response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
           signal: controller.signal,
         })
-      } else if (_division.value === 'Occupancy') {
+      } else if (_division.isOccupancy) {
         const encryptedEndpoint = encrypt('GetOrderofPaymentOccupancy')
         const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
         const encryptedData = encrypt(_searchvalue.value)
@@ -102,12 +104,12 @@ const getOrderofPayment = async () => {
         response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
           signal: controller.signal,
         })
-      } else if (_division.value === 'Signage') {
+      } else if (_division.isSignage) {
         // response = await api.get('/api/CheckSignage/' + searched, {
         //   signal: controller.signal,
         // })
         return
-      } else if (_division.value === 'Electrical') {
+      } else if (_division.isElectrical) {
         const encryptedEndpoint = encrypt('GetOrderofPaymentElectrical')
         const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
         const encryptedData = encrypt(_searchvalue.value)
@@ -115,14 +117,15 @@ const getOrderofPayment = async () => {
         response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
           signal: controller.signal,
         })
-      } else if (_division.value === 'Mechanical') {
+      } else if (_division.isMechanical) {
         // response = await api.get('/api/CheckMechanical/' + searched, {
         //   signal: controller.signal,
         // })
         return
-      } else if (_division.value === 'Unidentified') {
-        _errormessage.value = 'Invalid Search'
-        updatePage('searcherror')
+      } else {
+        _errormessage.updateMessage('Invalid Search')
+        _errormessage.updateSubMessage('Unknown division')
+        updatePage('error')
         return
       }
 
@@ -148,15 +151,15 @@ const getOrderofPayment = async () => {
 const getOwnerDetails = async () => {
   let method = ''
 
-  if (_division.value === 'Building') {
+  if (_division.isBuilding) {
     method = 'Bldg'
-  } else if (_division.value === 'Occupancy') {
+  } else if (_division.isOccupancy) {
     method = 'Occ'
-  } else if (_division.value === 'Signage') {
+  } else if (_division.isSignage) {
     method = 'Sign'
-  } else if (_division.value === 'Electrical') {
+  } else if (_division.isElectrical) {
     method = 'Elec'
-  } else if (_division.value === 'Mechanical') {
+  } else if (_division.isMechanical) {
     method = 'Mech'
   }
 

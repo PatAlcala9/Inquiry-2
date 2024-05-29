@@ -5,7 +5,7 @@ q-page.padding.flex.flex-center.page
     span.loading-title Generating List
     span.loading-type {{_listtype.value.toUpperCase()}}
     span.minor for
-    span.loading-division {{_division.value}} Applications
+    span.loading-division {{_division.getValue}} Applications
     span.minor on
     span.loading-division {{properDate}}
 
@@ -49,7 +49,7 @@ const router = useRouter()
 // const quasar = useQuasar()
 
 let _listtype = useListType
-let _division = useDivision
+let _division = useDivision()
 let _currentpage = useCurrentPage
 let _tabledata = useTableData
 let _listyear = useListYear
@@ -77,32 +77,32 @@ const getDailyReceived = async () => {
   const result = conn !== null ? decrypt(conn.result) : null
 
   if (result !== null) {
-    if (_division.value === 'Building') {
+    if (_division.isBuilding) {
       const encryptedEndpoint = encrypt('GetDailyReceived')
       const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
       const encryptedData = encrypt(formattedDate)
       const replacedData = encryptedData.replaceAll('/', '~')
       const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
       data = response.data.length !== 0 ? response.data : null
-    } else if (_division.value === 'Occupancy') {
+    } else if (_division.isOccupancy) {
       const encryptedEndpoint = encrypt('GetDailyReceivedOccupancy')
       const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
       const encryptedData = encrypt(formattedDate)
       const replacedData = encryptedData.replaceAll('/', '~')
       const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
       data = response.data.length !== 0 ? response.data : null
-    } else if (_division.value === 'Signage') {
+    } else if (_division.isSignage) {
       _errormessage.value = 'Error on Generating List'
       _errorsubmessage.value = 'Signage Data is not found'
       updatePage('error')
-    } else if (_division.value === 'Electrical') {
+    } else if (_division.isElectrical) {
       const encryptedEndpoint = encrypt('GetDailyReceivedElectrical')
       const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
       const encryptedData = encrypt(formattedDate)
       const replacedData = encryptedData.replaceAll('/', '~')
       const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
       data = response.data.length !== 0 ? response.data : null
-    } else if (_division.value === 'Mechanical') {
+    } else if (_division.isMechanical) {
       _errormessage.value = 'Error on Generating List'
       _errorsubmessage.value = 'Mechanical Data is not found'
       updatePage('error')
@@ -166,11 +166,11 @@ const getDailyReceived = async () => {
 
 const getLatestStatus = async (application) => {
   let encryptedEndpoint
-  if (_division.value === 'Building') {
+  if (_division.isBuilding) {
     encryptedEndpoint = encrypt('GetLatestStatusBuilding')
-  } else if (_division.value === 'Occupancy') {
+  } else if (_division.isOccupancy) {
     encryptedEndpoint = encrypt('GetLatestStatusOccupancy')
-  } else if (_division.value === 'Electrical') {
+  } else if (_division.isElectrical) {
     encryptedEndpoint = encrypt('GetLatestStatusElectrical')
   } else {
     encryptedEndpoint = null

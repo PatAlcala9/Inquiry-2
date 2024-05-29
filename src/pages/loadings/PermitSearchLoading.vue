@@ -5,7 +5,7 @@ q-page.padding.flex.flex-center.page
     span.loading-title Generating List
     span.loading-type {{_listtype.value.toUpperCase()}}
     span.minor for
-    span.loading-division {{_division.value}} Application
+    span.loading-division {{_division.getValue}} Application
     span.loading-value {{_searchvalue.value}}
 
     div.fit.column.items-center
@@ -46,7 +46,7 @@ const router = useRouter()
 let _listtype = useListType
 let _currentpage = useCurrentPage
 let _searchvalue = useSearchValue
-let _division = useDivision
+let _division = useDivision()
 let _applicationno = useApplicationNo
 let _tabledata = useTableData
 let _ownername = useOwnername
@@ -71,31 +71,31 @@ const getPermits = async () => {
   try {
     let data
 
-    if (_division.value === 'Building') {
+    if (_division.isBuilding) {
       const encryptedEndpoint = encrypt('GetPermitsBuilding')
       const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
       const encryptedData = encrypt(_searchvalue.value)
       const replacedData = encryptedData.replaceAll('/', '~')
       const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
       data = response.data.length !== 0 ? response.data : null
-    } else if (_division.value === 'Occupancy') {
+    } else if (_division.isOccupancy) {
      const encryptedEndpoint = encrypt('GetPermitsOccupancy')
       const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
       const encryptedData = encrypt(_searchvalue.value)
       const replacedData = encryptedData.replaceAll('/', '~')
       const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
       data = response.data.length !== 0 ? response.data : null
-    } else if (_division.value === 'Signage') {
+    } else if (_division.isSignage) {
       // const response = await api.get('/api/GetProgressFlowOccupancy/' + _searchvalue.value)
       data = null
-    } else if (_division.value === 'Electrical') {
+    } else if (_division.isElectrical) {
       const encryptedEndpoint = encrypt('GetPermitsElectrical')
       const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
       const encryptedData = encrypt(_searchvalue.value)
       const replacedData = encryptedData.replaceAll('/', '~')
       const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
       data = response.data.length !== 0 ? response.data : null
-    } else if (_division.value === 'Mechanical') {
+    } else if (_division.isMechanical) {
       // const response = await api.get('/api/GetProgressFlowOccupancy/' + _searchvalue.value)
       data = null
     }
@@ -137,15 +137,15 @@ const getOwnerDetails = async () => {
   const appno = _applicationno.value
   let method = ''
 
-  if (_division.value === 'Building') {
+  if (_division.isBuilding) {
     method = 'Bldg'
-  } else if (_division.value === 'Occupancy') {
+  } else if (_division.isOccupancy) {
     method = 'Occ'
-  } else if (_division.value === 'Signage') {
+  } else if (_division.isSignage) {
     method = 'Sign'
-  } else if (_division.value === 'Electrical') {
+  } else if (_division.isElectrical) {
     method = 'Elec'
-  } else if (_division.value === 'Mechanical') {
+  } else if (_division.isMechanical) {
     method = 'Mech'
   }
 

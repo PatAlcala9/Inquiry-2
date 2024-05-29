@@ -1,8 +1,8 @@
 <template lang="pug">
 
 q-page.fit.column.items-center.justify-center.text-center.content-center(padding)
-  span.error-title {{_errormessage.value}}
-  span.error-subtitle {{_errorsubmessage.value}}
+  span.error-title {{ _errormessage.getMessage }}
+  span.error-subtitle {{ _errormessage.getSubMessage}}
 
   q-btn.button-back(rounded label="Back" @click="gotoHome")
 
@@ -22,13 +22,13 @@ export default {
 
 <script setup>
 import { useErrorMessage } from 'stores/errormessage'
-import { useErrorSubMessage } from 'stores/errorsubmessage'
+// import { useErrorSubMessage } from 'stores/errorsubmessage'
 import { useCurrentPage } from 'stores/currentpage'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-let _errormessage = useErrorMessage
-let _errorsubmessage = useErrorSubMessage
+const _errormessage = useErrorMessage()
+// let _errorsubmessage = useErrorSubMessage
 let _currentpage = useCurrentPage
 
 const updatePage = (page) => {
@@ -51,7 +51,8 @@ const gotoHome = () => {
 
 .error-subtitle
   font-family: 'LexendBold'
-  font-size: 2rem
+  font-size: 1.4rem
+  margin: 2rem 0 0 0
   color: $text
 
 @media screen and (min-width: 1023px)
@@ -61,4 +62,5 @@ const gotoHome = () => {
   .error-subtitle
     font-size: 2rem
     padding: 0 0 1rem 0
+    margin: 1rem 0 0 0
 </style>

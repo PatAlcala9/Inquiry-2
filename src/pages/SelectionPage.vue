@@ -1,8 +1,8 @@
 <template lang="pug">
 
 q-page.page.padding.column.wrap.justify-center.items-center.content-center.text-center
-  section.page-title-group.column.wrap.justify-center.items-center.content-center.text-center(v-if="_division.value !== 'Unidentified'")
-    span.division {{_division.value}} Application
+  section.page-title-group.column.wrap.justify-center.items-center.content-center.text-center(v-if="_division.getValue !== undefined")
+    span.division {{_division.getValue}} Application
     span.search-value {{_searchvalue.value}}
     span.select-message Please select which information you wish to inquire
 
@@ -13,7 +13,7 @@ q-page.page.padding.column.wrap.justify-center.items-center.content-center.text-
       q-btn.four.select-button(rounded @click="gotoPermitSearch") Permits Details
 
   section.column.wrap.justify-center.items-center.content-center.text-center(v-else)
-    span.division {{_division.value}} Application
+    span.division {{_division.getValue}} Application
     span.search-value {{_searchvalue.value}}
     span.select-message Invalid Search
 
@@ -54,22 +54,22 @@ const router = useRouter()
 const quasar = useQuasar()
 let _currentpage = useCurrentPage
 let _searchvalue = useSearchValue
-let _division = useDivision
+let _division = useDivision()
 let _listtype = useListType
 
 const detectDivision = async () => {
   if (_searchvalue.value.length === 9) {
-    _division.value = 'Building'
+    _division.setBuilding()
   } else if (_searchvalue.value.length === 8) {
-    _division.value = 'Occupancy'
+    _division.setOccupancy()
   } else if (_searchvalue.value.length === 10) {
-    _division.value = 'Electrical'
+    _division.setElectrical()
   } else if (_searchvalue.value.length === 11) {
-    _division.value = 'Signage'
+    _division.setSignage()
   } else if (_searchvalue.value.length === 7) {
-    _division.value = 'Mechanical'
+    _division.setMechanical()
   } else {
-    _division.value = 'Unidentified'
+    _division.setUndefined()
   }
 }
 
