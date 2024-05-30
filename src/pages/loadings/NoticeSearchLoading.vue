@@ -45,7 +45,7 @@ let _listtype = useListType
 let _currentpage = useCurrentPage
 let _searchvalue = useSearchValue
 let _division = useDivision()
-let _applicationno = useApplicationNo
+let _applicationno = useApplicationNo()
 let _tabledata = useTableData
 let _ownername = useOwnername
 let _owneraddress = useOwneraddress
@@ -92,7 +92,7 @@ const getProgressFlow = async () => {
     }
 
     if (data !== null) {
-      _applicationno.value = _searchvalue.value
+      _applicationno.updateValue(_searchvalue.value)
       _tabledata.value = data
       updatePage('noticecheck')
     }
@@ -145,7 +145,7 @@ const getOwnerDetails = async () => {
           const addressresult = decrypt(data.result4)
           const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
 
-          _applicationno.value = _searchvalue.value
+          _applicationno.updateValue(_searchvalue.value)
           _ownername.value = ffname || '--No Name found on Database--'
           _owneraddress.value = addressresult || '--No Address found on Database--'
 

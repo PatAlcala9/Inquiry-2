@@ -5,7 +5,7 @@ q-page.page(padding)
     div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
       label.owner-label Application Number:
       br
-      label.owner-name.secondary-title {{_applicationno.value}}
+      label.owner-name.secondary-title {{_applicationno.getValue}}
     div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
       label.owner-label Owner's Name:
       br
@@ -77,7 +77,7 @@ import { useCurrentPage } from 'stores/currentpage'
 import { decrypt } from 'assets/js/shield'
 
 const router = useRouter()
-let _applicationno = useApplicationNo
+let _applicationno = useApplicationNo()
 let _tabledata = useTableData
 let _ownername = useOwnername
 let _owneraddress = useOwneraddress

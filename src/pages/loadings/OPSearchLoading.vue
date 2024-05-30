@@ -47,7 +47,7 @@ let _currentpage = useCurrentPage
 let _searchvalue = useSearchValue
 const _division = useDivision()
 const _errormessage = useErrorMessage()
-let _applicationno = useApplicationNo
+let _applicationno = useApplicationNo()
 let _tabledata = useTableData
 let _ownername = useOwnername
 let _owneraddress = useOwneraddress
@@ -181,7 +181,7 @@ const getOwnerDetails = async () => {
       const addressresult = decrypt(data.result4)
       const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
 
-      _applicationno.value = _searchvalue.value
+      _applicationno.updateValue(_searchvalue.value)
       _ownername.value = ffname || '--No Name found on Database--'
       _owneraddress.value = addressresult || '--No Address found on Database--'
     }

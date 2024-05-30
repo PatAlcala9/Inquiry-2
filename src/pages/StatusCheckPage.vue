@@ -3,6 +3,10 @@
 q-page.page(padding)
   section.page-title-group
     div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
+        label.owner-label Application Number:
+        br
+        label.owner-name.secondary-title {{_applicationno.getValue}}
+    div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
         label.owner-label.light Owner's Name:
         br
         label.owner-name.secondary-title {{ownername}}
@@ -72,7 +76,7 @@ import { useCurrentPage } from 'stores/currentpage'
 import { decrypt } from 'assets/js/shield'
 
 const router = useRouter()
-let _applicationno = useApplicationNo
+let _applicationno = useApplicationNo()
 let _searchvalue = useSearchValue
 // let _division = useDivision()
 let _tabledata = useTableData

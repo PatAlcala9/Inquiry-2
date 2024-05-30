@@ -14,7 +14,11 @@ export const useErrorMessage = defineStore('errormessage', {
   },
 
   actions: {
-    updateMessage: (msg) => this.message = msg,
-    updateSubMessage: (msg) => this.subMessage = msg,
+    updateMessage(msg) {
+      this.message = msg
+    },
+    updateSubMessage(msg) {
+      this.subMessage = msg
+    },
   },
 })

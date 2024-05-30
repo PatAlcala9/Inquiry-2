@@ -38,7 +38,6 @@ import { useTableData } from 'stores/tabledata'
 import { useOwnername } from 'stores/ownername'
 import { useOwneraddress } from 'stores/owneraddress'
 import { useErrorMessage } from 'stores/errormessage'
-import { useErrorSubMessage } from 'stores/errorsubmessage'
 import { encrypt, decrypt } from 'assets/js/shield'
 
 const router = useRouter()
@@ -47,12 +46,11 @@ let _listtype = useListType
 let _currentpage = useCurrentPage
 let _searchvalue = useSearchValue
 let _division = useDivision()
-let _applicationno = useApplicationNo
+let _applicationno = useApplicationNo()
 let _tabledata = useTableData
 let _ownername = useOwnername
 let _owneraddress = useOwneraddress
-let _errormessage = useErrorMessage
-let _errorsubmessage = useErrorSubMessage
+let _errormessage = useErrorMessage()
 
 const controller = new AbortController()
 
@@ -134,7 +132,7 @@ const getPermits = async () => {
 // }
 
 const getOwnerDetails = async () => {
-  const appno = _applicationno.value
+  const appno = _applicationno.getValue
   let method = ''
 
   if (_division.isBuilding) {
@@ -181,8 +179,8 @@ const getOwnerDetails = async () => {
         if (permit === 'ok') {
           updatePage('permitcheck')
         } else if (permit === 'nodata') {
-          _errormessage.value = 'Failed to Inquire Permits'
-          _errorsubmessage.value = 'No Permits Found for ' + _searchvalue.value
+          _errormessage.updateMessage('Failed to Inquire Permits')
+          _errormessage.updateSubMessage('No Permits Found for ' + _searchvalue.value)
           updatePage('error')
         } else {
           updatePage('noconnection')

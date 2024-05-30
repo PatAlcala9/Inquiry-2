@@ -30,10 +30,10 @@ q-page.page(padding)
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCurrentPage } from 'stores/currentpage'
-import { useApplicationNo } from 'stores/applicationno'
+// import { useApplicationNo } from 'stores/applicationno'
 import { useSearchValue } from 'stores/searchvalue'
 import { useErrorMessage } from 'stores/errormessage'
-import { useErrorSubMessage } from 'stores/errorsubmessage'
+// import { useErrorSubMessage } from 'stores/errorsubmessage'
 import { useListSubject } from 'stores/listsubject'
 import { useListType } from 'stores/listtype'
 import { useDivision } from 'stores/division'
@@ -46,10 +46,10 @@ import { encrypt, decrypt } from 'assets/js/shield'
 
 const router = useRouter()
 let _currentpage = useCurrentPage
-let _applicationno = useApplicationNo
+// let _applicationno = useApplicationNo
 let _searchvalue = useSearchValue
 let _errormessage = useErrorMessage()
-let _errorsubmessage = useErrorSubMessage
+// let _errorsubmessage = useErrorSubMessage
 // let _listsubject = useListSubject
 let _listtype = useListType
 let _division = useDivision()
@@ -406,33 +406,48 @@ const callserver = async () => {
           _listdate.value = formattedDate
           updatePage('listgeneratereceived')
         } else if (monthsList.some((month) => searchedDate.toUpperCase().includes(month))) {
+          const monthWith31List = ['JANUARY', 'MARCH', 'MAY', 'JULY', 'AUGUST', 'OCTOBER', 'DECEMBER']
+          const yearWithLeapList = ['2012', '2016', '2020', '2024', '2028', '2032', '2036', '2040', '2044', '2048']
+
           const matchingMonth = monthsList.filter((month) => searchedDate.toUpperCase().includes(month.toUpperCase()))
-          const days = Array.from({ length: 31 }, (_, index) => (index + 1).toString())
+          let days
+          if (monthWith31List.includes(matchingMonth[0])) {
+            days = Array.from({ length: 31 }, (_, index) => (index + 1).toString())
+          } else if (matchingMonth[0] === 'FEBRUARY') {
+            days = Array.from({ length: 29 }, (_, index) => (index + 1).toString())
+          } else {
+            days = Array.from({ length: 30 }, (_, index) => (index + 1).toString())
+          }
 
           if (days.some((day) => searchedDate.substring(matchingMonth[0].length + 1, matchingMonth[0].length + 3).trim() === day)) {
             const matchingDay = days.filter((day) => searchedDate.substring(matchingMonth[0].length + 1, matchingMonth[0].length + 3).trim() === day)
             const year = searchedDate.substring(parseInt(matchingMonth[0].length + 1) + parseInt(matchingDay[0].length + 1))
 
+            if (!yearWithLeapList.includes(year) && matchingMonth[0] === 'FEBRUARY') {
+              days = days.filter((day) => day !== 29)
+            }
+
             if (year > 0) {
               _listdate.value = searchedDate
               updatePage('listgeneratereceived')
             } else {
-              console.log('yeah')
               _errormessage.updateMessage('Invalid Command')
               _errormessage.updateSubMessage('Please specify the year')
-              // _errorsubmessage.value = 'Please specify the year'
               updatePage('error')
             }
           } else {
+            if (searchedDate.split(' ')[2] === undefined) {
+              _errormessage.updateSubMessage('Please specify the year')
+            } else {
+              _errormessage.updateSubMessage('Please specify the day of the month')
+            }
+
             _errormessage.updateMessage('Invalid Command')
-            _errormessage.updateSubMessage('Please specify the day of the month')
-            // _errorsubmessage.value = 'Please specify the day of the month'
             updatePage('error')
           }
         } else {
           _errormessage.updateMessage('Invalid Command')
-          _errormessage.updateSubMessage('Please specify a date with a proper format')
-          // _errorsubmessage.value = 'Please specify a date with a proper format'
+          _errormessage.updateSubMessage(searchedDate.toUpperCase().split(' ')[0] + ' is not a month, please state a proper month')
           updatePage('error')
         }
       } else {
@@ -546,9 +561,9 @@ const reset = () => {
   searched.value = ''
 }
 
-const uploadApplication = () => {
-  _applicationno.value = searched.value
-}
+// const uploadApplication = () => {
+//   _applicationno.value = searched.value
+// }
 
 const updatePage = (page) => {
   _currentpage.value = page

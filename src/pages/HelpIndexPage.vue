@@ -46,9 +46,9 @@ q-page.page(padding)
 <script>
 export default {
   preFetch({ redirect }) {
-    let _currentpage = useCurrentPage
+    const _currentpage = useCurrentPage()
 
-    if (_currentpage.value === undefined) {
+    if (_currentpage.isNull) {
       redirect({ path: '/' })
     }
   },
@@ -60,18 +60,20 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { useCurrentPage } from 'stores/currentpage'
-import { useApplicationNo } from 'stores/applicationno'
+// import { useApplicationNo } from 'stores/applicationno'
 
 // import INQPageTitle from 'components/INQPageTitle.vue'
 
 const router = useRouter()
 const quasar = useQuasar()
-let _currentpage = useCurrentPage
-let _applicationno = useApplicationNo
+let _currentpage = useCurrentPage()
+// let _applicationno = useApplicationNo
 let screenWidth = ref(null)
 
+console.log('page', _currentpage.isNull)
+
 const gotoApplicationHelp = () => {
-  _currentpage.value = 'helpapplication'
+  _currentpage.updatePage('helpapplication')
   router.push('helpapplication')
 }
 
@@ -95,7 +97,7 @@ const gotoHome = () => {
 // }
 
 const updatePage = (page) => {
-  _currentpage.value = page
+  _currentpage.updatePage(page)
   router.push(page, () => {})
 }
 

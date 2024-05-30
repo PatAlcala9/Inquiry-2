@@ -38,7 +38,6 @@ import { useTableData } from 'stores/tabledata'
 import { useListYear } from 'stores/listyear'
 import { useListDate } from 'stores/listdate'
 import { useErrorMessage } from 'stores/errormessage'
-import { useErrorSubMessage } from 'stores/errorsubmessage'
 import { useListStatus } from 'stores/liststatus'
 import { useListSumPaid } from 'stores/listsumpaid'
 import { ref } from 'vue'
@@ -54,8 +53,7 @@ let _currentpage = useCurrentPage
 let _tabledata = useTableData
 let _listyear = useListYear
 let _listdate = useListDate
-let _errormessage = useErrorMessage
-let _errorsubmessage = useErrorSubMessage
+let _errormessage = useErrorMessage()
 let _liststatus = useListStatus()
 let _listsumpaid = useListSumPaid()
 
@@ -83,15 +81,15 @@ const getDailyReceived = async () => {
     } else if (_division.isOccupancy) {
       encryptedEndpoint = encrypt('GetDailyReceivedOccupancy')
     } else if (_division.isSignage) {
-      _errormessage.value = 'Error on Generating List'
-      _errorsubmessage.value = 'Signage Data is not found'
+      _errormessage.updateMessage('Error on Generating List')
+      _errormessage.updateSubMessage('Signage Data is not found')
       updatePage('error')
       return
     } else if (_division.isElectrical) {
       encryptedEndpoint = encrypt('GetDailyReceivedElectrical')
     } else if (_division.isMechanical) {
-      _errormessage.value = 'Error on Generating List'
-      _errorsubmessage.value = 'Mechanical Data is not found'
+      _errormessage.updateMessage('Error on Generating List')
+      _errormessage.updateSubMessage('Mechanical Data is not found')
       updatePage('error')
       return
     } else {
@@ -127,22 +125,19 @@ const getDailyReceived = async () => {
       const dayOfWeek = searcheddate.getDay()
       const dayOfYearToday = date.formatDate(today, 'DDD')
       const dayOfYearSearched = date.formatDate(searcheddate, 'DDD')
-      // console.log('week', dayOfWeek)
-      // console.log('today', dayOfYearToday)
-      // console.log('searched', dayOfYearSearched)
 
-      _errormessage.value = 'Error on Generating List'
+      _errormessage.updateMessage('Error on Generating List')
 
       if (dayOfWeek === 6) {
-        _errorsubmessage.value = properDate + ' is Saturday, OCBO is closed on weekends'
+        _errormessage.updateSubMessage(properDate + ' is Saturday, OCBO is closed on weekends')
       } else if (dayOfWeek === 7) {
-        _errorsubmessage.value = properDate + ' is Sunday, OCBO is closed on weekends'
+        _errormessage.updateSubMessage(properDate + ' is Sundate, OCBO is closed on weekends')
       } else if (dayOfYearToday === dayOfYearSearched) {
-        _errorsubmessage.value = 'No current received data found at this moment'
+        _errormessage.updateSubMessage('No current received data found at this moment')
       } else if (dayOfYearToday < dayOfYearSearched) {
-        _errorsubmessage.value = 'Cannot generate data from the future'
+        _errormessage.updateSubMessage('Cannot generate data from the future')
       } else {
-        _errorsubmessage.value = 'Error'
+        _errormessage.updateSubMessage('Error')
       }
       updatePage('error')
     }

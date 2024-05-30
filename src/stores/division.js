@@ -15,11 +15,23 @@ export const useDivision = defineStore('division', {
   },
 
   actions: {
-    setBuilding: () => this.value = 'Building',
-    setOccupancy: () => this.value = 'Occupancy',
-    setSignage: () => this.value = 'Signage',
-    setElectrical: () => this.value = 'Electrical',
-    setMechanical: () => this.value = 'Mechanical',
-    setUndefined: () => this.value = undefined,
+    setBuilding() {
+      this.value = 'Building'
+    },
+    setOccupancy() {
+      this.value = 'Occupancy'
+    },
+    setSignage() {
+      this.value = 'Signage'
+    },
+    setElectrical() {
+      this.value = 'Electrical'
+    },
+    setMechanical() {
+      this.value = 'Mechanical'
+    },
+    setUndefined() {
+      this.value = undefined
+    }
   },
 })

@@ -6,20 +6,12 @@ export const useListSumPaid = defineStore('listsumpaid', {
   }),
 
   getters: {
-    getTotal(state) {
-      // let total = 0
-      // state.value.map((sum) => {
-      //   total += sum
-      // })
+    getTotal: (state) => {
       const sum = state.value.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
       return sum
     },
-    getSums(state) {
-      return state.value.map((status) => status.name)
-    },
-    getValue(state) {
-      return state.value
-    },
+    getSums: (state) => state.value.map((status) => status.name),
+    getValue: (state) => state.value,
   },
 
   actions: {

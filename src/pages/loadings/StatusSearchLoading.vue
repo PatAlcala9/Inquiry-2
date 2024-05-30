@@ -47,7 +47,7 @@ const quasar = useQuasar()
 
 let _searchvalue = useSearchValue
 let _division = useDivision()
-let _applicationno = useApplicationNo
+let _applicationno = useApplicationNo()
 let _ownername = useOwnername
 let _owneraddress = useOwneraddress
 let _lateststatus = useLatestStatus
@@ -118,7 +118,7 @@ const searchData = async () => {
       const result = data !== null ? decrypt(data.result) : null
       if (result !== null) {
         if (result.length > 0) {
-          _applicationno.value = searched
+          _applicationno.updateValue(searched)
           await getOwnerDetails()
           await getTableData()
 
@@ -141,7 +141,7 @@ const searchData = async () => {
 }
 
 const getOwnerDetails = async () => {
-  const appno = _applicationno.value
+  const appno = _applicationno.getValue
   let method = ''
 
   if (_division.isBuilding) {
@@ -197,7 +197,7 @@ const getOwnerDetails = async () => {
 }
 
 const getTableData = async () => {
-  const appno = _applicationno.value
+  const appno = _applicationno.getValue
   let method = ''
 
   if (_division.isBuilding) {
