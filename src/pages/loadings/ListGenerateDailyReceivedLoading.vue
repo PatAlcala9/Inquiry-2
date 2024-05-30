@@ -77,51 +77,38 @@ const getDailyReceived = async () => {
   const result = conn !== null ? decrypt(conn.result) : null
 
   if (result !== null) {
+    let encryptedEndpoint
     if (_division.isBuilding) {
-      const encryptedEndpoint = encrypt('GetDailyReceived')
-      const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
-      const encryptedData = encrypt(formattedDate)
-      const replacedData = encryptedData.replaceAll('/', '~')
-      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
-      data = response.data.length !== 0 ? response.data : null
+      encryptedEndpoint = encrypt('GetDailyReceived')
     } else if (_division.isOccupancy) {
-      const encryptedEndpoint = encrypt('GetDailyReceivedOccupancy')
-      const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
-      const encryptedData = encrypt(formattedDate)
-      const replacedData = encryptedData.replaceAll('/', '~')
-      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
-      data = response.data.length !== 0 ? response.data : null
+      encryptedEndpoint = encrypt('GetDailyReceivedOccupancy')
     } else if (_division.isSignage) {
       _errormessage.value = 'Error on Generating List'
       _errorsubmessage.value = 'Signage Data is not found'
       updatePage('error')
+      return
     } else if (_division.isElectrical) {
-      const encryptedEndpoint = encrypt('GetDailyReceivedElectrical')
-      const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
-      const encryptedData = encrypt(formattedDate)
-      const replacedData = encryptedData.replaceAll('/', '~')
-      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
-      data = response.data.length !== 0 ? response.data : null
+      encryptedEndpoint = encrypt('GetDailyReceivedElectrical')
     } else if (_division.isMechanical) {
       _errormessage.value = 'Error on Generating List'
       _errorsubmessage.value = 'Mechanical Data is not found'
       updatePage('error')
+      return
+    } else {
+      encryptedEndpoint = null
     }
+
+    const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+    const encryptedData = encrypt(formattedDate)
+    const replacedData = encryptedData.replaceAll('/', '~')
+    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+    data = response.data.length !== 0 ? response.data : null
 
     if (data.result.length > 0) {
       _tabledata.value = data
       const tempApp = data.result
       _liststatus.$patch({ value: [] })
       _listsumpaid.$patch({ value: [] })
-
-      // tempApp.map(async (application) => {
-      //   const decApp = decrypt(application)
-
-      //   const stat = await getLatestStatus(decApp)
-      //   _liststatus.addStatus(stat)
-      //   const sum = await getSumPaid(decApp)
-      //   _listsumpaid.addSum(sum)
-      // })
 
       for (let i = 0; i < tempApp.length; i++) {
         const application = tempApp[i]
@@ -186,7 +173,17 @@ const getLatestStatus = async (application) => {
 }
 
 const getSumPaid = async (application) => {
-  const encryptedEndpoint = encrypt('GetSumPaid')
+  let encryptedEndpoint
+  if (_division.isBuilding) {
+    encryptedEndpoint = encrypt('GetSumPaid')
+  } else if (_division.isOccupancy) {
+    encryptedEndpoint = encrypt('GetSumPaidOccupancy')
+  } else if (_division.isElectrical) {
+    encryptedEndpoint = encrypt('GetSumPaidElectrical')
+  } else {
+    encryptedEndpoint = null
+  }
+
   const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
   const encryptedData = encrypt(application)
   const replacedData = encryptedData.replaceAll('/', '~')
@@ -198,7 +195,31 @@ const getSumPaid = async (application) => {
 }
 
 const countOPReleased = async () => {
-  const filterArray = ['ORDER OF PAYMENT RELEASED', 'OR NUMBER VERIFIED', 'RECEIVED FOR PROCESSING', 'FOR BUILDING OFFICIAL APPROVAL', 'PERMIT APPROVE AND READY FOR RELEASE', 'PERMIT ALREADY RELEASE']
+  let filterArray
+  if (_division.isBuilding) {
+    filterArray = ['ORDER OF PAYMENT RELEASED', 'OR NUMBER VERIFIED', 'RECEIVED FOR PROCESSING', 'FOR BUILDING OFFICIAL APPROVAL', 'PERMIT APPROVE AND READY FOR RELEASE', 'PERMIT ALREADY RELEASE']
+  } else if (_division.isOccupancy) {
+    filterArray = [
+      'ORDER OF PAYMENT RELEASE FOR BUREAU OF FIRE',
+      'OCCUPANCY ORDER OF PAYMENT PAID',
+      'OCCUPANCY OFFICIAL RECEIPT VALIDATED',
+      'FOR OCCUPANCY PERMIT RECOMMENDING APPROVAL',
+      'FOR OCUPANCY CERTIFICATE OF ELECTRICAL INSPECTION GENERATION',
+      'FOR OCCUPANCY PERMIT GENERATION',
+      'FOR OCCUPANCY RELEASING',
+      'OCCUPANCY PERMIT RELEASED TO',
+    ]
+  } else if (_division.isElectrical) {
+    filterArray = [
+      'ELECTRICAL ORDERPAYMENT RELEASED',
+      'FOR ELECTRICAL OFFICIAL RECEIPT VALIDATION',
+      'FOR ELECTRICAL PERMIT APPROVAL',
+      'FOR ELECTRICAL PERMIT RELEASING',
+      'ELECTRICAL PERMIT RELEASED TO',
+      'ELECTRICAL PERMIT SENT TO',
+    ]
+  }
+
   const newArray = _liststatus.allStatusArray.filter((item) => filterArray.includes(item))
   opReleasedCount.value = newArray.length
   // console.log('newarray', newArray)

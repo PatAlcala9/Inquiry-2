@@ -1,20 +1,19 @@
 <template lang="pug">
 
-q-page(padding)
-  //- div(class="q-pa-md")
+q-page.page(padding)
 
   div(v-if="$q.screen.width <= 899")
     div.full-width.column.no-wrap.justify-center.items-center.content-start
       span.page-title Found for
       span.page-searchvalue {{_searchvalue.value.toUpperCase()}}
-      span(class="secondary-title number") {{_tabledata.value.result.length}}
-      span(class="secondary-title sentence") {{sentence}}
+      span.secondary-title.number {{_tabledata.value.result.length}}
+      span.secondary-title.sentence {{sentence}}
       q-input.searchbar(rounded outlined v-model="specific" placeholder="Search Specific" bg-color="white" )
         template(v-slot:prepend)
           q-icon(name="search")
 
     div.full-width.column.wrap.justify-center.items-center.content-center
-      q-btn.button-back(rounded label="Back" @click="gotoHome" icon="arrow_back_ios")
+      q-btn.button-back(rounded label="Back" @click="gotoHome")
 
       section(v-if="_tabledata.value.result.length > 0")
         div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-align(v-for="(item, index) in _tabledata.value.result" :key="data")
@@ -24,7 +23,7 @@ q-page(padding)
 
   div(v-else)
     div.full-width.column.content-center.items-center.justify-center
-      h3(class="secondary-title") {{_tabledata.value.result.length}} {{sentence}}
+      h3.secondary-title {{_tabledata.value.result.length}} {{sentence}}
       q-input.searchbar(rounded outlined v-model="specific" placeholder="Search Specific" bg-color="white" )
         template(v-slot:prepend)
           q-icon(name="search")

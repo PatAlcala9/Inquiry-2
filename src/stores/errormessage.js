@@ -9,20 +9,12 @@ export const useErrorMessage = defineStore('errormessage', {
   },
 
   getters: {
-    getMessage(state) {
-      return state.message
-    },
-    getSubMessage(state) {
-      return state.subMessage
-    },
+    getMessage: (state) => state.message,
+    getSubMessage: (state) => state.subMessage,
   },
 
   actions: {
-    updateMessage(msg) {
-      this.message = msg
-    },
-    updateSubMessage(msg) {
-      this.subMessage = msg
-    },
+    updateMessage: (msg) => this.message = msg,
+    updateSubMessage: (msg) => this.subMessage = msg,
   },
 })

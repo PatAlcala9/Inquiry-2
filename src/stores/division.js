@@ -6,44 +6,20 @@ export const useDivision = defineStore('division', {
   }),
 
   getters: {
-    getValue(state) {
-      return state.value
-    },
-    isBuilding(state) {
-      return state.value === 'Building'
-    },
-    isOccupancy(state) {
-      return state.value === 'Occupancy'
-    },
-    isElectrical(state) {
-      return state.value === 'Electrical'
-    },
-    isSignage(state) {
-      return state.value === 'Signage'
-    },
-    isMechanical(state) {
-      return state.value === 'Mechanical'
-    },
+    getValue: (state) => state.value,
+    isBuilding: (state) =>  state.value === 'Building',
+    isOccupancy: (state) => state.value === 'Occupancy',
+    isElectrical: (state) => state.value === 'Electrical',
+    isSignage: (state) => state.value === 'Signage',
+    isMechanical: (state) => state.value === 'Mechanical',
   },
 
   actions: {
-    setBuilding() {
-      this.value = 'Building'
-    },
-    setOccupancy() {
-      this.value = 'Occupancy'
-    },
-    setSignage() {
-      this.value = 'Signage'
-    },
-    setElectrical() {
-      this.value = 'Electrical'
-    },
-    setMechanical() {
-      this.value = 'Mechanical'
-    },
-    setUndefined() {
-      this.value = undefined
-    },
+    setBuilding: () => this.value = 'Building',
+    setOccupancy: () => this.value = 'Occupancy',
+    setSignage: () => this.value = 'Signage',
+    setElectrical: () => this.value = 'Electrical',
+    setMechanical: () => this.value = 'Mechanical',
+    setUndefined: () => this.value = undefined,
   },
 })
