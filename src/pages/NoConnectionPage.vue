@@ -9,9 +9,9 @@ q-page.fit.column.wrap.justify-center.items-center.content-center(padding)
 <script>
 export default {
   preFetch({ redirect }) {
-    let _currentpage = useCurrentPage
+    const _currentpage = useCurrentPage()
 
-    if (_currentpage.value === undefined) {
+    if (_currentpage.isNull) {
       redirect({ path: '/' })
     }
   },
@@ -23,7 +23,7 @@ import { useRouter } from 'vue-router'
 import { useCurrentPage } from 'stores/currentpage'
 
 const router = useRouter()
-let _currentpage = useCurrentPage
+const _currentpage = useCurrentPage()
 
 const gotoHome = () => {
   updatePage('/')
@@ -31,7 +31,7 @@ const gotoHome = () => {
 }
 
 const updatePage = (page) => {
-  _currentpage.value = page
+  _currentpage.updatePage(page)
   router.push(page, () => {})
 }
 </script>

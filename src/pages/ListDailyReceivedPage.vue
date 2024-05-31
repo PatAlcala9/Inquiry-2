@@ -46,9 +46,9 @@ q-page.page(padding)
 <script>
 export default {
   preFetch({ redirect }) {
-    let _currentpage = useCurrentPage
+    const _currentpage = useCurrentPage()
 
-    if (_currentpage.value === undefined) {
+    if (_currentpage.isNull) {
       redirect({ path: '/' })
     }
   },
@@ -69,12 +69,12 @@ import { useDivision } from 'stores/division'
 
 const router = useRouter()
 
-let _currentpage = useCurrentPage
+const _currentpage = useCurrentPage()
 let _tabledata = useTableData
 let _listdate = useListDate
-let _liststatus = useListStatus()
-let _listsumpaid = useListSumPaid()
-let _division = useDivision()
+const _liststatus = useListStatus()
+const _listsumpaid = useListSumPaid()
+const _division = useDivision()
 
 const properDate = date.formatDate(_listdate.value, 'MMMM DD, YYYY')
 
@@ -99,7 +99,7 @@ const countOPReleased = async () => {
 }
 
 const updatePage = (page) => {
-  _currentpage.value = page
+  _currentpage.updatePage(page)
   router.push(page)
 }
 

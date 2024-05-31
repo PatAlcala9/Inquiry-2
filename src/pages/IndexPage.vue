@@ -45,7 +45,7 @@ import { JSEncrypt } from 'jsencrypt'
 import { encrypt, decrypt } from 'assets/js/shield'
 
 const router = useRouter()
-let _currentpage = useCurrentPage
+let _currentpage = useCurrentPage()
 // let _applicationno = useApplicationNo
 let _searchvalue = useSearchValue
 let _errormessage = useErrorMessage()
@@ -541,7 +541,7 @@ const callserver = async () => {
         updatePage('error')
       } else {
         _searchvalue.value = searched.value
-        _currentpage.value = 'namesearch'
+        _currentpage.updatePage('namesearch')
         router.push('namesearch')
       }
     }
@@ -549,11 +549,11 @@ const callserver = async () => {
 }
 
 const loadCurrentPage = () => {
-  router.push(_currentpage.value)
+  router.push(_currentpage.getValue)
 }
 
 const gotoHelp = () => {
-  _currentpage.value = 'helpindex'
+  _currentpage.updatePage('helpindex')
   router.push('helpindex')
 }
 
@@ -566,7 +566,7 @@ const reset = () => {
 // }
 
 const updatePage = (page) => {
-  _currentpage.value = page
+  _currentpage.updatePage(page)
   router.push(page)
 }
 

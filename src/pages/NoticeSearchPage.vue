@@ -59,9 +59,9 @@ q-page.page(padding)
 <script>
 export default {
   preFetch({ redirect }) {
-    let _currentpage = useCurrentPage
+    const _currentpage = useCurrentPage()
 
-    if (_currentpage.value === undefined) {
+    if (_currentpage.isNull) {
       redirect({ path: '/' })
     }
   },
@@ -83,17 +83,17 @@ import { date } from 'quasar'
 import { decrypt } from 'assets/js/shield'
 
 const router = useRouter()
-let _applicationno = useApplicationNo()
+const _applicationno = useApplicationNo()
 let _tabledata = useTableData
 let _ownername = useOwnername
 let _owneraddress = useOwneraddress
-let _currentpage = useCurrentPage
-let _division = useDivision()
+const _currentpage = useCurrentPage()
+const _division = useDivision()
 
 // const controller = new AbortController()
 
 const updatePage = (page) => {
-  _currentpage.value = page
+  _currentpage.updatePage(page)
   router.push(page, () => {})
 }
 
