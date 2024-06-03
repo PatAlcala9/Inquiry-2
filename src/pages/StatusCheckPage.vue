@@ -77,12 +77,12 @@ import { decrypt } from 'assets/js/shield'
 
 const router = useRouter()
 const _applicationno = useApplicationNo()
-let _searchvalue = useSearchValue
+const _searchvalue = useSearchValue()
 // let _division = useDivision()
 let _tabledata = useTableData
 let _ownername = useOwnername
 let _owneraddress = useOwneraddress
-let _lateststatus = useLatestStatus
+const _lateststatus = useLatestStatus()
 const _currentpage = useCurrentPage()
 
 // const controller = new AbortController()
@@ -91,7 +91,7 @@ let ownername = ref(_ownername.value)
 let address = ref(_owneraddress.value)
 
 let tableData = ref(_tabledata.value)
-let latestStatus = ref(_lateststatus.value)
+let latestStatus = ref(_lateststatus.getValue)
 let ready = ref(null)
 
 const gotoHome = () => {

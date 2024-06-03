@@ -5,7 +5,7 @@ q-page.page(padding)
   div(v-if="$q.screen.width <= 899")
     div.full-width.column.no-wrap.justify-center.items-center.content-start
       span.page-title Found for
-      span.page-searchvalue {{_searchvalue.value.toUpperCase()}}
+      span.page-searchvalue {{_searchvalue.getValue.toUpperCase()}}
       span.secondary-title.number {{_tabledata.value.result.length}}
       span.secondary-title.sentence {{sentence}}
       q-input.searchbar(rounded outlined v-model="specific" placeholder="Search Specific" bg-color="white" )
@@ -161,7 +161,7 @@ import { decrypt } from 'assets/js/shield'
 const router = useRouter()
 let _tabledata = useTableData
 const _currentpage = useCurrentPage()
-let _searchvalue = useSearchValue
+const _searchvalue = useSearchValue()
 
 // let rows = ref(_tabledata.value)
 let specific = ref('')

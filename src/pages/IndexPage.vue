@@ -47,7 +47,7 @@ import { encrypt, decrypt } from 'assets/js/shield'
 const router = useRouter()
 const _currentpage = useCurrentPage()
 // let _applicationno = useApplicationNo
-let _searchvalue = useSearchValue
+const _searchvalue = useSearchValue()
 let _errormessage = useErrorMessage()
 // let _errorsubmessage = useErrorSubMessage
 // let _listsubject = useListSubject
@@ -174,11 +174,11 @@ const defaultMode = () => {
 const callserver = async () => {
   if (isNaN(searched.value.substring(0, 2)) === false) {
     if (searched.value.includes('-')) {
-      _searchvalue.value = searched.value
+      _searchvalue.updateValue(searched.value)
       updatePage('selection')
     } else {
       const withDash = searched.value.toString().substring(0, 2) + '-' + searched.value.toString().substring(2, searched.value.length)
-      _searchvalue.value = withDash
+      _searchvalue.updateValue(withDash)
       updatePage('selection')
     }
     // if (years.includes(searched.value)) {
@@ -540,7 +540,7 @@ const callserver = async () => {
 
         updatePage('error')
       } else {
-        _searchvalue.value = searched.value
+        _searchvalue.updateValue(searched.value)
         updatePage('namesearch')
         // _currentpage.value = 'namesearch'
         // router.push('namesearch', () => {})
@@ -573,7 +573,7 @@ const updatePage = (page) => {
 }
 
 const uploadSearch = (value) => {
-  _searchvalue.value = value
+  _searchvalue.updateValue(value)
 }
 
 ;(async () => {

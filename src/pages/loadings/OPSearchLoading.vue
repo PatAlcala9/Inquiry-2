@@ -6,7 +6,7 @@ q-page.padding.flex.flex-center.page
     span.loading-type {{_listtype.value.toUpperCase()}}
     span.minor for
     span.loading-division {{_division.getValue}} Application
-    span.loading-value {{_searchvalue.value}}
+    span.loading-value {{_searchvalue.getValue}}
 
     div.fit.column.items-center
       q-btn.button(rounded @click="gotoHome") Cancel
@@ -44,7 +44,7 @@ const router = useRouter()
 // let _listsubject = useListSubject
 let _listtype = useListType
 const _currentpage = useCurrentPage()
-let _searchvalue = useSearchValue
+const _searchvalue = useSearchValue()
 const _division = useDivision()
 const _errormessage = useErrorMessage()
 let _applicationno = useApplicationNo()
@@ -91,7 +91,7 @@ const getOrderofPayment = async () => {
       if (_division.isBuilding) {
         const encryptedEndpoint = encrypt('GetOrderofPaymentBuilding')
         const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
-        const encryptedData = encrypt(_searchvalue.value)
+        const encryptedData = encrypt(_searchvalue.getValue)
         const replacedData = encryptedData.replaceAll('/', '~')
         response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
           signal: controller.signal,
@@ -99,7 +99,7 @@ const getOrderofPayment = async () => {
       } else if (_division.isOccupancy) {
         const encryptedEndpoint = encrypt('GetOrderofPaymentOccupancy')
         const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
-        const encryptedData = encrypt(_searchvalue.value)
+        const encryptedData = encrypt(_searchvalue.getValue)
         const replacedData = encryptedData.replaceAll('/', '~')
         response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
           signal: controller.signal,
@@ -112,7 +112,7 @@ const getOrderofPayment = async () => {
       } else if (_division.isElectrical) {
         const encryptedEndpoint = encrypt('GetOrderofPaymentElectrical')
         const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
-        const encryptedData = encrypt(_searchvalue.value)
+        const encryptedData = encrypt(_searchvalue.getValue)
         const replacedData = encryptedData.replaceAll('/', '~')
         response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
           signal: controller.signal,
@@ -167,7 +167,7 @@ const getOwnerDetails = async () => {
     const encryptedEndpoint = encrypt('GetOwnerName' + method)
     const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
 
-    const encryptedData = encrypt(_searchvalue.value)
+    const encryptedData = encrypt(_searchvalue.getValue)
     const replacedData = encryptedData.replaceAll('/', '~')
     const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
       signal: controller.signal,
@@ -181,7 +181,7 @@ const getOwnerDetails = async () => {
       const addressresult = decrypt(data.result4)
       const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
 
-      _applicationno.updateValue(_searchvalue.value)
+      _applicationno.updateValue(_searchvalue.getValue)
       _ownername.value = ffname || '--No Name found on Database--'
       _owneraddress.value = addressresult || '--No Address found on Database--'
     }

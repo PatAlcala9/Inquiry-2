@@ -3,7 +3,7 @@
 q-page.page.padding.column.wrap.justify-center.items-center.content-center.text-center
   section.page-title-group.column.wrap.justify-center.items-center.content-center.text-center(v-if="_division.getValue !== undefined")
     span.division {{_division.getValue}} Application
-    span.search-value {{_searchvalue.value}}
+    span.search-value {{_searchvalue.getValue}}
     span.select-message Please select which information you wish to inquire
 
     div.grid
@@ -14,7 +14,7 @@ q-page.page.padding.column.wrap.justify-center.items-center.content-center.text-
 
   section.column.wrap.justify-center.items-center.content-center.text-center(v-else)
     span.division {{_division.getValue}} Application
-    span.search-value {{_searchvalue.value}}
+    span.search-value {{_searchvalue.getValue}}
     span.select-message Invalid Search
 
   div.fit.column.items-center.cancel-button
@@ -53,20 +53,20 @@ import { useCurrentPage } from 'stores/currentpage'
 const router = useRouter()
 const quasar = useQuasar()
 const _currentpage = useCurrentPage()
-let _searchvalue = useSearchValue
-let _division = useDivision()
-let _listtype = useListType
+const _searchvalue = useSearchValue()
+const _division = useDivision()
+const _listtype = useListType()
 
 const detectDivision = async () => {
-  if (_searchvalue.value.length === 9) {
+  if (_searchvalue.getValue.length === 9) {
     _division.setBuilding()
-  } else if (_searchvalue.value.length === 8) {
+  } else if (_searchvalue.getLength === 8) {
     _division.setOccupancy()
-  } else if (_searchvalue.value.length === 10) {
+  } else if (_searchvalue.getLength === 10) {
     _division.setElectrical()
-  } else if (_searchvalue.value.length === 11) {
+  } else if (_searchvalue.getLength === 11) {
     _division.setSignage()
-  } else if (_searchvalue.value.length === 7) {
+  } else if (_searchvalue.getLength === 7) {
     _division.setMechanical()
   } else {
     _division.setUndefined()
@@ -78,17 +78,17 @@ const gotoStatusSearch = () => {
 }
 
 const gotoOPSearch = () => {
-  _listtype.value = 'Order of Payment'
+  _listtype.updateValue('Order of Payment')
   updatePage('opsearch')
 }
 
 const gotoNoticeSearch = () => {
-  _listtype.value = 'Notice to Comply'
+  _listtype.updateValue('Notice to Comply')
   updatePage('noticesearch')
 }
 
 const gotoPermitSearch = () => {
-  _listtype.value = 'List of Permits'
+  _listtype.updateValue('List of Permits')
   updatePage('permitsearch')
 }
 

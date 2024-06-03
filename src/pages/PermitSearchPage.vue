@@ -83,12 +83,12 @@ import { decrypt } from 'assets/js/shield'
 
 const router = useRouter()
 let _applicationno = useApplicationNo()
-let _searchvalue = useSearchValue
+const _searchvalue = useSearchValue()
 let _division = useDivision
 let _tabledata = useTableData
 let _ownername = useOwnername
 let _owneraddress = useOwneraddress
-let _lateststatus = useLatestStatus
+const _lateststatus = useLatestStatus()
 const _currentpage = useCurrentPage()
 let _listyear = useListYear
 

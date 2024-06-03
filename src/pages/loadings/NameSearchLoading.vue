@@ -3,7 +3,7 @@
 q-page.padding.flex.flex-center.page
   div.full-width.column.items-center.justify-center.text-center
     span.loading-title Searching for the name
-    span.loading-value {{_searchvalue.value.toUpperCase()}}
+    span.loading-value {{_searchvalue.getValue.toUpperCase()}}
     span.loading-division Please wait
 
     div.fit.column.items-center
@@ -33,7 +33,7 @@ import { useCurrentPage } from 'stores/currentpage'
 import { encrypt, decrypt } from 'src/assets/js/shield'
 
 const router = useRouter()
-let _searchvalue = useSearchValue
+const _searchvalue = useSearchValue()
 let _tabledata = useTableData
 const _currentpage = useCurrentPage()
 
@@ -53,7 +53,7 @@ const getClientList = async () => {
     if (result !== null) {
       const encryptedEndpoint = encrypt('GetListofClients')
       const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
-      const encryptedData = encrypt(_searchvalue.value.toUpperCase())
+      const encryptedData = encrypt(_searchvalue.getValue.toUpperCase())
       const replacedData = encryptedData.replaceAll('/', '~')
       const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
         signal: controller.signal,

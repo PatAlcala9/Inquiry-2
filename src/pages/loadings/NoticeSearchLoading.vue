@@ -6,7 +6,7 @@ q-page.padding.flex.flex-center.page
     span.loading-type {{_listtype.value.toUpperCase()}}
     span.minor for
     span.loading-division {{_division.getValue}} Application
-    span.loading-value {{_searchvalue.value}}
+    span.loading-value {{_searchvalue.getValue}}
 
     div.fit.column.items-center
       q-btn.button(rounded @click="gotoHome") Cancel
@@ -43,7 +43,7 @@ const router = useRouter()
 // let _listsubject = useListSubject
 let _listtype = useListType
 const _currentpage = useCurrentPage()
-let _searchvalue = useSearchValue
+const _searchvalue = useSearchValue()
 let _division = useDivision()
 let _applicationno = useApplicationNo()
 let _tabledata = useTableData
@@ -65,14 +65,14 @@ const getProgressFlow = async () => {
     if (_division.isBuilding) {
       const encryptedEndpoint = encrypt('GetProgressFlowBuilding')
       const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
-      const encryptedData = encrypt(_searchvalue.value)
+      const encryptedData = encrypt(_searchvalue.getValue)
       const replacedData = encryptedData.replaceAll('/', '~')
       const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
       data = response.data.length !== 0 ? response.data : null
     } else if (_division.isOccupancy) {
       const encryptedEndpoint = encrypt('GetProgressFlowOccupancy')
       const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
-      const encryptedData = encrypt(_searchvalue.value)
+      const encryptedData = encrypt(_searchvalue.getValue)
       const replacedData = encryptedData.replaceAll('/', '~')
       const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
       data = response.data.length !== 0 ? response.data : null
@@ -82,7 +82,7 @@ const getProgressFlow = async () => {
     } else if (_division.isElectrical) {
       const encryptedEndpoint = encrypt('GetProgressFlowElectrical')
       const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
-      const encryptedData = encrypt(_searchvalue.value)
+      const encryptedData = encrypt(_searchvalue.getValue)
       const replacedData = encryptedData.replaceAll('/', '~')
       const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
       data = response.data.length !== 0 ? response.data : null
@@ -92,7 +92,7 @@ const getProgressFlow = async () => {
     }
 
     if (data !== null) {
-      _applicationno.updateValue(_searchvalue.value)
+      _applicationno.updateValue(_searchvalue.getValue)
       _tabledata.value = data
       updatePage('noticecheck')
     }
@@ -127,7 +127,7 @@ const getOwnerDetails = async () => {
     if (result !== null) {
       const encryptedEndpoint = encrypt('GetOwnerName' + method)
       const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
-      const encryptedData = encrypt(_searchvalue.value)
+      const encryptedData = encrypt(_searchvalue.getValue)
       const replacedData = encryptedData.replaceAll('/', '~')
       const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
         signal: controller.signal,
@@ -145,7 +145,7 @@ const getOwnerDetails = async () => {
           const addressresult = decrypt(data.result4)
           const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
 
-          _applicationno.updateValue(_searchvalue.value)
+          _applicationno.updateValue(_searchvalue.getValue)
           _ownername.value = ffname || '--No Name found on Database--'
           _owneraddress.value = addressresult || '--No Address found on Database--'
 

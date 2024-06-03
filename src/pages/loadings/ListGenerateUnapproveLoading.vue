@@ -35,7 +35,7 @@ import { useCurrentPage } from 'stores/currentpage'
 
 const router = useRouter()
 let _listtype = useListType
-// let _searchvalue = useSearchValue
+// const _searchvalue = useSearchValue()
 let _division = useDivision
 const _currentpage = useCurrentPage()
 
