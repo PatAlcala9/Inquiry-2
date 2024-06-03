@@ -3,7 +3,7 @@
 q-page.padding.flex.flex-center.page
   div.column.items-center.text-center
     span.loading-title Generating List
-    span.loading-type {{_listtype.value.toUpperCase()}}
+    span.loading-type {{_listtype.getValue.toUpperCase()}}
     span.minor for
     span.loading-division {{_division.getValue}} Application
     span.loading-value {{_searchvalue.getValue}}
@@ -42,15 +42,15 @@ import { encrypt, decrypt } from 'assets/js/shield'
 
 const router = useRouter()
 // let _listsubject = useListSubject
-let _listtype = useListType
+const _listtype = useListType()
 const _currentpage = useCurrentPage()
 const _searchvalue = useSearchValue()
 const _division = useDivision()
 const _errormessage = useErrorMessage()
-let _applicationno = useApplicationNo()
+const _applicationno = useApplicationNo()
 let _tabledata = useTableData
-let _ownername = useOwnername
-let _owneraddress = useOwneraddress
+const _ownername = useOwnername()
+const _owneraddress = useOwneraddress()
 
 const controller = new AbortController()
 
@@ -182,12 +182,12 @@ const getOwnerDetails = async () => {
       const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
 
       _applicationno.updateValue(_searchvalue.getValue)
-      _ownername.value = ffname || '--No Name found on Database--'
-      _owneraddress.value = addressresult || '--No Address found on Database--'
+      _ownername.updateValue(ffname || '--No Name found on Database--')
+      _owneraddress.updateValue(addressresult || '--No Address found on Database--')
     }
   } catch {
-    _ownername.value = '--No Name found on Database--'
-    _owneraddress.value = '--No Address found on Database--'
+    _ownername.updateValue('--No Name found on Database--')
+    _owneraddress.updateValue('--No Address found on Database--')
   }
 }
 

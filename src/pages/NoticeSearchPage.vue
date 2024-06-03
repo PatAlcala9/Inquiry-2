@@ -9,11 +9,11 @@ q-page.page(padding)
     div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
       label.owner-label Owner's Name:
       br
-      label.owner-name.secondary-title {{_ownername.value}}
+      label.owner-name.secondary-title {{_ownername.getValue}}
     div.address-group.full-width.column.no-wrap.justify-center.items-center.content-start
       label.address-label Address:
       br
-      label.address-name.secondary-title {{_owneraddress.value}}
+      label.address-name.secondary-title {{_owneraddress.getValue}}
 
     div.back-button.full-width.column.wrap.justify-center.items-center.content-center
       q-btn(rounded class="button-back" label="Back" @click="gotoHome")
@@ -85,8 +85,8 @@ import { decrypt } from 'assets/js/shield'
 const router = useRouter()
 let _applicationno = useApplicationNo()
 let _tabledata = useTableData
-let _ownername = useOwnername
-let _owneraddress = useOwneraddress
+const _ownername = useOwnername()
+const _owneraddress = useOwneraddress()
 const _currentpage = useCurrentPage()
 let _division = useDivision()
 

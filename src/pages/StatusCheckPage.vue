@@ -80,15 +80,15 @@ const _applicationno = useApplicationNo()
 const _searchvalue = useSearchValue()
 // let _division = useDivision()
 let _tabledata = useTableData
-let _ownername = useOwnername
-let _owneraddress = useOwneraddress
+const _ownername = useOwnername()
+const _owneraddress = useOwneraddress()
 const _lateststatus = useLatestStatus()
 const _currentpage = useCurrentPage()
 
 // const controller = new AbortController()
 
-let ownername = ref(_ownername.value)
-let address = ref(_owneraddress.value)
+let ownername = ref(_ownername.getValue)
+let address = ref(_owneraddress.getValue)
 
 let tableData = ref(_tabledata.value)
 let latestStatus = ref(_lateststatus.getValue)

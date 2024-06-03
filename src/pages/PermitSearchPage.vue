@@ -9,11 +9,11 @@ q-page.page(padding)
     div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
         label.owner-label Owner's Name:
         br
-        label.owner-name.secondary-title {{_ownername.value}}
+        label.owner-name.secondary-title {{_ownername.getValue}}
     div.address-group.full-width.column.no-wrap.justify-center.items-center.content-start
         label.address-label Address:
         br
-        label.address-name.secondary-title {{_owneraddress.value}}
+        label.address-name.secondary-title {{_owneraddress.getValue}}
 
   div(v-if="_tabledata.value !== null")
     section(v-if="$q.screen.width <= 899")
@@ -86,8 +86,8 @@ let _applicationno = useApplicationNo()
 const _searchvalue = useSearchValue()
 let _division = useDivision
 let _tabledata = useTableData
-let _ownername = useOwnername
-let _owneraddress = useOwneraddress
+const _ownername = useOwnername()
+const _owneraddress = useOwneraddress()
 const _lateststatus = useLatestStatus()
 const _currentpage = useCurrentPage()
 let _listyear = useListYear
