@@ -16,9 +16,9 @@ q-page.flex.flex-center(padding)
 <script>
 export default {
   preFetch({ redirect }) {
-    let _currentpage = useCurrentPage
+    const _currentpage = useCurrentPage()
 
-    if (_currentpage.value === undefined) {
+    if (_currentpage.isNull) {
       redirect({ path: '/' })
     }
   },
@@ -34,7 +34,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 let _errormessage = useErrorMessage()
 // let _errorsubmessage = useErrorSubMessage
-let _currentpage = useCurrentPage
+const _currentpage = useCurrentPage()
 
 const gotoHome = () => {
   // controller.abort()
@@ -47,8 +47,8 @@ const gotoHelp = () => {
 }
 
 const updatePage = (page) => {
-  _currentpage.value = page
-  router.push(page, () => {})
+  _currentpage.updateValue(page)
+  router.push(page)
 }
 </script>
 

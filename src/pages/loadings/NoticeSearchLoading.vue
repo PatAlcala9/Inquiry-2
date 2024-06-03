@@ -16,9 +16,9 @@ q-page.padding.flex.flex-center.page
 <script>
 export default {
   preFetch({ redirect }) {
-    let _currentpage = useCurrentPage
+    const _currentpage = useCurrentPage()
 
-    if (_currentpage.value === undefined) {
+    if (_currentpage.isNull) {
       redirect({ path: '/' })
     }
   },
@@ -42,7 +42,7 @@ import { encrypt, decrypt } from 'assets/js/shield'
 const router = useRouter()
 // let _listsubject = useListSubject
 let _listtype = useListType
-let _currentpage = useCurrentPage
+const _currentpage = useCurrentPage()
 let _searchvalue = useSearchValue
 let _division = useDivision()
 let _applicationno = useApplicationNo()
@@ -167,12 +167,12 @@ const gotoHome = () => {
 }
 
 const updatePage = (page) => {
-  _currentpage.value = page
-  router.push(page, () => {})
+  _currentpage.updateValue(page)
+  router.push(page)
 }
 
 const loadCurrentPage = () => {
-  router.push(_currentpage.value, () => {})
+  router.push(_currentpage.getValue)
 }
 
 ;(async () => {

@@ -3,7 +3,7 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '/', component: () => import('pages/IndexPage.vue') },
+      { path: '', component: () => import('pages/IndexPage.vue') },
       { path: 'selection', component: () => import('pages/SelectionPage.vue') },
       { path: 'statuscheck', component: () => import('pages/StatusCheckPage.vue') },
       { path: 'opcheck', component: () => import('pages/OPSearchPage.vue') },

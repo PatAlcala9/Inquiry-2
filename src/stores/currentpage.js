@@ -6,13 +6,16 @@ export const useCurrentPage = defineStore('currentpage', {
   }),
 
   getters: {
-    getCurrentPage: (state) => state.value,
+    getValue: (state) => state.value,
     isNull: (state) => state.value === null || state.value === undefined
   },
 
   actions: {
-    updatePage(page) {
+    updateValue(page) {
       this.value = page
     },
+    setHome() {
+      this.value = '/'
+    }
   },
 })

@@ -36,10 +36,10 @@ q-page.page(padding)
 
   div(v-if="$q.screen.width <= 500")
     div.full-width.column.no-wrap.justify-center.items-center.content-start
-      q-btn.button(rounded label="Home" @click="gotoHome")
+      q-btn.button-back(rounded label="Home" @click="gotoHome")
 
   div.flex.flex-center(v-else)
-    q-btn.button(rounded label="Home" @click="gotoHome")
+    q-btn.button-back(rounded label="Home" @click="gotoHome")
 
 </template>
 
@@ -60,25 +60,20 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { useCurrentPage } from 'stores/currentpage'
-// import { useApplicationNo } from 'stores/applicationno'
-
-// import INQPageTitle from 'components/INQPageTitle.vue'
 
 const router = useRouter()
 const quasar = useQuasar()
-let _currentpage = useCurrentPage()
+const _currentpage = useCurrentPage()
 // let _applicationno = useApplicationNo
 let screenWidth = ref(null)
 
-console.log('page', _currentpage.isNull)
-
 const gotoApplicationHelp = () => {
-  _currentpage.updatePage('helpapplication')
+  _currentpage.updateValue('helpapplication')
   router.push('helpapplication')
 }
 
 const gotoNameHelp = () => {
-  _currentpage.value = 'helpname'
+  _currentpage.updateValue('helpname')
   router.push('helpname')
 }
 
@@ -88,19 +83,12 @@ const onResize = () => {
 
 const gotoHome = () => {
   updatePage('/')
-  // window.location.reload()
-  // window.location.reload()
 }
-
-// const updateBlank = () => {
-//   return _global.applicationNo
-// }
 
 const updatePage = (page) => {
-  _currentpage.updatePage(page)
-  router.push(page, () => {})
+  _currentpage.updateValue(page)
+  router.push(page)
 }
-
 </script>
 
 <style lang="sass" scoped>

@@ -16,9 +16,9 @@ q-page.padding.flex.flex-center.page
 <script>
 export default {
   preFetch({ redirect }) {
-    let _currentpage = useCurrentPage
+    const _currentpage = useCurrentPage()
 
-    if (_currentpage.value === undefined) {
+    if (_currentpage.isNull) {
       redirect({ path: '/' })
     }
   },
@@ -52,7 +52,7 @@ let _ownername = useOwnername
 let _owneraddress = useOwneraddress
 let _lateststatus = useLatestStatus
 let _errormessage = useErrorMessage
-let _currentpage = useCurrentPage
+const _currentpage = useCurrentPage()
 let _tabledata = useTableData
 
 const controller = new AbortController()
@@ -234,8 +234,8 @@ const getTableData = async () => {
 }
 
 const updatePage = (page) => {
-  _currentpage.value = page
-  router.push(page, () => {})
+  _currentpage.updateValue(page)
+  router.push(page)
 }
 
 const gotoHome = () => {
@@ -245,7 +245,7 @@ const gotoHome = () => {
 }
 
 const loadCurrentPage = () => {
-  router.push(_currentpage.value, () => {})
+  router.push(_currentpage.getValue)
 }
 
 ;(async () => {

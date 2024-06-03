@@ -104,7 +104,7 @@ import { useCurrentPage } from 'stores/currentpage'
 
 const router = useRouter()
 const quasar = useQuasar()
-let _currentpage = useCurrentPage
+const _currentpage = useCurrentPage()
 
 let screenWidth = ref(null)
 
@@ -118,7 +118,7 @@ const onResize = () => {
 }
 
 const loadCurrentPage = () => {
-  router.push(_currentpage.value, () => {})
+  router.push(_currentpage.getValue)
 }
 
 ;(async () => {

@@ -87,33 +87,33 @@ q-page.page(padding)
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { useQuasar } from "quasar";
-import { useCurrentPage } from "stores/currentpage";
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
+import { useCurrentPage } from 'stores/currentpage'
 
-const router = useRouter();
-const quasar = useQuasar();
-let _currentpage = useCurrentPage;
+const router = useRouter()
+const quasar = useQuasar()
+const _currentpage = useCurrentPage()
 
-let screenWidth = ref(null);
+let screenWidth = ref(null)
 
 const onResize = () => {
-  screenWidth.value = quasar.screen.width;
-};
+  screenWidth.value = quasar.screen.width
+}
 
 const returnHome = () => {
-  _currentpage.value = "/";
-  router.push("/", () => {});
-};
+  _currentpage.value = '/'
+  router.push('/', () => {})
+}
 
 const loadCurrentPage = () => {
-  router.push(_currentpage.value, () => {});
-};
+  router.push(_currentpage.getValue)
+}
 
-(async () => {
-  loadCurrentPage();
-})();
+;(async () => {
+  loadCurrentPage()
+})()
 </script>
 
 <style lang="sass" scoped>

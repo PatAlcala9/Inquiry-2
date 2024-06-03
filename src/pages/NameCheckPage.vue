@@ -140,9 +140,9 @@ q-page.page(padding)
 <script>
 export default {
   preFetch({ redirect }) {
-    let _currentpage = useCurrentPage
+    const _currentpage = useCurrentPage()
 
-    if (_currentpage.value === undefined) {
+    if (_currentpage.isNull) {
       redirect({ path: '/' })
     }
   },
@@ -160,7 +160,7 @@ import { decrypt } from 'assets/js/shield'
 
 const router = useRouter()
 let _tabledata = useTableData
-let _currentpage = useCurrentPage
+const _currentpage = useCurrentPage()
 let _searchvalue = useSearchValue
 
 // let rows = ref(_tabledata.value)
@@ -387,8 +387,8 @@ let dialog4 = ref(false)
 // }
 
 const updatePage = (page) => {
-  _currentpage.value = page
-  router.push(page, () => {})
+  _currentpage.updateValue(page)
+  router.push(page)
 }
 
 const gotoHome = () => {

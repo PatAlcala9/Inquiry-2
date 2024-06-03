@@ -59,9 +59,9 @@ q-page.page(padding)
 <script>
 export default {
   preFetch({ redirect }) {
-    let _currentpage = useCurrentPage
+    const _currentpage = useCurrentPage()
 
-    if (_currentpage.value === undefined) {
+    if (_currentpage.isNull) {
       redirect({ path: '/' })
     }
   },
@@ -87,14 +87,14 @@ let _applicationno = useApplicationNo()
 let _tabledata = useTableData
 let _ownername = useOwnername
 let _owneraddress = useOwneraddress
-let _currentpage = useCurrentPage
+const _currentpage = useCurrentPage()
 let _division = useDivision()
 
 // const controller = new AbortController()
 
 const updatePage = (page) => {
-  _currentpage.value = page
-  router.push(page, () => {})
+  _currentpage.updateValue(page)
+  router.push(page)
 }
 
 const gotoHome = () => {
@@ -160,6 +160,4 @@ label
 
 .table-area
   margin-top: 2rem
-
-
 </style>

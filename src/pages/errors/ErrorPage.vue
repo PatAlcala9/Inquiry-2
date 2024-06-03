@@ -11,9 +11,9 @@ q-page.fit.column.items-center.justify-center.text-center.content-center(padding
 <script>
 export default {
   preFetch({ redirect }) {
-    let _currentpage = useCurrentPage
+    const _currentpage = useCurrentPage()
 
-    if (_currentpage.value === undefined) {
+    if (_currentpage.isNull) {
       redirect({ path: '/' })
     }
   },
@@ -29,11 +29,11 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const _errormessage = useErrorMessage()
 // let _errorsubmessage = useErrorSubMessage
-let _currentpage = useCurrentPage
+const _currentpage = useCurrentPage()
 
 const updatePage = (page) => {
-  _currentpage.value = page
-  router.push(page, () => {})
+  _currentpage.updateValue(page)
+  router.push(page)
 }
 
 const gotoHome = () => {
