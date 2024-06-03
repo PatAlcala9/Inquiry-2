@@ -71,7 +71,6 @@ let _currentpage = useCurrentPage()
 let screenWidth = ref(null)
 
 console.log('page', _currentpage.isNull)
-console.log(_currentpage.getCurrentPage)
 
 const gotoApplicationHelp = () => {
   _currentpage.updatePage('helpapplication')
@@ -79,7 +78,7 @@ const gotoApplicationHelp = () => {
 }
 
 const gotoNameHelp = () => {
-  _currentpage.updatePage('helpname')
+  _currentpage.value = 'helpname'
   router.push('helpname')
 }
 

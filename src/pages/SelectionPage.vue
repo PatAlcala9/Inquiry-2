@@ -25,9 +25,9 @@ q-page.page.padding.column.wrap.justify-center.items-center.content-center.text-
 <script>
 export default {
   preFetch({ redirect }) {
-    const _currentpage = useCurrentPage()
+    let _currentpage = useCurrentPage
 
-    if (_currentpage.isNull) {
+    if (_currentpage.value === undefined) {
       redirect({ path: '/' })
     }
   },
@@ -52,9 +52,9 @@ import { useCurrentPage } from 'stores/currentpage'
 
 const router = useRouter()
 const quasar = useQuasar()
-const _currentpage = useCurrentPage()
+let _currentpage = useCurrentPage
 let _searchvalue = useSearchValue
-const _division = useDivision()
+let _division = useDivision()
 let _listtype = useListType
 
 const detectDivision = async () => {
@@ -93,7 +93,7 @@ const gotoPermitSearch = () => {
 }
 
 const updatePage = (page) => {
-  _currentpage.updatePage(page)
+  _currentpage.value = page
   router.push(page, () => {})
 }
 

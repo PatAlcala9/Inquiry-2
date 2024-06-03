@@ -14,9 +14,9 @@ q-page.padding.flex.flex-center.page
 <script>
 export default {
   preFetch({ redirect }) {
-    const _currentpage = useCurrentPage()
+    let _currentpage = useCurrentPage
 
-    if (_currentpage.isNull) {
+    if (_currentpage.value === undefined) {
       redirect({ path: '/' })
     }
   },
@@ -35,7 +35,7 @@ import { encrypt, decrypt } from 'src/assets/js/shield'
 const router = useRouter()
 let _searchvalue = useSearchValue
 let _tabledata = useTableData
-const _currentpage = useCurrentPage()
+let _currentpage = useCurrentPage
 
 let message = ref('Downloading Information from the Server')
 let found = false
@@ -69,7 +69,7 @@ const getClientList = async () => {
         _tabledata.value = data
         found = true
       } else {
-
+        
       }
     } else {
       updatePage('noconnection')
@@ -85,7 +85,7 @@ const gotoNextPage = async () => {
 }
 
 const updatePage = (page) => {
-  _currentpage.updatePage(page)
+  _currentpage.value = page
   router.push(page, () => {})
 }
 
@@ -96,7 +96,7 @@ const gotoHome = () => {
 }
 
 const loadCurrentPage = () => {
-  router.push(_currentpage.getValue)
+  router.push(_currentpage.value, () => {})
 }
 
 ;(async () => {

@@ -54,9 +54,9 @@ q-page.page(padding)
 <script>
 export default {
   preFetch({ redirect }) {
-    const _currentpage = useCurrentPage()
+    let _currentpage = useCurrentPage
 
-    if (_currentpage.isNull) {
+    if (_currentpage.value === undefined) {
       redirect({ path: '/' })
     }
   },
@@ -77,16 +77,16 @@ import { useCurrentPage } from 'stores/currentpage'
 import { decrypt } from 'assets/js/shield'
 
 const router = useRouter()
-const _applicationno = useApplicationNo()
+let _applicationno = useApplicationNo()
 let _tabledata = useTableData
 let _ownername = useOwnername
 let _owneraddress = useOwneraddress
-const _currentpage = useCurrentPage()
+let _currentpage = useCurrentPage
 
 // const controller = new AbortController()
 
 const updatePage = (page) => {
-  _currentpage.updatePage(page)
+  _currentpage.value = page
   router.push(page, () => {})
 }
 

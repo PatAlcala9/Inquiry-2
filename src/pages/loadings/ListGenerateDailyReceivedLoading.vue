@@ -19,9 +19,9 @@ q-page.padding.flex.flex-center.page
 <script>
 export default {
   preFetch({ redirect }) {
-    let _currentpage = useCurrentPage()
+    let _currentpage = useCurrentPage
 
-    if (_currentpage.isNull) {
+    if (_currentpage.value === undefined) {
       redirect({ path: '/' })
     }
   },
@@ -49,13 +49,13 @@ const router = useRouter()
 
 let _listtype = useListType
 let _division = useDivision()
-const _currentpage = useCurrentPage()
+let _currentpage = useCurrentPage
 let _tabledata = useTableData
 let _listyear = useListYear
 let _listdate = useListDate
-const _errormessage = useErrorMessage()
-const _liststatus = useListStatus()
-const _listsumpaid = useListSumPaid()
+let _errormessage = useErrorMessage()
+let _liststatus = useListStatus()
+let _listsumpaid = useListSumPaid()
 
 let statusList = []
 
@@ -228,12 +228,12 @@ const gotoHome = () => {
 }
 
 const updatePage = (page) => {
-  _currentpage.updatePage(page)
+  _currentpage.value = page
   router.push(page, () => {})
 }
 
 const loadCurrentPage = () => {
-  router.push(_currentpage.getValue)
+  router.push(_currentpage.value, () => {})
 }
 
 ;(async () => {
