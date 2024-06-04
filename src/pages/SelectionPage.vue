@@ -1,6 +1,6 @@
 <template lang="pug">
 
-q-page.page.padding.column.wrap.justify-center.items-center.content-center.text-center
+q-page.page.column.wrap.justify-center.items-center.content-center.text-center(padding)
   section.page-title-group.column.wrap.justify-center.items-center.content-center.text-center(v-if="_division.getValue !== undefined")
     span.division {{_division.getValue}} Application
     span.search-value {{_searchvalue.getValue}}

@@ -1,6 +1,6 @@
 <template lang="pug">
 
-q-page.padding.flex.flex-center.page
+q-page.flex.flex-center.page(padding)
   div.column.items-center.text-center
     span.loading-title Generating List
     span.loading-type {{_listtype.value.toUpperCase()}}

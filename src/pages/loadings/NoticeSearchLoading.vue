@@ -1,6 +1,6 @@
 <template lang="pug">
 
-q-page.padding.flex.flex-center.page
+q-page.flex.flex-center.page(padding)
   div.column.items-center.text-center
     span.loading-title Generating List
     span.loading-type {{_listtype.getValue.toUpperCase()}}
@@ -67,14 +67,14 @@ const getProgressFlow = async () => {
       const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
       const encryptedData = encrypt(_searchvalue.getValue)
       const replacedData = encryptedData.replaceAll('/', '~')
-      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
       data = response.data.length !== 0 ? response.data : null
     } else if (_division.isOccupancy) {
       const encryptedEndpoint = encrypt('GetProgressFlowOccupancy')
       const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
       const encryptedData = encrypt(_searchvalue.getValue)
       const replacedData = encryptedData.replaceAll('/', '~')
-      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
       data = response.data.length !== 0 ? response.data : null
     } else if (_division.isSignage) {
       // const response = await api.get('/api/GetProgressFlowOccupancy/' + _searchvalue.value)
@@ -84,7 +84,7 @@ const getProgressFlow = async () => {
       const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
       const encryptedData = encrypt(_searchvalue.getValue)
       const replacedData = encryptedData.replaceAll('/', '~')
-      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
       data = response.data.length !== 0 ? response.data : null
     } else if (_division.isMechanical) {
       // const response = await api.get('/api/GetProgressFlowOccupancy/' + _searchvalue.value)
@@ -120,7 +120,7 @@ const getOwnerDetails = async () => {
   try {
     const encryptedEndpoint = encrypt('CheckConnection')
     const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
-    const connection = await api.get('/api/' + replacedEndpoint)
+    const connection = await api.get('/api/' + replacedEndpoint, { signal: controller.signal })
     const connData = connection.data || null
     const result = connData !== null ? decrypt(connData.result) : null
 
@@ -129,9 +129,7 @@ const getOwnerDetails = async () => {
       const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
       const encryptedData = encrypt(_searchvalue.getValue)
       const replacedData = encryptedData.replaceAll('/', '~')
-      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
-        signal: controller.signal,
-      })
+      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
 
       const data = response.data.length !== 0 ? response.data : null
 

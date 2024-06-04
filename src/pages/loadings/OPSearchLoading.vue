@@ -1,6 +1,6 @@
 <template lang="pug">
 
-q-page.padding.flex.flex-center.page
+q-page.flex.flex-center.page(padding)
   div.column.items-center.text-center
     span.loading-title Generating List
     span.loading-type {{_listtype.getValue.toUpperCase()}}
@@ -83,7 +83,7 @@ const getOrderofPayment = async () => {
     const encryptedEndpoint = encrypt('CheckConnection')
     const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
 
-    const connection = await api.get('/api/' + replacedEndpoint)
+    const connection = await api.get('/api/' + replacedEndpoint, { signal: controller.signal })
     const data = connection.data || null
     const result = data !== null ? decrypt(data.result) : null
 
@@ -93,17 +93,13 @@ const getOrderofPayment = async () => {
         const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
         const encryptedData = encrypt(_searchvalue.getValue)
         const replacedData = encryptedData.replaceAll('/', '~')
-        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
-          signal: controller.signal,
-        })
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
       } else if (_division.isOccupancy) {
         const encryptedEndpoint = encrypt('GetOrderofPaymentOccupancy')
         const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
         const encryptedData = encrypt(_searchvalue.getValue)
         const replacedData = encryptedData.replaceAll('/', '~')
-        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
-          signal: controller.signal,
-        })
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
       } else if (_division.isSignage) {
         // response = await api.get('/api/CheckSignage/' + searched, {
         //   signal: controller.signal,
@@ -114,9 +110,7 @@ const getOrderofPayment = async () => {
         const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
         const encryptedData = encrypt(_searchvalue.getValue)
         const replacedData = encryptedData.replaceAll('/', '~')
-        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
-          signal: controller.signal,
-        })
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
       } else if (_division.isMechanical) {
         // response = await api.get('/api/CheckMechanical/' + searched, {
         //   signal: controller.signal,
@@ -169,9 +163,7 @@ const getOwnerDetails = async () => {
 
     const encryptedData = encrypt(_searchvalue.getValue)
     const replacedData = encryptedData.replaceAll('/', '~')
-    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
-      signal: controller.signal,
-    })
+    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
     const data = response.data.length !== 0 ? response.data : null
 
     if (data !== null) {

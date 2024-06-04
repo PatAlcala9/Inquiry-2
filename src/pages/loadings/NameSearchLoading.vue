@@ -1,6 +1,6 @@
 <template lang="pug">
 
-q-page.padding.flex.flex-center.page
+q-page.flex.flex-center.page(padding)
   div.full-width.column.items-center.justify-center.text-center
     span.loading-title Searching for the name
     span.loading-value {{_searchvalue.getValue.toUpperCase()}}
@@ -46,7 +46,7 @@ const getClientList = async () => {
     const encryptedEndpoint = encrypt('CheckConnection')
     const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
 
-    const connection = await api.get('/api/' + replacedEndpoint)
+    const connection = await api.get('/api/' + replacedEndpoint, { signal: controller.signal })
     const data = connection.data || null
     const result = data !== null ? decrypt(data.result) : null
 
@@ -55,9 +55,7 @@ const getClientList = async () => {
       const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
       const encryptedData = encrypt(_searchvalue.getValue.toUpperCase())
       const replacedData = encryptedData.replaceAll('/', '~')
-      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
-        signal: controller.signal,
-      })
+      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
       const data = response.data.length !== 0 ? response.data : null
       // let tempData = []
       if (data !== null) {

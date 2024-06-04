@@ -1,6 +1,6 @@
 <template lang="pug">
 
-q-page.padding.flex.flex-center.page
+q-page.flex.flex-center.page(padding)
   div.column.items-center.text-center
     span.loading-title Generating List
     span.loading-type Application Status
@@ -64,7 +64,7 @@ const searchData = async () => {
     const encryptedEndpoint = encrypt('CheckConnection')
     console.log(encryptedEndpoint)
     const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
-    const connection = await api.get('/api/' + replacedEndpoint)
+    const connection = await api.get('/api/' + replacedEndpoint, { signal: controller.signal })
     const data = connection.data || null
     const result = data !== null ? decrypt(data.result) : null
 
@@ -74,41 +74,31 @@ const searchData = async () => {
         const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
         const encryptedData = encrypt(searched)
         const replacedData = encryptedData.replace(/\//g, '~')
-        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
-          signal: controller.signal,
-        })
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
       } else if (_division.isOccupancy) {
         const encryptedEndpoint = encrypt('CheckOccupancy')
         const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
         const encryptedData = encrypt(searched)
         const replacedData = encryptedData.replace(/\//g, '~')
-        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
-          signal: controller.signal,
-        })
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
       } else if (_division.isSignage) {
         const encryptedEndpoint = encrypt('CheckSignage')
         const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
         const encryptedData = encrypt(searched)
         const replacedData = encryptedData.replace(/\//g, '~')
-        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
-          signal: controller.signal,
-        })
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
       } else if (_division.isElectrical) {
         const encryptedEndpoint = encrypt('CheckElectrical')
         const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
         const encryptedData = encrypt(searched)
         const replacedData = encryptedData.replace(/\//g, '~')
-        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
-          signal: controller.signal,
-        })
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
       } else if (_division.isMechanical) {
         const encryptedEndpoint = encrypt('CheckMechanical')
         const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
         const encryptedData = encrypt(searched)
         const replacedData = encryptedData.replace(/\//g, '~')
-        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
-          signal: controller.signal,
-        })
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
       } else {
         _errormessage.updateMessage('Invalid Search')
         updatePage('searcherror')
@@ -165,9 +155,7 @@ const getOwnerDetails = async () => {
     const encryptedData = encrypt(_searchvalue.getValue)
     const replacedData = encryptedData.replace(/\//g, '~')
     // response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
-    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
-      signal: controller.signal,
-    })
+    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
     const data = response.data.length !== 0 ? response.data : null
     if (data !== null) {
       const result = data || null
@@ -220,9 +208,7 @@ const getTableData = async () => {
 
     const encryptedData = encrypt(appno)
     const replacedData = encryptedData.replace(/\//g, '~')
-    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
-      signal: controller.signal,
-    })
+    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
     const data = response.data.length !== 0 ? response.data : null
 
     if (data !== null) {
