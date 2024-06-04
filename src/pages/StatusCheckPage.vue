@@ -78,7 +78,7 @@ import { decrypt } from 'assets/js/shield'
 const router = useRouter()
 const _applicationno = useApplicationNo()
 const _searchvalue = useSearchValue()
-// let _division = useDivision()
+// const _division = useDivision()
 let _tabledata = useTableData
 const _ownername = useOwnername()
 const _owneraddress = useOwneraddress()

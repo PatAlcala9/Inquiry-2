@@ -88,7 +88,7 @@ let _tabledata = useTableData
 const _ownername = useOwnername()
 const _owneraddress = useOwneraddress()
 const _currentpage = useCurrentPage()
-let _division = useDivision()
+const _division = useDivision()
 
 // const controller = new AbortController()
 

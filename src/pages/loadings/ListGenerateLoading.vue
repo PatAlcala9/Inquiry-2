@@ -3,7 +3,7 @@
 q-page.flex.flex-center.page(padding)
   div.column.items-center.text-center
     span.loading-title Generating List
-    span.loading-type {{_listtype.value.toUpperCase()}}
+    span.loading-type {{_listtype.getValue.toUpperCase()}}
     span.minor for
     span.loading-division {{_division.getValue}} Application
     span.loading-value {{_searchvalue.getValue}}
@@ -37,9 +37,9 @@ import { useCurrentPage } from 'stores/currentpage'
 
 const router = useRouter()
 // let _listsubject = useListSubject
-let _listtype = useListType
+const _listtype = useListType()
 const _searchvalue = useSearchValue()
-let _division = useDivision()
+const _division = useDivision()
 const _currentpage = useCurrentPage()
 
 // const controller = new AbortController()

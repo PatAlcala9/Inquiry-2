@@ -45,12 +45,12 @@ const router = useRouter()
 const _listtype = useListType()
 const _currentpage = useCurrentPage()
 const _searchvalue = useSearchValue()
-let _division = useDivision()
+const _division = useDivision()
 let _applicationno = useApplicationNo()
 let _tabledata = useTableData
 const _ownername = useOwnername()
 const _owneraddress = useOwneraddress()
-let _errormessage = useErrorMessage()
+const _errormessage = useErrorMessage()
 
 const controller = new AbortController()
 

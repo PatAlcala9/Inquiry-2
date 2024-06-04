@@ -3,7 +3,7 @@
 q-page.flex.flex-center.page(padding)
   div.column.items-center.text-center
     span.loading-title Generating List
-    span.loading-type {{_listtype.value.toUpperCase()}}
+    span.loading-type {{_listtype.getValue.toUpperCase()}}
     span.minor for
     span.loading-division {{_division.getValue}} Applications
     span.minor on
@@ -47,21 +47,21 @@ import { encrypt, decrypt } from 'assets/js/shield'
 const router = useRouter()
 // const quasar = useQuasar()
 
-let _listtype = useListType
-let _division = useDivision()
+const _listtype = useListType()
+const _division = useDivision()
 const _currentpage = useCurrentPage()
 let _tabledata = useTableData
-let _listyear = useListYear
-let _listdate = useListDate
-let _errormessage = useErrorMessage()
+const _listyear = useListYear()
+const _listdate = useListDate()
+const _errormessage = useErrorMessage()
 let _liststatus = useListStatus()
 let _listsumpaid = useListSumPaid()
 
 let statusList = []
 
 let percentage = ref(0)
-const properDate = date.formatDate(_listdate.value, 'MMMM DD, YYYY')
-const formattedDate = date.formatDate(_listdate.value, 'YYYY~MM~DD')
+const properDate = date.formatDate(_listdate.getValue, 'MMMM DD, YYYY')
+const formattedDate = date.formatDate(_listdate.getValue, 'YYYY~MM~DD')
 
 const controller = new AbortController()
 

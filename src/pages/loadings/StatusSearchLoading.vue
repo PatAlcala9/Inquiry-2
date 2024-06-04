@@ -46,7 +46,7 @@ const router = useRouter()
 const quasar = useQuasar()
 
 const _searchvalue = useSearchValue()
-let _division = useDivision()
+const _division = useDivision()
 let _applicationno = useApplicationNo()
 const _ownername = useOwnername()
 const _owneraddress = useOwneraddress()

@@ -48,14 +48,13 @@ const router = useRouter()
 const _currentpage = useCurrentPage()
 // let _applicationno = useApplicationNo
 const _searchvalue = useSearchValue()
-let _errormessage = useErrorMessage()
-// let _errorsubmessage = useErrorSubMessage
+const _errormessage = useErrorMessage()
 // let _listsubject = useListSubject
-let _listtype = useListType
-let _division = useDivision()
-let _listyear = useListYear
-let _listdate = useListDate
-let _rsakey = useRSAKey()
+const _listtype = useListType()
+const _division = useDivision()
+const _listyear = useListYear()
+const _listdate = useListDate()
+const _rsakey = useRSAKey()
 
 let helpInfo = ref('Need help? Click ')
 let searched = ref('')
@@ -67,6 +66,8 @@ let tableEmptyE = ref(false)
 let online = ref(false)
 
 const monthsList = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER']
+const monthWith31List = ['JANUARY', 'MARCH', 'MAY', 'JULY', 'AUGUST', 'OCTOBER', 'DECEMBER']
+const yearWithLeapList = ['2012', '2016', '2020', '2024', '2028', '2032', '2036', '2040', '2044', '2048']
 
 // const columns = [
 //   {
@@ -192,126 +193,64 @@ const callserver = async () => {
     // }
   } else {
     if (searched.value.toString().substring(0, 6) === listCommand) {
-      if (searched.value.includes(' approve')) {
-        if (searched.value.includes(' --division building')) {
-          _listtype.value = 'Approved Permit'
+      if (searched.value.includes(' approved')) {
+        let searchedDate
+        _listtype.updateValue('Approved Permit')
+
+        if (searched.value.includes(' building')) {
           _division.setBuilding()
-          if (searched.value.includes(' --year 2020')) {
-            _listyear.value = 2020
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2021')) {
-            _listyear.value = 2021
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2022')) {
-            _listyear.value = 2022
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2023')) {
-            _listyear.value = 2023
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2024')) {
-            _listyear.value = 2024
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2025')) {
-            _listyear.value = 2025
-            updatePage('listgenerateapprove')
-          }
-        } else if (searched.value.includes(' --division occupancy')) {
-          _listtype.value = 'Approved Permit'
+          searchedDate = searched.value.substring(25)
+        } else if (searched.value.includes(' occupancy')) {
           _division.setOccupancy()
-
-          if (searched.value.includes(' --year 2020')) {
-            _listyear.value = 2020
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2021')) {
-            _listyear.value = 2021
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2022')) {
-            _listyear.value = 2022
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2023')) {
-            _listyear.value = 2023
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2024')) {
-            _listyear.value = 2024
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2025')) {
-            _listyear.value = 2025
-            updatePage('listgenerateapprove')
-          }
-        } else if (searched.value.includes(' --division electrical')) {
-          _listtype.value = 'Approved Permit'
+          searchedDate = searched.value.substring(26)
+        } else if (searched.value.includes(' electrical')) {
           _division.setElectrical()
-
-          if (searched.value.includes(' --year 2020')) {
-            _listyear.value = 2020
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2021')) {
-            _listyear.value = 2021
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2022')) {
-            _listyear.value = 2022
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2023')) {
-            _listyear.value = 2023
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2024')) {
-            _listyear.value = 2024
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2025')) {
-            _listyear.value = 2025
-            updatePage('listgenerateapprove')
-          }
-        } else if (searched.value.includes(' --division signage')) {
-          _listtype.value = 'Approved Permit'
+          searchedDate = searched.value.substring(27)
+        } else if (searched.value.includes(' signage')) {
           _division.setSignage()
 
-          if (searched.value.includes(' --year 2020')) {
-            _listyear.value = 2020
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2021')) {
-            _listyear.value = 2021
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2022')) {
-            _listyear.value = 2022
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2023')) {
-            _listyear.value = 2023
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2024')) {
-            _listyear.value = 2024
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2025')) {
-            _listyear.value = 2025
-            updatePage('listgenerateapprove')
-          }
+          _errormessage.updateMessage('Apologize for the Inconvenient')
+          _errormessage.updateSubMessage("Signage's system not available")
+          updatePage('error')
         } else if (searched.value.includes(' --division mechanical')) {
-          _listtype.value = 'Approved Permit'
           _division.setMechanical()
 
-          if (searched.value.includes(' --year 2020')) {
-            _listyear.value = 2020
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2021')) {
-            _listyear.value = 2021
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2022')) {
-            _listyear.value = 2022
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2023')) {
-            _listyear.value = 2023
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2024')) {
-            _listyear.value = 2024
-            updatePage('listgenerateapprove')
-          } else if (searched.value.includes(' --year 2025')) {
-            _listyear.value = 2025
-            updatePage('listgenerateapprove')
-          }
+          _errormessage.updateMessage('Apologize for the Inconvenient')
+          _errormessage.updateSubMessage("Mechanical's system not available")
+          updatePage('error')
         } else {
           _errormessage.updateMessage('Invalid Command')
           _errormessage.updateSubMessage('Please specify a division')
           // _errorsubmessage.value = 'Please specify a division'
-          updatePage('searcherror')
+          updatePage('error')
+        }
+
+        if (monthsList.some((month) => searchedDate.toUpperCase().includes(month))) {
+          const matchingMonth = monthsList.filter((month) => searchedDate.toUpperCase().includes(month.toUpperCase()))
+          const year = searchedDate.substring(parseInt(matchingMonth[0].length + 1))
+          const validYear = !isNaN(year)
+
+          if (validYear) {
+            const formattedDate = date.formatDate(searchedDate + ' 1', 'YYYY-MM')
+            _listyear.updateValue(0)
+            _listdate.updateValue(formattedDate)
+            updatePage('listgenerateapprove')
+          } else {
+            _errormessage.updateMessage('Invalid Command')
+            _errormessage.updateSubMessage(`${year} is not a valid year`)
+            updatePage('error')
+          }
+        } else {
+          const validYear = !isNaN(searchedDate)
+
+          if (validYear) {
+            _listyear.updateValue(searchedDate)
+            updatePage('listgenerateapprove')
+          } else {
+            _errormessage.updateMessage('Invalid Command')
+            _errormessage.updateSubMessage(`${year} is not a valid year`)
+            updatePage('error')
+          }
         }
         // const newValue = searched.value.toString().substring(10)
 
@@ -336,79 +275,31 @@ const callserver = async () => {
         // }
       } else if (searched.value.includes(' received')) {
         let searchedDate
+        _listtype.updateValue('Daily Received')
 
         if (searched.value.includes(' building')) {
-          _listtype.value = 'Daily Received'
           _division.setBuilding()
-
           searchedDate = searched.value.substring(25)
         } else if (searched.value.includes(' occupancy')) {
-          _listtype.value = 'Daily Received'
           _division.setOccupancy()
-
           searchedDate = searched.value.substring(26)
-
-          // if (searchedDate.toUpperCase() === 'TODAY') {
-          //   const today = Date.now()
-          //   const formattedDate = date.formatDate(today, 'YYYY-MM-DD')
-          //   _listdate.value = formattedDate
-          //   updatePage('listgeneratereceived')
-          // } else if (searchedDate.toUpperCase() === 'YESTERDAY') {
-          //   const today = Date.now()
-          //   const yesterday = date.subtractFromDate(today, { hours: 24 })
-          //   const formattedDate = date.formatDate(yesterday, 'YYYY-MM-DD')
-          //   _listdate.value = formattedDate
-          //   updatePage('listgeneratereceived')
-          // } else if (searchedDate.substring(0, 2) === '20' && searchedDate.length === 10) {
-          //   _listdate.value = searchedDate
-          //   updatePage('listgeneratereceived')
-          // } else {
-          //   _errormessage.value = 'Invalid Command'
-          //   _errorsubmessage.value = 'Invalid Date Format'
-          //   updatePage('searcherror')
-          // }
         } else if (searched.value.includes(' electrical')) {
-          _listtype.value = 'Daily Received'
           _division.setElectrical()
-
           searchedDate = searched.value.substring(27)
-
-          // if (searchedDate === 'today') {
-          //   const today = Date.now()
-          //   const formattedDate = date.formatDate(today, 'YYYY-MM-DD')
-          //   _listdate.value = formattedDate
-          //   updatePage('listgeneratereceived')
-          // } else if (searchedDate === 'yesterday') {
-          //   const today = Date.now()
-          //   const yesterday = date.subtractFromDate(today, { hours: 24 })
-          //   const formattedDate = date.formatDate(yesterday, 'YYYY-MM-DD')
-          //   _listdate.value = formattedDate
-          //   updatePage('listgeneratereceived')
-          // } else if (searchedDate.substring(0, 2) === '20' && searchedDate.length === 10) {
-          //   _listdate.value = searchedDate
-          //   updatePage('listgeneratereceived')
-          // } else {
-          //   _errormessage.value = 'Invalid Command'
-          //   _errorsubmessage.value = 'Invalid Date Format'
-          //   updatePage('error')
-          // }
         }
 
         if (searchedDate.toUpperCase() === 'TODAY') {
           const today = Date.now()
           const formattedDate = date.formatDate(today, 'YYYY-MM-DD')
-          _listdate.value = formattedDate
+          _listdate.updateValue(formattedDate)
           updatePage('listgeneratereceived')
         } else if (searchedDate.toUpperCase() === 'YESTERDAY') {
           const today = Date.now()
           const yesterday = date.subtractFromDate(today, { hours: 24 })
           const formattedDate = date.formatDate(yesterday, 'YYYY-MM-DD')
-          _listdate.value = formattedDate
+          _listdate.updateValue(formattedDate)
           updatePage('listgeneratereceived')
         } else if (monthsList.some((month) => searchedDate.toUpperCase().includes(month))) {
-          const monthWith31List = ['JANUARY', 'MARCH', 'MAY', 'JULY', 'AUGUST', 'OCTOBER', 'DECEMBER']
-          const yearWithLeapList = ['2012', '2016', '2020', '2024', '2028', '2032', '2036', '2040', '2044', '2048']
-
           const matchingMonth = monthsList.filter((month) => searchedDate.toUpperCase().includes(month.toUpperCase()))
           let days
           if (monthWith31List.includes(matchingMonth[0])) {
@@ -428,7 +319,7 @@ const callserver = async () => {
             }
 
             if (year > 0) {
-              _listdate.value = searchedDate
+              _listdate.updateValue(searchedDate)
               updatePage('listgeneratereceived')
             } else {
               _errormessage.updateMessage('Invalid Command')

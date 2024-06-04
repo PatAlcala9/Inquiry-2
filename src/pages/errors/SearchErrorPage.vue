@@ -32,7 +32,7 @@ import { useCurrentPage } from 'stores/currentpage'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-let _errormessage = useErrorMessage()
+const _errormessage = useErrorMessage()
 // let _errorsubmessage = useErrorSubMessage
 const _currentpage = useCurrentPage()
 

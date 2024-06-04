@@ -71,12 +71,12 @@ const router = useRouter()
 
 const _currentpage = useCurrentPage()
 let _tabledata = useTableData
-let _listdate = useListDate
+const _listdate = useListDate()
 let _liststatus = useListStatus()
 let _listsumpaid = useListSumPaid()
-let _division = useDivision()
+const _division = useDivision()
 
-const properDate = date.formatDate(_listdate.value, 'MMMM DD, YYYY')
+const properDate = date.formatDate(_listdate.getValue, 'MMMM DD, YYYY')
 
 const detectWeekend = (date) => {}
 

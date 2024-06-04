@@ -3,10 +3,12 @@
 q-page.flex.flex-center.page(padding)
   div.column.items-center.text-center
     span.loading-title Generating List
-    span.loading-type {{_listtype.value.toUpperCase()}}
+    span.loading-type {{_listtype.getValue.toUpperCase()}}
     span.minor for
-    span.loading-division {{_division.value}} Applications
-    span.loading-division for the year {{_listyear.value}}
+    span.loading-division {{_division.getValue}} Applications
+
+    span.loading-division(v-if="_listyear.getValue !== 0") for the year {{_listyear.getValue}}
+    span.loading-division(v-else) for {{_listdate.getValue}}
 
     span.loading-division(v-if="percentage > 0") {{percentage}} %
 
@@ -35,14 +37,16 @@ import { useDivision } from 'stores/division'
 import { useCurrentPage } from 'stores/currentpage'
 import { useTableData } from 'stores/tabledata'
 import { useListYear } from 'stores/listyear'
+import { useListDate } from 'stores/listdate'
 import { ref } from 'vue'
 
 const router = useRouter()
-let _listtype = useListType
-let _division = useDivision()
+const _listtype = useListType()
+const _division = useDivision()
 const _currentpage = useCurrentPage()
 let _tabledata = useTableData
-let _listyear = useListYear
+const _listyear = useListYear()
+const _listdate = useListDate()
 
 let percentage = ref(0)
 
@@ -50,7 +54,7 @@ const controller = new AbortController()
 
 let applicationNoList = []
 const getListofApplicationReleasedByYear = async () => {
-  const response = await api.get('/api/GetListofApplicationReleasedByYear/' + _listyear.value, { signal: controller.signal })
+  const response = await api.get('/api/GetListofApplicationReleasedByYear/' + _listyear.getValue, { signal: controller.signal })
   const data = response.data.length !== 0 ? response.data : null
 
   if (data !== null) {
@@ -69,7 +73,7 @@ const getListofApplicationReleasedByYear = async () => {
 
 let occupancyIDList = []
 const getListofOccupancyApplicationReleasedByYear = async () => {
-  const response = await api.get('/api/GetListofOccupancyApplicationReleasedByYear/' + _listyear.value, { signal: controller.signal })
+  const response = await api.get('/api/GetListofOccupancyApplicationReleasedByYear/' + _listyear.getValue, { signal: controller.signal })
   const data = response.data.length !== 0 ? response.data : null
 
   if (data !== null) {
@@ -88,7 +92,7 @@ const getListofOccupancyApplicationReleasedByYear = async () => {
 
 let electricalIDList = []
 const getListofElectricalApplicationReleasedByYear = async () => {
-  const response = await api.get('/api/GetListofElectricalApplicationReleasedByYear/' + _listyear.value, { signal: controller.signal })
+  const response = await api.get('/api/GetListofElectricalApplicationReleasedByYear/' + _listyear.getValue, { signal: controller.signal })
   const data = response.data.length !== 0 ? response.data : null
 
   if (data !== null) {
@@ -154,8 +158,8 @@ const getApplicationByDivision = async () => {
 
 const gotoHome = () => {
   controller.abort()
-  // // updatePage('/')
-  window.location.reload()
+  updatePage('/')
+  // window.location.reload()
 }
 
 const updatePage = (page) => {
