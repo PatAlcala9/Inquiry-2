@@ -70,7 +70,7 @@ const getDailyReceived = async () => {
 
   const encryptedEndpoint = encrypt('CheckConnection')
   const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
-  const connection = await api.get('/api/' + replacedEndpoint)
+  const connection = await api.get('/api/' + replacedEndpoint, { signal: controller.signal })
   const conn = connection.data || null
   const result = conn !== null ? decrypt(conn.result) : null
 
@@ -99,7 +99,7 @@ const getDailyReceived = async () => {
     const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
     const encryptedData = encrypt(formattedDate)
     const replacedData = encryptedData.replaceAll('/', '~')
-    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
     data = response.data.length !== 0 ? response.data : null
 
     if (data.result.length > 0) {
@@ -161,7 +161,7 @@ const getLatestStatus = async (application) => {
   const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
   const encryptedData = encrypt(application)
   const replacedData = encryptedData.replaceAll('/', '~')
-  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
   const data = response.data.length !== 0 ? response.data : null
 
   return decrypt(data.result)
@@ -182,7 +182,7 @@ const getSumPaid = async (application) => {
   const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
   const encryptedData = encrypt(application)
   const replacedData = encryptedData.replaceAll('/', '~')
-  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
   const data = response.data.length !== 0 ? response.data : null
   const result = decrypt(data.result)
 
@@ -210,12 +210,13 @@ const countOPReleased = async () => {
       'FOR ELECTRICAL OFFICIAL RECEIPT VALIDATION',
       'FOR ELECTRICAL PERMIT APPROVAL',
       'FOR ELECTRICAL PERMIT RELEASING',
-      'ELECTRICAL PERMIT RELEASED TO',
-      'ELECTRICAL PERMIT SENT TO',
+      /ELECTRICAL PERMIT RELEASED TO/,
+      /ELECTRICAL PERMIT SENT TO/,
     ]
   }
 
-  const newArray = _liststatus.allStatusArray.filter((item) => filterArray.includes(item))
+  // const newArray = _liststatus.allStatusArray.filter((item) => filterArray.includes(item))
+  const newArray = _liststatus.allStatusArray.filter((item) => filterArray.some((filter) => filter.test(item)))
   opReleasedCount.value = newArray.length
   // console.log('newarray', newArray)
   // console.log('oldarray', _liststatus.allStatusArray)
