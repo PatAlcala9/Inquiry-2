@@ -39,7 +39,7 @@ import { ref } from 'vue'
 
 const router = useRouter()
 let _listtype = useListType
-let _division = useDivision
+let _division = useDivision()
 const _currentpage = useCurrentPage()
 let _tabledata = useTableData
 let _listyear = useListYear
@@ -142,6 +142,16 @@ const getDataofElectricalApplicationRelease = async (item) => {
   }
 }
 
+const getApplicationByDivision = async () => {
+  if (_division.isBuilding) {
+    await getListofApplicationReleasedByYear()
+  } else if (_division.isOccupancy) {
+    await getListofOccupancyApplicationReleasedByYear()
+  } else if (_division.isElectrical) {
+    await getListofElectricalApplicationReleasedByYear()
+  }
+}
+
 const gotoHome = () => {
   controller.abort()
   // // updatePage('/')
@@ -159,61 +169,6 @@ const loadCurrentPage = () => {
 
 ;(async () => {
   loadCurrentPage()
-
-  if (_division.value === 'Building') {
-  }
-
-  switch (_division.value) {
-    case 'Building':
-      await getListofApplicationReleasedByYear()
-
-    case 'Occupancy':
-      await getListofOccupancyApplicationReleasedByYear()
-
-    case 'Electrical':
-      await getListofElectricalApplicationReleasedByYear()
-  }
+  await getApplicationByDivision()
 })()
 </script>
-
-<style lang="sass" scoped>
-
-.loading-title
-  font-size: 2.3rem
-  font-family: 'PoppinsBold'
-
-.loading-type
-  font-size: 1.8rem
-  font-family: 'Poppins'
-
-.minor
-  padding: 2rem
-
-.loading-division
-  font-size: 2rem
-  font-family: 'PoppinsBold'
-
-.loading-value
-  margin-top: 2rem
-  font-size: 2.4rem
-  font-family: 'PoppinsBold'
-  color: $yellow
-
-@media screen and (min-width: 900px)
-  .loading-title
-    font-size: 3rem
-
-  .loading-type
-    font-size: 2.2rem
-
-  .minor
-    font-size: 1.8rem
-    padding: 2rem
-
-  .loading-division
-    font-size: 2.8rem
-
-  .loading-value
-    margin-top: 3rem
-    font-size: 3.1rem
-</style>

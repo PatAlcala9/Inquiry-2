@@ -272,42 +272,42 @@ h4, h2, h3
   text-align: center
   margin-top: -3rem
 
-.loading-title
-  font-size: 2.3rem
-  font-family: 'PoppinsBold'
+// .loading-title
+//   font-size: 2.3rem
+//   font-family: 'PoppinsBold'
 
-.minor
-  padding: 2rem
+// .minor
+//   padding: 2rem
 
-.loading-division
-  font-size: 2rem
-  font-family: 'PoppinsBold'
+// .loading-division
+//   font-size: 2rem
+//   font-family: 'PoppinsBold'
 
-.loading-value
-  margin-top: 2rem
-  font-size: 2.4rem
-  font-family: 'PoppinsBold'
-  color: $yellow
+// .loading-value
+//   margin-top: 2rem
+//   font-size: 2.4rem
+//   font-family: 'PoppinsBold'
+//   color: $yellow
 
-.loading-type
-  font-size: 1.8rem
-  font-family: 'Poppins'
+// .loading-type
+//   font-size: 1.8rem
+//   font-family: 'Poppins'
 
 @media screen and (min-width: 900px)
-  .loading-title
-    font-size: 3rem
+  // .loading-title
+  //   font-size: 3rem
 
-  .minor
-    font-size: 1.8rem
-    padding: 2rem
+  // .minor
+  //   font-size: 1.8rem
+  //   padding: 2rem
 
-  .loading-division
-    font-size: 2.8rem
+  // .loading-division
+  //   font-size: 2.8rem
 
-  .loading-value
-    margin-top: 3rem
-    font-size: 3.1rem
+  // .loading-value
+  //   margin-top: 3rem
+  //   font-size: 3.1rem
 
-  .loading-type
-    font-size: 2.2rem
+  // .loading-type
+  //   font-size: 2.2rem
 </style>

@@ -217,7 +217,7 @@ const loadCurrentPage = () => {
 })()
 </script>
 
-<style lang="sass" scoped>
+<!-- <style lang="sass" scoped>
 
 .loading-title
   font-size: 1.6rem
@@ -257,4 +257,4 @@ const loadCurrentPage = () => {
   .loading-value
     margin-top: 2rem
     font-size: 2.6rem
-</style>
+</style> -->

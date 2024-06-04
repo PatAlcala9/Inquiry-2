@@ -265,7 +265,7 @@ const loadCurrentPage = () => {
   font-family: 'LexendBold'
   color: $yellow
 
-@media screen and (min-width: 900px)
+@media screen and (min-width: 1023px)
   .loading-title
     font-size: 2rem
 
