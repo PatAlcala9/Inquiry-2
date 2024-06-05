@@ -7,6 +7,7 @@ export const useListYear = defineStore('listyear', {
 
   getters: {
     getValue: (state) => state.value,
+    isNull: (state) => state.value === 0 || state.value === null
   },
 
   actions: {
