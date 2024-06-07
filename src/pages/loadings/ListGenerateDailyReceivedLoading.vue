@@ -40,6 +40,8 @@ import { useListDate } from 'stores/listdate'
 import { useErrorMessage } from 'stores/errormessage'
 import { useListStatus } from 'stores/liststatus'
 import { useListSumPaid } from 'stores/listsumpaid'
+import { useListOPCount } from 'stores/listopcount'
+import { useListPermitCount } from 'stores/listpermitcount'
 import { ref } from 'vue'
 import { date } from 'quasar'
 import { encrypt, decrypt } from 'assets/js/shield'
@@ -54,8 +56,10 @@ let _tabledata = useTableData
 const _listyear = useListYear()
 const _listdate = useListDate()
 const _errormessage = useErrorMessage()
-let _liststatus = useListStatus()
-let _listsumpaid = useListSumPaid()
+const _liststatus = useListStatus()
+const _listsumpaid = useListSumPaid()
+const _listopcount = useListOPCount()
+const _listpermitcount = useListPermitCount()
 
 let statusList = []
 
@@ -190,36 +194,52 @@ const getSumPaid = async (application) => {
 }
 
 const countOPReleased = async () => {
-  let filterArray
+  let filterArray = []
+  let newArray = []
+
   if (_division.isBuilding) {
     filterArray = ['ORDER OF PAYMENT RELEASED', 'OR NUMBER VERIFIED', 'RECEIVED FOR PROCESSING', 'FOR BUILDING OFFICIAL APPROVAL', 'PERMIT APPROVE AND READY FOR RELEASE', 'PERMIT ALREADY RELEASE']
+    newArray = _liststatus.allStatusArray.filter((item) => filterArray.includes(item))
   } else if (_division.isOccupancy) {
     filterArray = [
-      'ORDER OF PAYMENT RELEASE FOR BUREAU OF FIRE',
-      'OCCUPANCY ORDER OF PAYMENT PAID',
-      'OCCUPANCY OFFICIAL RECEIPT VALIDATED',
-      'FOR OCCUPANCY PERMIT RECOMMENDING APPROVAL',
-      'FOR OCUPANCY CERTIFICATE OF ELECTRICAL INSPECTION GENERATION',
-      'FOR OCCUPANCY PERMIT GENERATION',
-      'FOR OCCUPANCY RELEASING',
-      'OCCUPANCY PERMIT RELEASED TO',
+      /ORDER OF PAYMENT RELEASE FOR BUREAU OF FIRE/,
+      /OCCUPANCY ORDER OF PAYMENT PAID/,
+      /OCCUPANCY OFFICIAL RECEIPT VALIDATED/,
+      /FOR OCCUPANCY PERMIT RECOMMENDING APPROVAL/,
+      /FOR OCUPANCY CERTIFICATE OF ELECTRICAL INSPECTION GENERATION/,
+      /FOR OCCUPANCY PERMIT GENERATION/,
+      /FOR OCCUPANCY RELEASING/,
+      /OCCUPANCY PERMIT RELEASED TO/,
     ]
+    newArray = _liststatus.allStatusArray.filter((item) => filterArray.some((filter) => filter.test(item)))
   } else if (_division.isElectrical) {
     filterArray = [
-      'ELECTRICAL ORDERPAYMENT RELEASED',
-      'FOR ELECTRICAL OFFICIAL RECEIPT VALIDATION',
-      'FOR ELECTRICAL PERMIT APPROVAL',
-      'FOR ELECTRICAL PERMIT RELEASING',
+      /ELECTRICAL ORDERPAYMENT RELEASED/,
+      /FOR ELECTRICAL OFFICIAL RECEIPT VALIDATION/,
+      /FOR ELECTRICAL PERMIT APPROVAL/,
+      /FOR ELECTRICAL PERMIT RELEASING/,
       /ELECTRICAL PERMIT RELEASED TO/,
       /ELECTRICAL PERMIT SENT TO/,
     ]
+    newArray = _liststatus.allStatusArray.filter((item) => filterArray.some((filter) => filter.test(item)))
+  }
+  return newArray.length
+}
+
+// const permitReleasedCount = ref(_liststatus.allStatusArray.filter((stat) => stat === 'PERMIT ALREADY RELEASE').length)
+
+const countPermitRelease = async () => {
+  let result = 0
+
+  if (_division.isBuilding) {
+    result = _liststatus.allStatusArray.filter((stat) => stat === 'PERMIT ALREADY RELEASE').length
+  } else if (_division.isOccupancy) {
+    result = _liststatus.allStatusArray.filter((stat) => /OCCUPANCY PERMIT RELEASED TO/.test(stat)).length
+  } else {
+    result = _liststatus.allStatusArray.filter((stat) => /ELECTRICAL PERMIT SENT TO/.test(stat)).length
   }
 
-  // const newArray = _liststatus.allStatusArray.filter((item) => filterArray.includes(item))
-  const newArray = _liststatus.allStatusArray.filter((item) => filterArray.some((filter) => filter.test(item)))
-  opReleasedCount.value = newArray.length
-  // console.log('newarray', newArray)
-  // console.log('oldarray', _liststatus.allStatusArray)
+  return result
 }
 
 const gotoHome = () => {
@@ -240,6 +260,8 @@ const loadCurrentPage = () => {
 ;(async () => {
   loadCurrentPage()
   await getDailyReceived()
+  _listopcount.updateValue(await countOPReleased())
+  _listpermitcount.updateValue(await countPermitRelease())
 })()
 </script>
 

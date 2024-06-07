@@ -13,11 +13,11 @@ q-page.page(padding)
 
       div.summary--count
         span.label Order of Payment Released
-        span.content {{ opReleasedCount }}
+        span.content {{ _listopcount.getValue }}
 
       div.summary--count
         span.label Permit Released
-        span.content {{ permitReleasedCount }}
+        span.content {{ _listpermitcount.getValue }}
 
       div.summary--count
         span.label Total Amount
@@ -66,6 +66,8 @@ import { decrypt } from 'assets/js/shield'
 import { useListStatus } from 'stores/liststatus'
 import { useListSumPaid } from 'stores/listsumpaid'
 import { useDivision } from 'stores/division'
+import { useListOPCount } from 'stores/listopcount'
+import { useListPermitCount } from 'stores/listpermitcount'
 
 const router = useRouter()
 
@@ -75,6 +77,8 @@ const _listdate = useListDate()
 let _liststatus = useListStatus()
 let _listsumpaid = useListSumPaid()
 const _division = useDivision()
+const _listopcount = useListOPCount()
+const _listpermitcount = useListPermitCount()
 
 const properDate = date.formatDate(_listdate.getValue, 'MMMM DD, YYYY')
 
@@ -91,11 +95,35 @@ const opReleasedCount = ref(0)
 const permitReleasedCount = ref(_liststatus.allStatusArray.filter((stat) => stat === 'PERMIT ALREADY RELEASE').length)
 
 const countOPReleased = async () => {
-  const filterArray = ['ORDER OF PAYMENT RELEASED', 'OR NUMBER VERIFIED', 'RECEIVED FOR PROCESSING', 'FOR BUILDING OFFICIAL APPROVAL', 'PERMIT APPROVE AND READY FOR RELEASE', 'PERMIT ALREADY RELEASE']
-  const newArray = _liststatus.allStatusArray.filter((item) => filterArray.includes(item))
+  let filterArray
+  let newArray
+  if (_division.isBuilding) {
+    filterArray = ['ORDER OF PAYMENT RELEASED', 'OR NUMBER VERIFIED', 'RECEIVED FOR PROCESSING', 'FOR BUILDING OFFICIAL APPROVAL', 'PERMIT APPROVE AND READY FOR RELEASE', 'PERMIT ALREADY RELEASE']
+    newArray = _liststatus.allStatusArray.filter((item) => filterArray.includes(item))
+  } else if (_division.isOccupancy) {
+    filterArray = [
+      /ORDER OF PAYMENT RELEASE FOR BUREAU OF FIRE/,
+      /OCCUPANCY ORDER OF PAYMENT PAID/,
+      /OCCUPANCY OFFICIAL RECEIPT VALIDATED/,
+      /FOR OCCUPANCY PERMIT RECOMMENDING APPROVAL/,
+      /FOR OCUPANCY CERTIFICATE OF ELECTRICAL INSPECTION GENERATION/,
+      /FOR OCCUPANCY PERMIT GENERATION/,
+      /FOR OCCUPANCY RELEASING/,
+      /OCCUPANCY PERMIT RELEASED TO/,
+    ]
+    newArray = _liststatus.allStatusArray.filter((item) => filterArray.some((filter) => filter.test(item)))
+  } else if (_division.isElectrical) {
+    filterArray = [
+      /ELECTRICAL ORDERPAYMENT RELEASED/,
+      /FOR ELECTRICAL OFFICIAL RECEIPT VALIDATION/,
+      /FOR ELECTRICAL PERMIT APPROVAL/,
+      /FOR ELECTRICAL PERMIT RELEASING/,
+      /ELECTRICAL PERMIT RELEASED TO/,
+      /ELECTRICAL PERMIT SENT TO/,
+    ]
+    newArray = _liststatus.allStatusArray.filter((item) => filterArray.some((filter) => filter.test(item)))
+  }
   opReleasedCount.value = newArray.length
-  // console.log('newarray', newArray)
-  // console.log('oldarray', _liststatus.allStatusArray.map(item => item))
 }
 
 const updatePage = (page) => {
@@ -109,7 +137,6 @@ const gotoHome = () => {
 
 ;(async () => {
   await countOPReleased()
-  // getTotalSum()
 })()
 </script>
 
