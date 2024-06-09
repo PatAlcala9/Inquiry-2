@@ -103,7 +103,6 @@ const getProgressFlow = async () => {
 
 const getOwnerDetails = async () => {
   let method = ''
-  console.log(_division.getValue)
 
   if (_division.isBuilding) {
     method = 'Bldg'

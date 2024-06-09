@@ -124,7 +124,6 @@ const getOrderofPayment = async () => {
       }
 
       const data = response.data.length !== 0 ? response.data : null
-      console.log('data', data)
 
       if (data !== null) {
         _tabledata.value = data

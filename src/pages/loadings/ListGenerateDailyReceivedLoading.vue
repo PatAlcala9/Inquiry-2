@@ -134,8 +134,8 @@ const getDailyReceived = async () => {
 
       if (dayOfWeek === 6) {
         _errormessage.updateSubMessage(properDate + ' is Saturday, OCBO is closed on weekends')
-      } else if (dayOfWeek === 7) {
-        _errormessage.updateSubMessage(properDate + ' is Sundate, OCBO is closed on weekends')
+      } else if (dayOfWeek === 0) {
+        _errormessage.updateSubMessage(properDate + ' is Sunday, OCBO is closed on weekends')
       } else if (dayOfYearToday === dayOfYearSearched) {
         _errormessage.updateSubMessage('No current received data found at this moment')
       } else if (dayOfYearToday < dayOfYearSearched) {
@@ -226,8 +226,6 @@ const countOPReleased = async () => {
   return newArray.length
 }
 
-// const permitReleasedCount = ref(_liststatus.allStatusArray.filter((stat) => stat === 'PERMIT ALREADY RELEASE').length)
-
 const countPermitRelease = async () => {
   let result = 0
 
@@ -235,8 +233,10 @@ const countPermitRelease = async () => {
     result = _liststatus.allStatusArray.filter((stat) => stat === 'PERMIT ALREADY RELEASE').length
   } else if (_division.isOccupancy) {
     result = _liststatus.allStatusArray.filter((stat) => /OCCUPANCY PERMIT RELEASED TO/.test(stat)).length
+  } else if (_division.isElectrical) {
+    result = _liststatus.allStatusArray.filter((stat) => /ELECTRICAL PERMIT RELEASED TO/.test(stat) || /ELECTRICAL PERMIT SENT TO/.test(stat)).length
   } else {
-    result = _liststatus.allStatusArray.filter((stat) => /ELECTRICAL PERMIT SENT TO/.test(stat)).length
+    result = 0
   }
 
   return result

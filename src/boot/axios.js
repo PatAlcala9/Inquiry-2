@@ -10,8 +10,16 @@ import {encrypt} from 'assets/js/shield'
 // for each client)
 
 // DEVELOPMENT
+// const api = axios.create({
+//   baseURL: '',
+//   headers: {
+//     'OCBO-ShieldConnection': encrypt('inquiry'),
+//   },
+// })
+
+//SERVER
 const api = axios.create({
-  baseURL: '',
+  baseURL: 'http://127.0.0.1:8081/',
   headers: {
     'OCBO-ShieldConnection': encrypt('inquiry'),
   },

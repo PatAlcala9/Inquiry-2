@@ -172,10 +172,10 @@ const getApplicationByDivision = async () => {
     let encryptedData
     if (_division.isBuilding) {
       if (_listyear.isNull) {
-        encryptedEndpoint = encrypt('GetApprovedPermitsByMonth')
+        encryptedEndpoint = encrypt('GetApprovedPermits')
         encryptedData = encrypt(_listdate.getValue)
       } else {
-        encryptedEndpoint = encrypt('GetApprovedPermitsByYear')
+        encryptedEndpoint = encrypt('GetApprovedPermits')
         encryptedData = encrypt(_listyear.getValue)
       }
     } else if (_division.isOccupancy) {
@@ -213,18 +213,22 @@ const getApplicationByDivision = async () => {
     const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
     const data = response.data.length !== 0 ? response.data : null
 
+
+
     if (data.result.length > 0) {
       const permitList = []
       const decData = {
         result: data.result.map((item) => decrypt(item)),
         result2: data.result2.map((item) => decrypt(item)),
       }
-
+      console.log('decdata', decData)
 
       for (let i = 0; i < decData.result.length; i++) {
         const permit = await getApprovedPermitsDetails(decData.result[i])
-        permitList.push(permit)
+        console.log('permit', permit)
+        // permitList.push(permit)
       }
+      console.log('permitList', permitList)
       // const a = await getApprovedPermitsDetails(decData.result[0])
       // permitList.push(a)
       // console.log(decrypt(a.result))
@@ -236,7 +240,7 @@ const getApplicationByDivision = async () => {
       // console.log(permitList)
       // console.log('permitList', permitList)
 
-      for (let i = 0; i < decData.result.length; i++) {}
+      // for (let i = 0; i < decData.result.length; i++) {}
       const newObj = {
         result: permitList.result.map(d => d),
         result2: permitList.result2.map(d => d),
@@ -256,9 +260,9 @@ const getApplicationByDivision = async () => {
         result6: data.result2.map(d => decrypt(d)),
         result7: permitList.result6.map(d => decrypt(d))
       }
-      console.log('newObj', newObj)
-      console.log('newObj2', newObj2)
 
+      // console.log('newObj', newObj)
+      // console.log('newObj2', newObj2)
 
       // const tempApp = data.result
       // _liststatus.$patch({ value: [] })
