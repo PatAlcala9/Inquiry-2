@@ -1,19 +1,16 @@
 <template lang="pug">
 
 q-page.page(padding)
-  section
+  section.page-title-group
     div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
-        label.owner-label Application Number:
-        br
-        label.owner-name.secondary-title {{_applicationno.getValue}}
+      span.page-label Application Number:
+      span.page-info--primary {{_applicationno.getValue}}
     div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
-        label.owner-label Owner's Name:
-        br
-        label.owner-name.secondary-title {{_ownername.getValue}}
+      span.page-label Owner's Name:
+      span.page-info {{_ownername.getValue}}
     div.address-group.full-width.column.no-wrap.justify-center.items-center.content-start
-        label.address-label Address:
-        br
-        label.address-name.secondary-title {{_owneraddress.getValue}}
+      span.page-label Address:
+      span.page-info {{_owneraddress.getValue}}
 
   div(v-if="_tabledata.value !== null")
     section(v-if="$q.screen.width <= 899")
@@ -82,15 +79,15 @@ import { useListYear } from 'stores/listyear'
 import { decrypt } from 'assets/js/shield'
 
 const router = useRouter()
-let _applicationno = useApplicationNo()
+const _applicationno = useApplicationNo()
 const _searchvalue = useSearchValue()
-let _division = useDivision
+// const _division = useDivision()
 let _tabledata = useTableData
 const _ownername = useOwnername()
 const _owneraddress = useOwneraddress()
-const _lateststatus = useLatestStatus()
+// const _lateststatus = useLatestStatus()
 const _currentpage = useCurrentPage()
-const _listyear = useListYear()
+// const _listyear = useListYear()
 
 // const controller = new AbortController()
 
@@ -219,7 +216,7 @@ label
     margin: 2rem
     width: 90%
 
-@media screen and (min-width: 900px)
+@media screen and (min-width: 1023px)
   .button
     width: 250px
     margin: 2rem 0 0 0

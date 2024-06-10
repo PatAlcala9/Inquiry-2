@@ -153,7 +153,6 @@ const getOwnerDetails = async () => {
 
     const encryptedData = encrypt(_searchvalue.getValue)
     const replacedData = encryptedData.replace(/\//g, '~')
-    // response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, {
     const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
     const data = response.data.length !== 0 ? response.data : null
     if (data !== null) {
@@ -164,7 +163,8 @@ const getOwnerDetails = async () => {
         const mname = decrypt(result.result2)
         const lname = decrypt(result.result3)
         const addressresult = decrypt(result.result4)
-        const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
+        // const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
+        const ffname = fname.length === 0 ? lname : fname + ' ' + (mname.length === 0 ? lname : mname + '. ' + lname)
 
         _ownername.updateValue(ffname || '--No Name found on Database--')
         _owneraddress.updateValue(addressresult || '--No Address found on Database--')

@@ -140,7 +140,7 @@ const getOwnerDetails = async () => {
           const mname = decrypt(data.result2)
           const lname = decrypt(data.result3)
           const addressresult = decrypt(data.result4)
-          const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
+          const ffname = fname.length === 0 ? lname : fname + ' ' + (mname.length === 0 ? lname : mname + '. ' + lname)
 
           _applicationno.updateValue(_searchvalue.getValue)
           _ownername.updateValue(ffname || '--No Name found on Database--')

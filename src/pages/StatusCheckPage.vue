@@ -3,21 +3,17 @@
 q-page.page(padding)
   section.page-title-group
     div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
-        label.owner-label Application Number:
-        br
-        label.owner-name.secondary-title {{_applicationno.getValue}}
+      span.page-label Application Number:
+      span.page-info--primary {{_applicationno.getValue}}
     div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
-        label.owner-label.light Owner's Name:
-        br
-        label.owner-name.secondary-title {{ownername}}
+      span.page-label Owner's Name:
+      span.page-info {{ownername}}
     div.address-group.full-width.column.no-wrap.justify-center.items-center.content-start
-        label.address-label.light Address:
-        br
-        label.address-name.secondary-title {{address}}
+      span.page-label Address:
+      sapn.page-info {{address}}
     div.address-group.full-width.column.no-wrap.justify-center.items-center.content-start
-        label.address-label.light Latest Status:
-        br
-        label.address-name.secondary-title {{latestStatus}}
+      span.page-label Latest Status:
+      span.page-info {{latestStatus}}
 
   div.button-back-area.full-width.column.wrap.justify-center.items-center.content-center
     q-btn.button-back(rounded label="Back" @click="gotoHome")
@@ -215,7 +211,7 @@ label
 //     margin: 2rem
 //     width: 90%
 
-@media screen and (min-width: 900px)
+@media screen and (min-width: 1023px)
   .button
     width: 250px
     margin: 2rem 0 0 0
