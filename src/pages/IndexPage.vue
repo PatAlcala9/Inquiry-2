@@ -429,9 +429,9 @@ const callserver = async () => {
     } else if (commands.includes(searched.value)) {
       gotoHelp()
     } else {
-      if (searched.value.length < 3) {
+      if (searched.value.length < 5 || searched.value.toUpperCase() === 'DAVAO') {
         _errormessage.updateMessage('Invalid Search')
-        _errormessage.updateSubMessage('Please be specific in your search')
+        _errormessage.updateSubMessage('Please be more specific in your search')
 
         updatePage('error')
       } else {
@@ -508,7 +508,7 @@ h1, h2
 
 .searchbar
   width: 85%
-  font-family: 'Lexend', Arial, 'Poppins', sans-serif
+  font-family: 'Lexend', Arial, sans-serif
   margin-top: -2rem
 
   &:hover
