@@ -172,10 +172,6 @@ const defaultMode = () => {
   error.value = false
 }
 
-const sample = () => {
-  console.log('test')
-}
-
 const callserver = async () => {
   if (isNaN(searched.value.substring(0, 2)) === false) {
     if (searched.value.includes('-')) {
