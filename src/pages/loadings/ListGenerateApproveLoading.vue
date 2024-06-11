@@ -139,7 +139,6 @@ const getDataofApplicationRelease = async (item) => {
 const getDataofOccupancyApplicationRelease = async (item) => {
   const response = await api.get('/api/GetDataofOccupancyApplicationRelease/' + item)
   const data = response.data.length !== 0 ? response.data : null
-  // console.log('data:', data)
   if (data !== null) {
     for (let item of data) {
       tempTable.push(item)
