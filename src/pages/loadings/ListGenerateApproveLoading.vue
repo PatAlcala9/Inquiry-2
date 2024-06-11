@@ -221,55 +221,39 @@ const getApplicationByDivision = async () => {
       }
       console.table(decData.result)
       console.table(decData.result2)
+      // console.log(decData.result)
+      // console.log(decData.result2)
 
       for (let i = 0; i < decData.result.length; i++) {
         const permit = await getApprovedPermitsDetails(decData.result[i])
-        // console.log('permit', permit)
         permitList.push(permit)
       }
 
-      let decPermitList = {}
-      for (let i = 0; i < permitList.length; i++) {
-        decPermitList = permitList.map(({ result }) => ({
-          result: decrypt(result),
-        }))
-      }
-
-      console.log('decPermitList', decPermitList)
-      // const a = await getApprovedPermitsDetails(decData.result[0])
-      // permitList.push(a)
-      // console.log(decrypt(a.result))
-      // console.log(decrypt(a.result2))
-      // console.log(decrypt(a.result3))
-      // console.log(decrypt(a.result4))
-      // console.log(decrypt(a.result5))
-      // console.log(decrypt(a.result6))
-      // console.log(permitList)
       // console.log('permitList', permitList)
 
-      // for (let i = 0; i < decData.result.length; i++) {}
-      // const newObj = {
-      //   result: permitList.result.map(d => d),
-      //   result2: permitList.result2.map(d => d),
-      //   result3: permitList.result3.map(d => d),
-      //   result4: permitList.result4.map(d => d),
-      //   result5: permitList.result5.map(d => d),
-      //   result6: data.result2.map(d => d),
-      //   result7: permitList.result6.map(d => d)
-      // }
+      let decPermitList = {}
+      const tempResult = []
+      const tempResult2 = []
+      const tempResult3 = []
+      const tempResult4 = []
+      const tempResult5 = []
+      const tempResult6 = []
+      for (let i = 0; i < permitList.length; i++) {
+        tempResult.push(decrypt(permitList[i].result))
+        tempResult2.push(decrypt(permitList[i].result2))
+        tempResult3.push(decrypt(permitList[i].result3))
+        tempResult4.push(decrypt(permitList[i].result4))
+        tempResult5.push(decrypt(permitList[i].result5))
+        tempResult6.push(decrypt(permitList[i].result6))
+      }
+      decPermitList['result'] = tempResult
+      decPermitList['result2'] = tempResult2
+      decPermitList['result3'] = tempResult3
+      decPermitList['result4'] = tempResult4
+      decPermitList['result5'] = tempResult5
+      decPermitList['result6'] = tempResult6
 
-      // const newObj2 = {
-      //   result: permitList.result.map(d => decrypt(d)),
-      //   result2: permitList.result2.map(d => decrypt(d)),
-      //   result3: permitList.result3.map(d => decrypt(d)),
-      //   result4: permitList.result4.map(d => decrypt(d)),
-      //   result5: permitList.result5.map(d => decrypt(d)),
-      //   result6: data.result2.map(d => decrypt(d)),
-      //   result7: permitList.result6.map(d => decrypt(d))
-      // }
-
-      // console.log('newObj', newObj)
-      // console.log('newObj2', newObj2)
+      console.log(decPermitList)
 
       // const tempApp = data.result
       // _liststatus.$patch({ value: [] })

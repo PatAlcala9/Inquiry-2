@@ -172,6 +172,11 @@ const defaultMode = () => {
   error.value = false
 }
 
+const sample = () => {
+  // const file = 'src/assets/sample.pem'
+  // console.log(file)
+}
+
 const callserver = async () => {
   if (isNaN(searched.value.substring(0, 2)) === false) {
     if (searched.value.includes('-')) {
