@@ -2,7 +2,7 @@
 
 q-page.page(padding)
   section.full-width.column.wrap.justify-center.items-center.content-center
-    span.title List of Received {{ _division.getValue }} Application
+    span.title List of Approved {{ _division.getValue }} Permits
     span.subheader on
     span.header {{ properDate }}
 
@@ -11,17 +11,17 @@ q-page.page(padding)
         span.label Total Count
         span.content {{ rowCount }}
 
-      div.summary--count
-        span.label Order of Payment Released
-        span.content {{ _listopcount.getValue }}
+    //-   div.summary--count
+    //-     span.label Order of Payment Released
+    //-     span.content {{ _listopcount.getValue }}
 
-      div.summary--count
-        span.label Permit Released
-        span.content {{ _listpermitcount.getValue }}
+    //-   div.summary--count
+    //-     span.label Permit Released
+    //-     span.content {{ _listpermitcount.getValue }}
 
-      div.summary--count
-        span.label Total Amount
-        span.content &#8369; {{ Intl.NumberFormat('en-IN').format(_listsumpaid.getTotal) }}
+    //-   div.summary--count
+    //-     span.label Total Amount
+    //-     span.content &#8369; {{ Intl.NumberFormat('en-IN').format(_listsumpaid.getTotal) }}
 
     section.table-contain
       table.table-custom
@@ -29,15 +29,16 @@ q-page.page(padding)
           tr
             th Application No.
             th Owner's Name
-            //- th Owner's Address
             th Location
-            th Occupancy Type
+            th Building Permit
+            th Released Date
         tbody
           tr(v-for="(item, index) in _tabledata.value.result" :key="item")
-            td {{decrypt(item)}}
-            td {{decrypt(_tabledata.value.result2[index])}}
-            td {{decrypt(_tabledata.value.result3[index])}}
-            td {{decrypt(_tabledata.value.result4[index])}}
+            td {{item}}
+            td {{_tabledata.value.result2[index]}}
+            td {{ _tabledata.value.result3[index].length !== 0 ? `BLOCK ${_tabledata.value.result3[index]} ` : null}} {{_tabledata.value.result4[index].length !== 0 ? `LOT _tabledata.value.result4[index] ` : null}} {{_tabledata.value.result5[index]}}
+            td {{_tabledata.value.result6[index]}}
+            td {{date.formatDate(_tabledata.value.result7[index], 'MMMM DD, YYYY')}}
 
   div.back-button.full-width.column.wrap.justify-center.items-center.content-center
     q-btn.button-back(rounded label="Back" @click="gotoHome")
@@ -80,7 +81,7 @@ const _division = useDivision()
 const _listopcount = useListOPCount()
 const _listpermitcount = useListPermitCount()
 
-const properDate = date.formatDate(_listdate.getValue, 'MMMM DD, YYYY')
+const properDate = date.formatDate(_listdate.getValue, 'MMMM YYYY')
 
 const detectWeekend = (date) => {}
 
@@ -136,7 +137,7 @@ const gotoHome = () => {
 }
 
 ;(async () => {
-  await countOPReleased()
+  // await countOPReleased()
 })()
 </script>
 

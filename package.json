@@ -25,12 +25,12 @@
     "pinia": "^2.1.7",
     "quasar": "^2.16.4",
     "vue": "^3.4.27",
-    "vue-router": "^4.3.3"
+    "vue-router": "^4.3.2"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.24.7",
     "@quasar/app-webpack": "^3.13.2",
-    "@vue/language-plugin-pug": "^2.0.21",
+    "@vue/language-plugin-pug": "^2.0.19",
     "compression-webpack-plugin": "^11.1.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^8.10.0",

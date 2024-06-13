@@ -8,7 +8,10 @@ q-page.page(padding)
   div.body
     img.logo(src="../assets/ocbologo2.webp" alt="OCBO Logo")
     h1.main-title(@click="sample") OCBO Inquiry
-    q-input.searchbar(icon="search" outlined rounded v-model="searched" placeholder="Search Here" @keydown.enter="callserver" bg-color="white" input-style="letter-spacing: 1px; font-size: 1.8rem; color: #002859")
+    q-input.searchbar(v-if="$q.screen.width <= 899" icon="search" outlined rounded v-model="searched" placeholder="Search Here" @keydown.enter="callserver" bg-color="white" input-style="letter-spacing: 0.8px; font-size: 1.2rem; color: #002859")
+      template(v-slot:prepend)
+        q-icon(name="search")
+    q-input.searchbar(v-else icon="search" outlined rounded v-model="searched" placeholder="Type Application Number or Name Here" @keydown.enter="callserver" bg-color="white" input-style="letter-spacing: 0.8px; font-size: 1.2rem; color: #002859")
       template(v-slot:prepend)
         q-icon(name="search")
 
@@ -549,11 +552,11 @@ h1, h2
   margin-bottom: 3rem
 
 .help-info
-  margin-top: 1.5rem
+  margin-top: 1.4rem
   // font-family: 'Poppins'
   font-family: 'Lexend'
   color: rgba(255, 255, 255, 0.8)
-  font-size: 1.1rem
+  font-size: 1rem
 
 .bold
   font-weight: bold
@@ -580,5 +583,6 @@ h1, h2
     padding: 0.5rem 0 0 0
 
   .help-info
-    font-size: 1rem
+    margin-top: 1.6rem
+    font-size: 0.9rem
 </style>
