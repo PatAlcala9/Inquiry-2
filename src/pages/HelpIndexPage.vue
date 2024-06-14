@@ -3,6 +3,7 @@
 q-page.page(padding)
   q-resize-observer(@resize="onResize")
 
+  //- section.page-title-group
   h1.main-title2.center-text Help Page
   //- component(:is="INQPageTitle" text="Sample")
   //- inq-pagetitle(text="Sample2")

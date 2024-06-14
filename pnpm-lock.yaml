@@ -45,7 +45,7 @@ importers:
         specifier: ^3.4.27
         version: 3.4.27(typescript@4.9.4)
       vue-router:
-        specifier: ^4.3.3
+        specifier: ^4.3.2
         version: 4.3.3(vue@3.4.27(typescript@4.9.4))
     devDependencies:
       '@babel/eslint-parser':
@@ -55,7 +55,7 @@ importers:
         specifier: ^3.13.2
         version: 3.13.2(eslint@8.57.0)(pinia@2.1.7(typescript@4.9.4)(vue@3.4.27(typescript@4.9.4)))(quasar@2.16.4)(vue-router@4.3.3(vue@3.4.27(typescript@4.9.4)))(vue@3.4.27(typescript@4.9.4))
       '@vue/language-plugin-pug':
-        specifier: ^2.0.21
+        specifier: ^2.0.19
         version: 2.0.21
       compression-webpack-plugin:
         specifier: ^11.1.0
