@@ -1,14 +1,14 @@
 <template lang="pug">
 
 q-page.page(padding)
-  //- div.body(v-if="error")
-  //-   h2(class="main-title" v-if="error") {{errorMessage}}
-  //-   q-btn(rounded class="button" label="Return" @click="defaultMode")
-
   div.body
     img.logo(src="../assets/ocbologo2.webp" alt="OCBO Logo")
     h1.main-title(@click="sample") OCBO Inquiry
-    q-input.searchbar(icon="search" outlined rounded v-model="searched" placeholder="Search Here" @keydown.enter="callserver" bg-color="white" input-style="letter-spacing: 1px; font-size: 1.8rem; color: #002859")
+
+    q-input.searchbar(v-if="$q.screen.width <= 899" icon="search" outlined rounded v-model="searched" placeholder="Search Here" @keydown.enter="callserver" bg-color="white" input-style="font-size: 1.2rem; color: #002859")
+      template(v-slot:prepend)
+        q-icon(name="search")
+    q-input.searchbar(v-else icon="search" outlined rounded v-model="searched" placeholder="Type Application Number or Name Here" @keydown.enter="callserver" bg-color="white" input-style="font-size: 1.2rem; color: #002859")
       template(v-slot:prepend)
         q-icon(name="search")
 
@@ -34,7 +34,7 @@ import { useCurrentPage } from 'stores/currentpage'
 import { useSearchValue } from 'stores/searchvalue'
 import { useErrorMessage } from 'stores/errormessage'
 // import { useErrorSubMessage } from 'stores/errorsubmessage'
-import { useListSubject } from 'stores/listsubject'
+// import { useListSubject } from 'stores/listsubject'
 import { useListType } from 'stores/listtype'
 import { useDivision } from 'stores/division'
 import { useListYear } from 'stores/listyear'
@@ -214,14 +214,14 @@ const callserver = async () => {
         } else if (searched.value.includes(' signage')) {
           _division.setSignage()
 
-          _errormessage.updateMessage('Apologize for the Inconvenient')
-          _errormessage.updateSubMessage("Signage's system not available")
+          _errormessage.updateMessage('Apologize for the Inconvenience')
+          _errormessage.updateSubMessage("Signage's system is not yet available")
           updatePage('error')
-        } else if (searched.value.includes(' --division mechanical')) {
+        } else if (searched.value.includes(' mechanical')) {
           _division.setMechanical()
 
-          _errormessage.updateMessage('Apologize for the Inconvenient')
-          _errormessage.updateSubMessage("Mechanical's system not available")
+          _errormessage.updateMessage('Apologize for the Inconvenience')
+          _errormessage.updateSubMessage("Mechanical's system is not yet available")
           updatePage('error')
         } else {
           _errormessage.updateMessage('Invalid Command')
@@ -291,6 +291,14 @@ const callserver = async () => {
         } else if (searched.value.includes(' electrical')) {
           _division.setElectrical()
           searchedDate = searched.value.substring(27)
+        } else if (searched.value.includes(' signage')) {
+          _errormessage.updateMessage('Apologize for the Inconvenience')
+          _errormessage.updateSubMessage("Signage's system is not yet available")
+          updatePage('error')
+        } else if (searched.value.includes(' mechanical')) {
+          _errormessage.updateMessage('Apologize for the Inconvenience')
+          _errormessage.updateSubMessage("Mechanical's system is not yet available")
+          updatePage('error')
         }
 
         if (searchedDate.toUpperCase() === 'TODAY') {
@@ -549,11 +557,11 @@ h1, h2
   margin-bottom: 3rem
 
 .help-info
-  margin-top: 1.5rem
+  margin-top: 1.4rem
   // font-family: 'Poppins'
   font-family: 'Lexend'
   color: rgba(255, 255, 255, 0.8)
-  font-size: 1.1rem
+  font-size: 1rem
 
 .bold
   font-weight: bold
@@ -580,5 +588,9 @@ h1, h2
     padding: 0.5rem 0 0 0
 
   .help-info
-    font-size: 1rem
+    margin-top: 1.6rem
+    font-size: 0.9rem
+
+  .body
+    margin: 4rem 0 0 0
 </style>

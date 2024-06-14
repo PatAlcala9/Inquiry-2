@@ -38,6 +38,7 @@ import { useCurrentPage } from 'stores/currentpage'
 import { useTableData } from 'stores/tabledata'
 import { useListYear } from 'stores/listyear'
 import { useListDate } from 'stores/listdate'
+import { useErrorMessage } from 'stores/errormessage'
 import { ref } from 'vue'
 import { date } from 'quasar'
 import { encrypt, decrypt } from 'src/assets/js/shield'
@@ -49,6 +50,7 @@ const _currentpage = useCurrentPage()
 let _tabledata = useTableData
 const _listyear = useListYear()
 const _listdate = useListDate()
+const _errormessage = useErrorMessage()
 
 let percentage = ref(0)
 const dateDisplay = date.formatDate(_listdate.getValue, 'MMMM YYYY')
@@ -171,34 +173,16 @@ const getApplicationByDivision = async () => {
     let encryptedEndpoint
     let encryptedData
     if (_division.isBuilding) {
-      if (_listyear.isNull) {
-        encryptedEndpoint = encrypt('GetApprovedPermits')
-        encryptedData = encrypt(_listdate.getValue)
-      } else {
-        encryptedEndpoint = encrypt('GetApprovedPermits')
-        encryptedData = encrypt(_listyear.getValue)
-      }
+      encryptedEndpoint = encrypt('GetApprovedPermits')
     } else if (_division.isOccupancy) {
-      if (_listyear.isNull) {
-        encryptedEndpoint = encrypt('GetApprovedPermitsByMonthOccupancy')
-        encryptedData = encrypt(_listdate.getValue)
-      } else {
-        encryptedEndpoint = encrypt('GetApprovedPermitsByYearOccupancy')
-        encryptedData = encrypt(_listyear.getValue)
-      }
+      encryptedEndpoint = encrypt('GetApprovedPermitsOccupancy')
     } else if (_division.isSignage) {
       _errormessage.updateMessage('Error on Generating List')
       _errormessage.updateSubMessage('Signage Data is not found')
       updatePage('error')
       return
     } else if (_division.isElectrical) {
-      if (_listyear.isNull) {
-        encryptedEndpoint = encrypt('GetApprovedPermitsByMonthElectrical')
-        encryptedData = encrypt(_listdate.getValue)
-      } else {
-        encryptedEndpoint = encrypt('GetApprovedPermitsByYearElectrical')
-        encryptedData = encrypt(_listyear.getValue)
-      }
+      encryptedEndpoint = encrypt('GetApprovedPermitsElectrical')
     } else if (_division.isMechanical) {
       _errormessage.updateMessage('Error on Generating List')
       _errormessage.updateSubMessage('Mechanical Data is not found')
@@ -207,6 +191,7 @@ const getApplicationByDivision = async () => {
     } else {
       encryptedEndpoint = null
     }
+    encryptedData = _listyear.isNull ? encrypt(_listdate.getValue) : encrypt(_listyear.getValue)
 
     const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
     const replacedData = encryptedData.replaceAll('/', '~')
@@ -219,57 +204,46 @@ const getApplicationByDivision = async () => {
         result: data.result.map((item) => decrypt(item)),
         result2: data.result2.map((item) => decrypt(item)),
       }
-      console.table(decData.result)
-      console.table(decData.result2)
-      // console.log(decData.result)
-      // console.log(decData.result2)
 
       for (let i = 0; i < decData.result.length; i++) {
         const permit = await getApprovedPermitsDetails(decData.result[i])
         permitList.push(permit)
       }
 
-      // console.log('permitList', permitList)
-
-      let decPermitList = {}
-      const tempResult = []
-      const tempResult2 = []
-      const tempResult3 = []
-      const tempResult4 = []
-      const tempResult5 = []
-      const tempResult6 = []
+      let decResultList = {}
+      const decResult = []
+      const decResult2 = []
+      const decResult3 = []
+      const decResult4 = []
+      const decResult5 = []
+      const decResult6 = []
       for (let i = 0; i < permitList.length; i++) {
-        tempResult.push(decrypt(permitList[i].result))
-        tempResult2.push(decrypt(permitList[i].result2))
-        tempResult3.push(decrypt(permitList[i].result3))
-        tempResult4.push(decrypt(permitList[i].result4))
-        tempResult5.push(decrypt(permitList[i].result5))
-        tempResult6.push(decrypt(permitList[i].result6))
+        decResult.push(decrypt(permitList[i].result))
+        decResult2.push(decrypt(permitList[i].result2))
+        decResult3.push(decrypt(permitList[i].result3))
+        decResult4.push(decrypt(permitList[i].result4))
+        decResult5.push(decrypt(permitList[i].result5))
+        decResult6.push(decrypt(permitList[i].result6))
       }
-      decPermitList['result'] = tempResult
-      decPermitList['result2'] = tempResult2
-      decPermitList['result3'] = tempResult3
-      decPermitList['result4'] = tempResult4
-      decPermitList['result5'] = tempResult5
-      decPermitList['result6'] = tempResult6
+      decResultList['result'] = decResult
+      decResultList['result2'] = decResult2
+      decResultList['result3'] = decResult3
+      decResultList['result4'] = decResult4
+      decResultList['result5'] = decResult5
+      decResultList['result6'] = decResult6
 
-      console.log(decPermitList)
+      const newObj = {
+        result: decResultList.result,
+        result2: decResultList.result2,
+        result3: decResultList.result3,
+        result4: decResultList.result4,
+        result5: decResultList.result5,
+        result6: decResultList.result6,
+        result7: decData.result2,
+      }
 
-      // const tempApp = data.result
-      // _liststatus.$patch({ value: [] })
-      // _listsumpaid.$patch({ value: [] })
-
-      // for (let i = 0; i < tempApp.length; i++) {
-      //   const application = tempApp[i]
-      //   const decApp = decrypt(application)
-
-      //   const stat = await getLatestStatus(decApp)
-      //   _liststatus.addStatus(stat)
-      //   const sum = await getSumPaid(decApp)
-      //   _listsumpaid.addSum(sum)
-      // }
-      updatePage('/')
-      // updatePage('receivedlist')
+      _tabledata.value = newObj
+      updatePage('approvedlist')
     } else {
       _errormessage.updateMessage('Error on Generating List')
       _errormessage.updateSubMessage('Error')
