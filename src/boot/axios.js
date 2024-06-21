@@ -27,10 +27,9 @@ const api = axios.create({
 
 // SERVER
 // const api = axios.create({
-//   baseURL: 'https://192.168.7.160/inqserver/',
+//   baseURL: 'http://192.168.7.160:8080/inquiry-server/',
 //   headers: {
-//     'X-Requested-With': 'XMLHttpRequest',
-//     'X-OCBO-SecureConnection': 'ocbo',
+//     'OCBO-ShieldConnection': encrypt('inquiry'),
 //   }
 // })
 

@@ -13,6 +13,8 @@ const routes = [
       { path: 'namecheck', component: () => import('pages/NameCheckPage.vue') },
       { path: 'approvedlist', component: () => import('pages/ListApprovedPage.vue') },
 
+      { path: 'blank', component: () => import('pages/BlankPage.vue') },
+
       { path: 'helpindex', component: () => import('pages/HelpIndexPage.vue') },
       { path: 'helpapplication', component: () => import('pages/helps/ApplicationHelpPage.vue') },
 

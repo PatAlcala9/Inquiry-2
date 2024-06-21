@@ -2,7 +2,8 @@
 
 q-page.flex.flex-center.page(padding)
   div.column.items-center.text-center
-    span.loading-title Generating List
+    span.loading-title Please wait
+    span.loading-title Downloading Data
     span.loading-type Application Status
     span.minor for
     span.loading-division {{_division.getValue}} Application
