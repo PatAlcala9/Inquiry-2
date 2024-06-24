@@ -17,9 +17,15 @@ q-page.page(padding)
       img.image(src="../../assets/images/mobile/app-mobile2.webp" alt="application_search_image")
 
     section.step.fit.column.wrap.justify-center.items-center.content-center
-      span.details Wait for List Generating to finish
-      span.details-extra as seen below
-      img.image(src="../../assets/images/mobile/application_search_mobile3.jpg" alt="application_search_image")
+      span.details Press Enter on your keyboard
+      span.details At selection menu, choose the "Track Application"
+      //- span.details-extra as demonstated below
+      img.image(src="../../assets/images/mobile/app-mobile3.webp" alt="application_search_image")
+
+    section.step.fit.column.wrap.justify-center.items-center.content-center
+      span.details Wait for the data to be finish downloading
+      //- span.details-extra as seen below
+      img.image(src="../../assets/images/mobile/app-mobile4.webp" alt="application_search_image")
 
     section.step.fit.column.wrap.justify-center.items-center.content-center
       span.details Details completely rendered
@@ -114,6 +120,7 @@ const onResize = () => {
 }
 
 const returnHome = () => {
+  debugger
   _currentpage.value = '/'
   router.push('/', () => {})
 }
@@ -142,9 +149,9 @@ const loadCurrentPage = () => {
   font-size: 1.2rem
   margin: 0 0 1rem 0
 
-.details-extra
-  font-family: "Poppins"
-  color: rgba(255, 213, 107, 0.9)
+// .details-extra
+//   font-family: "Poppins"
+//   color: rgba(255, 213, 107, 0.9)
 
 .image
   box-shadow: -12px 11px 16px -5px rgba(0, 0, 0, 0.45)

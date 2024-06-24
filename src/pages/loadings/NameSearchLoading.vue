@@ -57,13 +57,8 @@ const getClientList = async () => {
       const replacedData = encryptedData.replaceAll('/', '~')
       const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
       const data = response.data.length !== 0 ? response.data : null
-      // let tempData = []
+
       if (data !== null) {
-        // data.forEach((element) => {
-        //   if (element.result !== null && element.result2 !== null) {
-        //     tempData.push(element)
-        //   }
-        // })
         _tabledata.value = data
         found = true
       } else {
