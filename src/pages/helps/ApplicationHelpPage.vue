@@ -120,7 +120,6 @@ const onResize = () => {
 }
 
 const returnHome = () => {
-  debugger
   _currentpage.value = '/'
   router.push('/', () => {})
 }
