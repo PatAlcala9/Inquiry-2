@@ -197,17 +197,17 @@ const displayDetail = async () => {
     await getApplicationByID()
   }
 
-  // await searchByNameOccupancy()
-  // if (occupancyid.value > 0) {
-  //   await getLastStatusOccupancy()
-  //   await getOccupancyApplicationByID()
-  // }
+  await searchByNameOccupancy()
+  if (occupancyid.value > 0) {
+    await getLastStatusOccupancy()
+    await getOccupancyApplicationByID()
+  }
 
-  // await searchByNameElectrical()
-  // if (electricalid.value > 0) {
-  //   await getLastStatusElectrical()
-  //   await getElectricalApplicationByID()
-  // }
+  await searchByNameElectrical()
+  if (electricalid.value > 0) {
+    await getLastStatusElectrical()
+    await getElectricalApplicationByID()
+  }
 
   await countIDs()
 }
@@ -264,79 +264,108 @@ const getLastStatusBuilding = async () => {
   }
 }
 
-// const searchByNameOccupancy = async () => {
-//   if (selectedLastName.value.includes('/')) {
-//     const arraylastName = selectedLastName.value.split('/')
-//     selectedLastName.value = arraylastName[0]
-//   }
+const searchByNameOccupancy = async () => {
+  if (selectedLastName.value.includes('/')) {
+    const arraylastName = selectedLastName.value.split('/')
+    selectedLastName.value = arraylastName[0]
+  }
 
-//   if (selectedFirstName.value === null) {
-//     const tempFirstName = 'empty'
-//     selectedFirstName.value = tempFirstName
-//   }
+  if (selectedFirstName.value === null) {
+    const tempFirstName = 'empty'
+    selectedFirstName.value = tempFirstName
+  }
 
-//   try {
-//     const response = await api.get('/api/SearchByNameOccupancy/' + selectedLastName.value + '/' + selectedFirstName.value)
-//     const result = response.data.length !== 0 ? response.data : null
+  try {
+    const encryptedEndpoint = encrypt('SearchByNameOccupancy')
+    const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
 
-//     if (result === null) {
-//       occupancyid.value = 0
-//     } else {
-//       occupancyid.value = result[0].result
-//     }
-//   } catch {
-//     occupancyid.value = 0
-//     lastStatusOccupancy.value = 'Downloading Data'
-//   }
-// }
+    const encryptedData = encrypt(selectedLastName.value)
+    const replacedData = encryptedData.replace(/\//g, '~')
 
-// const getLastStatusOccupancy = async () => {
-//   const response = await api.get('/api/GetLastStatusOccupancy/' + occupancyid.value)
-//   const result = response.data.length !== 0 ? response.data : null
+    const encryptedData2 = encrypt(selectedFirstName.value)
+    const replacedData2 = encryptedData2.replace(/\//g, '~')
 
-//   if (result === null) {
-//     lastStatusOccupancy.value = 'No Status Found'
-//   } else {
-//     lastStatusOccupancy.value = result[0].result || 'No Status Found'
-//   }
-// }
+    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData + '/' + replacedData2, { signal: controller.signal })
+    const data = response.data.length !== 0 ? response.data : null
 
-// const searchByNameElectrical = async () => {
-//   if (selectedLastName.value.includes('/')) {
-//     const arraylastName = selectedLastName.value.split('/')
-//     selectedLastName.value = arraylastName[0]
-//   }
+    if (data === null) {
+      occupancyid.value = 0
+    } else {
+      occupancyid.value = decrypt(data.result) || 0
+    }
+  } catch {
+    occupancyid.value = 0
+    lastStatusOccupancy.value = 'Downloading Data'
+  }
+}
 
-//   if (selectedFirstName.value === null) {
-//     const tempFirstName = 'empty'
-//     selectedFirstName.value = tempFirstName
-//   }
+const getLastStatusOccupancy = async () => {
+  const encryptedEndpoint = encrypt('GetLastStatusOccupancy')
+  const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
 
-//   try {
-//     const response = await api.get('/api/SearchByNameElectrical/' + selectedLastName.value + '/' + selectedFirstName.value)
-//     const result = response.data.length !== 0 ? response.data : null
+  const encryptedData = encrypt(occupancyid.value)
+  const replacedData = encryptedData.replace(/\//g, '~')
 
-//     if (result === null) {
-//       electricalid.value = 0
-//     } else {
-//       electricalid.value = result[0].result
-//     }
-//   } catch {
-//     electricalid.value = 0
-//   }
-// }
+  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+  const data = response.data.length !== 0 ? response.data : null
 
-// const getLastStatusElectrical = async () => {
-//   const response = await api.get('/api/GetLastStatusElectrical/' + electricalid.value)
+  if (data === null) {
+    lastStatusOccupancy.value = 'No Status Found'
+  } else {
+    lastStatusOccupancy.value = decrypt(data.result) || 'No Status Found'
+  }
+}
 
-//   const result = response.data.length !== 0 ? response.data : null
+const searchByNameElectrical = async () => {
+  if (selectedLastName.value.includes('/')) {
+    const arraylastName = selectedLastName.value.split('/')
+    selectedLastName.value = arraylastName[0]
+  }
 
-//   if (result === null) {
-//     lastStatusElectrical.value = 'No Status Found'
-//   } else {
-//     lastStatusElectrical.value = result[0].result || 'No Status Found'
-//   }
-// }
+  if (selectedFirstName.value === null) {
+    const tempFirstName = 'empty'
+    selectedFirstName.value = tempFirstName
+  }
+
+  try {
+    const encryptedEndpoint = encrypt('SearchByNameElectrical')
+    const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+
+    const encryptedData = encrypt(selectedLastName.value)
+    const replacedData = encryptedData.replace(/\//g, '~')
+
+    const encryptedData2 = encrypt(selectedFirstName.value)
+    const replacedData2 = encryptedData2.replace(/\//g, '~')
+
+    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData + '/' + replacedData2, { signal: controller.signal })
+    const data = response.data.length !== 0 ? response.data : null
+
+    if (data === null) {
+      electricalid.value = 0
+    } else {
+      electricalid.value = decrypt(data.result) || 0
+    }
+  } catch {
+    electricalid.value = 0
+  }
+}
+
+const getLastStatusElectrical = async () => {
+  const encryptedEndpoint = encrypt('GetLastStatusElectrical')
+  const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+
+  const encryptedData = encrypt(electricalid.value)
+  const replacedData = encryptedData.replace(/\//g, '~')
+
+  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+  const data = response.data.length !== 0 ? response.data : null
+
+  if (data === null) {
+    lastStatusElectrical.value = 'No Status Found'
+  } else {
+    lastStatusElectrical.value = decrypt(data.result) || 'No Status Found'
+  }
+}
 
 const countIDs = async () => {
   const receivingCount = receivingid.value > 0 ? 1 : 0
@@ -361,20 +390,50 @@ const getApplicationByID = async () => {
 
   const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
   const data = response.data.length !== 0 ? response.data : null
-  applicationNo.value = decrypt(data.result) || null
+
+  if (data !== null) {
+    applicationNo.value = decrypt(data.result) || null
+    console.log(applicationNo.value)
+  } else {
+    console.log('No record on Building')
+  }
 }
 
-// const getOccupancyApplicationByID = async () => {
-//   const response = await api.get('/api/GetOccupancyApplicationByID/' + occupancyid.value)
-//   const result = response.data || null
-//   applicationNo.value = result[0].result || null
-// }
+const getOccupancyApplicationByID = async () => {
+  const encryptedEndpoint = encrypt('GetOccupancyApplicationByID')
+  const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
 
-// const getElectricalApplicationByID = async () => {
-//   const response = await api.get('/api/GetElectricalApplicationByID/' + electricalid.value)
-//   const result = response.data || null
-//   applicationNo.value = result[0].result || null
-// }
+  const encryptedData = encrypt(occupancyid.value)
+  const replacedData = encryptedData.replace(/\//g, '~')
+
+  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+  const data = response.data.length !== 0 ? response.data : null
+
+  if (data !== null) {
+    applicationNo.value = decrypt(data.result) || null
+    console.log(applicationNo.value)
+  } else {
+    console.log('No record on Occupancy')
+  }
+}
+
+const getElectricalApplicationByID = async () => {
+  const encryptedEndpoint = encrypt('GetElectricalApplicationByID')
+  const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+
+  const encryptedData = encrypt(electricalid.value)
+  const replacedData = encryptedData.replace(/\//g, '~')
+
+  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+  const data = response.data.length !== 0 ? response.data : null
+
+  if (data !== null) {
+    applicationNo.value = decrypt(data.result) || null
+    console.log(applicationNo.value)
+  } else {
+    console.log('No record on Electrical')
+  }
+}
 
 // const openDialog2 = () => {
 //   dialog.value = false
@@ -569,6 +628,7 @@ const gotoHome = () => {
   font-size: 1.2rem
   color: yellow
   text-align: center
+  border: 1px solid $button2
 
 .table-data-mobile-status
   font-family: "PoppinsBold"

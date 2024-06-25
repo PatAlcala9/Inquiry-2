@@ -1,46 +1,70 @@
 <template lang="pug">
 
 q-page.page(padding)
-  section.page-title-group
-    div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
-      span.page-label Application Number:
-      span.page-info--primary {{_applicationno.getValue}}
-    div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
-      span.page-label Owner's Name:
-      span.page-info {{ownername}}
-    div.address-group.full-width.column.no-wrap.justify-center.items-center.content-start
-      span.page-label Address:
-      sapn.page-info {{address}}
-    div.address-group.full-width.column.no-wrap.justify-center.items-center.content-start
-      span.page-label Latest Status:
-      span.page-info {{latestStatus}}
-
-  div.button-back-area.full-width.column.wrap.justify-center.items-center.content-center
-    q-btn.button-back(rounded label="Back" @click="gotoHome")
-
-  div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
-    span Status Breakdown
-
   section(v-if="$q.screen.width <= 899")
+    section.page-title-group.left
+      div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
+        span.page-label Application Number:
+        span.page-info--primary {{_applicationno.getValue}}
+      div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
+        span.page-label Owner's Name:
+        span.page-info {{ownername}}
+      div.address-group.full-width.column.no-wrap.justify-center.items-center.content-start
+        span.page-label Address:
+        sapn.page-info {{address}}
+      div.address-group.full-width.column.no-wrap.justify-center.items-center.content-start
+        span.page-label Latest Status:
+        span.page-info {{latestStatus}}
+
+    div.button-back-area.full-width.column.wrap.justify-center.items-center.content-center
+      q-btn.button-back(rounded label="Back" @click="gotoHome")
+
+    div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
+      span Status Breakdown
+
     section
       div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center(v-for="(item, index) in tableData.result" :key="item")
         span.table-data-mobile-date {{decrypt(item).toUpperCase()}}
         span.table-data-mobile-status.last {{decrypt(tableData.result2[index]).toUpperCase()}}
 
-  section(v-else)
-    section.table-area.full-width.column.content-center.items-center.justify-center
-      table.table-custom
-        thead
-          tr
-            th Date
-            th Status
-        tbody
-          tr(v-for="(item, index) in tableData.result" :key="item")
-            td {{decrypt(item)}}
-            td {{decrypt(tableData.result2[index])}}
-            //- td {{tableData.result2[index]}}
+  section.page-pc(v-else)
+    section.page-title-group.left
+      div.application
+        span.page-info--primary {{_applicationno.getValue}}
 
-  div.button-area.full-width.column.no-wrap.justify-center.items-center.content-start
+      section.details
+        div.owner-group.full-width.column.wrap.justify-start.items-start.content-start
+          span.page-label Owner's Name:
+          span.page-info {{ownername}}
+        div.address-group.full-width.column.wrap.justify-start.items-start.content-start
+          span.page-label Address:
+          sapn.page-info {{address}}
+        div.address-group.full-width.column.wrap.justify-start.items-start.content-start
+          span.page-label Latest Status:
+          span.page-info {{latestStatus}}
+
+      section.button-grid
+        q-btn.button-back(rounded label="Back" @click="gotoHome")
+        //- div.button-back-area.full-width.column.wrap.justify-start.items-start.content-start
+
+
+      //- div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
+      //-   span Status Breakdown
+
+    section.right
+      div.table-limit
+        table.table-custom
+          thead
+            tr
+              th Date
+              th Status
+          tbody
+            tr(v-for="(item, index) in tableData.result" :key="item")
+              td {{decrypt(item)}}
+              td {{decrypt(tableData.result2[index])}}
+              //- td {{tableData.result2[index]}}
+
+  //- div.button-area.full-width.column.no-wrap.justify-center.items-center.content-start
   //-   q-btn(rounded class="button" label="Back" @click="gotoHome")
 
 </template>
@@ -192,6 +216,7 @@ label
   padding: 0.3rem
   text-align: center
   border-radius: 1rem
+  border: 1px solid $button2
 
 .table-data-mobile-status
   font-family: "LexendBold"
@@ -212,6 +237,67 @@ label
 //     width: 90%
 
 @media screen and (min-width: 1023px)
+  .page-pc
+    display: grid
+    grid-template-columns: 0.6fr 0.4fr
+    grid-template-rows: 1fr
+    gap: 0px 0px
+    grid-template-areas: "left right"
+    max-width: 1920px
+    margin: 0 auto
+
+  .left
+    display: grid
+    grid-template-columns: 1fr
+    grid-template-rows: 0.2fr 0.7fr 0.1fr
+    gap: 5rem 0px
+    grid-template-areas: "application" "details" "button-grid"
+    grid-area: left
+
+  .application
+    grid-area: application
+    margin: 0 0 2rem 0
+
+  .details
+    grid-area: details
+
+  .button-grid
+    grid-area: button-grid
+
+  .right
+    justify-self: center
+    align-self: center
+    grid-area: right
+
+  .page-info--primary
+    font-size: 2.8rem
+
+  .page-label
+    opacity: 0.5
+
+  .page-info
+    font-size: 1.8rem
+    text-align: left
+
+  .table-custom thead
+    background-color: transparent
+    font-size: 1.1rem
+
+  .table-custom th
+    padding: 1.1rem 1.1rem 2rem 1.1rem
+
+  .table-custom tbody
+    padding: 1rem
+
+  .table-custom td
+    padding: 1rem
+    font-size: 1rem
+    border-bottom: 1px solid $text
+
+  .table-limit
+    height: 800px
+    overflow-y: auto
+
   .button
     width: 250px
     margin: 2rem 0 0 0

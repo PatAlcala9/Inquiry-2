@@ -135,6 +135,7 @@ label
   padding: 0.3rem
   text-align: center
   border-radius: 1rem
+  border: 1px solid $button2
 
 .table-data-mobile-amount
   // font-family: 'LexendBold'
