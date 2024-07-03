@@ -2,7 +2,7 @@
 
 q-page.fit.column.wrap.justify-center.items-center.content-center(padding)
   span.text No Connection on Server
-  q-btn.button-back(rounded label="Back" @click="gotoHome")
+  q-btn.button-back2(rounded label="Back" @click="gotoHome")
 
 </template>
 

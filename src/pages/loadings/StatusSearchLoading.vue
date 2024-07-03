@@ -10,7 +10,7 @@ q-page.flex.flex-center.page(padding)
     span.loading-value {{_searchvalue.getValue}}
 
     div.fit.column.items-center
-      q-btn.button(rounded @click="gotoHome") Cancel
+      q-btn.button-back2(rounded @click="gotoHome") Cancel
 
 </template>
 
@@ -235,7 +235,8 @@ const loadCurrentPage = () => {
 
 <style lang="sass" scoped>
 h4, h2, h3
-  font-family: 'PoppinsBold'
+  font-family: 'Roboto'
+  font-weight: bold
 
 .while
   margin-top: -3 rem

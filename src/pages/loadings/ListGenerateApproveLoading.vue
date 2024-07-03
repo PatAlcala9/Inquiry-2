@@ -58,7 +58,15 @@ const dateDisplay = date.formatDate(_listdate.getValue, 'MMMM YYYY')
 const controller = new AbortController()
 
 const getApprovedPermitsDetails = async (id) => {
-  const encryptedEndpoint = encrypt('GetApprovedPermitsDetails')
+  let encryptedEndpoint
+  if (_division.isBuilding) {
+    encryptedEndpoint = encrypt('GetApprovedPermitsDetails')
+  } else if (_division.isOccupancy) {
+    encryptedEndpoint = encrypt('GetApprovedPermitsOccupancyDetails')
+  } else if (_division.isElectrical) {
+    encryptedEndpoint = encrypt('GetApprovedPermitsElectricalDetails')
+  }
+
   const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
   const encryptedData = encrypt(id)
   const replacedData = encryptedData.replaceAll('/', '~')

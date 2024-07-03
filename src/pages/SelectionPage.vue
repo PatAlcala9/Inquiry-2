@@ -8,7 +8,7 @@ q-page.page.column.wrap.justify-center.items-center.content-center.text-center(p
 
     div.grid
       q-btn.one.select-button(rounded @click="gotoStatusSearch") Track Application
-      q-btn.two.select-button(rounded @click="gotoOPSearch" label="Order of Payment (Fees)")
+      q-btn.two.select-button(rounded @click="gotoOPSearch" label="Order of Payment")
       q-btn.three.select-button(rounded @click="gotoNoticeSearch") Inspection Details
       q-btn.four.select-button(rounded @click="gotoPermitSearch") Permits Details
 
@@ -18,7 +18,7 @@ q-page.page.column.wrap.justify-center.items-center.content-center.text-center(p
     span.select-message Invalid Search
 
   div.fit.column.items-center.cancel-button
-    q-btn.button-back(rounded @click="gotoHome") Cancel
+    q-btn.button-back2(rounded @click="gotoHome") Cancel
 
 </template>
 
@@ -114,17 +114,19 @@ const gotoHome = () => {
 
 .division
   font-size: 1.6rem
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
 
 .search-value
   margin-top: 1.2rem
   font-size: 1.8rem
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
+  font-weight: bold
   color: $yellow
 
 .select-message
   font-size: 1.2rem
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
+  font-weight: bold
   padding: 2rem
 
 .grid
@@ -153,16 +155,38 @@ const gotoHome = () => {
 .four
   grid-area: four
 
+// .select-button
+//   width: 90%
+//   font-size: 1rem
+//   font-family: 'Roboto'
+//   font-weight: bold
+//   height: 5.2rem
+//   margin-top: 1.2rem
+//   // box-shadow: -12px 11px 16px -5px rgba(13, 5, 100, 0.45)
+//   box-shadow: -12px 11px 16px -5px rgba(255, 255, 255, 0.2)
+//   // border: 3px solid rgba(14,84,160,1)
+//   border-radius: 0px 20px 0px 0px
+//   // background-color: rgba(14,84,160,0.5)
+//   background-color: $yellow
+//   color: $darktext
+
 .select-button
   width: 90%
-  font-size: 1rem
-  font-family: 'LexendBold'
-  height: 5.2rem
+  font-size: 0.9rem
+  font-family: 'Roboto', sans-serif
+  height: 4.8rem
   margin-top: 1.2rem
-  box-shadow: -12px 11px 16px -5px rgba(13, 5, 100, 0.45)
-  border: 3px solid rgba(14,84,160,1)
-  border-radius: 0px 20px 0px 0px
-  background-color: rgba(14,84,160,0.5)
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)
+  border: none
+  border-radius: 0 20px 0 0
+  background-color: $yellow
+  color: $darktext
+  cursor: pointer
+  transition: background-color 0.3s ease
+
+  &:hover
+    background-color: $darktext
+    color: $yellow
 
 .cancel-button
   padding-top: 2rem
@@ -177,12 +201,14 @@ const gotoHome = () => {
   .search-value
     margin: 1rem 0 0 0
     font-size: 2.8rem
-    font-family: 'LexendBold'
+    font-family: 'Roboto'
+    font-weight: bold
     color: $yellow
 
   .select-message
     font-size: 1.4rem
 
   .select-button
-    font-size: 1.2rem
+    font-size: 1rem
+    padding: 0 2rem
 </style>

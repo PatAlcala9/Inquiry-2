@@ -9,7 +9,7 @@ q-page.flex.flex-center.page(padding)
     span.loading-value {{_searchvalue.getValue}}
 
     div.fit.column.items-center
-      q-btn.button(rounded @click="gotoHome") Cancel
+      q-btn.button-back2(rounded @click="gotoHome") Cancel
 
 </template>
 
@@ -215,44 +215,4 @@ const loadCurrentPage = () => {
 })()
 </script>
 
-<!-- <style lang="sass" scoped>
 
-.loading-title
-  font-size: 1.6rem
-  font-family: 'LexendBold'
-
-.loading-type
-  font-size: 1.2rem
-  font-family: 'Lexend'
-
-.minor
-  padding: 1.2rem
-
-.loading-division
-  font-size: 1.4rem
-  font-family: 'LexendBold'
-
-.loading-value
-  margin-top: 1.6rem
-  font-size: 1.8rem
-  font-family: 'LexendBold'
-  color: $yellow
-
-@media screen and (min-width: 900px)
-  .loading-title
-    font-size: 2.2rem
-
-  .loading-type
-    font-size: 1.8rem
-
-  .minor
-    font-size: 1.6rem
-    padding: 1.6rem
-
-  .loading-division
-    font-size: 2.2rem
-
-  .loading-value
-    margin-top: 2rem
-    font-size: 2.6rem
-</style> -->

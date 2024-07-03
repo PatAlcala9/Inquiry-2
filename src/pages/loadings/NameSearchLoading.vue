@@ -104,20 +104,23 @@ const loadCurrentPage = () => {
 
 .loading-title
   font-size: 2.3rem
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
+  font-weight: bold
 
 .loading-type
   font-size: 1.8rem
-  font-family: 'Lexend'
+  font-family: 'Roboto'
 
 .loading-division
   font-size: 2rem
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
+  font-weight: bold
   padding-top: 4rem
 
 .loading-value
   margin-top: 2rem
   font-size: 2.4rem
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
+  font-weight: bold
   color: $yellow
 </style>

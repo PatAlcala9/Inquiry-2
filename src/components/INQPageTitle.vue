@@ -14,11 +14,11 @@ div
 // })
 
 const props = defineProps(['text'])
-
 </script>
 
 <style lang="sass" scoped>
 .title
-  font-family: "LexendBold"
+  font-family: 'Roboto'
+  font-weight: bold
   font-size: 3.1rem
 </style>

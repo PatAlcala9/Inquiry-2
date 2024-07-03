@@ -37,10 +37,10 @@ q-page.page(padding)
 
   div(v-if="$q.screen.width <= 500")
     div.full-width.column.no-wrap.justify-center.items-center.content-start
-      q-btn.button-back(rounded label="Home" @click="gotoHome")
+      q-btn.button-back2(rounded label="Home" @click="gotoHome")
 
   div.flex.flex-center(v-else)
-    q-btn.button-back(rounded label="Home" @click="gotoHome")
+    q-btn.button-back2(rounded label="Home" @click="gotoHome")
 
 </template>
 
@@ -94,43 +94,65 @@ const updatePage = (page) => {
 
 <style lang="sass" scoped>
 .main-title2
-  font-family: "LexendBold"
+  font-family: 'Roboto'
+  font-weight: bold
   font-size: 3.1rem
 
 .list
-  font-family: "LexendBold"
+  font-family: 'Roboto'
+  font-weight: bold
   font-size: 1.4rem
   // font-weight: 800
   color: white
   border: none
   text-align: center
 
+// .list-item
+//   box-shadow: -12px 11px 16px -5px rgba(13, 5, 100, 0.45)
+//   margin-bottom: 1.5rem
+//   border: 3px solid rgba(14,84,160,1)
+//   border-radius: 0px 20px 0px 0px
+//   background-color: rgba(14,84,160,0.5)
+// padding: 0.6rem 1.1rem
+//   // padding-bottom 0.6rem
+
 .list-item
-  box-shadow: -12px 11px 16px -5px rgba(13, 5, 100, 0.45)
-  margin-bottom: 1.5rem
-  border: 3px solid rgba(14,84,160,1)
-  border-radius: 0px 20px 0px 0px
-  background-color: rgba(14,84,160,0.5)
+  width: 90%
+  font-size: 1.2rem
+  font-family: 'Roboto', sans-serif
+  height: 4.8rem
+  margin-top: 1.2rem
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)
+  border: none
+  border-radius: 0 20px 0 0
   padding: 0.6rem 1.1rem
-  // padding-bottom 0.6rem
+  background-color: $yellow
+  color: $darktext
+  cursor: pointer
+  transition: background-color 0.3s ease
+
+  &:hover
+    background-color: $darktext
+    color: $yellow
 
 @media screen and (min-width: 900px)
   .list
     width: 35rem
     font-size: 1.8rem
 
-  .list-item
-    padding: 0.6rem 2rem
+  // .list-item
+  //   padding: 0.6rem 2rem
 
   .main-title2
     font-size: 3.5rem
 
 @media screen and (min-width: 1280px)
   .list
-    font-family: "LexendBold"
+    font-family: 'Roboto'
+    font-weight: bold
     width: 16rem
     margin: 1.5rem
 
-  .list-item
-    height: 10rem
+  // .list-item
+  //   height: 10rem
 </style>

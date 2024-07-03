@@ -17,7 +17,7 @@ q-page.page(padding)
         span.page-info {{latestStatus}}
 
     div.button-back-area.full-width.column.wrap.justify-center.items-center.content-center
-      q-btn.button-back(rounded label="Back" @click="gotoHome")
+      q-btn.button-back2(rounded label="Back" @click="gotoHome")
 
     div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
       span Status Breakdown
@@ -44,7 +44,7 @@ q-page.page(padding)
           span.page-info {{latestStatus}}
 
       section.button-grid
-        q-btn.button-back(rounded label="Back" @click="gotoHome")
+        q-btn.button-back2(rounded label="Back" @click="gotoHome")
         //- div.button-back-area.full-width.column.wrap.justify-start.items-start.content-start
 
 
@@ -128,7 +128,8 @@ const updatePage = (page) => {
 
 <style lang="sass" scoped>
 label
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
+  font-weight: bold
 
 .owner-group
   padding-bottom: 2em
@@ -156,7 +157,7 @@ label
   margin-top: 1.5em
 
 .fetching
-  font-family: "Lexend"
+  font-family: "Roboto"
   width: 100%
   text-align: center
   color: #ffffff
@@ -166,7 +167,7 @@ label
   margin-bottom: 1rem
 
 .light
-  font-family: "Lexend"
+  font-family: "Roboto"
 
 .table-area
   margin-top: 2rem
@@ -176,7 +177,8 @@ label
   margin-bottom: 2rem
   padding-left: 4rem
   padding-right: 4rem
-  font-family: "LexendBold"
+  font-family: 'Roboto'
+  font-weight: bold
   font-size: 1.2rem
   color: $text
 
@@ -184,7 +186,8 @@ label
   margin: 2rem 0 1.5rem 0
   padding-left: 1rem
   padding-right: 1rem
-  font-family: "LexendBold"
+  font-family: 'Roboto'
+  font-weight: bold
   font-size: 1.5rem
   color: white
   text-align: center
@@ -198,7 +201,7 @@ label
   padding-right: 1rem
 
 .table-data
-  font-family: "Lexend"
+  font-family: "Roboto"
   font-size: 0.9rem
   color: #0f3057
   padding: 0.3rem
@@ -208,7 +211,8 @@ label
   background-color: rgba(255,255,255,0.8)
 
 .table-data-mobile-date
-  font-family: "LexendBold"
+  font-family: 'Roboto'
+  font-weight: bold
   font-size: 0.9rem
   color: $text
   background-color: $button
@@ -219,7 +223,8 @@ label
   border: 1px solid $button2
 
 .table-data-mobile-status
-  font-family: "LexendBold"
+  font-family: 'Roboto'
+  font-weight: bold
   font-size: 1rem
   color: $text
   text-align: center
@@ -249,8 +254,8 @@ label
   .left
     display: grid
     grid-template-columns: 1fr
-    grid-template-rows: 0.2fr 0.7fr 0.1fr
-    gap: 5rem 0px
+    grid-template-rows: 0.1fr 0.8fr 0.1fr
+    gap: 3rem 0px
     grid-template-areas: "application" "details" "button-grid"
     grid-area: left
 
@@ -265,18 +270,21 @@ label
     grid-area: button-grid
 
   .right
+    margin: 2rem 0 0 0
     justify-self: center
     align-self: center
     grid-area: right
 
   .page-info--primary
-    font-size: 2.8rem
+    // font-size: 2.8rem
+    paddinng: 0
+    margin: 0
 
   .page-label
     opacity: 0.5
 
   .page-info
-    font-size: 1.8rem
+    // font-size: 1.8rem
     text-align: left
 
   .table-custom thead

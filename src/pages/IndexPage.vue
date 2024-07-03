@@ -5,10 +5,10 @@ q-page.page(padding)
     img.logo(src="../assets/ocbologo2.webp" alt="OCBO Logo")
     h1.main-title(@click="sample") OCBO Inquiry
 
-    q-input.searchbar(v-if="$q.screen.width <= 899" icon="search" outlined rounded v-model="searched" placeholder="Search Here" @keydown.enter="callserver" bg-color="white" input-style="font-size: 1.2rem; color: #002859")
+    q-input.searchbar(v-if="$q.screen.width <= 899" icon="search" outlined rounded v-model="searched" placeholder="Search Here" @keydown.enter="callserver" bg-color="white" input-style="font-size: 1.2rem; color: #424f60")
       template(v-slot:prepend)
         q-icon(name="search")
-    q-input.searchbar(v-else icon="search" outlined rounded v-model="searched" placeholder="Type Application Number or Name Here" @keydown.enter="callserver" bg-color="white" input-style="font-size: 1.2rem; color: #002859")
+    q-input.searchbar(v-else icon="search" outlined rounded v-model="searched" placeholder="Type Application Number or Name Here" @keydown.enter="callserver" bg-color="white" input-style="font-size: 1.2rem; color: #424f60")
       template(v-slot:prepend)
         q-icon(name="search")
 
@@ -497,7 +497,9 @@ const uploadSearch = (value) => {
 
 <style lang="sass" scoped>
 h1, h2
-  font-family: 'PoppinsBold', sans-serif
+  // font-family: 'PoppinsBold', sans-serif
+  font-family: 'Roboto'
+  font-weight: bold
   opacity: 0.9
 
 .logo
@@ -517,12 +519,13 @@ h1, h2
 
 .searchbar
   width: 85%
-  font-family: 'Lexend', Arial, sans-serif
+  font-family: 'Roboto', Arial, sans-serif
   margin-top: -2rem
 
   &:hover
     border-radius: 2rem
-    box-shadow: 4px 8px 41px 2px rgba(14, 84, 160, 0.87)
+    // box-shadow: 4px 8px 41px 2px rgba(14, 84, 160, 0.87)
+    box-shadow: 4px 8px 41px 2px rgba(66, 79, 96, 0.87)
     overflow: hidden
 
 .sample
@@ -559,7 +562,7 @@ h1, h2
 .help-info
   margin-top: 1.4rem
   // font-family: 'Poppins'
-  font-family: 'Lexend'
+  font-family: 'Roboto'
   color: rgba(255, 255, 255, 0.8)
   font-size: 1rem
 
@@ -581,7 +584,7 @@ h1, h2
     border-radius: 15px
 
   .main-title
-    font-size: 3.5rem
+    font-size: 3.8rem
 
   .right-side
     width: 550px

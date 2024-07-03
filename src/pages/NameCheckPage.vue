@@ -13,7 +13,7 @@ q-page.page(padding)
           q-icon(name="search")
 
     div.full-width.column.wrap.justify-center.items-center.content-center
-      q-btn.button-back(rounded label="Back" @click="gotoHome")
+      q-btn.button-back2(rounded label="Back" @click="gotoHome")
 
       section(v-if="_tabledata.value.result.length > 0")
         div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-align(v-for="(item, index) in _tabledata.value.result" :key="data")
@@ -29,7 +29,7 @@ q-page.page(padding)
           q-icon(name="search")
 
       div.flex.flex-center
-        q-btn.button-back(rounded label="Back" @click="gotoHome")
+        q-btn.button-back2(rounded label="Back" @click="gotoHome")
 
       section.full-width.column.content-center.items-center.justify-center(v-if="_tabledata.value.result.length > 0")
         table.table-custom
@@ -490,7 +490,7 @@ const gotoHome = () => {
   font-size: 4.5rem
 
 .sentence
-  font-family: 'Lexend'
+  font-family: 'Roboto'
   // font-size: 2rem
   font-size: 1.6rem
   padding-bottom: 1rem
@@ -553,7 +553,7 @@ const gotoHome = () => {
   box-shadow: -10px 10px 18px 0px rgba(0, 0, 0, 0.4)
 
 .standard-font
-  font-family: 'Lexend'
+  font-family: 'Roboto'
 
 .button-group
   display: flex
@@ -579,7 +579,8 @@ const gotoHome = () => {
   margin-bottom: 2rem
   padding-left: 4rem
   padding-right: 4rem
-  font-family: "LexendBold"
+  font-family: 'Roboto'
+  font-weight: bold
   font-size: 1.8rem
   color: white
 

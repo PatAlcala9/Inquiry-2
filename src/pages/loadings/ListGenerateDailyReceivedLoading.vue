@@ -12,7 +12,7 @@ q-page.flex.flex-center.page(padding)
     span.loading-division(v-if="percentage > 0") {{percentage}} %
 
     div.fit.column.items-center
-      q-btn.button-back(rounded @click="gotoHome") Cancel
+      q-btn.button-back2(rounded @click="gotoHome") Cancel
 
 </template>
 
@@ -268,24 +268,27 @@ const loadCurrentPage = () => {
 <style lang="sass" scoped>
 
 .loading-title
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
+  font-weight: bold
   font-size: 1.8rem
 
 .loading-type
   font-size: 1.8rem
-  font-family: 'Lexend'
+  font-family: 'Roboto'
 
 .minor
   padding: 1.2rem
 
 .loading-division
   font-size: 1.8rem
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
+  font-weight: bold
 
 .loading-value
   margin-top: 2rem
   font-size: 2.2rem
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
+  font-weight: bold
   color: $yellow
 
 @media screen and (min-width: 1023px)

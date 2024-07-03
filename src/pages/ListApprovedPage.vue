@@ -21,7 +21,7 @@ q-page.page(padding)
 
     //-   div.summary--count
     //-     span.label Total Amount
-    //-     span.content &#8369; {{ Intl.NumberFormat('en-IN').format(_listsumpaid.getTotal) }}
+    //-     span.content &#8369; {{ Intl.NumberFormat('en-US').format(_listsumpaid.getTotal) }}
 
     section.table-contain
       table.table-custom
@@ -41,7 +41,7 @@ q-page.page(padding)
             td {{date.formatDate(_tabledata.value.result7[index], 'MMMM DD, YYYY')}}
 
   div.back-button.full-width.column.wrap.justify-center.items-center.content-center
-    q-btn.button-back(rounded label="Back" @click="gotoHome")
+    q-btn.button-back2(rounded label="Back" @click="gotoHome")
 </template>
 
 <script>
@@ -143,13 +143,15 @@ const gotoHome = () => {
 
 <style lang="sass" scoped>
 .subheader
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
+  font-weight: bold
   width: 100%
   text-align: center
   font-size: 1.2rem
   color: $text
 .header
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
+  font-weight: bold
   width: 100%
   text-align: center
   font-size: 1.4rem
@@ -181,13 +183,15 @@ const gotoHome = () => {
 
 @media screen and (min-width: 1023px)
   .subheader
-    font-family: 'LexendBold'
+    font-family: 'Roboto'
+    font-weight: bold
     width: 100%
     text-align: center
     font-size: 1.4rem
     color: $text
   .header
-    font-family: 'LexendBold'
+    font-family: 'Roboto'
+    font-weight: bold
     width: 100%
     text-align: center
     font-size: 1.6rem

@@ -93,7 +93,7 @@ q-page.page(padding)
       //- span.details-extra as demonstated below
       img.image(src="../../assets/images/pc/app6.webp" alt="application_search_image")
 
-    q-btn.button-back(rounded label="Back" @click="returnHome")
+    q-btn.button-back2(rounded label="Back" @click="returnHome")
 
   //- div(v-if="$q.screen.width <= 1000")
   //-   div(class="full-width column no-wrap justify-center items-center content-start")
@@ -120,7 +120,6 @@ const onResize = () => {
 }
 
 const returnHome = () => {
-  debugger
   _currentpage.value = '/'
   router.push('/', () => {})
 }
@@ -136,7 +135,8 @@ const loadCurrentPage = () => {
 
 <style lang="sass" scoped>
 .main-title2
-  font-family: "LexendBold"
+  font-family: 'Roboto'
+  font-weight: bold
   font-size: 2rem
   margin-bottom: 2rem
 
