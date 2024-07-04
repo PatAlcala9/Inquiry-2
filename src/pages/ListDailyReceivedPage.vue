@@ -204,12 +204,12 @@ const gotoHome = () => {
   border-radius: 2rem
   padding: 1.6rem 2.2rem
   margin: 0 0 1rem 0
-  background-color: $darktext
-  color: $yellow
+  background-color: transparent
+  color: $text
   font-size: 1.1rem
   opacity: 0.8
   // margin: 1rem 0
-  border: 1px solid $yellow
+  border: 1px solid $text
 
   & .label
     font-size: 0.9rem

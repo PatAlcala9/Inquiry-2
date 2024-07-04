@@ -13,7 +13,7 @@ q-page.flex.flex-center.page(padding)
     span.loading-division(v-if="percentage > 0") {{percentage}} %
 
     div.fit.column.items-center
-      q-btn.button(rounded @click="gotoHome") Cancel
+      q-btn.button-back2(rounded @click="gotoHome") Cancel
 
 </template>
 

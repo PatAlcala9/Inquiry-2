@@ -7,7 +7,7 @@ q-page.page(padding)
     span.header {{ properDate }}
 
     section.fit.row.wrap.justify-between.items-center.content-center
-      div.summary--count
+      div.summary--count2
         span.label Total Count
         span.content {{ rowCount }}
 
@@ -162,19 +162,53 @@ const gotoHome = () => {
   height: 500px
   overflow-y: auto
 
-.summary--count
+.table-custom thead
+  background-color: transparent
+  font-size: 1.1rem
+
+.table-custom th
+  padding: 1.1rem 1.1rem 2rem 1.1rem
+
+.table-custom tbody
+  padding: 1rem
+
+.table-custom td
+  padding: 1rem
+  font-size: 1rem
+  border-bottom: 1px solid $text
+
+// .summary--count
+//   display: flex
+//   flex-direction: column
+//   flex-wrap: wrap
+//   justify-content: center
+//   align-items: center
+//   align-content: center
+//   // border: 1px solid white
+//   border-radius: 2rem
+//   padding: 2rem 3rem
+//   margin: 0 0 1rem 0
+//   background-color: $button2
+
+.summary--count2
   display: flex
   flex-direction: column
   flex-wrap: wrap
   justify-content: center
   align-items: center
   align-content: center
-  // border: 1px solid white
+  font-family: 'Roboto'
+  // width: 9rem
+  // height: 2rem
   border-radius: 2rem
-  padding: 2rem 3rem
+  padding: 1.6rem 2.2rem
   margin: 0 0 1rem 0
-  background-color: $button2
-
+  background-color: transparent
+  color: $text
+  font-size: 1.1rem
+  opacity: 0.8
+  // margin: 1rem 0
+  border: 1px solid $text
   & .label
     font-size: 1rem
     // margin: auto

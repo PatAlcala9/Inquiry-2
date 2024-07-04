@@ -553,7 +553,8 @@ h1, h2
 .mobile-title
   margin-top: 2rem
   font-size: 1rem
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
+  font-weight: bold
   opacity: 0.9
 
 .list
@@ -561,7 +562,6 @@ h1, h2
 
 .help-info
   margin-top: 1.4rem
-  // font-family: 'Poppins'
   font-family: 'Roboto'
   color: rgba(255, 255, 255, 0.8)
   font-size: 1rem
