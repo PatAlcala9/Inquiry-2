@@ -17,7 +17,7 @@ q-page.page(padding)
         span.page-info {{latestStatus}}
 
     div.button-back-area.full-width.column.wrap.justify-center.items-center.content-center
-      q-btn.button-back2(rounded label="Back" @click="gotoHome")
+      q-btn.button-back2(rounded label="Back" @click="gotoSelection")
 
     div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
       span Status Breakdown
@@ -44,7 +44,7 @@ q-page.page(padding)
           span.page-info {{latestStatus}}
 
       section.button-grid
-        q-btn.button-back2(rounded label="Back" @click="gotoHome")
+        q-btn.button-back2(rounded label="Back" @click="gotoSelection")
         //- div.button-back-area.full-width.column.wrap.justify-start.items-start.content-start
 
 
@@ -118,6 +118,10 @@ const gotoHome = () => {
   // controller.abort()
   updatePage('/')
   // window.location.reload()
+}
+
+const gotoSelection = () => {
+  updatePage('selection')
 }
 
 const updatePage = (page) => {
@@ -214,13 +218,13 @@ label
   font-family: 'Roboto'
   font-weight: bold
   font-size: 0.9rem
-  color: $text
-  background-color: $button
+  color: $darktext
+  background-color: $yellow
   width: 60%
   padding: 0.3rem
   text-align: center
   border-radius: 1rem
-  border: 1px solid $button2
+  border: 1px solid $darktext
 
 .table-data-mobile-status
   font-family: 'Roboto'

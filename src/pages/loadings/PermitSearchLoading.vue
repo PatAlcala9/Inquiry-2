@@ -167,8 +167,14 @@ const getOwnerDetails = async () => {
         const fname = decrypt(data.result)
         const mname = decrypt(data.result2)
         const lname = decrypt(data.result3)
-        const addressresult = decrypt(data.result4)
+        const block = decrypt(data.result4)
+        const lot = decrypt(data.result5)
+        const address = decrypt(data.result6)
+        // const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
         const ffname = fname.length === 0 ? lname : fname + ' ' + (mname.length === 0 ? lname : mname + '. ' + lname)
+        let addressresult = `${block.length === 0 ? '' : `BLOCK ${block} `}${lot.length === 0 ? '' : `LOT ${lot} `}${address}`
+        addressresult = addressresult.replace(/(\s|^)BLK/g, 'BLOCK')
+        addressresult = addressresult.replace(/(\s|^)LT/g, 'LOT')
 
         _ownername.updateValue(ffname || '--No Name found on Database--')
         _owneraddress.updateValue(addressresult || '--No Address found on Database--')
@@ -196,8 +202,8 @@ const getOwnerDetails = async () => {
 
 const gotoHome = () => {
   controller.abort()
-  // updatePage('/')
-  window.location.reload()
+  updatePage('/')
+  // window.location.reload()
 }
 
 const updatePage = (page) => {
@@ -214,5 +220,3 @@ const loadCurrentPage = () => {
   await getOwnerDetails()
 })()
 </script>
-
-

@@ -13,6 +13,9 @@ q-page.page(padding)
         span.page-label Address:
         span.page-info {{_owneraddress.getValue}}
 
+    div.back-button.full-width.column.wrap.justify-center.items-center.content-center
+      q-btn.button-back2(rounded class="button-back" label="Back" @click="gotoSelection")
+      
     div(v-if="_tabledata.value !== null")
         section
           div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
@@ -46,7 +49,7 @@ q-page.page(padding)
         //-   span.page-info {{latestStatus}}
 
       section.button-grid
-        q-btn.button-back2(rounded label="Back" @click="gotoHome")
+        q-btn.button-back2(rounded label="Back" @click="gotoSelection")
 
     section.right
       div.table-limit(v-if="_tabledata.value !== null")
@@ -135,6 +138,10 @@ const gotoHome = () => {
   // controller.abort()
   updatePage('/')
   // window.location.reload()
+}
+
+const gotoSelection = () => {
+  updatePage('selection')
 }
 
 const updatePage = (page) => {
@@ -232,7 +239,7 @@ label
   font-family: 'Roboto'
   font-weight: bold
   font-size: 0.9rem
-  color: $text
+  color: $darktext
   background-color: $button
   width: 60%
   padding: 0.3rem
@@ -263,7 +270,6 @@ label
     width: 90%
 
 @media screen and (min-width: 1023px)
-  @media screen and (min-width: 1023px)
   .page-pc
     display: grid
     grid-template-columns: 0.6fr 0.4fr

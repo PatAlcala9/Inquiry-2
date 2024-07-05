@@ -63,7 +63,6 @@ const searchData = async () => {
   try {
     let response
     const encryptedEndpoint = encrypt('CheckConnection')
-    console.log(encryptedEndpoint)
     const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
     const connection = await api.get('/api/' + replacedEndpoint, { signal: controller.signal })
     const data = connection.data || null
@@ -163,15 +162,20 @@ const getOwnerDetails = async () => {
         const fname = decrypt(result.result)
         const mname = decrypt(result.result2)
         const lname = decrypt(result.result3)
-        const addressresult = decrypt(result.result4)
+        const block = decrypt(result.result4)
+        const lot = decrypt(result.result5)
+        const address = decrypt(result.result6)
         // const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
         const ffname = fname.length === 0 ? lname : fname + ' ' + (mname.length === 0 ? lname : mname + '. ' + lname)
+        let addressresult = `${block.length === 0 ? '' : `BLOCK ${block} `}${lot.length === 0 ? '' : `LOT ${lot} `}${address}`
+        addressresult = addressresult.replace(/(\s|^)BLK/g, "BLOCK")
+        addressresult = addressresult.replace(/(\s|^)LT/g, "LOT")
 
         _ownername.updateValue(ffname || '--No Name found on Database--')
         _owneraddress.updateValue(addressresult || '--No Address found on Database--')
       }
     }
-  } catch (error) {
+  } catch {
     _ownername.updateValue('--No Name found on Database--')
     _owneraddress.updateValue('--No Address found on Database--')
   }

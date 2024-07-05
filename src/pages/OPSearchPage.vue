@@ -14,25 +14,32 @@ q-page.page(padding)
         span.page-info {{_owneraddress.getValue}}
       div.address-group.full-width.column.no-wrap.justify-center.items-center.content-start
         span.page-label Total Amount:
-        span.page-info {{_owneraddress.getValue}}
+        span.page-info
+          b &#8369; &#0032;
+          a {{Intl.NumberFormat('en-US').format(getTotal()) }}
 
     div.back-button.full-width.column.wrap.justify-center.items-center.content-center
-      q-btn.button-back2(rounded class="button-back" label="Back" @click="gotoHome")
+      q-btn.button-back2(rounded class="button-back" label="Back" @click="gotoSelection")
 
       //- div(v-if="_tabledata.value.result5[0] !== ''").owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
       //-   label.owner-label OR:
       //-   br
       //-   label.owner-name {{_tabledata.value.result5[0]}}
 
-    div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
-      span.table-title Order of Payment
+    section(v-if="_tabledata.value.result.length > 0")
+      div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
+        span.table-title Order of Payment
 
-    div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="(item, index) in _tabledata.value.result" :key="item")
-      span.table-data-mobile-desc {{decrypt(item)}}
-      span.table-data-mobile-amount
-        b &#8369; &#0032;
-        a {{Intl.NumberFormat('en-US').format(decrypt(_tabledata.value.result2[index]))}}
-      span.table-data-mobile-paid.last {{decrypt(_tabledata.value.result3[index]) === '1' ? 'PAID' : 'UNPAID'}}
+      div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="(item, index) in _tabledata.value.result" :key="item")
+        span.table-data-mobile-desc {{decrypt(item)}}
+        span.table-data-mobile-amount
+          b &#8369; &#0032;
+          a {{Intl.NumberFormat('en-US').format(decrypt(_tabledata.value.result2[index]))}}
+        span.table-data-mobile-paid.last {{decrypt(_tabledata.value.result3[index]) === '1' ? 'PAID' : 'UNPAID'}}
+
+    section(v-else)
+      div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
+        span.table-title No Order of Payment Found
 
   section.page-pc(v-else)
     section.page-title-group.left
@@ -56,9 +63,9 @@ q-page.page(padding)
         //-   span.page-info {{latestStatus}}
 
       section.button-grid
-        q-btn.button-back2(rounded label="Back" @click="gotoHome")
+        q-btn.button-back2(rounded label="Back" @click="gotoSelection")
 
-    section.right
+    section.right(v-if="_tabledata.value.result.length > 0")
       div.table-limit
         table.table-custom
           thead
@@ -73,6 +80,10 @@ q-page.page(padding)
                 b &#8369; &#0032;
                 a {{Intl.NumberFormat('en-US').format(decrypt(_tabledata.value.result2[index]))}}
               td {{decrypt(_tabledata.value.result3[index]) === '1' ? 'YES' : 'NO'}}
+
+    section.right(v-else)
+      div.box
+        span No Order of Payment Found
 
   //- section.table-area.full-width.column.content-center.items-center.justify-center(v-else)
     //- table.table-custom
@@ -147,6 +158,10 @@ const gotoHome = () => {
   updatePage('/')
   // window.location.reload()
 }
+
+const gotoSelection = () => {
+  updatePage('selection')
+}
 </script>
 
 <style lang="sass" scoped>
@@ -215,6 +230,9 @@ label
 .table-area
   margin-top: 2rem
 
+.page-label
+    opacity: 0.5
+
 @media screen and (min-width: 1023px)
   .page-pc
     display: grid
@@ -254,9 +272,6 @@ label
     paddinng: 0
     margin: 0
 
-  .page-label
-    opacity: 0.5
-
   .page-info
     // font-size: 1.8rem
     text-align: left
@@ -283,4 +298,12 @@ label
   .button
     width: 250px
     margin: 2rem 0 0 0
+
+  .box
+    font-weight: bold
+    border: 1px solid white
+    border-radius: 2rem
+    padding: 10rem
+    font-size: 1.4rem
+    text-align: center
 </style>

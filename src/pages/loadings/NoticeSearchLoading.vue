@@ -139,8 +139,14 @@ const getOwnerDetails = async () => {
           const fname = decrypt(data.result)
           const mname = decrypt(data.result2)
           const lname = decrypt(data.result3)
-          const addressresult = decrypt(data.result4)
+          const block = decrypt(data.result4)
+          const lot = decrypt(data.result5)
+          const address = decrypt(data.result6)
+          // const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
           const ffname = fname.length === 0 ? lname : fname + ' ' + (mname.length === 0 ? lname : mname + '. ' + lname)
+          let addressresult = `${block.length === 0 ? '' : `BLOCK ${block} `}${lot.length === 0 ? '' : `LOT ${lot} `}${address}`
+          addressresult = addressresult.replace(/(\s|^)BLK/g, 'BLOCK')
+          addressresult = addressresult.replace(/(\s|^)LT/g, 'LOT')
 
           _applicationno.updateValue(_searchvalue.getValue)
           _ownername.updateValue(ffname || '--No Name found on Database--')
