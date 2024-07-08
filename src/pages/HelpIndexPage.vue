@@ -3,44 +3,48 @@
 q-page.page(padding)
   q-resize-observer(@resize="onResize")
 
-  //- section.page-title-group
-  h1.main-title2.center-text Help Page
-  //- component(:is="INQPageTitle" text="Sample")
-  //- inq-pagetitle(text="Sample2")
+  div.page-title-group.column.wrap.justify-center.items-center.content-center.text-center
+    h1.helppage-title Help Page
 
-  div.flex.flex-center(v-if="screenWidth < 1280")
-    q-list.list(bordered separator)
-      q-item.list-item(clickable v-ripple @click="gotoApplicationHelp")
-        q-item-section.list-section Application Status
-
-      q-item.list-item(clickable v-ripple @click="gotoNameHelp")
-        q-item-section Name Record
-      q-item.list-item(clickable v-ripple)
-        q-item-section Approved Permits
-
-  div.fit.column.justify-center.items-center.content-center(v-else)
-
-    div.fit.row.justify-center.items-center.content-center
+    div.flex.flex-center(v-if="screenWidth < 1280")
       q-list.list(bordered separator)
-        q-item.list-item(clickable v-ripple @click="gotoApplicationHelp")
-          q-item-section Application Status
-      q-list.list(bordered separator)
-        q-item.list-item(clickable v-ripple @click="gotoNameHelp")
-          q-item-section Name Record
-    div.fit.row.justify-center.items-center.content-center
-      q-list.list(bordered separator)
-        q-item.list-item(clickable v-ripple)
-          q-item-section Approved Permits
-      q-list.list(bordered separator)
-        q-item.list-item(clickable v-ripple)
-          q-item-section
+        //- q-item.list-item(clickable v-ripple @click="gotoApplicationHelp")
+        //-   q-item-section.list-section Application Status
+        LinkButton(text="Application Status" @click="gotoApplicationHelp")
+        LinkButton(text="Name Record" @click="gotoNameHelp")
+        LinkButton(text="Approved Permits" )
+        //- q-item.list-item(clickable v-ripple @click="gotoNameHelp")
+        //-   q-item-section Name Record
+        //- q-item.list-item(clickable v-ripple)
+        //-   q-item-section Approved Permits
 
-  div(v-if="$q.screen.width <= 500")
-    div.full-width.column.no-wrap.justify-center.items-center.content-start
+    div.fit.column.justify-center.items-center.content-center(v-else)
+
+      //- div.fit.row.justify-center.items-center.content-center
+      div.grid
+        //- q-list.list(bordered separator)
+          //- q-item.list-item(clickable v-ripple @click="gotoApplicationHelp")
+          //-   q-item-section Application Status
+        LinkButton.one(text="Application Status" @click="gotoApplicationHelp")
+        LinkButton.two(text="Name Record" @click="gotoNameHelp")
+        LinkButton.three(text="Approved Permits" )
+      //-   q-list.list(bordered separator)
+      //-     q-item.list-item(clickable v-ripple @click="gotoNameHelp")
+      //-       q-item-section Name Record
+      //- div.fit.row.justify-center.items-center.content-center
+      //-   q-list.list(bordered separator)
+      //-     q-item.list-item(clickable v-ripple)
+      //-       q-item-section Approved Permits
+      //-   //- q-list.list(bordered separator)
+      //-   //-   q-item.list-item(clickable v-ripple)
+      //-   //-     q-item-section
+
+    div(v-if="$q.screen.width <= 500")
+      div.full-width.column.no-wrap.justify-center.items-center.content-start
+        q-btn.button-back2(rounded label="Home" @click="gotoHome")
+
+    div.flex.flex-center(v-else)
       q-btn.button-back2(rounded label="Home" @click="gotoHome")
-
-  div.flex.flex-center(v-else)
-    q-btn.button-back2(rounded label="Home" @click="gotoHome")
 
 </template>
 
@@ -61,11 +65,12 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { useCurrentPage } from 'stores/currentpage'
+import LinkButton from 'components/LinkButton.vue'
 
 const router = useRouter()
 const quasar = useQuasar()
 const _currentpage = useCurrentPage()
-// let _applicationno = useApplicationNo
+// const _applicationno = useApplicationNo
 let screenWidth = ref(null)
 
 const gotoApplicationHelp = () => {
@@ -93,10 +98,36 @@ const updatePage = (page) => {
 </script>
 
 <style lang="sass" scoped>
-.main-title2
+.helppage-title
   font-family: 'Roboto'
   font-weight: bold
-  font-size: 3.1rem
+  font-size: 2.4rem
+
+.grid
+  display: grid
+  grid-auto-columns: 1fr
+  grid-auto-rows: 1fr
+  gap: 0px 0px
+  grid-template-columns: 1fr
+  grid-template-rows: 1fr 1fr 1fr 1fr
+  grid-auto-flow: row
+  grid-template-areas: "one" "two" "three" "four"
+  justify-content: center
+  align-content: center
+  justify-items: center
+  align-items: center
+
+.one
+  grid-area: one
+
+.two
+  grid-area: two
+
+.three
+  grid-area: three
+
+.four
+  grid-area: four
 
 .list
   font-family: 'Roboto'
@@ -118,7 +149,7 @@ const updatePage = (page) => {
 
 .list-item
   width: 90%
-  font-size: 1.2rem
+  font-size: 0.9rem
   font-family: 'Roboto', sans-serif
   height: 4.8rem
   margin-top: 1.2rem
@@ -130,6 +161,7 @@ const updatePage = (page) => {
   color: $darktext
   cursor: pointer
   transition: background-color 0.3s ease
+  text-transform: uppercase
 
   &:hover
     background-color: $darktext
@@ -143,8 +175,9 @@ const updatePage = (page) => {
   // .list-item
   //   padding: 0.6rem 2rem
 
-  .main-title2
-    font-size: 3.5rem
+  .helppage-title
+    font-size: 2.8rem
+    // padding: 2rem 0 0 0
 
 @media screen and (min-width: 1280px)
   .list
@@ -153,6 +186,7 @@ const updatePage = (page) => {
     width: 16rem
     margin: 1.5rem
 
-  // .list-item
-  //   height: 10rem
+  .list-item
+    font-size: 1rem
+    padding: 0 2rem
 </style>

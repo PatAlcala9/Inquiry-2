@@ -16,21 +16,21 @@ q-page.page(padding)
     div.back-button.full-width.column.wrap.justify-center.items-center.content-center
       q-btn.button-back2(rounded class="button-back" label="Back" @click="gotoSelection")
 
-      //- div(v-if="_tabledata.value.result5[0] !== ''").owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
+      //- div(v-if="_tabledata.getTable.result5[0] !== ''").owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
       //-   label.owner-label OR:
       //-   br
-      //-   label.owner-name {{_tabledata.value.result5[0]}}
+      //-   label.owner-name {{_tabledata.getTable.result5[0]}}
 
     div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
       span.table-title Inspections
 
-    div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="(item, index) in _tabledata.value.result" :key="item")
+    div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="(item, index) in _tabledata.getTable.result" :key="item")
       span.table-data-mobile-desc {{decrypt(item)}}
       span.table-data-mobile-label Date In
-      span.table-data-mobile-info {{date.formatDate(decrypt(_tabledata.value.result2[index]), 'MMMM D, YYYY')}}
+      span.table-data-mobile-info {{date.formatDate(decrypt(_tabledata.getTable.result2[index]), 'MMMM D, YYYY')}}
       span.table-data-mobile-label Day Out
-      span.table-data-mobile-info {{date.formatDate(decrypt(_tabledata.value.result3[index]), 'MMMM D, YYYY')}}
-      span.table-data-mobile-info.last {{decrypt(_tabledata.value.result4[index]) === '1' || 1 ? 'ACCOMPLISHED' : 'UNACCOMPLISHED'}}
+      span.table-data-mobile-info {{date.formatDate(decrypt(_tabledata.getTable.result3[index]), 'MMMM D, YYYY')}}
+      span.table-data-mobile-info.last {{decrypt(_tabledata.getTable.result4[index]) === '1' || 1 ? 'ACCOMPLISHED' : 'UNACCOMPLISHED'}}
 
   //- section.table-area.full-width.column.content-center.items-center.justify-center(v-else)
   section.page-pc(v-else)
@@ -59,11 +59,11 @@ q-page.page(padding)
               th Date Return
               th(v-if="_division.getValue !== 'Electrical'") Accomplished
           tbody
-            tr(v-for="(item, index) in _tabledata.value.result" :key="item")
+            tr(v-for="(item, index) in _tabledata.getTable.result" :key="item")
               td {{decrypt(item)}}
-              td {{date.formatDate(decrypt(_tabledata.value.result2[index]), 'MMMM D, YYYY')}}
-              td {{date.formatDate(decrypt(_tabledata.value.result3[index]), 'MMMM D, YYYY')}}
-              td(v-if="_division.getValue !== 'Electrical'") {{decrypt(_tabledata.value.result4[index]) === '1' || 1 ? 'YES' : 'NO'}}
+              td {{date.formatDate(decrypt(_tabledata.getTable.result2[index]), 'MMMM D, YYYY')}}
+              td {{date.formatDate(decrypt(_tabledata.getTable.result3[index]), 'MMMM D, YYYY')}}
+              td(v-if="_division.getValue !== 'Electrical'") {{decrypt(_tabledata.getTable.result4[index]) === '1' || 1 ? 'YES' : 'NO'}}
 
     //- table.table-custom
     //-   thead
@@ -73,11 +73,11 @@ q-page.page(padding)
     //-       th Date Return
     //-       th(v-if="_division.getValue !== 'Electrical'") Accomplished
     //-   tbody
-    //-     tr(v-for="(item, index) in _tabledata.value.result" :key="item")
+    //-     tr(v-for="(item, index) in _tabledata.getTable.result" :key="item")
     //-       td {{decrypt(item)}}
-    //-       td {{date.formatDate(decrypt(_tabledata.value.result2[index]), 'MMMM D, YYYY')}}
-    //-       td {{date.formatDate(decrypt(_tabledata.value.result3[index]), 'MMMM D, YYYY')}}
-    //-       td(v-if="_division.getValue !== 'Electrical'") {{decrypt(_tabledata.value.result4[index]) === '1' ? 'YES' : 'NO'}}
+    //-       td {{date.formatDate(decrypt(_tabledata.getTable.result2[index]), 'MMMM D, YYYY')}}
+    //-       td {{date.formatDate(decrypt(_tabledata.getTable.result3[index]), 'MMMM D, YYYY')}}
+    //-       td(v-if="_division.getValue !== 'Electrical'") {{decrypt(_tabledata.getTable.result4[index]) === '1' ? 'YES' : 'NO'}}
 
   //- div.full-width.column.no-wrap.justify-center.items-center.content-start
   //-   q-btn.button(rounded @click="gotoHome") Back
@@ -112,7 +112,7 @@ import { decrypt } from 'assets/js/shield'
 
 const router = useRouter()
 const _applicationno = useApplicationNo()
-let _tabledata = useTableData
+const _tabledata = useTableData()
 const _ownername = useOwnername()
 const _owneraddress = useOwneraddress()
 const _currentpage = useCurrentPage()

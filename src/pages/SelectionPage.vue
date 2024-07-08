@@ -1,24 +1,24 @@
 <template lang="pug">
 
-q-page.page.column.wrap.justify-center.items-center.content-center.text-center(padding)
-  section.page-title-group.column.wrap.justify-center.items-center.content-center.text-center(v-if="_division.getValue !== undefined")
+q-page.flex.flex-center.page(padding)
+  section.page-title-group.column.wrap.justify-center.items-center.content-center.text-center
     span.division {{_division.getValue}} Application
     span.search-value {{_searchvalue.getValue}}
     span.select-message Please select which information you wish to inquire
 
     div.grid
-      q-btn.one.select-button(rounded @click="gotoStatusSearch") Track Application
-      q-btn.two.select-button(rounded @click="gotoOPSearch" label="Order of Payment")
-      q-btn.three.select-button(rounded @click="gotoNoticeSearch") Inspection Details
-      q-btn.four.select-button(rounded @click="gotoPermitSearch") Permits Details
+      LinkButton.one(text="Track Application" @click="gotoStatusSearch")
+      LinkButton.two(text="Order of Payment" @click="gotoOPSearch")
+      LinkButton.three(text="Inspection Details" @click="gotoNoticeSearch")
+      LinkButton.four(text="Permits Details" @click="gotoStatusSearch")
 
-  section.column.wrap.justify-center.items-center.content-center.text-center(v-else)
-    span.division {{_division.getValue}} Application
-    span.search-value {{_searchvalue.getValue}}
-    span.select-message Invalid Search
+  //- section.column.wrap.justify-center.items-center.content-center.text-center(v-else)
+  //-   span.division {{_division.getValue}} Application
+  //-   span.search-value {{_searchvalue.getValue}}
+  //-   span.select-message Invalid Search
 
   div.fit.column.items-center.cancel-button
-    q-btn.button-back2(rounded @click="gotoHome") Cancel
+    BackButton(text="Cancel" @click="gotoHome")
 
 </template>
 
@@ -49,6 +49,8 @@ import { useOwneraddress } from 'stores/owneraddress'
 import { useLatestStatus } from 'stores/lateststatus'
 import { useErrorMessage } from 'stores/errormessage'
 import { useCurrentPage } from 'stores/currentpage'
+import LinkButton from 'components/LinkButton.vue'
+import BackButton from 'components/BackButton.vue'
 
 const router = useRouter()
 const quasar = useQuasar()
@@ -189,8 +191,8 @@ const gotoHome = () => {
     color: $yellow
 
 .cancel-button
-  padding-top: 2rem
-  padding-bottom: 3rem
+  // padding: 2rem 0 0 0
+  // padding-bottom: 3rem
 
 @media screen and (min-width: 1023px)
   .grid

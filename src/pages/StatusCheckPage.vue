@@ -99,7 +99,7 @@ const router = useRouter()
 const _applicationno = useApplicationNo()
 const _searchvalue = useSearchValue()
 // const _division = useDivision()
-let _tabledata = useTableData
+const _tabledata = useTableData()
 const _ownername = useOwnername()
 const _owneraddress = useOwneraddress()
 const _lateststatus = useLatestStatus()
@@ -110,7 +110,7 @@ const _currentpage = useCurrentPage()
 let ownername = ref(_ownername.getValue)
 let address = ref(_owneraddress.getValue)
 
-let tableData = ref(_tabledata.value)
+let tableData = ref(_tabledata.getTable)
 let latestStatus = ref(_lateststatus.getValue)
 let ready = ref(null)
 

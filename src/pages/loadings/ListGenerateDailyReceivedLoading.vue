@@ -1,7 +1,7 @@
 <template lang="pug">
 
 q-page.flex.flex-center.page(padding)
-  div.column.items-center.text-center
+  div.loading-screen
     span.loading-title Generating List
     span.loading-type {{_listtype.getValue.toUpperCase()}}
     span.minor for
@@ -52,7 +52,7 @@ const router = useRouter()
 const _listtype = useListType()
 const _division = useDivision()
 const _currentpage = useCurrentPage()
-let _tabledata = useTableData
+const _tabledata = useTableData()
 const _listyear = useListYear()
 const _listdate = useListDate()
 const _errormessage = useErrorMessage()
@@ -107,7 +107,7 @@ const getDailyReceived = async () => {
     data = response.data.length !== 0 ? response.data : null
 
     if (data.result.length > 0) {
-      _tabledata.value = data
+      _tabledata.updateTable(data)
       const tempApp = data.result
       _liststatus.$patch({ value: [] })
       _listsumpaid.$patch({ value: [] })

@@ -33,7 +33,7 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const _errormessage = useErrorMessage()
-// let _errorsubmessage = useErrorSubMessage
+// const _errorsubmessage = useErrorSubMessage
 const _currentpage = useCurrentPage()
 
 const gotoHome = () => {

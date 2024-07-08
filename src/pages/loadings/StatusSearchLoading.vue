@@ -1,7 +1,7 @@
 <template lang="pug">
 
 q-page.flex.flex-center.page(padding)
-  div.column.items-center.text-center
+  div.loading-screen
     span.loading-title Please wait
     span.loading-title Downloading Data
     span.loading-type Application Status
@@ -48,13 +48,13 @@ const quasar = useQuasar()
 
 const _searchvalue = useSearchValue()
 const _division = useDivision()
-let _applicationno = useApplicationNo()
+const _applicationno = useApplicationNo()
 const _ownername = useOwnername()
 const _owneraddress = useOwneraddress()
 const _lateststatus = useLatestStatus()
 const _errormessage = useErrorMessage()
 const _currentpage = useCurrentPage()
-let _tabledata = useTableData
+const _tabledata = useTableData()
 
 const controller = new AbortController()
 
@@ -207,11 +207,12 @@ const getTableData = async () => {
     const data = response.data.length !== 0 ? response.data : null
 
     if (data !== null) {
-      _tabledata.value = data
+      // _tabledata.value = data
+      _tabledata.updateTable(data)
       _lateststatus.updateValue(decrypt(data.result2[0]))
     }
   } catch {
-    _tabledata.value = {}
+    _tabledata.updateTable({})
     _lateststatus.updateValue(null)
   }
 }

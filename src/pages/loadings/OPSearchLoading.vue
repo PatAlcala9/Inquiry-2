@@ -1,7 +1,7 @@
 <template lang="pug">
 
 q-page.flex.flex-center.page(padding)
-  div.column.items-center.text-center
+  div.loading-screen
     span.loading-title Generating List
     span.loading-type {{_listtype.getValue.toUpperCase()}}
     span.minor for
@@ -41,14 +41,14 @@ import { useOwneraddress } from 'stores/owneraddress'
 import { encrypt, decrypt } from 'assets/js/shield'
 
 const router = useRouter()
-// let _listsubject = useListSubject
+// const _listsubject = useListSubject
 const _listtype = useListType()
 const _currentpage = useCurrentPage()
 const _searchvalue = useSearchValue()
 const _division = useDivision()
 const _errormessage = useErrorMessage()
 const _applicationno = useApplicationNo()
-let _tabledata = useTableData
+const _tabledata = useTableData()
 const _ownername = useOwnername()
 const _owneraddress = useOwneraddress()
 
@@ -126,7 +126,7 @@ const getOrderofPayment = async () => {
       const data = response.data.length !== 0 ? response.data : null
 
       if (data !== null) {
-        _tabledata.value = data
+        _tabledata.updateTable(data)
         await getOwnerDetails()
 
         updatePage('opcheck')

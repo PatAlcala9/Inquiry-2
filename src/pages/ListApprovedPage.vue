@@ -33,12 +33,12 @@ q-page.page(padding)
             th Building Permit
             th Released Date
         tbody
-          tr(v-for="(item, index) in _tabledata.value.result" :key="item")
+          tr(v-for="(item, index) in _tabledata.getTable.result" :key="item")
             td {{item}}
-            td {{_tabledata.value.result2[index]}}
-            td {{ _tabledata.value.result3[index].length !== 0 ? `BLOCK ${_tabledata.value.result3[index]} ` : null}} {{_tabledata.value.result4[index].length !== 0 ? `LOT _tabledata.value.result4[index] ` : null}} {{_tabledata.value.result5[index]}}
-            td {{_tabledata.value.result6[index]}}
-            td {{date.formatDate(_tabledata.value.result7[index], 'MMMM DD, YYYY')}}
+            td {{_tabledata.getTable.result2[index]}}
+            td {{ _tabledata.getTable.result3[index].length !== 0 ? `BLOCK ${_tabledata.getTable.result3[index]} ` : null}} {{_tabledata.getTable.result4[index].length !== 0 ? `LOT _tabledata.getTable.result4[index] ` : null}} {{_tabledata.getTable.result5[index]}}
+            td {{_tabledata.getTable.result6[index]}}
+            td {{date.formatDate(_tabledata.getTable.result7[index], 'MMMM DD, YYYY')}}
 
   div.back-button.full-width.column.wrap.justify-center.items-center.content-center
     q-btn.button-back2(rounded label="Back" @click="gotoHome")
@@ -73,10 +73,10 @@ import { useListPermitCount } from 'stores/listpermitcount'
 const router = useRouter()
 
 const _currentpage = useCurrentPage()
-let _tabledata = useTableData
+const _tabledata = useTableData()
 const _listdate = useListDate()
-let _liststatus = useListStatus()
-let _listsumpaid = useListSumPaid()
+const _liststatus = useListStatus()
+const _listsumpaid = useListSumPaid()
 const _division = useDivision()
 const _listopcount = useListOPCount()
 const _listpermitcount = useListPermitCount()

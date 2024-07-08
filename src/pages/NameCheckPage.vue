@@ -6,7 +6,7 @@ q-page.page(padding)
     div.full-width.column.no-wrap.justify-center.items-center.content-start
       span.page-title Found for
       span.page-searchvalue {{_searchvalue.getValue.toUpperCase()}}
-      span.secondary-title.number {{_tabledata.value.result.length}}
+      span.secondary-title.number {{_tabledata.getTable.result.length}}
       span.secondary-title.sentence {{sentence}}
       q-input.searchbar(rounded outlined v-model="specific" placeholder="Search Specific" bg-color="white" )
         template(v-slot:prepend)
@@ -15,15 +15,15 @@ q-page.page(padding)
     div.full-width.column.wrap.justify-center.items-center.content-center
       q-btn.button-back2(rounded label="Back" @click="gotoHome")
 
-      section(v-if="_tabledata.value.result.length > 0")
-        div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-align(v-for="(item, index) in _tabledata.value.result" :key="data")
+      section(v-if="_tabledata.getTable.result.length > 0")
+        div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-align(v-for="(item, index) in _tabledata.getTable.result" :key="data")
           span.table-data-mobile-date {{decrypt(item).toUpperCase()}}
-          span.table-data-mobile-status {{decrypt(_tabledata.value.result2[index]).toUpperCase()}}
-          q-btn.table-button-mobile(rounded @click="getName(decrypt(_tabledata.value.result3[index]), decrypt(_tabledata.value.result4[index]))") Check
+          span.table-data-mobile-status {{decrypt(_tabledata.getTable.result2[index]).toUpperCase()}}
+          q-btn.table-button-mobile(rounded @click="getName(decrypt(_tabledata.getTable.result3[index]), decrypt(_tabledata.getTable.result4[index]))") Check
 
   div(v-else)
     div.full-width.column.content-center.items-center.justify-center
-      h3.secondary-title {{_tabledata.value.result.length}} {{sentence}}
+      h3.secondary-title {{_tabledata.getTable.result.length}} {{sentence}}
       q-input.searchbar(rounded outlined v-model="specific" placeholder="Search Specific" bg-color="white" )
         template(v-slot:prepend)
           q-icon(name="search")
@@ -31,7 +31,7 @@ q-page.page(padding)
       div.flex.flex-center
         q-btn.button-back2(rounded label="Back" @click="gotoHome")
 
-      section.full-width.column.content-center.items-center.justify-center(v-if="_tabledata.value.result.length > 0")
+      section.full-width.column.content-center.items-center.justify-center(v-if="_tabledata.getTable.result.length > 0")
         table.table-custom
           thead
             tr
@@ -39,11 +39,11 @@ q-page.page(padding)
               th Address
               th
           tbody
-            tr(v-for="(item, index) in _tabledata.value.result" :key="item")
+            tr(v-for="(item, index) in _tabledata.getTable.result" :key="item")
               td {{decrypt(item).toUpperCase()}}
-              td {{decrypt(_tabledata.value.result2[index]).toUpperCase()}}
+              td {{decrypt(_tabledata.getTable.result2[index]).toUpperCase()}}
               td
-                q-btn.table-button(rounded @click="getName(decrypt(_tabledata.value.result3[index]), decrypt(_tabledata.value.result4[index]))") Check
+                q-btn.table-button(rounded @click="getName(decrypt(_tabledata.getTable.result3[index]), decrypt(_tabledata.getTable.result4[index]))") Check
 
 
   q-dialog.dialog(full-width v-model="dialog" position="top")
@@ -144,7 +144,7 @@ import { useSearchValue } from 'stores/searchvalue'
 import { encrypt, decrypt } from 'assets/js/shield'
 
 const router = useRouter()
-let _tabledata = useTableData
+const _tabledata = useTableData()
 const _currentpage = useCurrentPage()
 const _searchvalue = useSearchValue()
 

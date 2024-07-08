@@ -1,7 +1,7 @@
 <template lang="pug">
 
 q-page.flex.flex-center.page(padding)
-  div.column.items-center.text-center
+  div.loading-screen
     span.loading-title Generating List
     span.loading-type {{_listtype.getValue.toUpperCase()}}
     span.minor for
@@ -47,7 +47,7 @@ const router = useRouter()
 const _listtype = useListType()
 const _division = useDivision()
 const _currentpage = useCurrentPage()
-let _tabledata = useTableData
+const _tabledata = useTableData()
 const _listyear = useListYear()
 const _listdate = useListDate()
 const _errormessage = useErrorMessage()
@@ -90,7 +90,7 @@ const getListofApplicationReleasedByYear = async () => {
       percentage.value = Math.round((parseInt(item) / data.length) * 100)
     }
 
-    _tabledata.value = tempTable
+    _tabledata.updateTable(tempTable)
     updatePage('approvelist')
   }
 }
@@ -109,7 +109,7 @@ const getListofOccupancyApplicationReleasedByYear = async () => {
       percentage.value = Math.round((parseInt(item) / data.length) * 100)
     }
 
-    _tabledata.value = tempTable
+    _tabledata.updateTable(tempTable)
     updatePage('approvelist')
   }
 }
@@ -128,7 +128,7 @@ const getListofElectricalApplicationReleasedByYear = async () => {
       percentage.value = Math.round((parseInt(item) / data.length) * 100)
     }
 
-    _tabledata.value = tempTable
+    _tabledata.updateTable(tempTable)
     updatePage('approvelist')
   }
 }
@@ -250,7 +250,7 @@ const getApplicationByDivision = async () => {
         result7: decData.result2,
       }
 
-      _tabledata.value = newObj
+      _tabledata.updateTable(newObj)
       updatePage('approvedlist')
     } else {
       _errormessage.updateMessage('Error on Generating List')

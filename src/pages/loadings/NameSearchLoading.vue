@@ -34,7 +34,7 @@ import { encrypt, decrypt } from 'src/assets/js/shield'
 
 const router = useRouter()
 const _searchvalue = useSearchValue()
-let _tabledata = useTableData
+const _tabledata = useTableData()
 const _currentpage = useCurrentPage()
 
 let message = ref('Downloading Information from the Server')
@@ -59,7 +59,7 @@ const getClientList = async () => {
       const data = response.data.length !== 0 ? response.data : null
 
       if (data !== null) {
-        _tabledata.value = data
+        _tabledata.updateTable(data)
         found = true
       } else {
       }
@@ -67,7 +67,7 @@ const getClientList = async () => {
       updatePage('noconnection')
     }
   } catch {
-    _tabledata.value = {}
+    _tabledata.updateTable({})
     found = false
   }
 }

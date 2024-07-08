@@ -21,21 +21,21 @@ q-page.page(padding)
     div.back-button.full-width.column.wrap.justify-center.items-center.content-center
       q-btn.button-back2(rounded class="button-back" label="Back" @click="gotoSelection")
 
-      //- div(v-if="_tabledata.value.result5[0] !== ''").owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
+      //- div(v-if="_tabledata.getTable.result5[0] !== ''").owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
       //-   label.owner-label OR:
       //-   br
-      //-   label.owner-name {{_tabledata.value.result5[0]}}
+      //-   label.owner-name {{_tabledata.getTable.result5[0]}}
 
-    section(v-if="_tabledata.value.result.length > 0")
+    section(v-if="_tabledata.getTable.result.length > 0")
       div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
         span.table-title Order of Payment
 
-      div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="(item, index) in _tabledata.value.result" :key="item")
+      div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="(item, index) in _tabledata.getTable.result" :key="item")
         span.table-data-mobile-desc {{decrypt(item)}}
         span.table-data-mobile-amount
           b &#8369; &#0032;
-          a {{Intl.NumberFormat('en-US').format(decrypt(_tabledata.value.result2[index]))}}
-        span.table-data-mobile-paid.last {{decrypt(_tabledata.value.result3[index]) === '1' ? 'PAID' : 'UNPAID'}}
+          a {{Intl.NumberFormat('en-US').format(decrypt(_tabledata.getTable.result2[index]))}}
+        span.table-data-mobile-paid.last {{decrypt(_tabledata.getTable.result3[index]) === '1' ? 'PAID' : 'UNPAID'}}
 
     section(v-else)
       div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
@@ -65,7 +65,7 @@ q-page.page(padding)
       section.button-grid
         q-btn.button-back2(rounded label="Back" @click="gotoSelection")
 
-    section.right(v-if="_tabledata.value.result.length > 0")
+    section.right(v-if="_tabledata.getTable.result.length > 0")
       div.table-limit
         table.table-custom
           thead
@@ -74,12 +74,12 @@ q-page.page(padding)
               th Amount
               th Paid
           tbody
-            tr(v-for="(item, index) in _tabledata.value.result" :key="item")
+            tr(v-for="(item, index) in _tabledata.getTable.result" :key="item")
               td {{decrypt(item)}}
               td
                 b &#8369; &#0032;
-                a {{Intl.NumberFormat('en-US').format(decrypt(_tabledata.value.result2[index]))}}
-              td {{decrypt(_tabledata.value.result3[index]) === '1' ? 'YES' : 'NO'}}
+                a {{Intl.NumberFormat('en-US').format(decrypt(_tabledata.getTable.result2[index]))}}
+              td {{decrypt(_tabledata.getTable.result3[index]) === '1' ? 'YES' : 'NO'}}
 
     section.right(v-else)
       div.box
@@ -93,10 +93,10 @@ q-page.page(padding)
     //-       th Amount
     //-       th Paid
     //-   tbody
-    //-     tr(v-for="(item, index) in _tabledata.value.result" :key="item")
+    //-     tr(v-for="(item, index) in _tabledata.getTable.result" :key="item")
     //-       td {{decrypt(item)}}
-    //-       td &#8369; {{Intl.NumberFormat('en-US').format(decrypt(_tabledata.value.result2[index]))}}
-    //-       td {{decrypt(_tabledata.value.result3[index]) === '1' ? 'YES' : 'NO'}}
+    //-       td &#8369; {{Intl.NumberFormat('en-US').format(decrypt(_tabledata.getTable.result2[index]))}}
+    //-       td {{decrypt(_tabledata.getTable.result3[index]) === '1' ? 'YES' : 'NO'}}
 
   //- div.full-width.column.no-wrap.justify-center.items-center.content-start
   //-   q-btn.button(rounded @click="gotoHome") Back
@@ -130,20 +130,20 @@ import { decrypt } from 'assets/js/shield'
 
 const router = useRouter()
 const _applicationno = useApplicationNo()
-let _tabledata = useTableData
+const _tabledata = useTableData()
 const _ownername = useOwnername()
 const _owneraddress = useOwneraddress()
 const _currentpage = useCurrentPage()
 
 // const controller = new AbortController()
 
-// console.log('result', decrypt(_tabledata.value.result2.map(num).reduce((acc, curr) => acc + curr, 0)))
-// const a = _tabledata.value.result2[0].reduce((acc, curr) => decrypt(acc) + decrypt(curr), 0)
+// console.log('result', decrypt(_tabledata.getTable.result2.map(num).reduce((acc, curr) => acc + curr, 0)))
+// const a = _tabledata.getTable.result2[0].reduce((acc, curr) => decrypt(acc) + decrypt(curr), 0)
 
 const getTotal = () => {
   let total = 0
-  for (let i = 0; i < _tabledata.value.result2.length; i++) {
-    total = total + parseFloat(decrypt(_tabledata.value.result2[i]))
+  for (let i = 0; i < _tabledata.getTable.result2.length; i++) {
+    total = total + parseFloat(decrypt(_tabledata.getTable.result2[i]))
   }
   return total
 }

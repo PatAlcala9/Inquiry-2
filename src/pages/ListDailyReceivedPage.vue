@@ -35,11 +35,11 @@ q-page.page(padding)
             th Location
             th Occupancy Type
         tbody
-          tr(v-for="(item, index) in _tabledata.value.result" :key="item")
+          tr(v-for="(item, index) in _tabledata.getTable.result" :key="item")
             td {{decrypt(item)}}
-            td {{decrypt(_tabledata.value.result2[index])}}
-            td {{decrypt(_tabledata.value.result3[index])}}
-            td {{decrypt(_tabledata.value.result4[index])}}
+            td {{decrypt(_tabledata.getTable.result2[index])}}
+            td {{decrypt(_tabledata.getTable.result3[index])}}
+            td {{decrypt(_tabledata.getTable.result4[index])}}
 
   div.back-button.full-width.column.wrap.justify-center.items-center.content-center
     q-btn.button-back2(rounded label="Back" @click="gotoHome")
@@ -74,10 +74,10 @@ import { useListPermitCount } from 'stores/listpermitcount'
 const router = useRouter()
 
 const _currentpage = useCurrentPage()
-let _tabledata = useTableData
+const _tabledata = useTableData()
 const _listdate = useListDate()
-let _liststatus = useListStatus()
-let _listsumpaid = useListSumPaid()
+const _liststatus = useListStatus()
+const _listsumpaid = useListSumPaid()
 const _division = useDivision()
 const _listopcount = useListOPCount()
 const _listpermitcount = useListPermitCount()

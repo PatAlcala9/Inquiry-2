@@ -15,18 +15,18 @@ q-page.page(padding)
 
     div.back-button.full-width.column.wrap.justify-center.items-center.content-center
       q-btn.button-back2(rounded class="button-back" label="Back" @click="gotoSelection")
-      
+
     div(v-if="_tabledata.value !== null")
         section
           div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
             span(v-if="_tabledata.value.length > 1") Permits
             span(v-else) Permit
 
-          div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="(item, index) in _tabledata.value.result" :key="item")
-            span.table-data-mobile-desc.last(v-if="_tabledata.value.result4 !== undefined") {{decrypt(item)}}
+          div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="(item, index) in _tabledata.getTable.result" :key="item")
+            span.table-data-mobile-desc.last(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(item)}}
             span.table-data-mobile-desc(v-else) {{decrypt(item)}}
-            span.table-data-mobile-info(v-if="_tabledata.value.result4 !== undefined") Block {{decrypt(_tabledata.value.result2[index])}} Lot {{decrypt(_tabledata.value.result3[index])}}
-            span.table-data-mobile-info.last(v-if="_tabledata.value.result4 !== undefined") {{decrypt(_tabledata.value.result4[index])}}
+            span.table-data-mobile-info(v-if="_tabledata.getTable.result4 !== undefined") Block {{decrypt(_tabledata.getTable.result2[index])}} Lot {{decrypt(_tabledata.getTable.result3[index])}}
+            span.table-data-mobile-info.last(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result4[index])}}
 
     div(v-else)
       section.flex.flex-center
@@ -56,17 +56,17 @@ q-page.page(padding)
         table.table-custom
           thead
             tr
-              th(v-if="_tabledata.value.result.length > 1") Permits
+              th(v-if="_tabledata.getTable.result.length > 1") Permits
               th(v-else) Permit
-              th(v-if="_tabledata.value.result4 !== undefined") Block
-              th(v-if="_tabledata.value.result4 !== undefined") Lot
-              th(v-if="_tabledata.value.result4 !== undefined") Address
+              th(v-if="_tabledata.getTable.result4 !== undefined") Block
+              th(v-if="_tabledata.getTable.result4 !== undefined") Lot
+              th(v-if="_tabledata.getTable.result4 !== undefined") Address
           tbody
-            tr(v-for="(item, index) in _tabledata.value.result" :key="item")
+            tr(v-for="(item, index) in _tabledata.getTable.result" :key="item")
               td {{decrypt(item)}}
-              td(v-if="_tabledata.value.result4 !== undefined") {{decrypt(_tabledata.value.result2[index])}}
-              td(v-if="_tabledata.value.result4 !== undefined") {{decrypt(_tabledata.value.result3[index])}}
-              td(v-if="_tabledata.value.result4 !== undefined") {{decrypt(_tabledata.value.result4[index])}}
+              td(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result2[index])}}
+              td(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result3[index])}}
+              td(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result4[index])}}
 
       div(v-else)
         section.flex.flex-center
@@ -75,17 +75,17 @@ q-page.page(padding)
     //-   table.table-custom
     //-     thead
     //-       tr
-    //-         th(v-if="_tabledata.value.result.length > 1") Permits
+    //-         th(v-if="_tabledata.getTable.result.length > 1") Permits
     //-         th(v-else) Permit
-    //-         th(v-if="_tabledata.value.result4 !== undefined") Block
-    //-         th(v-if="_tabledata.value.result4 !== undefined") Lot
-    //-         th(v-if="_tabledata.value.result4 !== undefined") Address
+    //-         th(v-if="_tabledata.getTable.result4 !== undefined") Block
+    //-         th(v-if="_tabledata.getTable.result4 !== undefined") Lot
+    //-         th(v-if="_tabledata.getTable.result4 !== undefined") Address
     //-     tbody
-    //-       tr(v-for="(item, index) in _tabledata.value.result" :key="item")
+    //-       tr(v-for="(item, index) in _tabledata.getTable.result" :key="item")
     //-         td {{decrypt(item)}}
-    //-         td(v-if="_tabledata.value.result4 !== undefined") {{decrypt(_tabledata.value.result2[index])}}
-    //-         td(v-if="_tabledata.value.result4 !== undefined") {{decrypt(_tabledata.value.result3[index])}}
-    //-         td(v-if="_tabledata.value.result4 !== undefined") {{decrypt(_tabledata.value.result4[index])}}
+    //-         td(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result2[index])}}
+    //-         td(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result3[index])}}
+    //-         td(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result4[index])}}
 
 
 
@@ -125,7 +125,7 @@ const router = useRouter()
 const _applicationno = useApplicationNo()
 const _searchvalue = useSearchValue()
 // const _division = useDivision()
-let _tabledata = useTableData
+const _tabledata = useTableData()
 const _ownername = useOwnername()
 const _owneraddress = useOwneraddress()
 // const _lateststatus = useLatestStatus()

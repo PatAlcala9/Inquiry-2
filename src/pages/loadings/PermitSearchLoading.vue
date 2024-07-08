@@ -1,7 +1,7 @@
 <template lang="pug">
 
 q-page.flex.flex-center.page(padding)
-  div.column.items-center.text-center
+  div.loading-screen
     span.loading-title Generating List
     span.loading-type {{_listtype.getValue.toUpperCase()}}
     span.minor for
@@ -41,13 +41,13 @@ import { useErrorMessage } from 'stores/errormessage'
 import { encrypt, decrypt } from 'assets/js/shield'
 
 const router = useRouter()
-// let _listsubject = useListSubject
+// const _listsubject = useListSubject
 const _listtype = useListType()
 const _currentpage = useCurrentPage()
 const _searchvalue = useSearchValue()
 const _division = useDivision()
-let _applicationno = useApplicationNo()
-let _tabledata = useTableData
+const _applicationno = useApplicationNo()
+const _tabledata = useTableData()
 const _ownername = useOwnername()
 const _owneraddress = useOwneraddress()
 const _errormessage = useErrorMessage()
@@ -99,10 +99,10 @@ const getPermits = async () => {
     }
 
     if (data !== null) {
-      _tabledata.value = data
+      _tabledata.updateTable(data)
       return 'ok'
     } else {
-      _tabledata.value = null
+      _tabledata.updateTable(null)
       return 'nodata'
     }
   } catch {

@@ -5,14 +5,14 @@ q-page.page(padding)
     img.logo(src="../assets/ocbologo2.webp" alt="OCBO Logo")
     h1.main-title(@click="sample") OCBO Inquiry
 
-    q-input.searchbar(v-if="$q.screen.width <= 899" icon="search" outlined rounded v-model="searched" placeholder="Search Here" @keydown.enter="callserver" bg-color="white" input-style="font-size: 1.2rem; color: #424f60")
+    q-input.searchbar(v-if="$q.screen.width <= 899" icon="search" outlined rounded v-model="searched" placeholder="Search Here" @keydown.enter="runCommand" bg-color="white" input-style="font-size: 1.2rem; color: #424f60")
       template(v-slot:prepend)
         q-icon(name="search")
-    q-input.searchbar(v-else icon="search" outlined rounded v-model="searched" placeholder="Type Application Number or Name Here" @keydown.enter="callserver" bg-color="white" input-style="font-size: 1.2rem; color: #424f60")
+    q-input.searchbar(v-else icon="search" outlined rounded v-model="searched" placeholder="Type Application Number or Name Here" @keydown.enter="runCommand" bg-color="white" input-style="font-size: 1.2rem; color: #424f60")
       template(v-slot:prepend)
         q-icon(name="search")
 
-    q-btn.button(rounded label="Search" @click="callserver")
+    //- q-btn.button(rounded label="Search" @click="runCommand")
 
     div(v-if="$q.screen.width <= 899")
       div.flex.flex-center
@@ -28,9 +28,10 @@ q-page.page(padding)
 
 <script setup>
 import { ref } from 'vue'
+import { api } from 'boot/axios'
 import { useRouter } from 'vue-router'
 import { useCurrentPage } from 'stores/currentpage'
-// import { useApplicationNo } from 'stores/applicationno'
+import { useApplicationNo } from 'stores/applicationno'
 import { useSearchValue } from 'stores/searchvalue'
 import { useErrorMessage } from 'stores/errormessage'
 // import { useErrorSubMessage } from 'stores/errorsubmessage'
@@ -46,10 +47,10 @@ import { encrypt, decrypt } from 'assets/js/shield'
 
 const router = useRouter()
 const _currentpage = useCurrentPage()
-// let _applicationno = useApplicationNo
+const _applicationno = useApplicationNo()
 const _searchvalue = useSearchValue()
 const _errormessage = useErrorMessage()
-// let _listsubject = useListSubject
+// const _listsubject = useListSubject
 const _listtype = useListType()
 const _division = useDivision()
 const _listyear = useListYear()
@@ -172,20 +173,110 @@ const defaultMode = () => {
   error.value = false
 }
 
-const sample = () => {
-  // const file = 'src/assets/sample.pem'
-  // console.log(file)
+const detectDivision = async (value) => {
+  if (value.length === 9) {
+    _division.setBuilding()
+  } else if (value.length === 8) {
+    _division.setOccupancy()
+  } else if (value.length === 10) {
+    _division.setElectrical()
+  } else if (value.length === 11) {
+    _division.setSignage()
+  } else if (value.length === 7) {
+    _division.setMechanical()
+  } else {
+    _division.setUndefined()
+  }
 }
 
-const callserver = async () => {
+const checkApplication = async (application) => {
+  try {
+    let response
+    const encryptedEndpoint = encrypt('CheckConnection')
+    const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+    const connection = await api.get('/api/' + replacedEndpoint)
+    const data = connection.data || null
+    const result = data !== null ? decrypt(data.result) : null
+
+    if (result !== null) {
+      await detectDivision(application)
+
+      if (_division.isBuilding) {
+        const encryptedEndpoint = encrypt('CheckBuilding')
+        const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+        const encryptedData = encrypt(application)
+        const replacedData = encryptedData.replace(/\//g, '~')
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+      } else if (_division.isOccupancy) {
+        const encryptedEndpoint = encrypt('CheckOccupancy')
+        const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+        const encryptedData = encrypt(application)
+        const replacedData = encryptedData.replace(/\//g, '~')
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+      } else if (_division.isSignage) {
+        const encryptedEndpoint = encrypt('CheckSignage')
+        const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+        const encryptedData = encrypt(application)
+        const replacedData = encryptedData.replace(/\//g, '~')
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+      } else if (_division.isElectrical) {
+        const encryptedEndpoint = encrypt('CheckElectrical')
+        const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+        const encryptedData = encrypt(application)
+        const replacedData = encryptedData.replace(/\//g, '~')
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+      } else if (_division.isMechanical) {
+        const encryptedEndpoint = encrypt('CheckMechanical')
+        const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+        const encryptedData = encrypt(application)
+        const replacedData = encryptedData.replace(/\//g, '~')
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+      } else {
+        return false
+      }
+
+      const data = response.data.length !== 0 ? response.data : null
+      const result = data !== null ? decrypt(data.result) : null
+
+      if (result !== null) {
+        if (result > 0) {
+          _applicationno.updateValue(application)
+          return true
+        } else {
+          return false
+        }
+      } else {
+        return false
+      }
+    } else {
+      updatePage('noconnection')
+    }
+  } catch {
+    updatePage('noconnection')
+  }
+}
+
+const runCommand = async () => {
   if (isNaN(searched.value.substring(0, 2)) === false) {
     if (searched.value.includes('-')) {
       _searchvalue.updateValue(searched.value)
-      updatePage('selection')
+      if (await checkApplication(searched.value)) {
+        updatePage('selection')
+      } else {
+        _errormessage.updateMessage('Search Error')
+        _errormessage.updateSubMessage('Application does not exist')
+        updatePage('error')
+      }
     } else {
       const withDash = searched.value.toString().substring(0, 2) + '-' + searched.value.toString().substring(2, searched.value.length)
       _searchvalue.updateValue(withDash)
-      updatePage('selection')
+      if (await checkApplication(withDash)) {
+        updatePage('selection')
+      } else {
+        _errormessage.updateMessage('Search Error')
+        _errormessage.updateSubMessage('Application does not exist')
+        updatePage('error')
+      }
     }
     // if (years.includes(searched.value)) {
     //   // // this.mode = 'List of Account in a year'
@@ -272,7 +363,6 @@ const callserver = async () => {
 
         // _listsubject.value = _searchvalue.value
 
-        // console.log('hehre')
         // } else {
         //   _errormessage.value = 'Invalid Generation of List'
         //   _errorsubmessage.value = 'Application Number required'
@@ -483,15 +573,6 @@ const uploadSearch = (value) => {
 ;(async () => {
   reset()
   loadCurrentPage()
-  // const encrypt = new JSEncrypt()
-  // encrypt.setPublicKey(_rsakey.publickey)
-  // const encrypted = encrypt.encrypt('abc3211233a')
-
-  // encrypt.setPrivateKey(_rsakey.privatekey)
-  // var uncrypted = encrypt.decrypt(encrypted)
-
-  // console.log('aaa', encrypt('aaa'))
-  // console.log('decrypt', decrypt('Piw50PYYQeYoBAaXYXNjdFnn6rhBLPnhe7Jle2YXdC1/AqdcBWw6vHXZcTO/EFwW7WAgL1cry7RQAkl+vWFnGWYrtw4s428+fhwi/mUbKEEdYnBA1GCQCQmjurFxpjqpdG/tpbU1HLw7WiPJGg1jrUymRwAf7j8eeFWJWRXEsKpb8I7icMlMnipjCJZSRTgzlM0D2q4RVeCe0ADcNB9IN5j0Ub96Bc+gz2L3kb6W0s/WX9ocEn5ZqqZ5YKVSFZG+4Gao6JyHMBd2LjvoDUcZFYLeI/q2ngoRGZoHvO4H175hMR5WFL1xbE/zL5jfJywV7gVoYnxMK85hXTv/9+Cr9w=='))
 })()
 </script>
 
@@ -584,7 +665,7 @@ h1, h2
     border-radius: 15px
 
   .main-title
-    font-size: 3.8rem
+    font-size: 4.6rem
 
   .right-side
     width: 550px
