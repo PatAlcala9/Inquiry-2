@@ -2,7 +2,7 @@
 
 q-page.page(padding)
   div.body
-    img.logo(src="../assets/ocbologo2.webp" alt="OCBO Logo")
+    img.logo(src="../assets/ocbologo3.webp" alt="OCBO Logo")
     h1.main-title(@click="sample") OCBO Inquiry
 
     q-input.searchbar(v-if="$q.screen.width <= 899" icon="search" outlined rounded v-model="searched" placeholder="Search Here" @keydown.enter="runCommand" bg-color="white" input-style="font-size: 1.2rem; color: #424f60")
