@@ -2,7 +2,8 @@
 
 q-page.flex.flex-center.page(padding)
   div.loading-screen
-    span.loading-title Generating List
+    span.loading-title Please wait
+    span.loading-title Downloading Data
     span.loading-type {{_listtype.getValue.toUpperCase()}}
     span.minor for
     span.loading-division {{_division.getValue}} Application
