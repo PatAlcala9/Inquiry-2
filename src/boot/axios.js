@@ -1,6 +1,6 @@
 import { boot } from 'quasar/wrappers'
 import axios from 'axios'
-import { encrypt } from 'assets/js/shield'
+import {encrypt} from 'assets/js/shield'
 
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;
@@ -10,12 +10,12 @@ import { encrypt } from 'assets/js/shield'
 // for each client)
 
 // DEVELOPMENT
-const api = axios.create({
-  baseURL: '',
-  headers: {
-    'OCBO-ShieldConnection': encrypt('inquiry'),
-  },
-})
+// const api = axios.create({
+//   baseURL: '',
+//   headers: {
+//     'OCBO-ShieldConnection': encrypt('inquiry'),
+//   },
+// })
 
 //SERVER
 // const api = axios.create({
@@ -26,12 +26,12 @@ const api = axios.create({
 // })
 
 // SERVER
-// const api = axios.create({
-//   baseURL: 'http://192.168.7.160:8080/inquiry-server/',
-//   headers: {
-//     'OCBO-ShieldConnection': encrypt('inquiry'),
-//   },
-// })
+const api = axios.create({
+  baseURL: 'http://192.168.7.160:8080/inquiry-server/',
+  headers: {
+    'OCBO-ShieldConnection': encrypt('inquiry'),
+  }
+})
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api

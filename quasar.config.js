@@ -48,6 +48,8 @@ module.exports = configure(function (ctx) {
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
 
+      env: require('dotenv').config().parsed,
+
       // transpile: false,
       // publicPath: '/',
 
@@ -65,9 +67,9 @@ module.exports = configure(function (ctx) {
       // Options below are automatically set depending on the env, set them if you want to override
       // extractCSS: false,
 
-      // uglifyOptions: {
-      //   compress: { drop_console : true }
-      // },
+      uglifyOptions: {
+        compress: { drop_console : true }
+      },
 
       // https://v2.quasar.dev/quasar-cli-webpack/handling-webpack
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain

@@ -10,7 +10,7 @@ q-page.flex.flex-center.page(padding)
       LinkButton.one(text="Track Application" @click="gotoStatusSearch")
       LinkButton.two(text="Order of Payment" @click="gotoOPSearch")
       LinkButton.three(text="Inspection Details" @click="gotoNoticeSearch")
-      LinkButton.four(text="Permits Details" @click="gotoStatusSearch")
+      LinkButton.four(text="Permits Details" @click="gotoPermitSearch")
 
   //- section.column.wrap.justify-center.items-center.content-center.text-center(v-else)
   //-   span.division {{_division.getValue}} Application
@@ -40,20 +40,20 @@ import { ref } from 'vue'
 import { useSearchValue } from 'stores/searchvalue'
 import { useDivision } from 'stores/division'
 import { useRouter } from 'vue-router'
-import { useQuasar } from 'quasar'
+// import { useQuasar } from 'quasar'
 import { useListType } from 'stores/listtype'
-import { useApplicationNo } from 'stores/applicationno'
-import { useTableData } from 'stores/tabledata'
-import { useOwnername } from 'stores/ownername'
-import { useOwneraddress } from 'stores/owneraddress'
-import { useLatestStatus } from 'stores/lateststatus'
-import { useErrorMessage } from 'stores/errormessage'
+// import { useApplicationNo } from 'stores/applicationno'
+// import { useTableData } from 'stores/tabledata'
+// import { useOwnername } from 'stores/ownername'
+// import { useOwneraddress } from 'stores/owneraddress'
+// import { useLatestStatus } from 'stores/lateststatus'
+// import { useErrorMessage } from 'stores/errormessage'
 import { useCurrentPage } from 'stores/currentpage'
 import LinkButton from 'components/LinkButton.vue'
 import BackButton from 'components/BackButton.vue'
 
 const router = useRouter()
-const quasar = useQuasar()
+// const quasar = useQuasar()
 const _currentpage = useCurrentPage()
 const _searchvalue = useSearchValue()
 const _division = useDivision()

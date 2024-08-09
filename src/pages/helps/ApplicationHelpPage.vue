@@ -7,7 +7,7 @@ q-page.page(padding)
     span.main-title2.center-text Application Status Guide
 
     section.step.fit.column.wrap.justify-center.items-center.content-center
-      span.details Type the Application with a dash
+      span.details Type the Application either with a dash
       //- span.details-extra as demonstated below
       img.image(src="../../assets/images/mobile/app-mobile1.webp" alt="application_search_image")
 
@@ -17,7 +17,7 @@ q-page.page(padding)
       img.image(src="../../assets/images/mobile/app-mobile2.webp" alt="application_search_image")
 
     section.step.fit.column.wrap.justify-center.items-center.content-center
-      span.details Press Enter on your keyboard
+      span.details Then, press Enter on your keypad
       span.details At selection menu, choose the "Track Application"
       //- span.details-extra as demonstated below
       img.image(src="../../assets/images/mobile/app-mobile3.webp" alt="application_search_image")
@@ -59,29 +59,54 @@ q-page.page(padding)
 
   //-   q-btn.button(rounded label="Back" @click="returnHome")
 
-  div.fit.column.wrap.justify-center.items-center.content-center(v-if="screenWidth > 500")
+  div.fit.column.wrap.justify-center.items-center.content-center(v-if="screenWidth > 767")
     h3.main-title2.center-text Application Status Guide
 
-    section.step.fit.column.wrap.justify-center.items-center.content-center
-      span.details Type the Application Number with a dash
-      //- span.details-extra as demonstated below
-      img.image(src="../../assets/images/pc/app1.webp" alt="application_search_image")
+    section.step
+      div.grid
+        div.grid-right
+          span.details Click on the input box to activate typing
+          span.details Type the Application Number either with a dash
+        //- span.details-extra as demonstated below
+        //- img.image(src="../../assets/images/pc/app1.webp" alt="application_search_image")
+        div.grid-left
+          picture.fit.column.wrap.justify-center.items-center.content-center
+            source(srcset="../../assets/images/pc/app1.avif" type="image/avif")
+            img.image(src="../../assets/images/pc/app1.webp" type="image/webp" alt="Application search image")
 
-    section.step.fit.column.wrap.justify-center.items-center.content-center
-      span.details Or without a dash
-      //- span.details-extra as demonstated below
-      img.image(src="../../assets/images/pc/app2.webp" alt="application_search_image")
+    section.step
+      div.grid
+        div.grid-left
+          span.details Or without a dash
+          //- span.details-extra as demonstated below
+          //- img.image(src="../../assets/images/pc/app2.webp" alt="application_search_image")
+        div.grid-right
+          picture.fit.column.wrap.justify-center.items-center.content-center
+            source(srcset="../../assets/images/pc/app2.avif" type="image/avif")
+            img.image(src="../../assets/images/pc/app2.webp" type="image/webp" alt="Application search image")
 
-    section.step.fit.column.wrap.justify-center.items-center.content-center
-      span.details Press Enter on your keyboard
-      span.details At selection menu, choose the "Track Application"
-      //- span.details-extra as demonstated below
-      img.image(src="../../assets/images/pc/app3.webp" alt="application_search_image")
+    section.step
+      div.grid
+        div.grid-right
+          span.details Then, press Enter on your keyboard
+          span.details At selection menu, choose the "Track Application"
+          //- span.details-extra as demonstated below
+          //- img.image(src="../../assets/images/pc/app3.webp" alt="application_search_image")
+        div.grid-left
+          picture.fit.column.wrap.justify-center.items-center.content-center
+            source(srcset="../../assets/images/pc/app3.avif" type="image/avif")
+            img.image(src="../../assets/images/pc/app3.webp" type="image/webp" alt="Application search image")
 
-    section.step.fit.column.wrap.justify-center.items-center.content-center
-      span.details Wait for the data to be finish downloading
-      //- span.details-extra as demonstated below
-      img.image(src="../../assets/images/pc/app4.webp" alt="application_search_image")
+    section.step
+      div.grid
+        div.grid-left
+          span.details Wait for the data to be finish downloading
+          //- span.details-extra as demonstated below
+          //- img.image(src="../../assets/images/pc/app4.webp" alt="application_search_image")
+        div.grid-right
+          picture.fit.column.wrap.justify-center.items-center.content-center
+            source(srcset="../../assets/images/pc/app4.avif" type="image/avif")
+            img.image(src="../../assets/images/pc/app4.webp" type="image/webp" alt="Application search image")
 
     section.step.fit.column.wrap.justify-center.items-center.content-center
       span.details Once finish downloading, you can view the latest status of your application
@@ -144,7 +169,7 @@ const loadCurrentPage = () => {
   margin-bottom: 1.5rem
 
 .details
-  font-family: "Lexend"
+  font-family: "Roboto"
   color: $text
   font-size: 1.2rem
   margin: 0 0 1rem 0
@@ -155,13 +180,50 @@ const loadCurrentPage = () => {
 
 .image
   box-shadow: -12px 11px 16px -5px rgba(0, 0, 0, 0.45)
-  width: 60%
+  width: 60vw
 
 .button
   width: 90%
   margin-bottom: 1rem
 
+.grid
+  display: flex
+  flex-direction: column
+  flex-wrap: wrap
+  justify-content: center
+  align-items: center
+  align-content: center
+
 @media screen and (min-width: 1023px)
   .image
     width: 40%
+
+  .grid
+    display: grid
+    grid-template-columns: 1fr 1fr
+    grid-template-rows: 1fr
+    gap: 0px 0px
+    grid-template-areas: "grid-left grid-right"
+
+  .grid-left
+    grid-area: grid-left
+    display: flex
+    flex-direction: column
+    flex-wrap: wrap
+    justify-content: center
+    align-items: center
+    align-content: center
+
+  .grid-right
+    grid-area: grid-right
+    display: flex
+    flex-direction: column
+    flex-wrap: wrap
+    justify-content: center
+    align-items: center
+    align-content: center
+
+  .image
+    box-shadow: -12px 11px 16px -5px rgba(0, 0, 0, 0.45)
+    width: 50vw
 </style>

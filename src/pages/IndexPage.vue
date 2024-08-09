@@ -2,7 +2,9 @@
 
 q-page.page(padding)
   div.body
-    img.logo(src="../assets/ocbologo3.webp" alt="OCBO Logo")
+    picture
+      source(srcset="../assets/ocbologo.avif" type="image/avif")
+      img.logo(src="../assets/ocbologo.webp" type="image/webp" alt="OCBO Logo")
     h1.main-title(@click="sample") OCBO Inquiry
 
     q-input.searchbar(v-if="$q.screen.width <= 899" icon="search" outlined rounded v-model="searched" placeholder="Search Here" @keydown.enter="runCommand" bg-color="white" input-style="font-size: 1.2rem; color: #424f60")
@@ -24,6 +26,15 @@ q-page.page(padding)
         span.help-info {{helpInfo}}
           span.bold(@click="gotoHelp") here
 
+    //- PinCodeBar
+
+    div.footer
+      section.footer-section
+        div.footer-left
+          q-img.footer--image
+          span.footer--copyright © 2024 -- Office of the City Building Official
+        div.footer-right
+          span.footer--copyright Developed by: Pat Alcala
 </template>
 
 <script setup>
@@ -44,6 +55,8 @@ import { useRSAKey } from 'stores/rsakey'
 import { date } from 'quasar'
 import { JSEncrypt } from 'jsencrypt'
 import { encrypt, decrypt } from 'assets/js/shield'
+
+import PinCodeBar from 'components/PinCodeBar.vue'
 
 const router = useRouter()
 const _currentpage = useCurrentPage()
@@ -652,6 +665,57 @@ h1, h2
   text-decoration: underline
   cursor: pointer
 
+.footer
+  content: ""
+  position: absolute
+  top: 100
+  left: 0
+  right: 0
+  bottom: 0
+  padding: 0 0 1rem 0
+  width: 100vw
+  width: 100svw
+  height: auto
+
+.footer-section
+  display: flex
+  flex-direction: column
+  flex-wrap: wrap
+  justify-content: center
+  align-items: center
+  align-content: center
+
+.footer-left
+  display: flex
+  flex-direction: column
+  flex-wrap: wrap
+  justify-content: center
+  align-items: center
+  align-content: center
+  // gap: 2rem
+  opacity: 0.3
+
+.footer-right
+  display: flex
+  flex-direction: column
+  flex-wrap: wrap
+  justify-content: center
+  align-items: center
+  align-content: center
+  // gap: 2rem
+  // padding: 0 1rem 0 0
+  opacity: 0.3
+
+.footer--image
+  background-image: url('../assets/images/davao.webp')
+  width: 16rem
+  height: auto
+  background-position: center
+  background-repeat: no-repeat
+  background-size: contain
+
+.footer--copyright
+  font-size: 0.9rem
 
 //**Tablet */
 @media screen and (min-width: 1023px)
@@ -677,4 +741,107 @@ h1, h2
 
   .body
     margin: 4rem 0 0 0
+
+  .footer
+    content: ""
+    position: absolute
+    top: 100
+    left: 0
+    right: 0
+    bottom: 0
+    padding: 0 2rem 1rem 2rem
+    width: 100vw
+    height: auto
+
+  .footer-section
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: space-between
+    align-items: flex-end
+    align-content: center
+
+  .footer-left
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: flex-start
+    align-items: center
+    align-content: center
+    gap: 2rem
+    opacity: 0.5
+
+  .footer-right
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: flex-end
+    align-items: center
+    align-content: center
+    gap: 2rem
+    opacity: 0.3
+
+  .footer--image
+    background-image: url('../assets/images/davao.webp')
+    width: 12rem
+    height: auto
+    background-position: center
+    background-repeat: no-repeat
+    background-size: contain
+
+  .footer--copyright
+    font-size: 0.8rem
+
+@media screen and (min-width: 1400px)
+  .footer
+    content: ""
+    position: absolute
+    top: 100
+    left: 0
+    right: 0
+    bottom: 0
+    padding: 0 2rem 1rem 2rem
+    width: 100vw
+    height: auto
+
+  .footer-section
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: space-between
+    align-items: flex-end
+    align-content: center
+
+  .footer-left
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: flex-start
+    align-items: center
+    align-content: center
+    gap: 2rem
+    opacity: 0.5
+
+  .footer-right
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: flex-end
+    align-items: center
+    align-content: center
+    gap: 2rem
+    opacity: 0.3
+
+  .footer--image
+    background-image: url('../assets/images/davao.webp')
+    @supports (background-image: url('../assets/images/davao.avif'))
+      background-image: url('../assets/images/davao.avif')
+    width: 16rem
+    height: auto
+    background-position: center
+    background-repeat: no-repeat
+    background-size: contain
+
+  .footer--copyright
+    font-size: 1rem
 </style>

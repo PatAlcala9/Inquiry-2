@@ -114,6 +114,26 @@ let tableData = ref(_tabledata.getTable)
 let latestStatus = ref(_lateststatus.getValue)
 let ready = ref(null)
 
+const statusList = [
+  'RECEIVING',
+  'FOR RE-ROUTING',
+  'FOR ASSESSMENT',
+  'FOR ORDER OF PAYMENT APPROVAL',
+  'FOR ORDER OF PAYMENT PRINT',
+  'ORDER OF PAYMENT RELEASED',
+  'OUT FOR COMPLIANCE',
+  'RECIEVE FOR COMPLIANCE',
+  'FOR BUILDING OFFICIAL APPROVAL',
+  'FOR RELEASE OF PERMIT',
+  'PERMIT ALREADY RELEASE',
+]
+const rephrasedStatusList = {
+  RECEIVING: 'APPLICATION RECEIVED',
+  'FOR RE-ROUTING': 'TO BE RE-ROUTE',
+  'FOR ASSESSMENT': 'ON GOING ASSESSMENT',
+  'FOR ORDER OF PAYMENT APPROVAL': 'ON GOING APPROVAL OF ',
+}
+
 const gotoHome = () => {
   // controller.abort()
   updatePage('/')
@@ -128,6 +148,14 @@ const updatePage = (page) => {
   _currentpage.updateValue(page)
   router.push(page)
 }
+
+const replaceArray = (array, newArray) => {
+  return array.map((item) => newArray[item] || item)
+}
+
+;(async () => {
+  await replaceArray(statusList, rephrasedStatusList)
+})()
 </script>
 
 <style lang="sass" scoped>

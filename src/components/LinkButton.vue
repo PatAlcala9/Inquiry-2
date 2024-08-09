@@ -1,12 +1,12 @@
 <template lang="pug">
 
 div
-  q-btn.button(rounded) {{props.text}}
+  q-btn.button(rounded :style="{'border': props.glow ? '5px solid #0097a7' : 'none'}") {{props.text}}
 
 </template>
 
 <script setup>
-const props = defineProps(['text'])
+const props = defineProps(['text', 'glow'])
 </script>
 
 <style lang="sass" scoped>
@@ -18,7 +18,7 @@ const props = defineProps(['text'])
   height: 4.8rem
   margin: 1.2rem 1rem 0 1rem
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)
-  border: none
+  // border: none
   border-radius: 0 20px 0 0
   background-color: $yellow
   color: $darktext

@@ -33,6 +33,8 @@ const routes = [
       { path: 'error', component: () => import('pages/errors/ErrorPage.vue') },
 
       { path: 'noconnection', component: () => import('pages/NoConnectionPage.vue') },
+
+      { path: 'pincode', component: () => import('pages/PinCodePage.vue') },{ path: 'noconnection', component: () => import('pages/NoConnectionPage.vue') },
     ],
   },
 
