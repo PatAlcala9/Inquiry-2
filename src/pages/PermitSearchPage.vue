@@ -1,7 +1,7 @@
 <template lang="pug">
 
 q-page.page(padding)
-  section(v-if="$q.screen.width <= 899")
+  section(v-if="$q.screen.width <= 767")
     section.page-title-group
       div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
         span.page-label Application Number:
@@ -12,14 +12,17 @@ q-page.page(padding)
       div.address-group.full-width.column.no-wrap.justify-center.items-center.content-start
         span.page-label Address:
         span.page-info {{_owneraddress.getValue}}
+      div.address-group.full-width.column.no-wrap.justify-center.items-center.content-start
+        span.page-label Number of Permits:
+        span.page-info--primary {{_tabledata.getTable.result.length}}
 
     div.back-button.full-width.column.wrap.justify-center.items-center.content-center
       q-btn.button-back2(rounded class="button-back" label="Back" @click="gotoSelection")
 
-    div(v-if="_tabledata.value !== null")
+    div(v-if="_tabledata.getTable !== null")
         section
           div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
-            span(v-if="_tabledata.value.length > 1") Permits
+            span(v-if="_tabledata.getTable.result.length > 1") Permits
             span(v-else) Permit
 
           div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="(item, index) in _tabledata.getTable.result" :key="item")
@@ -44,9 +47,9 @@ q-page.page(padding)
         div.address-group.full-width.column.wrap.justify-start.items-start.content-start
           span.page-label Address:
           sapn.page-info {{_owneraddress.getValue}}
-        //- div.address-group.full-width.column.wrap.justify-start.items-start.content-start
-        //-   span.page-label Latest Status:
-        //-   span.page-info {{latestStatus}}
+        div.address-group.full-width.column.no-wrap.justify-start.items-start.content-start
+          span.page-label Number of Permits:
+          span.page-info {{_tabledata.getTable.result.length}}
 
       section.button-grid
         q-btn.button-back2(rounded label="Back" @click="gotoSelection")
@@ -240,11 +243,12 @@ label
   font-weight: bold
   font-size: 0.9rem
   color: $darktext
-  background-color: $button
+  background-color: $yellow
   width: 60%
   padding: 0.3rem
   text-align: center
   border-radius: 1rem
+  border: 1px solid $darktext
 
 .table-data-mobile-info
   font-family: 'Roboto'
