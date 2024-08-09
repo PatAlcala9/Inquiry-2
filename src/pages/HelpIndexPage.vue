@@ -8,14 +8,14 @@ q-page.page(padding)
 
     q-img.image
 
-    div.flex.flex-center(v-if="screenWidth < 1280")
+    div.flex.flex-center(v-if="screenWidth < 767")
       q-list.list(bordered separator)
         //- q-item.list-item(clickable v-ripple @click="gotoApplicationHelp")
         //-   q-item-section.list-section Application Status
         LinkButton(text="Application Status" @click="gotoApplicationHelp")
+        LinkButton(text="Fees Details" @click="gotoFeesHelp")
+        LinkButton(text="Permit Details" @click="gotoPermitHelp")
         LinkButton(text="Name Record" @click="gotoNameHelp")
-        LinkButton(text="Fees Details")
-        LinkButton(text="Permit Details")
         //- q-item.list-item(clickable v-ripple @click="gotoNameHelp")
         //-   q-item-section Name Record
         //- q-item.list-item(clickable v-ripple)
@@ -41,9 +41,9 @@ q-page.page(padding)
           //- q-item.list-item(clickable v-ripple @click="gotoApplicationHelp")
           //-   q-item-section Application Status
         LinkButton.one(text="Application Status" @click="gotoApplicationHelp")
-        LinkButton.two(text="Name Record" @click="gotoNameHelp")
-        LinkButton.three(text="Fees Details")
-        LinkButton.four(text="Permit Details")
+        LinkButton.two(text="Fees Details" @click="gotoFeesHelp")
+        LinkButton.three(text="Permit Details" @click="gotoPermitHelp")
+        LinkButton.four(text="Name Record" @click="gotoNameHelp")
         //-   q-list.list(bordered separator)
         //-     q-item.list-item(clickable v-ripple @click="gotoNameHelp")
         //-       q-item-section Name Record
@@ -114,14 +114,26 @@ const _numbercode = useNumberCode()
 let screenWidth = ref(null)
 
 const gotoApplicationHelp = () => {
-  _currentpage.updateValue('helpapplication')
-  router.push('helpapplication')
+  // _currentpage.updateValue('helpapplication')
+  // router.push('helpapplication')
+  updatePage('helpapplication')
+}
+
+const gotoFeesHelp = () => {
+  // _currentpage.updateValue('helpfees')
+  // router.push('helpfees')
+  updatePage('helpfees')
+}
+
+const gotoPermitHelp = () => {
+  // _currentpage.updateValue('helppermit')
+  // router.push('helppermit')
+  updatePage('helppermit')
 }
 
 const gotoNameHelp = () => {
   // _currentpage.updateValue('helpname')
   // router.push('helpname')
-  console.log(_numbercode.check)
 }
 
 const onResize = () => {
@@ -270,7 +282,7 @@ const openPin = () => {
   background-size: contain
   border: 2px solid rgba(255, 255, 255, 0.4)
 
-@media screen and (min-width: 900px)
+@media screen and (min-width: 768px)
   .list
     width: 35rem
     font-size: 1.8rem
@@ -282,17 +294,6 @@ const openPin = () => {
     font-size: 2.8rem
     // padding: 2rem 0 0 0
 
-@media screen and (min-width: 1280px)
-  .list
-    font-family: 'Roboto'
-    font-weight: bold
-    width: 16rem
-    margin: 1.5rem
-
-  .list-item
-    font-size: 1rem
-    padding: 0 2rem
-
   .image
     background-image: url('../assets/images/main_page.webp')
     @supports (background-image: url('../assets/images/main_page.avif'))
@@ -303,4 +304,15 @@ const openPin = () => {
     background-repeat: no-repeat
     background-size: contain
     border: 2px solid rgba(255, 255, 255, 0.4)
+
+@media screen and (min-width: 1024px)
+  .list
+    font-family: 'Roboto'
+    font-weight: bold
+    width: 16rem
+    margin: 1.5rem
+
+  .list-item
+    font-size: 1rem
+    padding: 0 2rem
 </style>
