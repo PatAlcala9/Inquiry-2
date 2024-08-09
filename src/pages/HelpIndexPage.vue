@@ -14,7 +14,8 @@ q-page.page(padding)
         //-   q-item-section.list-section Application Status
         LinkButton(text="Application Status" @click="gotoApplicationHelp")
         LinkButton(text="Name Record" @click="gotoNameHelp")
-        LinkButton(text="Approved Permits")
+        LinkButton(text="Fees Details")
+        LinkButton(text="Permit Details")
         //- q-item.list-item(clickable v-ripple @click="gotoNameHelp")
         //-   q-item-section Name Record
         //- q-item.list-item(clickable v-ripple)
@@ -41,7 +42,8 @@ q-page.page(padding)
           //-   q-item-section Application Status
         LinkButton.one(text="Application Status" @click="gotoApplicationHelp")
         LinkButton.two(text="Name Record" @click="gotoNameHelp")
-        LinkButton.three(text="Approved Permits")
+        LinkButton.three(text="Fees Details")
+        LinkButton.four(text="Permit Details")
         //-   q-list.list(bordered separator)
         //-     q-item.list-item(clickable v-ripple @click="gotoNameHelp")
         //-       q-item-section Name Record
@@ -52,23 +54,22 @@ q-page.page(padding)
         //-   //- q-list.list(bordered separator)
         //-   //-   q-item.list-item(clickable v-ripple)
         //-   //-     q-item-section
-        div.advance-area
-
-          span(v-if="pin === false" @click="openPin").advance--text Open Advance Commands
-          section(v-else)
-            PinCodeBar(v-if="_numbercode.check === false")
-            div.grid2(v-else)
-              LinkButton.one2(glow="true" text="Generate List" )
-              LinkButton.two2(glow="true" text="Create Chart" )
-              LinkButton.three2(glow="true" text="Print PDF")
+      div.flex.flex-center.advance-area
+        span(v-if="pin === false" @click="openPin").advance--text Open Advance Commands
+        section(v-else)
+          PinCodeBar(v-if="_numbercode.check === false")
+          div.grid2(v-else)
+            LinkButton.one2(glow="true" text="Generate List" )
+            LinkButton.two2(glow="true" text="Create Chart" )
+            LinkButton.three2(glow="true" text="Print PDF")
         //-
 
         //- div.flex.flex-center.advance-area
         //-   span.advance--text(@click="vv = vv === 1 ? 0 : 1") Open Advance Commands
         //-   PinCodeBar(v-if="vv === 0")
 
-        div.flex.flex-center.button-area
-          q-btn.button-back2(rounded label="Home" @click="gotoHome")
+      div.flex.flex-center.button-area
+        q-btn.button-back2(rounded label="Home" @click="gotoHome")
 
     //- div(v-if="$q.screen.width <= 500")
     //-   div.full-width.column.no-wrap.justify-center.items-center.content-start
@@ -154,9 +155,9 @@ const openPin = () => {
   grid-auto-rows: 1fr
   gap: 0px 0px
   grid-template-columns: 1fr 1fr 1fr
-  grid-template-rows: 1fr 1fr 1fr
+  grid-template-rows: 1fr 1fr
   grid-auto-flow: row
-  grid-template-areas: "one two three" "advance-area advance-area advance-area" "button-area button-area button-area"
+  grid-template-areas: "one two three" ". four ."
   justify-content: center
   align-content: center
   justify-items: center
@@ -171,11 +172,20 @@ const openPin = () => {
 .three
   grid-area: three
 
+.four
+  grid-area: four
+
 .advance-area
-  grid-area: advance-area
+  // margin: 2rem 0 0 0
+//   // display: flex
+//   // flex-direction: column
+//   // flex-wrap: wrap
+//   // justify-content: flex-start
+//   // align-items: center
+//   // align-content: center
 
 .button-area
-  grid-area: button-area
+  // grid-area: button-area
   margin: 2rem 0 0 0
 
 .advance--text
