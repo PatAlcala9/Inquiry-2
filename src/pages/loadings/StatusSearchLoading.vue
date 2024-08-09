@@ -217,6 +217,32 @@ const getTableData = async () => {
   }
 }
 
+const statusList = [
+  'RECEIVING',
+  'FOR RE-ROUTING',
+  'FOR ASSESSMENT',
+  'FOR ORDER OF PAYMENT APPROVAL',
+  'FOR ORDER OF PAYMENT PRINT',
+  // 'ORDER OF PAYMENT RELEASED',
+  // 'OUT FOR COMPLIANCE',
+  // 'RECIEVE FOR COMPLIANCE',
+  // 'FOR BUILDING OFFICIAL APPROVAL',
+  // 'FOR RELEASE OF PERMIT',
+  // 'PERMIT ALREADY RELEASE',
+]
+const rephrasedStatusList = {
+  RECEIVING: 'APPLICATION RECEIVED',
+  'FOR RE-ROUTING': 'RE-ROUTED',
+  'FOR ASSESSMENT': 'FOR CALCULATION OF FEES',
+  'FOR ORDER OF PAYMENT APPROVAL': 'ON GOING ORDER OF PAYMENT APPROVAL',
+  'FOR ORDER OF PAYMENT PRINT': 'ORDER OF PAYMENT READY FOR PRINT',
+}
+
+const replaceArray = (array, newArray) => {
+  return array.map((item) => newArray[item] || item)
+}
+
+
 const updatePage = (page) => {
   _currentpage.updateValue(page)
   router.push(page)
