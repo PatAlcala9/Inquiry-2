@@ -393,9 +393,9 @@ const getApplicationByID = async () => {
 
   if (data !== null) {
     applicationNo.value = decrypt(data.result) || null
-    console.log(applicationNo.value)
+    // console.log(applicationNo.value)
   } else {
-    console.log('No record on Building')
+    // console.log('No record on Building')
   }
 }
 
@@ -411,9 +411,9 @@ const getOccupancyApplicationByID = async () => {
 
   if (data !== null) {
     applicationNo.value = decrypt(data.result) || null
-    console.log(applicationNo.value)
+    // console.log(applicationNo.value)
   } else {
-    console.log('No record on Occupancy')
+    // console.log('No record on Occupancy')
   }
 }
 
@@ -429,9 +429,9 @@ const getElectricalApplicationByID = async () => {
 
   if (data !== null) {
     applicationNo.value = decrypt(data.result) || null
-    console.log(applicationNo.value)
+    // console.log(applicationNo.value)
   } else {
-    console.log('No record on Electrical')
+    // console.log('No record on Electrical')
   }
 }
 
