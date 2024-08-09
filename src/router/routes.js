@@ -17,6 +17,8 @@ const routes = [
 
       { path: 'helpindex', component: () => import('pages/HelpIndexPage.vue') },
       { path: 'helpapplication', component: () => import('pages/helps/ApplicationHelpPage.vue') },
+      { path: 'helpfees', component: () => import('pages/helps/FeesHelpPage.vue') },
+      { path: 'helppermit', component: () => import('pages/helps/PermitHelpPage.vue') },
       { path: 'helpname', component: () => import('pages/helps/NameHelpPage.vue') },
 
       { path: 'statussearch', component: () => import('pages/loadings/StatusSearchLoading.vue') },
