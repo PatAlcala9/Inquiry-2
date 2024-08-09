@@ -9,7 +9,7 @@ q-page.flex.flex-center(padding)
     span.footer If you need help,&nbsp;
       a.link(@click="gotoHelp") click here
     br
-    q-btn.button-back(rounded label="Back" @click="gotoHome")
+    q-btn.button-back2(rounded label="Back" @click="gotoHome")
 
 </template>
 
@@ -33,7 +33,7 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const _errormessage = useErrorMessage()
-// let _errorsubmessage = useErrorSubMessage
+// const _errorsubmessage = useErrorSubMessage
 const _currentpage = useCurrentPage()
 
 const gotoHome = () => {
@@ -66,7 +66,7 @@ const updatePage = (page) => {
   padding: 3rem
 
 .footer
-  font-family: 'Lexend'
+  font-family: 'Roboto'
   font-size: 1.2rem
   color: white
   padding: 1rem
@@ -80,7 +80,7 @@ const updatePage = (page) => {
     font-size: 1.8rem
 
   .footer
-    font-family: 'Lexend'
+    font-family: 'Roboto'
     font-size: 1.2rem
     color: white
     padding: 5rem

@@ -1,7 +1,7 @@
 <template lang="pug">
 
 q-page.flex.flex-center.page(padding)
-  div.column.items-center.text-center
+  div.loading-screen
     span.loading-title Generating List
     span.loading-type {{_listtype.getValue.toUpperCase()}}
     span.minor for
@@ -9,7 +9,7 @@ q-page.flex.flex-center.page(padding)
     span.loading-value {{_searchvalue.getValue}}
 
     div.fit.column.items-center
-      q-btn.button(rounded @click="gotoHome") Cancel
+      q-btn.button-back2(rounded @click="gotoHome") Cancel
 
 </template>
 
@@ -41,13 +41,13 @@ import { useErrorMessage } from 'stores/errormessage'
 import { encrypt, decrypt } from 'assets/js/shield'
 
 const router = useRouter()
-// let _listsubject = useListSubject
+// const _listsubject = useListSubject
 const _listtype = useListType()
 const _currentpage = useCurrentPage()
 const _searchvalue = useSearchValue()
 const _division = useDivision()
-let _applicationno = useApplicationNo()
-let _tabledata = useTableData
+const _applicationno = useApplicationNo()
+const _tabledata = useTableData()
 const _ownername = useOwnername()
 const _owneraddress = useOwneraddress()
 const _errormessage = useErrorMessage()
@@ -99,10 +99,10 @@ const getPermits = async () => {
     }
 
     if (data !== null) {
-      _tabledata.value = data
+      _tabledata.updateTable(data)
       return 'ok'
     } else {
-      _tabledata.value = null
+      _tabledata.updateTable(null)
       return 'nodata'
     }
   } catch {
@@ -167,8 +167,14 @@ const getOwnerDetails = async () => {
         const fname = decrypt(data.result)
         const mname = decrypt(data.result2)
         const lname = decrypt(data.result3)
-        const addressresult = decrypt(data.result4)
+        const block = decrypt(data.result4)
+        const lot = decrypt(data.result5)
+        const address = decrypt(data.result6)
+        // const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
         const ffname = fname.length === 0 ? lname : fname + ' ' + (mname.length === 0 ? lname : mname + '. ' + lname)
+        let addressresult = `${block.length === 0 ? '' : `BLOCK ${block} `}${lot.length === 0 ? '' : `LOT ${lot} `}${address}`
+        addressresult = addressresult.replace(/(\s|^)BLK/g, 'BLOCK')
+        addressresult = addressresult.replace(/(\s|^)LT/g, 'LOT')
 
         _ownername.updateValue(ffname || '--No Name found on Database--')
         _owneraddress.updateValue(addressresult || '--No Address found on Database--')
@@ -196,8 +202,8 @@ const getOwnerDetails = async () => {
 
 const gotoHome = () => {
   controller.abort()
-  // updatePage('/')
-  window.location.reload()
+  updatePage('/')
+  // window.location.reload()
 }
 
 const updatePage = (page) => {
@@ -214,45 +220,3 @@ const loadCurrentPage = () => {
   await getOwnerDetails()
 })()
 </script>
-
-<!-- <style lang="sass" scoped>
-
-.loading-title
-  font-size: 1.6rem
-  font-family: 'LexendBold'
-
-.loading-type
-  font-size: 1.2rem
-  font-family: 'Lexend'
-
-.minor
-  padding: 1.2rem
-
-.loading-division
-  font-size: 1.4rem
-  font-family: 'LexendBold'
-
-.loading-value
-  margin-top: 1.6rem
-  font-size: 1.8rem
-  font-family: 'LexendBold'
-  color: $yellow
-
-@media screen and (min-width: 900px)
-  .loading-title
-    font-size: 2.2rem
-
-  .loading-type
-    font-size: 1.8rem
-
-  .minor
-    font-size: 1.6rem
-    padding: 1.6rem
-
-  .loading-division
-    font-size: 2.2rem
-
-  .loading-value
-    margin-top: 2rem
-    font-size: 2.6rem
-</style> -->

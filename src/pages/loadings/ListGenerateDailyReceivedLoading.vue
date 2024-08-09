@@ -1,7 +1,7 @@
 <template lang="pug">
 
 q-page.flex.flex-center.page(padding)
-  div.column.items-center.text-center
+  div.loading-screen
     span.loading-title Generating List
     span.loading-type {{_listtype.getValue.toUpperCase()}}
     span.minor for
@@ -12,7 +12,7 @@ q-page.flex.flex-center.page(padding)
     span.loading-division(v-if="percentage > 0") {{percentage}} %
 
     div.fit.column.items-center
-      q-btn.button-back(rounded @click="gotoHome") Cancel
+      q-btn.button-back2(rounded @click="gotoHome") Cancel
 
 </template>
 
@@ -52,7 +52,7 @@ const router = useRouter()
 const _listtype = useListType()
 const _division = useDivision()
 const _currentpage = useCurrentPage()
-let _tabledata = useTableData
+const _tabledata = useTableData()
 const _listyear = useListYear()
 const _listdate = useListDate()
 const _errormessage = useErrorMessage()
@@ -107,7 +107,7 @@ const getDailyReceived = async () => {
     data = response.data.length !== 0 ? response.data : null
 
     if (data.result.length > 0) {
-      _tabledata.value = data
+      _tabledata.updateTable(data)
       const tempApp = data.result
       _liststatus.$patch({ value: [] })
       _listsumpaid.$patch({ value: [] })
@@ -268,24 +268,27 @@ const loadCurrentPage = () => {
 <style lang="sass" scoped>
 
 .loading-title
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
+  font-weight: bold
   font-size: 1.8rem
 
 .loading-type
   font-size: 1.8rem
-  font-family: 'Lexend'
+  font-family: 'Roboto'
 
 .minor
   padding: 1.2rem
 
 .loading-division
   font-size: 1.8rem
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
+  font-weight: bold
 
 .loading-value
   margin-top: 2rem
   font-size: 2.2rem
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
+  font-weight: bold
   color: $yellow
 
 @media screen and (min-width: 1023px)

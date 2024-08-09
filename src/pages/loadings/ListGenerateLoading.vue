@@ -36,7 +36,7 @@ import { useDivision } from 'stores/division'
 import { useCurrentPage } from 'stores/currentpage'
 
 const router = useRouter()
-// let _listsubject = useListSubject
+// const _listsubject = useListSubject
 const _listtype = useListType()
 const _searchvalue = useSearchValue()
 const _division = useDivision()

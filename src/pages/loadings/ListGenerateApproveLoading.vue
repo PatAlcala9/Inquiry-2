@@ -1,7 +1,7 @@
 <template lang="pug">
 
 q-page.flex.flex-center.page(padding)
-  div.column.items-center.text-center
+  div.loading-screen
     span.loading-title Generating List
     span.loading-type {{_listtype.getValue.toUpperCase()}}
     span.minor for
@@ -13,7 +13,7 @@ q-page.flex.flex-center.page(padding)
     span.loading-division(v-if="percentage > 0") {{percentage}} %
 
     div.fit.column.items-center
-      q-btn.button(rounded @click="gotoHome") Cancel
+      q-btn.button-back2(rounded @click="gotoHome") Cancel
 
 </template>
 
@@ -47,7 +47,7 @@ const router = useRouter()
 const _listtype = useListType()
 const _division = useDivision()
 const _currentpage = useCurrentPage()
-let _tabledata = useTableData
+const _tabledata = useTableData()
 const _listyear = useListYear()
 const _listdate = useListDate()
 const _errormessage = useErrorMessage()
@@ -58,7 +58,15 @@ const dateDisplay = date.formatDate(_listdate.getValue, 'MMMM YYYY')
 const controller = new AbortController()
 
 const getApprovedPermitsDetails = async (id) => {
-  const encryptedEndpoint = encrypt('GetApprovedPermitsDetails')
+  let encryptedEndpoint
+  if (_division.isBuilding) {
+    encryptedEndpoint = encrypt('GetApprovedPermitsDetails')
+  } else if (_division.isOccupancy) {
+    encryptedEndpoint = encrypt('GetApprovedPermitsOccupancyDetails')
+  } else if (_division.isElectrical) {
+    encryptedEndpoint = encrypt('GetApprovedPermitsElectricalDetails')
+  }
+
   const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
   const encryptedData = encrypt(id)
   const replacedData = encryptedData.replaceAll('/', '~')
@@ -82,7 +90,7 @@ const getListofApplicationReleasedByYear = async () => {
       percentage.value = Math.round((parseInt(item) / data.length) * 100)
     }
 
-    _tabledata.value = tempTable
+    _tabledata.updateTable(tempTable)
     updatePage('approvelist')
   }
 }
@@ -101,7 +109,7 @@ const getListofOccupancyApplicationReleasedByYear = async () => {
       percentage.value = Math.round((parseInt(item) / data.length) * 100)
     }
 
-    _tabledata.value = tempTable
+    _tabledata.updateTable(tempTable)
     updatePage('approvelist')
   }
 }
@@ -120,7 +128,7 @@ const getListofElectricalApplicationReleasedByYear = async () => {
       percentage.value = Math.round((parseInt(item) / data.length) * 100)
     }
 
-    _tabledata.value = tempTable
+    _tabledata.updateTable(tempTable)
     updatePage('approvelist')
   }
 }
@@ -242,7 +250,7 @@ const getApplicationByDivision = async () => {
         result7: decData.result2,
       }
 
-      _tabledata.value = newObj
+      _tabledata.updateTable(newObj)
       updatePage('approvedlist')
     } else {
       _errormessage.updateMessage('Error on Generating List')

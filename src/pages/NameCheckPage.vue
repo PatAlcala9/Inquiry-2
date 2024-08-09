@@ -6,32 +6,32 @@ q-page.page(padding)
     div.full-width.column.no-wrap.justify-center.items-center.content-start
       span.page-title Found for
       span.page-searchvalue {{_searchvalue.getValue.toUpperCase()}}
-      span.secondary-title.number {{_tabledata.value.result.length}}
+      span.secondary-title.number {{_tabledata.getTable.result.length}}
       span.secondary-title.sentence {{sentence}}
       q-input.searchbar(rounded outlined v-model="specific" placeholder="Search Specific" bg-color="white" )
         template(v-slot:prepend)
           q-icon(name="search")
 
     div.full-width.column.wrap.justify-center.items-center.content-center
-      q-btn.button-back(rounded label="Back" @click="gotoHome")
+      q-btn.button-back2(rounded label="Back" @click="gotoHome")
 
-      section(v-if="_tabledata.value.result.length > 0")
-        div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-align(v-for="(item, index) in _tabledata.value.result" :key="data")
+      section(v-if="_tabledata.getTable.result.length > 0")
+        div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-align(v-for="(item, index) in _tabledata.getTable.result" :key="data")
           span.table-data-mobile-date {{decrypt(item).toUpperCase()}}
-          span.table-data-mobile-status {{decrypt(_tabledata.value.result2[index]).toUpperCase()}}
-          q-btn.table-button-mobile(rounded @click="getName(decrypt(_tabledata.value.result3[index]), decrypt(_tabledata.value.result4[index]))") Check
+          span.table-data-mobile-status {{decrypt(_tabledata.getTable.result2[index]).toUpperCase()}}
+          q-btn.table-button-mobile(rounded @click="getName(decrypt(_tabledata.getTable.result3[index]), decrypt(_tabledata.getTable.result4[index]))") Check
 
   div(v-else)
     div.full-width.column.content-center.items-center.justify-center
-      h3.secondary-title {{_tabledata.value.result.length}} {{sentence}}
+      h3.secondary-title {{_tabledata.getTable.result.length}} {{sentence}}
       q-input.searchbar(rounded outlined v-model="specific" placeholder="Search Specific" bg-color="white" )
         template(v-slot:prepend)
           q-icon(name="search")
 
       div.flex.flex-center
-        q-btn.button-back(rounded label="Back" @click="gotoHome")
+        q-btn.button-back2(rounded label="Back" @click="gotoHome")
 
-      section.full-width.column.content-center.items-center.justify-center(v-if="_tabledata.value.result.length > 0")
+      section.full-width.column.content-center.items-center.justify-center(v-if="_tabledata.getTable.result.length > 0")
         table.table-custom
           thead
             tr
@@ -39,102 +39,87 @@ q-page.page(padding)
               th Address
               th
           tbody
-            tr(v-for="(item, index) in _tabledata.value.result" :key="item")
+            tr(v-for="(item, index) in _tabledata.getTable.result" :key="item")
               td {{decrypt(item).toUpperCase()}}
-              td {{decrypt(_tabledata.value.result2[index]).toUpperCase()}}
+              td {{decrypt(_tabledata.getTable.result2[index]).toUpperCase()}}
               td
-                q-btn.table-button(rounded @click="getName(decrypt(_tabledata.value.result3[index]), decrypt(_tabledata.value.result4[index]))") Check
+                q-btn.table-button(rounded @click="getName(decrypt(_tabledata.getTable.result3[index]), decrypt(_tabledata.getTable.result4[index]))") Check
 
 
-  //- div(v-else class="fetching")
-  //-   h4(class="main-title2") You've search for
-  //-   h3(class="main-title2") '{{searchValue.toUpperCase()}}'
-  //-   h4(class="main-title2") Please wait
-  //-   h4(class="main-title2 while") while
-  //-   h4(class="main-title2") {{message}}
+  q-dialog.dialog(full-width v-model="dialog" position="top")
+    q-card.card-dialog
+      q-card-section
+        section(v-if="searchComplete")
+          div.dialog-status-display.full-width.column.justify-center.content-center.items-center(v-if="idCount === 0")
+            span.card-dialog-status No Application Found
+            span.card-dialog-third for
+            br
+            section.full-width.column.justify-center.content-center.items-center(v-if="selectedFirstName !== 'empty'")
+              span.card-dialog-third Lastname:
+              span.card-dialog-secondary {{selectedLastName}}
+              span.card-dialog-third Firstname:
+              span.card-dialog-secondary {{selectedFirstName}}
+            section.full-width.column.justify-center.content-center.items-center(v-else)
+              span.card-dialog-third Company Name:
+              span.card-dialog-status {{selectedLastName}}
 
-  //- div(v-if="$q.screen.width <= 500")
-  //-   div(class="full-width column no-wrap justify-center items-center content-start")
-  //-     q-btn(rounded class="button" label="Back" @click="gotoHome")
+          div.full-width.column.justify-center.items-center.content-center(v-else-if="idCount > 1" )
+            span.card-dialog-title Current Status
 
-  //- div(v-else).flex.flex-center
-  //-   q-btn(rounded class="button" label="Back" @click="gotoHome")
+            div(class="dialog-title-group")
+              span(class="card-dialog-title standard-font") Please select
+              span(class="card-dialog-title standard-font") which application
+              span(class="card-dialog-title standard-font") you want to check
 
+            div(class="button-group")
+              q-btn.card-dialog-button(v-if="receivingid > 0" rounded size="lg" @click="openDialog2") Building
+              q-btn.card-dialog-button(v-if="occupancyid > 0" rounded size="lg" @click="openDialog3") Occupancy
+              q-btn.card-dialog-button(v-if="electricalid > 0" rounded size="lg" @click="openDialog4") Electrical
 
-  //- q-dialog.dialog(full-width v-model="dialog" position="top")
-  //-   q-card.card-dialog
-  //-     q-card-section
-  //-       section(v-if="searchComplete")
-  //-         div.dialog-status-display.full-width.column.justify-center.content-center.items-center(v-if="idCount === 0")
-  //-           span.card-dialog-status No Application Found
-  //-           span.card-dialog-third for
-  //-           br
-  //-           section.full-width.column.justify-center.content-center.items-center(v-if="selectedFirstName !== 'empty'")
-  //-             span.card-dialog-third Lastname:
-  //-             span.card-dialog-secondary {{selectedLastName}}
-  //-             span.card-dialog-third Firstname:
-  //-             span.card-dialog-secondary {{selectedFirstName}}
-  //-           section.full-width.column.justify-center.content-center.items-center(v-else)
-  //-             span.card-dialog-third Company Name:
-  //-             span.card-dialog-status {{selectedLastName}}
+          div(v-else)
+            section(v-if="receivingid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
+              span(class="card-dialog-title") Building Application Number:
+              span(class="card-dialog-status") {{applicationNo}}
+              br
+              span(class="card-dialog-title") Current Status:
+              span(class="card-dialog-status") {{lastStatusBuilding}}
+            section(v-else-if="occupancyid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
+              span(class="card-dialog-title") Occupancy Application Number:
+              span(class="card-dialog-status") {{applicationNo}}
+              br
+              span(class="card-dialog-title") Current Status:
+              span(class="card-dialog-status") {{lastStatusOccupancy}}
+            section(v-else-if="electricalid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
+              span(class="card-dialog-title") Electrical Application Number:
+              span(class="card-dialog-status") {{applicationNo}}
+              br
+              span(class="card-dialog-title") Current Status:
+              span(class="card-dialog-status") {{lastStatusElectrical}}
+            section(v-else)
+              span(class="card-dialog-title") No Application Found
 
-  //-         div.full-width.column.justify-center.items-center.content-center(v-else-if="idCount > 1" )
-  //-           span.card-dialog-title Current Status
+        section(v-else)
+          div.dialog-status-display.full-width.column.justify-center.content-center.items-center
+            span(class="card-dialog-status") Checking Data
+            span(class="card-dialog-third") Please Wait
 
-  //-           div(class="dialog-title-group")
-  //-             span(class="card-dialog-title standard-font") Please select
-  //-             span(class="card-dialog-title standard-font") which application
-  //-             span(class="card-dialog-title standard-font") you want to check
+  q-dialog(class="dialog2" full-width v-model="dialog2" position="top")
+    q-card(class="card-dialog2")
+      div(class="button-group column items-center text-center")
+        span(class="card-dialog-title") Current Building Status
+        span(class="card-dialog-status") {{lastStatusBuilding}}
 
-  //-           div(class="button-group")
-  //-             q-btn.card-dialog-button(v-if="receivingid > 0" rounded size="lg" @click="openDialog2") Building
-  //-             q-btn.card-dialog-button(v-if="occupancyid > 0" rounded size="lg" @click="openDialog3") Occupancy
-  //-             q-btn.card-dialog-button(v-if="electricalid > 0" rounded size="lg" @click="openDialog4") Electrical
+  q-dialog(class="dialog2" full-width v-model="dialog3" position="top")
+    q-card(class="card-dialog2")
+      div(class="button-group column items-center text-center")
+        span(class="card-dialog-title") Current Occupancy Status
+        span(class="card-dialog-status") {{lastStatusOccupancy}}
 
-  //-         div(v-else)
-  //-           section(v-if="receivingid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
-  //-             span(class="card-dialog-title") Building Application Number:
-  //-             span(class="card-dialog-status") {{applicationNo}}
-  //-             br
-  //-             span(class="card-dialog-title") Current Status:
-  //-             span(class="card-dialog-status") {{lastStatusBuilding}}
-  //-           section(v-else-if="occupancyid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
-  //-             span(class="card-dialog-title") Occupancy Application Number:
-  //-             span(class="card-dialog-status") {{applicationNo}}
-  //-             br
-  //-             span(class="card-dialog-title") Current Status:
-  //-             span(class="card-dialog-status") {{lastStatusOccupancy}}
-  //-           section(v-else-if="electricalid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
-  //-             span(class="card-dialog-title") Electrical Application Number:
-  //-             span(class="card-dialog-status") {{applicationNo}}
-  //-             br
-  //-             span(class="card-dialog-title") Current Status:
-  //-             span(class="card-dialog-status") {{lastStatusElectrical}}
-  //-           section(v-else)
-  //-             span(class="card-dialog-title") No Application Found
-
-  //-       section(v-else)
-  //-         div.dialog-status-display.full-width.column.justify-center.content-center.items-center
-  //-           span(class="card-dialog-status") Checking Data
-  //-           span(class="card-dialog-third") Please Wait
-
-  //- q-dialog(class="dialog2" full-width v-model="dialog2" position="top")
-  //-   q-card(class="card-dialog2")
-  //-     div(class="button-group column items-center text-center")
-  //-       span(class="card-dialog-title") Current Building Status
-  //-       span(class="card-dialog-status") {{lastStatusBuilding}}
-
-  //- q-dialog(class="dialog2" full-width v-model="dialog3" position="top")
-  //-   q-card(class="card-dialog2")
-  //-     div(class="button-group column items-center text-center")
-  //-       span(class="card-dialog-title") Current Occupancy Status
-  //-       span(class="card-dialog-status") {{lastStatusOccupancy}}
-
-  //- q-dialog(class="dialog2" full-width v-model="dialog4" position="top")
-  //-   q-card(class="card-dialog2")
-  //-     div(class="button-group column items-center text-center")
-  //-       span(class="card-dialog-title") Current Electrical Status
-  //-       span(class="card-dialog-status") {{lastStatusElectrical}}
+  q-dialog(class="dialog2" full-width v-model="dialog4" position="top")
+    q-card(class="card-dialog2")
+      div(class="button-group column items-center text-center")
+        span(class="card-dialog-title") Current Electrical Status
+        span(class="card-dialog-status") {{lastStatusElectrical}}
 </template>
 
 <script>
@@ -156,12 +141,14 @@ import { useRouter } from 'vue-router'
 import { useTableData } from 'stores/tabledata'
 import { useCurrentPage } from 'stores/currentpage'
 import { useSearchValue } from 'stores/searchvalue'
-import { decrypt } from 'assets/js/shield'
+import { encrypt, decrypt } from 'assets/js/shield'
 
 const router = useRouter()
-let _tabledata = useTableData
+const _tabledata = useTableData()
 const _currentpage = useCurrentPage()
 const _searchvalue = useSearchValue()
+
+const controller = new AbortController()
 
 // let rows = ref(_tabledata.value)
 let specific = ref('')
@@ -192,181 +179,261 @@ let dialog2 = ref(false)
 let dialog3 = ref(false)
 let dialog4 = ref(false)
 
-// const getName = (lastname, firstname) => {
-//   selectedLastName.value = lastname || null
-//   selectedFirstName.value = firstname || null
+const getName = (lastname, firstname) => {
+  selectedLastName.value = lastname || null
+  selectedFirstName.value = firstname || null
 
-//   dialog.value = true
-//   displayDetail()
-// }
+  dialog.value = true
+  displayDetail()
+}
 
-// const displayDetail = async () => {
-//   idCount.value = 0
-//   searchComplete.value = false
+const displayDetail = async () => {
+  idCount.value = 0
+  searchComplete.value = false
 
-//   await searchByNameBuilding()
-//   if (receivingid.value > 0) {
-//     await getLastStatusBuilding()
-//     await getApplicationByID()
-//   }
+  await searchByNameBuilding()
+  if (receivingid.value > 0) {
+    await getLastStatusBuilding()
+    await getApplicationByID()
+  }
 
-//   await searchByNameOccupancy()
-//   if (occupancyid.value > 0) {
-//     await getLastStatusOccupancy()
-//     await getOccupancyApplicationByID()
-//   }
+  await searchByNameOccupancy()
+  if (occupancyid.value > 0) {
+    await getLastStatusOccupancy()
+    await getOccupancyApplicationByID()
+  }
 
-//   await searchByNameElectrical()
-//   if (electricalid.value > 0) {
-//     await getLastStatusElectrical()
-//     await getElectricalApplicationByID()
-//   }
+  await searchByNameElectrical()
+  if (electricalid.value > 0) {
+    await getLastStatusElectrical()
+    await getElectricalApplicationByID()
+  }
 
-//   await countIDs()
-// }
+  await countIDs()
+}
 
-// const searchByNameBuilding = async () => {
-//   if (selectedLastName.value.includes('/')) {
-//     const arraylastName = selectedLastName.value.split('/')
-//     selectedLastName.value = arraylastName[0]
-//   }
+const searchByNameBuilding = async () => {
+  if (selectedLastName.value.includes('/')) {
+    const arraylastName = selectedLastName.value.split('/')
+    selectedLastName.value = arraylastName[0]
+  }
 
-//   if (selectedFirstName.value === null) {
-//     const tempFirstName = 'empty'
-//     selectedFirstName.value = tempFirstName
-//   }
+  if (selectedFirstName.value === null) {
+    const tempFirstName = 'empty'
+    selectedFirstName.value = tempFirstName
+  }
 
-//   try {
-//     const response = await api.get('/api/SearchByNameBuilding/' + selectedLastName.value + '/' + selectedFirstName.value)
-//     const result = response.data.length !== 0 ? response.data : null
+  try {
+    const encryptedEndpoint = encrypt('SearchByNameBuilding')
+    const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
 
-//     if (result === null) {
-//       receivingid.value = 0
-//     } else {
-//       receivingid.value = result[0].result
-//     }
-//   } catch {
-//     receivingid.value = 0
-//     lastStatusBuilding.value = 'Downloading Data'
-//   }
-// }
+    const encryptedData = encrypt(selectedLastName.value)
+    const replacedData = encryptedData.replace(/\//g, '~')
 
-// const getLastStatusBuilding = async () => {
-//   const response = await api.get('/api/GetLastStatusBuilding/' + receivingid.value)
-//   const result = response.data.length !== 0 ? response.data : null
+    const encryptedData2 = encrypt(selectedFirstName.value)
+    const replacedData2 = encryptedData2.replace(/\//g, '~')
 
-//   if (result === null) {
-//     lastStatusBuilding.value = 'No Status Found'
-//   } else {
-//     lastStatusBuilding.value = result[0].result || 'No Status Found'
-//   }
-// }
+    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData + '/' + replacedData2, { signal: controller.signal })
+    const data = response.data.length !== 0 ? response.data : null
 
-// const searchByNameOccupancy = async () => {
-//   if (selectedLastName.value.includes('/')) {
-//     const arraylastName = selectedLastName.value.split('/')
-//     selectedLastName.value = arraylastName[0]
-//   }
+    if (data === null) {
+      receivingid.value = 0
+    } else {
+      receivingid.value = decrypt(data.result) || 0
+    }
+  } catch (err) {
+    receivingid.value = 0
+    lastStatusBuilding.value = 'Error on fetching Building data'
+  }
+}
 
-//   if (selectedFirstName.value === null) {
-//     const tempFirstName = 'empty'
-//     selectedFirstName.value = tempFirstName
-//   }
+const getLastStatusBuilding = async () => {
+  const encryptedEndpoint = encrypt('GetLastStatusBuilding')
+  const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
 
-//   try {
-//     const response = await api.get('/api/SearchByNameOccupancy/' + selectedLastName.value + '/' + selectedFirstName.value)
-//     const result = response.data.length !== 0 ? response.data : null
+  const encryptedData = encrypt(receivingid.value)
+  const replacedData = encryptedData.replace(/\//g, '~')
 
-//     if (result === null) {
-//       occupancyid.value = 0
-//     } else {
-//       occupancyid.value = result[0].result
-//     }
-//   } catch {
-//     occupancyid.value = 0
-//     lastStatusOccupancy.value = 'Downloading Data'
-//   }
-// }
+  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+  const data = response.data.length !== 0 ? response.data : null
 
-// const getLastStatusOccupancy = async () => {
-//   const response = await api.get('/api/GetLastStatusOccupancy/' + occupancyid.value)
-//   const result = response.data.length !== 0 ? response.data : null
+  if (data === null) {
+    lastStatusBuilding.value = 'No Status Found'
+  } else {
+    lastStatusBuilding.value = decrypt(data.result) || 'No Status Found'
+  }
+}
 
-//   if (result === null) {
-//     lastStatusOccupancy.value = 'No Status Found'
-//   } else {
-//     lastStatusOccupancy.value = result[0].result || 'No Status Found'
-//   }
-// }
+const searchByNameOccupancy = async () => {
+  if (selectedLastName.value.includes('/')) {
+    const arraylastName = selectedLastName.value.split('/')
+    selectedLastName.value = arraylastName[0]
+  }
 
-// const searchByNameElectrical = async () => {
-//   if (selectedLastName.value.includes('/')) {
-//     const arraylastName = selectedLastName.value.split('/')
-//     selectedLastName.value = arraylastName[0]
-//   }
+  if (selectedFirstName.value === null) {
+    const tempFirstName = 'empty'
+    selectedFirstName.value = tempFirstName
+  }
 
-//   if (selectedFirstName.value === null) {
-//     const tempFirstName = 'empty'
-//     selectedFirstName.value = tempFirstName
-//   }
+  try {
+    const encryptedEndpoint = encrypt('SearchByNameOccupancy')
+    const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
 
-//   try {
-//     const response = await api.get('/api/SearchByNameElectrical/' + selectedLastName.value + '/' + selectedFirstName.value)
-//     const result = response.data.length !== 0 ? response.data : null
+    const encryptedData = encrypt(selectedLastName.value)
+    const replacedData = encryptedData.replace(/\//g, '~')
 
-//     if (result === null) {
-//       electricalid.value = 0
-//     } else {
-//       electricalid.value = result[0].result
-//     }
-//   } catch {
-//     electricalid.value = 0
-//   }
-// }
+    const encryptedData2 = encrypt(selectedFirstName.value)
+    const replacedData2 = encryptedData2.replace(/\//g, '~')
 
-// const getLastStatusElectrical = async () => {
-//   const response = await api.get('/api/GetLastStatusElectrical/' + electricalid.value)
+    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData + '/' + replacedData2, { signal: controller.signal })
+    const data = response.data.length !== 0 ? response.data : null
 
-//   const result = response.data.length !== 0 ? response.data : null
+    if (data === null) {
+      occupancyid.value = 0
+    } else {
+      occupancyid.value = decrypt(data.result) || 0
+    }
+  } catch {
+    occupancyid.value = 0
+    lastStatusOccupancy.value = 'Downloading Data'
+  }
+}
 
-//   if (result === null) {
-//     lastStatusElectrical.value = 'No Status Found'
-//   } else {
-//     lastStatusElectrical.value = result[0].result || 'No Status Found'
-//   }
-// }
+const getLastStatusOccupancy = async () => {
+  const encryptedEndpoint = encrypt('GetLastStatusOccupancy')
+  const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
 
-// const countIDs = async () => {
-//   const receivingCount = receivingid.value > 0 ? 1 : 0
-//   const occupancyCount = occupancyid.value > 0 ? 1 : 0
-//   const electricalCount = electricalid.value > 0 ? 1 : 0
-//   const signageCount = signageid.value > 0 ? 1 : 0
-//   const mechanicalCount = mechanicalid.value > 0 ? 1 : 0
-//   const result = receivingCount + occupancyCount + electricalCount + signageCount + mechanicalCount
+  const encryptedData = encrypt(occupancyid.value)
+  const replacedData = encryptedData.replace(/\//g, '~')
 
-//   idCount.value = result
-//   searchComplete.value = true
-// }
+  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+  const data = response.data.length !== 0 ? response.data : null
 
-// let applicationNo = ref(null)
+  if (data === null) {
+    lastStatusOccupancy.value = 'No Status Found'
+  } else {
+    lastStatusOccupancy.value = decrypt(data.result) || 'No Status Found'
+  }
+}
 
-// const getApplicationByID = async () => {
-//   const response = await api.get('/api/GetApplicationByID/' + receivingid.value)
-//   const result = response.data || null
-//   applicationNo.value = result[0].result || null
-// }
+const searchByNameElectrical = async () => {
+  if (selectedLastName.value.includes('/')) {
+    const arraylastName = selectedLastName.value.split('/')
+    selectedLastName.value = arraylastName[0]
+  }
 
-// const getOccupancyApplicationByID = async () => {
-//   const response = await api.get('/api/GetOccupancyApplicationByID/' + occupancyid.value)
-//   const result = response.data || null
-//   applicationNo.value = result[0].result || null
-// }
+  if (selectedFirstName.value === null) {
+    const tempFirstName = 'empty'
+    selectedFirstName.value = tempFirstName
+  }
 
-// const getElectricalApplicationByID = async () => {
-//   const response = await api.get('/api/GetElectricalApplicationByID/' + electricalid.value)
-//   const result = response.data || null
-//   applicationNo.value = result[0].result || null
-// }
+  try {
+    const encryptedEndpoint = encrypt('SearchByNameElectrical')
+    const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+
+    const encryptedData = encrypt(selectedLastName.value)
+    const replacedData = encryptedData.replace(/\//g, '~')
+
+    const encryptedData2 = encrypt(selectedFirstName.value)
+    const replacedData2 = encryptedData2.replace(/\//g, '~')
+
+    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData + '/' + replacedData2, { signal: controller.signal })
+    const data = response.data.length !== 0 ? response.data : null
+
+    if (data === null) {
+      electricalid.value = 0
+    } else {
+      electricalid.value = decrypt(data.result) || 0
+    }
+  } catch {
+    electricalid.value = 0
+  }
+}
+
+const getLastStatusElectrical = async () => {
+  const encryptedEndpoint = encrypt('GetLastStatusElectrical')
+  const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+
+  const encryptedData = encrypt(electricalid.value)
+  const replacedData = encryptedData.replace(/\//g, '~')
+
+  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+  const data = response.data.length !== 0 ? response.data : null
+
+  if (data === null) {
+    lastStatusElectrical.value = 'No Status Found'
+  } else {
+    lastStatusElectrical.value = decrypt(data.result) || 'No Status Found'
+  }
+}
+
+const countIDs = async () => {
+  const receivingCount = receivingid.value > 0 ? 1 : 0
+  const occupancyCount = occupancyid.value > 0 ? 1 : 0
+  const electricalCount = electricalid.value > 0 ? 1 : 0
+  const signageCount = signageid.value > 0 ? 1 : 0
+  const mechanicalCount = mechanicalid.value > 0 ? 1 : 0
+  const result = receivingCount + occupancyCount + electricalCount + signageCount + mechanicalCount
+
+  idCount.value = result
+  searchComplete.value = true
+}
+
+let applicationNo = ref(null)
+
+const getApplicationByID = async () => {
+  const encryptedEndpoint = encrypt('GetApplicationByID')
+  const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+
+  const encryptedData = encrypt(receivingid.value)
+  const replacedData = encryptedData.replace(/\//g, '~')
+
+  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+  const data = response.data.length !== 0 ? response.data : null
+
+  if (data !== null) {
+    applicationNo.value = decrypt(data.result) || null
+    console.log(applicationNo.value)
+  } else {
+    console.log('No record on Building')
+  }
+}
+
+const getOccupancyApplicationByID = async () => {
+  const encryptedEndpoint = encrypt('GetOccupancyApplicationByID')
+  const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+
+  const encryptedData = encrypt(occupancyid.value)
+  const replacedData = encryptedData.replace(/\//g, '~')
+
+  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+  const data = response.data.length !== 0 ? response.data : null
+
+  if (data !== null) {
+    applicationNo.value = decrypt(data.result) || null
+    console.log(applicationNo.value)
+  } else {
+    console.log('No record on Occupancy')
+  }
+}
+
+const getElectricalApplicationByID = async () => {
+  const encryptedEndpoint = encrypt('GetElectricalApplicationByID')
+  const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+
+  const encryptedData = encrypt(electricalid.value)
+  const replacedData = encryptedData.replace(/\//g, '~')
+
+  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+  const data = response.data.length !== 0 ? response.data : null
+
+  if (data !== null) {
+    applicationNo.value = decrypt(data.result) || null
+    console.log(applicationNo.value)
+  } else {
+    console.log('No record on Electrical')
+  }
+}
 
 // const openDialog2 = () => {
 //   dialog.value = false
@@ -399,9 +466,6 @@ const gotoHome = () => {
 </script>
 
 <style lang="sass" scoped>
-// h4, h2, h3
-//   font-family: 'PoppinsBold'
-
 .header
   display: flex
   flex-direction: row
@@ -426,7 +490,7 @@ const gotoHome = () => {
   font-size: 4.5rem
 
 .sentence
-  font-family: 'Poppins'
+  font-family: 'Roboto'
   // font-size: 2rem
   font-size: 1.6rem
   padding-bottom: 1rem
@@ -448,7 +512,7 @@ const gotoHome = () => {
 .card-dialog
   background-color: $button
   color: #FFFFFF
-  font-family: 'PoppinsBold'
+  font-family: 'LexendBold'
   width: 100vw
   height: 150%
   opacity: 0.9
@@ -456,7 +520,7 @@ const gotoHome = () => {
 .card-dialog2
   background-color: $button
   color: #FFFFFF
-  font-family: 'PoppinsBold'
+  font-family: 'LexendBold'
   width: 100vw
   height: 50vh
   opacity: 0.8
@@ -489,7 +553,7 @@ const gotoHome = () => {
   box-shadow: -10px 10px 18px 0px rgba(0, 0, 0, 0.4)
 
 .standard-font
-  font-family: 'Poppins'
+  font-family: 'Roboto'
 
 .button-group
   display: flex
@@ -515,7 +579,8 @@ const gotoHome = () => {
   margin-bottom: 2rem
   padding-left: 4rem
   padding-right: 4rem
-  font-family: "PoppinsBold"
+  font-family: 'Roboto'
+  font-weight: bold
   font-size: 1.8rem
   color: white
 
@@ -523,7 +588,7 @@ const gotoHome = () => {
   margin: 2rem 0 1.5rem 0
   padding-left: 1rem
   padding-right: 1rem
-  font-family: "Poppins"
+  font-family: "Lexend"
   font-size: 1.5rem
   color: white
   text-align: center
@@ -564,6 +629,7 @@ const gotoHome = () => {
   font-size: 1.2rem
   color: yellow
   text-align: center
+  border: 1px solid $button2
 
 .table-data-mobile-status
   font-family: "PoppinsBold"

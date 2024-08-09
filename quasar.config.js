@@ -14,6 +14,39 @@ const { configure } = require('quasar/wrappers')
 const CompressionPlugin = require('compression-webpack-plugin')
 const zlib = require('zlib')
 
+// const routesPaths = {
+//   IndexPage: '',
+//   SelectionPage: 'selection',
+//   StatusCheckPage: 'statuscheck',
+//   OPSearchPage: 'opcheck',
+//   NoticeSearchPage: 'noticecheck',
+//   PermitSearchPage: 'permitcheck',
+//   ListDailyReceivedPage: 'receivedlist',
+//   NameCheckPage: 'namecheck',
+//   ListApprovedPage: 'approvedlist',
+//   BlankPage: 'blank',
+//   HelpIndexPage: 'helpindex',
+//   ApplicationHelpPage: 'helpapplication',
+//   NameHelpPage: 'helpname',
+//   StatusSearchLoading: 'statussearch',
+//   NameSearchLoading: 'namesearch',
+//   OPSearchLoading: 'opsearch',
+//   ListGenerateLoading: 'listgenerate',
+//   NoticeSearchLoading: 'noticesearch',
+//   PermitSearchLoading: 'permitsearch',
+//   ListGenerateApproveLoading: 'listgenerateapprove',
+//   ListGenerateDailyReceivedLoading: 'listgeneratereceived',
+//   SearchErrorPage: 'searcherror',
+//   StatusCheckErrorPage: 'statuserror',
+//   ErrorPage: 'error',
+//   NoConnectionPage: 'noconnection',
+//   PinCodePage: 'pincode',
+// }
+
+// const routes = Object.values(routesPaths).map((route) => {
+//   return `/${route}`
+// })
+
 module.exports = configure(function (ctx) {
   return {
     // https://v2.quasar.dev/quasar-cli-webpack/supporting-ts
@@ -40,13 +73,15 @@ module.exports = configure(function (ctx) {
       // 'line-awesome',
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
-      //'roboto-font', // optional, you are not bound to it
+      'roboto-font', // optional, you are not bound to it
       'material-icons', // optional, you are not bound to it
     ],
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-build
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
+
+      env: require('dotenv').config().parsed,
 
       // transpile: false,
       // publicPath: '/',
@@ -65,9 +100,9 @@ module.exports = configure(function (ctx) {
       // Options below are automatically set depending on the env, set them if you want to override
       // extractCSS: false,
 
-      // uglifyOptions: {
-      //   compress: { drop_console : true }
-      // },
+      uglifyOptions: {
+        compress: { drop_console: true },
+      },
 
       // https://v2.quasar.dev/quasar-cli-webpack/handling-webpack
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
@@ -138,9 +173,46 @@ module.exports = configure(function (ctx) {
     // https://quasar.dev/options/animations
     animations: [],
 
+    // ssg: { routes },
+    // build: {
+    //   env: {
+    //     ROUTES_PATHS: routesPaths
+    //   },
+    // },
+
     // https://v2.quasar.dev/quasar-cli-webpack/developing-ssr/configuring-ssr
     ssr: {
       pwa: false,
+
+      // pages: [
+      //   'src/pages/IndexPage.vue',
+      //   'src/pages/SelectionPage.vue',
+      //   'src/pages/StatusCheckPage.vue',
+      //   'src/pages/OPSearchPage.vue',
+      //   'src/pages/NoticeSearchPage.vue',
+      //   'src/pages/PermitSearchPage.vue',
+      //   'src/pages/ListDailyReceivedPage.vue',
+      //   'src/pages/NameCheckPage.vue',
+      //   'src/pages/ListApprovedPage.vue',
+      //   'src/pages/BlankPage.vue',
+      //   'src/pages/HelpIndexPage.vue',
+      //   'src/pages/helps/ApplicationHelpPage.vue',
+      //   'src/pages/helps/NameHelpPage.vue',
+      //   'src/pages/loadings/StatusSearchLoading.vue',
+      //   'src/pages/loadings/NameSearchLoading.vue',
+      //   'src/pages/loadings/OPSearchLoading.vue',
+      //   'src/pages/loadings/ListGenerateLoading.vue',
+      //   'src/pages/loadings/NoticeSearchLoading.vue',
+      //   'src/pages/loadings/PermitSearchLoading.vue',
+      //   'src/pages/loadings/ListGenerateApproveLoading.vue',
+      //   'src/pages/loadings/ListGenerateDailyReceivedLoading.vue',
+      //   'src/pages/errors/SearchErrorPage.vue',
+      //   'src/pages/errors/StatusCheckErrorPage.vue',
+      //   'src/pages/errors/ErrorPage.vue',
+      //   'src/pages/NoConnectionPage.vue',
+      //   'src/pages/PinCodePage.vue',
+      // ],
+      // ssr: true,
 
       // manualStoreHydration: true,
       // manualPostHydrationTrigger: true,

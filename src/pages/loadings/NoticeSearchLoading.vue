@@ -1,7 +1,7 @@
 <template lang="pug">
 
 q-page.flex.flex-center.page(padding)
-  div.column.items-center.text-center
+  div.loading-screen
     span.loading-title Generating List
     span.loading-type {{_listtype.getValue.toUpperCase()}}
     span.minor for
@@ -9,7 +9,7 @@ q-page.flex.flex-center.page(padding)
     span.loading-value {{_searchvalue.getValue}}
 
     div.fit.column.items-center
-      q-btn.button(rounded @click="gotoHome") Cancel
+      q-btn.button-back2(rounded @click="gotoHome") Cancel
 
 </template>
 
@@ -40,23 +40,16 @@ import { useOwneraddress } from 'stores/owneraddress'
 import { encrypt, decrypt } from 'assets/js/shield'
 
 const router = useRouter()
-// let _listsubject = useListSubject
 const _listtype = useListType()
 const _currentpage = useCurrentPage()
 const _searchvalue = useSearchValue()
 const _division = useDivision()
-let _applicationno = useApplicationNo()
-let _tabledata = useTableData
+const _applicationno = useApplicationNo()
+const _tabledata = useTableData()
 const _ownername = useOwnername()
 const _owneraddress = useOwneraddress()
 
 const controller = new AbortController()
-
-// const checkConnection = async () => {
-//   const response = await api.get('/api/CheckConnection')
-//   const data = connection.data || null
-//   return data !== null ? data.result : null
-// }
 
 const getProgressFlow = async () => {
   try {
@@ -93,7 +86,7 @@ const getProgressFlow = async () => {
 
     if (data !== null) {
       _applicationno.updateValue(_searchvalue.getValue)
-      _tabledata.value = data
+      _tabledata.updateTable(data)
       updatePage('noticecheck')
     }
   } catch {
@@ -139,8 +132,14 @@ const getOwnerDetails = async () => {
           const fname = decrypt(data.result)
           const mname = decrypt(data.result2)
           const lname = decrypt(data.result3)
-          const addressresult = decrypt(data.result4)
+          const block = decrypt(data.result4)
+          const lot = decrypt(data.result5)
+          const address = decrypt(data.result6)
+          // const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
           const ffname = fname.length === 0 ? lname : fname + ' ' + (mname.length === 0 ? lname : mname + '. ' + lname)
+          let addressresult = `${block.length === 0 ? '' : `BLOCK ${block} `}${lot.length === 0 ? '' : `LOT ${lot} `}${address}`
+          addressresult = addressresult.replace(/(\s|^)BLK/g, 'BLOCK')
+          addressresult = addressresult.replace(/(\s|^)LT/g, 'LOT')
 
           _applicationno.updateValue(_searchvalue.getValue)
           _ownername.updateValue(ffname || '--No Name found on Database--')

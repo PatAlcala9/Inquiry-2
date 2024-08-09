@@ -4,7 +4,7 @@ q-page.fit.column.items-center.justify-center.text-center.content-center(padding
   span.error-title {{ _errormessage.getMessage }}
   span.error-subtitle {{ _errormessage.getSubMessage}}
 
-  q-btn.button-back(rounded label="Back" @click="gotoHome")
+  q-btn.button-back2(rounded label="Back" @click="gotoHome")
 
 </template>
 
@@ -28,7 +28,6 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const _errormessage = useErrorMessage()
-// let _errorsubmessage = useErrorSubMessage
 const _currentpage = useCurrentPage()
 
 const updatePage = (page) => {
@@ -45,12 +44,14 @@ const gotoHome = () => {
 
 <style lang="sass" scoped>
 .error-title
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
+  font-weight: bold
   font-size: 2rem
   color: $text
 
 .error-subtitle
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
+  font-weight: bold
   font-size: 1.4rem
   margin: 2rem 0 0 0
   color: $text

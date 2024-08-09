@@ -13,8 +13,11 @@ const routes = [
       { path: 'namecheck', component: () => import('pages/NameCheckPage.vue') },
       { path: 'approvedlist', component: () => import('pages/ListApprovedPage.vue') },
 
+      { path: 'blank', component: () => import('pages/BlankPage.vue') },
+
       { path: 'helpindex', component: () => import('pages/HelpIndexPage.vue') },
       { path: 'helpapplication', component: () => import('pages/helps/ApplicationHelpPage.vue') },
+      { path: 'helpname', component: () => import('pages/helps/NameHelpPage.vue') },
 
       { path: 'statussearch', component: () => import('pages/loadings/StatusSearchLoading.vue') },
       { path: 'namesearch', component: () => import('pages/loadings/NameSearchLoading.vue') },
@@ -30,6 +33,8 @@ const routes = [
       { path: 'error', component: () => import('pages/errors/ErrorPage.vue') },
 
       { path: 'noconnection', component: () => import('pages/NoConnectionPage.vue') },
+
+      { path: 'pincode', component: () => import('pages/PinCodePage.vue') },
     ],
   },
 

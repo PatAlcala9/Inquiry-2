@@ -2,17 +2,19 @@
 
 q-page.page(padding)
   div.body
-    img.logo(src="../assets/ocbologo2.webp" alt="OCBO Logo")
+    picture
+      source(srcset="../assets/ocbologo.avif" type="image/avif")
+      img.logo(src="../assets/ocbologo.webp" type="image/webp" alt="OCBO Logo")
     h1.main-title(@click="sample") OCBO Inquiry
 
-    q-input.searchbar(v-if="$q.screen.width <= 899" icon="search" outlined rounded v-model="searched" placeholder="Search Here" @keydown.enter="callserver" bg-color="white" input-style="font-size: 1.2rem; color: #002859")
+    q-input.searchbar(v-if="$q.screen.width <= 899" icon="search" outlined rounded v-model="searched" placeholder="Search Here" @keydown.enter="runCommand" bg-color="white" input-style="font-size: 1.2rem; color: #424f60")
       template(v-slot:prepend)
         q-icon(name="search")
-    q-input.searchbar(v-else icon="search" outlined rounded v-model="searched" placeholder="Type Application Number or Name Here" @keydown.enter="callserver" bg-color="white" input-style="font-size: 1.2rem; color: #002859")
+    q-input.searchbar(v-else icon="search" outlined rounded v-model="searched" placeholder="Type Application Number or Name Here" @keydown.enter="runCommand" bg-color="white" input-style="font-size: 1.2rem; color: #424f60")
       template(v-slot:prepend)
         q-icon(name="search")
 
-    q-btn.button(rounded label="Search" @click="callserver")
+    //- q-btn.button(rounded label="Search" @click="runCommand")
 
     div(v-if="$q.screen.width <= 899")
       div.flex.flex-center
@@ -24,13 +26,23 @@ q-page.page(padding)
         span.help-info {{helpInfo}}
           span.bold(@click="gotoHelp") here
 
+    //- PinCodeBar
+
+    div.footer
+      section.footer-section
+        div.footer-left
+          q-img.footer--image
+          span.footer--copyright © 2024 -- Office of the City Building Official
+        div.footer-right
+          span.footer--copyright Developed by: Pat Alcala
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import { api } from 'boot/axios'
 import { useRouter } from 'vue-router'
 import { useCurrentPage } from 'stores/currentpage'
-// import { useApplicationNo } from 'stores/applicationno'
+import { useApplicationNo } from 'stores/applicationno'
 import { useSearchValue } from 'stores/searchvalue'
 import { useErrorMessage } from 'stores/errormessage'
 // import { useErrorSubMessage } from 'stores/errorsubmessage'
@@ -44,12 +56,15 @@ import { date } from 'quasar'
 import { JSEncrypt } from 'jsencrypt'
 import { encrypt, decrypt } from 'assets/js/shield'
 
+import PinCodeBar from 'components/PinCodeBar.vue'
+import { hash } from 'src/assets/js/OCBO'
+
 const router = useRouter()
 const _currentpage = useCurrentPage()
-// let _applicationno = useApplicationNo
+const _applicationno = useApplicationNo()
 const _searchvalue = useSearchValue()
 const _errormessage = useErrorMessage()
-// let _listsubject = useListSubject
+// const _listsubject = useListSubject
 const _listtype = useListType()
 const _division = useDivision()
 const _listyear = useListYear()
@@ -172,20 +187,110 @@ const defaultMode = () => {
   error.value = false
 }
 
-const sample = () => {
-  // const file = 'src/assets/sample.pem'
-  // console.log(file)
+const detectDivision = async (value) => {
+  if (value.length === 9) {
+    _division.setBuilding()
+  } else if (value.length === 8) {
+    _division.setOccupancy()
+  } else if (value.length === 10) {
+    _division.setElectrical()
+  } else if (value.length === 11) {
+    _division.setSignage()
+  } else if (value.length === 7) {
+    _division.setMechanical()
+  } else {
+    _division.setUndefined()
+  }
 }
 
-const callserver = async () => {
+const checkApplication = async (application) => {
+  try {
+    let response
+    const encryptedEndpoint = encrypt('CheckConnection')
+    const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+    const connection = await api.get('/api/' + replacedEndpoint)
+    const data = connection.data || null
+    const result = data !== null ? decrypt(data.result) : null
+
+    if (result !== null) {
+      await detectDivision(application)
+
+      if (_division.isBuilding) {
+        const encryptedEndpoint = encrypt('CheckBuilding')
+        const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+        const encryptedData = encrypt(application)
+        const replacedData = encryptedData.replace(/\//g, '~')
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+      } else if (_division.isOccupancy) {
+        const encryptedEndpoint = encrypt('CheckOccupancy')
+        const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+        const encryptedData = encrypt(application)
+        const replacedData = encryptedData.replace(/\//g, '~')
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+      } else if (_division.isSignage) {
+        const encryptedEndpoint = encrypt('CheckSignage')
+        const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+        const encryptedData = encrypt(application)
+        const replacedData = encryptedData.replace(/\//g, '~')
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+      } else if (_division.isElectrical) {
+        const encryptedEndpoint = encrypt('CheckElectrical')
+        const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+        const encryptedData = encrypt(application)
+        const replacedData = encryptedData.replace(/\//g, '~')
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+      } else if (_division.isMechanical) {
+        const encryptedEndpoint = encrypt('CheckMechanical')
+        const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+        const encryptedData = encrypt(application)
+        const replacedData = encryptedData.replace(/\//g, '~')
+        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+      } else {
+        return false
+      }
+
+      const data = response.data.length !== 0 ? response.data : null
+      const result = data !== null ? decrypt(data.result) : null
+
+      if (result !== null) {
+        if (result > 0) {
+          _applicationno.updateValue(application)
+          return true
+        } else {
+          return false
+        }
+      } else {
+        return false
+      }
+    } else {
+      updatePage('noconnection')
+    }
+  } catch {
+    updatePage('noconnection')
+  }
+}
+
+const runCommand = async () => {
   if (isNaN(searched.value.substring(0, 2)) === false) {
     if (searched.value.includes('-')) {
       _searchvalue.updateValue(searched.value)
-      updatePage('selection')
+      if (await checkApplication(searched.value)) {
+        updatePage('selection')
+      } else {
+        _errormessage.updateMessage('Search Error')
+        _errormessage.updateSubMessage('Application does not exist')
+        updatePage('error')
+      }
     } else {
       const withDash = searched.value.toString().substring(0, 2) + '-' + searched.value.toString().substring(2, searched.value.length)
       _searchvalue.updateValue(withDash)
-      updatePage('selection')
+      if (await checkApplication(withDash)) {
+        updatePage('selection')
+      } else {
+        _errormessage.updateMessage('Search Error')
+        _errormessage.updateSubMessage('Application does not exist')
+        updatePage('error')
+      }
     }
     // if (years.includes(searched.value)) {
     //   // // this.mode = 'List of Account in a year'
@@ -272,7 +377,6 @@ const callserver = async () => {
 
         // _listsubject.value = _searchvalue.value
 
-        // console.log('hehre')
         // } else {
         //   _errormessage.value = 'Invalid Generation of List'
         //   _errorsubmessage.value = 'Application Number required'
@@ -483,21 +587,16 @@ const uploadSearch = (value) => {
 ;(async () => {
   reset()
   loadCurrentPage()
-  // const encrypt = new JSEncrypt()
-  // encrypt.setPublicKey(_rsakey.publickey)
-  // const encrypted = encrypt.encrypt('abc3211233a')
 
-  // encrypt.setPrivateKey(_rsakey.privatekey)
-  // var uncrypted = encrypt.decrypt(encrypted)
-
-  // console.log('aaa', encrypt('aaa'))
-  // console.log('decrypt', decrypt('Piw50PYYQeYoBAaXYXNjdFnn6rhBLPnhe7Jle2YXdC1/AqdcBWw6vHXZcTO/EFwW7WAgL1cry7RQAkl+vWFnGWYrtw4s428+fhwi/mUbKEEdYnBA1GCQCQmjurFxpjqpdG/tpbU1HLw7WiPJGg1jrUymRwAf7j8eeFWJWRXEsKpb8I7icMlMnipjCJZSRTgzlM0D2q4RVeCe0ADcNB9IN5j0Ub96Bc+gz2L3kb6W0s/WX9ocEn5ZqqZ5YKVSFZG+4Gao6JyHMBd2LjvoDUcZFYLeI/q2ngoRGZoHvO4H175hMR5WFL1xbE/zL5jfJywV7gVoYnxMK85hXTv/9+Cr9w=='))
+  console.log(hash(process.env.PIN_CODE_PLAIN))
 })()
 </script>
 
 <style lang="sass" scoped>
 h1, h2
-  font-family: 'PoppinsBold', sans-serif
+  // font-family: 'PoppinsBold', sans-serif
+  font-family: 'Roboto'
+  font-weight: bold
   opacity: 0.9
 
 .logo
@@ -517,12 +616,13 @@ h1, h2
 
 .searchbar
   width: 85%
-  font-family: 'Lexend', Arial, sans-serif
+  font-family: 'Roboto', Arial, sans-serif
   margin-top: -2rem
 
   &:hover
     border-radius: 2rem
-    box-shadow: 4px 8px 41px 2px rgba(14, 84, 160, 0.87)
+    // box-shadow: 4px 8px 41px 2px rgba(14, 84, 160, 0.87)
+    box-shadow: 4px 8px 41px 2px rgba(66, 79, 96, 0.87)
     overflow: hidden
 
 .sample
@@ -550,7 +650,8 @@ h1, h2
 .mobile-title
   margin-top: 2rem
   font-size: 1rem
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
+  font-weight: bold
   opacity: 0.9
 
 .list
@@ -558,8 +659,7 @@ h1, h2
 
 .help-info
   margin-top: 1.4rem
-  // font-family: 'Poppins'
-  font-family: 'Lexend'
+  font-family: 'Roboto'
   color: rgba(255, 255, 255, 0.8)
   font-size: 1rem
 
@@ -568,6 +668,57 @@ h1, h2
   text-decoration: underline
   cursor: pointer
 
+.footer
+  content: ""
+  position: absolute
+  top: 100
+  left: 0
+  right: 0
+  bottom: 0
+  padding: 0 0 1rem 0
+  width: 100vw
+  width: 100svw
+  height: auto
+
+.footer-section
+  display: flex
+  flex-direction: column
+  flex-wrap: wrap
+  justify-content: center
+  align-items: center
+  align-content: center
+
+.footer-left
+  display: flex
+  flex-direction: column
+  flex-wrap: wrap
+  justify-content: center
+  align-items: center
+  align-content: center
+  // gap: 2rem
+  opacity: 0.3
+
+.footer-right
+  display: flex
+  flex-direction: column
+  flex-wrap: wrap
+  justify-content: center
+  align-items: center
+  align-content: center
+  // gap: 2rem
+  // padding: 0 1rem 0 0
+  opacity: 0.3
+
+.footer--image
+  background-image: url('../assets/images/davao.webp')
+  width: 16rem
+  height: auto
+  background-position: center
+  background-repeat: no-repeat
+  background-size: contain
+
+.footer--copyright
+  font-size: 0.9rem
 
 //**Tablet */
 @media screen and (min-width: 1023px)
@@ -581,7 +732,7 @@ h1, h2
     border-radius: 15px
 
   .main-title
-    font-size: 3.5rem
+    font-size: 4.6rem
 
   .right-side
     width: 550px
@@ -593,4 +744,107 @@ h1, h2
 
   .body
     margin: 4rem 0 0 0
+
+  .footer
+    content: ""
+    position: absolute
+    top: 100
+    left: 0
+    right: 0
+    bottom: 0
+    padding: 0 2rem 1rem 2rem
+    width: 100vw
+    height: auto
+
+  .footer-section
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: space-between
+    align-items: flex-end
+    align-content: center
+
+  .footer-left
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: flex-start
+    align-items: center
+    align-content: center
+    gap: 2rem
+    opacity: 0.5
+
+  .footer-right
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: flex-end
+    align-items: center
+    align-content: center
+    gap: 2rem
+    opacity: 0.3
+
+  .footer--image
+    background-image: url('../assets/images/davao.webp')
+    width: 12rem
+    height: auto
+    background-position: center
+    background-repeat: no-repeat
+    background-size: contain
+
+  .footer--copyright
+    font-size: 0.8rem
+
+@media screen and (min-width: 1400px)
+  .footer
+    content: ""
+    position: absolute
+    top: 100
+    left: 0
+    right: 0
+    bottom: 0
+    padding: 0 2rem 1rem 2rem
+    width: 100vw
+    height: auto
+
+  .footer-section
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: space-between
+    align-items: flex-end
+    align-content: center
+
+  .footer-left
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: flex-start
+    align-items: center
+    align-content: center
+    gap: 2rem
+    opacity: 0.5
+
+  .footer-right
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: flex-end
+    align-items: center
+    align-content: center
+    gap: 2rem
+    opacity: 0.3
+
+  .footer--image
+    background-image: url('../assets/images/davao.webp')
+    @supports (background-image: url('../assets/images/davao.avif'))
+      background-image: url('../assets/images/davao.avif')
+    width: 16rem
+    height: auto
+    background-position: center
+    background-repeat: no-repeat
+    background-size: contain
+
+  .footer--copyright
+    font-size: 1rem
 </style>

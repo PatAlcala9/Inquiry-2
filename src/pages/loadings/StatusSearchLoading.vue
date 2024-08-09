@@ -1,15 +1,16 @@
 <template lang="pug">
 
 q-page.flex.flex-center.page(padding)
-  div.column.items-center.text-center
-    span.loading-title Generating List
+  div.loading-screen
+    span.loading-title Please wait
+    span.loading-title Downloading Data
     span.loading-type Application Status
     span.minor for
     span.loading-division {{_division.getValue}} Application
     span.loading-value {{_searchvalue.getValue}}
 
     div.fit.column.items-center
-      q-btn.button(rounded @click="gotoHome") Cancel
+      q-btn.button-back2(rounded @click="gotoHome") Cancel
 
 </template>
 
@@ -47,13 +48,13 @@ const quasar = useQuasar()
 
 const _searchvalue = useSearchValue()
 const _division = useDivision()
-let _applicationno = useApplicationNo()
+const _applicationno = useApplicationNo()
 const _ownername = useOwnername()
 const _owneraddress = useOwneraddress()
 const _lateststatus = useLatestStatus()
 const _errormessage = useErrorMessage()
 const _currentpage = useCurrentPage()
-let _tabledata = useTableData
+const _tabledata = useTableData()
 
 const controller = new AbortController()
 
@@ -62,7 +63,6 @@ const searchData = async () => {
   try {
     let response
     const encryptedEndpoint = encrypt('CheckConnection')
-    console.log(encryptedEndpoint)
     const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
     const connection = await api.get('/api/' + replacedEndpoint, { signal: controller.signal })
     const data = connection.data || null
@@ -162,15 +162,20 @@ const getOwnerDetails = async () => {
         const fname = decrypt(result.result)
         const mname = decrypt(result.result2)
         const lname = decrypt(result.result3)
-        const addressresult = decrypt(result.result4)
+        const block = decrypt(result.result4)
+        const lot = decrypt(result.result5)
+        const address = decrypt(result.result6)
         // const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
         const ffname = fname.length === 0 ? lname : fname + ' ' + (mname.length === 0 ? lname : mname + '. ' + lname)
+        let addressresult = `${block.length === 0 ? '' : `BLOCK ${block} `}${lot.length === 0 ? '' : `LOT ${lot} `}${address}`
+        addressresult = addressresult.replace(/(\s|^)BLK/g, 'BLOCK')
+        addressresult = addressresult.replace(/(\s|^)LT/g, 'LOT')
 
         _ownername.updateValue(ffname || '--No Name found on Database--')
         _owneraddress.updateValue(addressresult || '--No Address found on Database--')
       }
     }
-  } catch (error) {
+  } catch {
     _ownername.updateValue('--No Name found on Database--')
     _owneraddress.updateValue('--No Address found on Database--')
   }
@@ -202,11 +207,12 @@ const getTableData = async () => {
     const data = response.data.length !== 0 ? response.data : null
 
     if (data !== null) {
-      _tabledata.value = data
+      // _tabledata.value = data
+      _tabledata.updateTable(data)
       _lateststatus.updateValue(decrypt(data.result2[0]))
     }
   } catch {
-    _tabledata.value = {}
+    _tabledata.updateTable({})
     _lateststatus.updateValue(null)
   }
 }
@@ -234,7 +240,8 @@ const loadCurrentPage = () => {
 
 <style lang="sass" scoped>
 h4, h2, h3
-  font-family: 'PoppinsBold'
+  font-family: 'Roboto'
+  font-weight: bold
 
 .while
   margin-top: -3 rem

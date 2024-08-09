@@ -1,53 +1,96 @@
 <template lang="pug">
 
 q-page.page(padding)
-  section.page-title-group
-    div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
-      span.page-label Application Number:
-      span.page-info--primary {{_applicationno.getValue}}
-    div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
-      span.page-label Owner's Name:
-      span.page-info {{_ownername.getValue}}
-    div.address-group.full-width.column.no-wrap.justify-center.items-center.content-start
-      span.page-label Address:
-      span.page-info {{_owneraddress.getValue}}
+  section(v-if="$q.screen.width <= 899")
+    section.page-title-group
+      div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
+        span.page-label Application Number:
+        span.page-info--primary {{_applicationno.getValue}}
+      div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
+        span.page-label Owner's Name:
+        span.page-info {{_ownername.getValue}}
+      div.address-group.full-width.column.no-wrap.justify-center.items-center.content-start
+        span.page-label Address:
+        span.page-info {{_owneraddress.getValue}}
 
-  div(v-if="_tabledata.value !== null")
-    section(v-if="$q.screen.width <= 899")
-      section
-        div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
-          span(v-if="_tabledata.value.length > 1") Permits
-          span(v-else) Permit
+    div.back-button.full-width.column.wrap.justify-center.items-center.content-center
+      q-btn.button-back2(rounded class="button-back" label="Back" @click="gotoSelection")
 
-        div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="(item, index) in _tabledata.value.result" :key="item")
-          span.table-data-mobile-desc.last(v-if="_tabledata.value.result4 !== undefined") {{decrypt(item)}}
-          span.table-data-mobile-desc(v-else) {{decrypt(item)}}
-          span.table-data-mobile-info(v-if="_tabledata.value.result4 !== undefined") Block {{decrypt(_tabledata.value.result2[index])}} Lot {{decrypt(_tabledata.value.result3[index])}}
-          span.table-data-mobile-info.last(v-if="_tabledata.value.result4 !== undefined") {{decrypt(_tabledata.value.result4[index])}}
+    div(v-if="_tabledata.value !== null")
+        section
+          div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
+            span(v-if="_tabledata.value.length > 1") Permits
+            span(v-else) Permit
 
-    section(v-else)
-      section.table-area.full-width.column.content-center.items-center.justify-center
+          div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="(item, index) in _tabledata.getTable.result" :key="item")
+            span.table-data-mobile-desc.last(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(item)}}
+            span.table-data-mobile-desc(v-else) {{decrypt(item)}}
+            span.table-data-mobile-info(v-if="_tabledata.getTable.result4 !== undefined") Block {{decrypt(_tabledata.getTable.result2[index])}} Lot {{decrypt(_tabledata.getTable.result3[index])}}
+            span.table-data-mobile-info.last(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result4[index])}}
+
+    div(v-else)
+      section.flex.flex-center
+        span.empty-table-message No Permit Found
+
+  section.page-pc(v-else)
+    section.page-title-group.left
+      div.application
+        span.page-info--primary {{_applicationno.getValue}}
+
+      section.details
+        div.owner-group.full-width.column.wrap.justify-start.items-start.content-start
+          span.page-label Owner's Name:
+          span.page-info {{_ownername.getValue}}
+        div.address-group.full-width.column.wrap.justify-start.items-start.content-start
+          span.page-label Address:
+          sapn.page-info {{_owneraddress.getValue}}
+        //- div.address-group.full-width.column.wrap.justify-start.items-start.content-start
+        //-   span.page-label Latest Status:
+        //-   span.page-info {{latestStatus}}
+
+      section.button-grid
+        q-btn.button-back2(rounded label="Back" @click="gotoSelection")
+
+    section.right
+      div.table-limit(v-if="_tabledata.value !== null")
         table.table-custom
           thead
             tr
-              th(v-if="_tabledata.value.result.length > 1") Permits
+              th(v-if="_tabledata.getTable.result.length > 1") Permits
               th(v-else) Permit
-              th(v-if="_tabledata.value.result4 !== undefined") Block
-              th(v-if="_tabledata.value.result4 !== undefined") Lot
-              th(v-if="_tabledata.value.result4 !== undefined") Address
+              th(v-if="_tabledata.getTable.result4 !== undefined") Block
+              th(v-if="_tabledata.getTable.result4 !== undefined") Lot
+              th(v-if="_tabledata.getTable.result4 !== undefined") Address
           tbody
-            tr(v-for="(item, index) in _tabledata.value.result" :key="item")
+            tr(v-for="(item, index) in _tabledata.getTable.result" :key="item")
               td {{decrypt(item)}}
-              td(v-if="_tabledata.value.result4 !== undefined") {{decrypt(_tabledata.value.result2[index])}}
-              td(v-if="_tabledata.value.result4 !== undefined") {{decrypt(_tabledata.value.result3[index])}}
-              td(v-if="_tabledata.value.result4 !== undefined") {{decrypt(_tabledata.value.result4[index])}}
+              td(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result2[index])}}
+              td(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result3[index])}}
+              td(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result4[index])}}
 
-  div(v-else)
-    section.flex.flex-center
-      span.empty-table-message No Permit Found
+      div(v-else)
+        section.flex.flex-center
+          span.empty-table-message No Permit Found
+    //- section.table-area.full-width.column.content-center.items-center.justify-center
+    //-   table.table-custom
+    //-     thead
+    //-       tr
+    //-         th(v-if="_tabledata.getTable.result.length > 1") Permits
+    //-         th(v-else) Permit
+    //-         th(v-if="_tabledata.getTable.result4 !== undefined") Block
+    //-         th(v-if="_tabledata.getTable.result4 !== undefined") Lot
+    //-         th(v-if="_tabledata.getTable.result4 !== undefined") Address
+    //-     tbody
+    //-       tr(v-for="(item, index) in _tabledata.getTable.result" :key="item")
+    //-         td {{decrypt(item)}}
+    //-         td(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result2[index])}}
+    //-         td(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result3[index])}}
+    //-         td(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result4[index])}}
 
-  div.button-area.full-width.column.no-wrap.justify-center.items-center.content-start
-    q-btn.button-back(rounded label="Back" @click="gotoHome")
+
+
+  //- div.button-area.full-width.column.no-wrap.justify-center.items-center.content-start
+  //-   q-btn.button-back2(rounded label="Back" @click="gotoHome")
 
 </template>
 
@@ -82,7 +125,7 @@ const router = useRouter()
 const _applicationno = useApplicationNo()
 const _searchvalue = useSearchValue()
 // const _division = useDivision()
-let _tabledata = useTableData
+const _tabledata = useTableData()
 const _ownername = useOwnername()
 const _owneraddress = useOwneraddress()
 // const _lateststatus = useLatestStatus()
@@ -97,6 +140,10 @@ const gotoHome = () => {
   // window.location.reload()
 }
 
+const gotoSelection = () => {
+  updatePage('selection')
+}
+
 const updatePage = (page) => {
   _currentpage.updateValue(page)
   router.push(page)
@@ -105,7 +152,8 @@ const updatePage = (page) => {
 
 <style scoped lang="sass">
 label
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
+  font-weight: bold
 
 .owner-group
   padding-bottom: 2em
@@ -134,7 +182,7 @@ label
   margin-top: 1.5em
 
 .fetching
-  font-family: "Lexend"
+  font-family: "Roboto"
   width: 100%
   text-align: center
   color: #ffffff
@@ -144,7 +192,7 @@ label
   margin-bottom: 1rem
 
 .light
-  font-family: "Lexend"
+  font-family: "Roboto"
 
 .table-area
   margin-top: 2rem
@@ -154,7 +202,8 @@ label
   margin-bottom: 2rem
   padding-left: 4rem
   padding-right: 4rem
-  font-family: "LexendBold"
+  font-family: 'Roboto'
+  font-weight: bold
   font-size: 2rem
   color: white
 
@@ -162,7 +211,8 @@ label
   margin: 2rem 0 1.5rem 0
   padding-left: 1rem
   padding-right: 1rem
-  font-family: "LexendBold"
+  font-family: 'Roboto'
+  font-weight: bold
   font-size: 1.5rem
   color: white
   text-align: center
@@ -176,7 +226,7 @@ label
   padding-right: 1rem
 
 .table-data
-  font-family: "Lexend"
+  font-family: "Roboto"
   font-size: 1.2rem
   color: #0f3057
   padding: 0.3rem
@@ -186,9 +236,10 @@ label
   background-color: rgba(255,255,255,0.8)
 
 .table-data-mobile-desc
-  font-family: "LexendBold"
+  font-family: 'Roboto'
+  font-weight: bold
   font-size: 0.9rem
-  color: $text
+  color: $darktext
   background-color: $button
   width: 60%
   padding: 0.3rem
@@ -196,7 +247,8 @@ label
   border-radius: 1rem
 
 .table-data-mobile-info
-  font-family: "LexendBold"
+  font-family: 'Roboto'
+  font-weight: bold
   font-size: 1rem
   color: $text
   text-align: center
@@ -205,7 +257,8 @@ label
   padding-bottom: 2rem
 
 .empty-table-message
-  font-family: "LexendBold"
+  font-family: 'Roboto'
+  font-weight: bold
   color: $yellow
   font-size: 2rem
   padding-top: 3rem
@@ -217,12 +270,77 @@ label
     width: 90%
 
 @media screen and (min-width: 1023px)
+  .page-pc
+    display: grid
+    grid-template-columns: 0.6fr 0.4fr
+    grid-template-rows: 1fr
+    gap: 0px 0px
+    grid-template-areas: "left right"
+    max-width: 1920px
+    margin: 0 auto
+
+  .left
+    display: grid
+    grid-template-columns: 1fr
+    grid-template-rows: 0.1fr 0.8fr 0.1fr
+    gap: 2.5rem 0px
+    grid-template-areas: "application" "details" "button-grid"
+    grid-area: left
+
+  .application
+    grid-area: application
+    margin: 0 0 2rem 0
+
+  .details
+    grid-area: details
+
+  .button-grid
+    grid-area: button-grid
+
+  .right
+    margin: 2rem 0 0 0
+    justify-self: center
+    align-self: center
+    grid-area: right
+
+  .page-info--primary
+    // font-size: 2.8rem
+    paddinng: 0
+    margin: 0
+
+  .page-label
+    opacity: 0.5
+
+  .page-info
+    // font-size: 1.8rem
+    text-align: left
+
+  .table-custom thead
+    background-color: transparent
+    font-size: 1.1rem
+
+  .table-custom th
+    padding: 1.1rem 1.1rem 2rem 1.1rem
+
+  .table-custom tbody
+    padding: 1rem
+
+  .table-custom td
+    padding: 1rem
+    font-size: 1rem
+    border-bottom: 1px solid $text
+
+  .table-limit
+    height: 800px
+    overflow-y: auto
+
   .button
     width: 250px
     margin: 2rem 0 0 0
 
   .owner-name
-    font-family: 'LexendBold'
+    font-family: 'Roboto'
+    font-weight: bold
     font-size: 2rem
 
   .address-name
