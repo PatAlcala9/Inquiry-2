@@ -9,7 +9,7 @@ q-page.flex.flex-center.page(padding)
     div.grid
       LinkButton.one(text="Track Application" @click="gotoStatusSearch")
       LinkButton.two(text="Order of Payment" @click="gotoOPSearch")
-      LinkButton.three(text="Inspection Details" @click="gotoNoticeSearch")
+      //- LinkButton.three(text="Inspection Details" @click="gotoNoticeSearch")
       LinkButton.four(text="Permits Details" @click="gotoPermitSearch")
 
   //- section.column.wrap.justify-center.items-center.content-center.text-center(v-else)
@@ -137,9 +137,9 @@ const gotoHome = () => {
   grid-auto-rows: 1fr
   gap: 0px 0px
   grid-template-columns: 1fr
-  grid-template-rows: 1fr 1fr 1fr 1fr
+  grid-template-rows: 1fr 1fr 1fr
   grid-auto-flow: row
-  grid-template-areas: "one" "two" "three" "four"
+  grid-template-areas: "one" "two" "four"
   justify-content: center
   align-content: center
   justify-items: center
@@ -198,7 +198,7 @@ const gotoHome = () => {
   .grid
     grid-template-columns: 1fr 1fr
     grid-template-rows: 1fr 1fr
-    grid-template-areas: "one two" "three four"
+    grid-template-areas: "one two" "four four"
 
   .search-value
     margin: 1rem 0 0 0
