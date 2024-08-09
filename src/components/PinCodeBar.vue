@@ -64,7 +64,7 @@ const backPin = () => {
   align-items: center
   align-content: center
   padding: auto
-  // margin: 2rem 0 0 0
+  margin: 2rem 0 0 0
 
 .grid
   display: grid
@@ -140,5 +140,5 @@ const backPin = () => {
     align-items: center
     align-content: center
     padding: auto
-    margin: -3rem 0 0 0
+    margin: 3rem 0 0 0
 </style>
