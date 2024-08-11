@@ -730,7 +730,7 @@ h1, h2
     border-radius: 15px
 
   .main-title
-    font-size: 4.6rem
+    font-size: 3.8rem
 
   .right-side
     width: 550px
@@ -794,6 +794,8 @@ h1, h2
     font-size: 0.8rem
 
 @media screen and (min-width: 1440px)
+  .main-title
+    font-size: 4.6rem
   .footer
     content: ""
     position: absolute
