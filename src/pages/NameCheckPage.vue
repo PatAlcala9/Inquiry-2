@@ -1,9 +1,8 @@
 <template lang="pug">
 
 q-page.page(padding)
-
-  div(v-if="$q.screen.width <= 899")
-    div.full-width.column.no-wrap.justify-center.items-center.content-start
+  section(v-if="$q.screen.width <= 767")
+    section.page-title-group.left
       span.page-title Found for
       span.page-searchvalue {{_searchvalue.getValue.toUpperCase()}}
       span.secondary-title.number {{_tabledata.getTable.result.length}}
@@ -21,17 +20,31 @@ q-page.page(padding)
           span.table-data-mobile-status {{decrypt(_tabledata.getTable.result2[index]).toUpperCase()}}
           q-btn.table-button-mobile(rounded @click="getName(decrypt(_tabledata.getTable.result3[index]), decrypt(_tabledata.getTable.result4[index]))") Check
 
-  div(v-else)
-    div.full-width.column.content-center.items-center.justify-center
-      h3.secondary-title {{_tabledata.getTable.result.length}} {{sentence}}
-      q-input.searchbar(rounded outlined v-model="specific" placeholder="Search Specific" bg-color="white" )
-        template(v-slot:prepend)
-          q-icon(name="search")
+  section.page-pc(v-else)
+    section.page-title-group.left
+      div.application
+        span.page-info--primary {{_tabledata.getTable.result.length}} {{sentence}}
+        q-input.searchbar(rounded outlined v-model="specific" placeholder="Search Specific" bg-color="white" )
+          template(v-slot:prepend)
+            q-icon(name="search")
 
-      div.flex.flex-center
+      section.details
+        //- div.owner-group.full-width.column.wrap.justify-start.items-start.content-start
+        //-   span.page-label Owner's Name:
+        //-   span.page-info {{ownername}}
+        //- div.address-group.full-width.column.wrap.justify-start.items-start.content-start
+        //-   span.page-label Address:
+        //-   sapn.page-info {{address}}
+        //- div.address-group.full-width.column.wrap.justify-start.items-start.content-start
+        //-   span.page-label Latest Status:
+        //-   span.page-info {{latestStatus}}
+
+      div.button-back-area.full-width.column.wrap.justify-center.items-center.content-center
         q-btn.button-back2(rounded label="Back" @click="gotoHome")
 
-      section.full-width.column.content-center.items-center.justify-center(v-if="_tabledata.getTable.result.length > 0")
+
+    section.right
+      div.table-limit(v-if="_tabledata.getTable.result.length > 0")
         table.table-custom
           thead
             tr
@@ -152,7 +165,7 @@ const controller = new AbortController()
 
 // let rows = ref(_tabledata.value)
 let specific = ref('')
-let sentence = ' Applications'
+let sentence = ref(_tabledata.getTable.result.length <= 1 ? ' Application' : ' Applications')
 
 // const newRows = computed(() => {
 //   return rows.value.filter((row) => {
@@ -483,7 +496,7 @@ const gotoHome = () => {
   width: 15rem
   margin-bottom: 3rem
   font-size: 1.2rem
-  font-family: 'Poppins', sans-serif
+  font-family: 'Roboto', sans-serif
 
 .number
   margin: -1rem
@@ -510,9 +523,10 @@ const gotoHome = () => {
   width: 100vw
 
 .card-dialog
-  background-color: $button
+  background-color: $darktext
   color: #FFFFFF
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
+  font-weight: bold
   width: 100vw
   height: 150%
   opacity: 0.9
@@ -520,7 +534,8 @@ const gotoHome = () => {
 .card-dialog2
   background-color: $button
   color: #FFFFFF
-  font-family: 'LexendBold'
+  font-family: 'Roboto'
+  font-weight: bold
   width: 100vw
   height: 50vh
   opacity: 0.8
@@ -602,7 +617,7 @@ const gotoHome = () => {
   padding-right: 1rem
 
 .table-data
-  font-family: "Poppins"
+  font-family: "Roboto"
   font-size: 1rem
   color: #0f3057
   padding: 0.3rem
@@ -612,27 +627,29 @@ const gotoHome = () => {
   background-color: rgba(255,255,255,0.8)
 
 .table-button
-  font-family: "Poppins"
+  font-family: "Roboto"
   background-color: #0f3057
   color: white
   width: 8rem
 
 .table-button-mobile
-  font-family: "Poppins"
+  font-family: "Roboto"
   background-color: #0f3057
   color: white
   width: 8rem
   margin-bottom: 2rem
 
 .table-data-mobile-date
-  font-family: "PoppinsBold"
+  font-family: "Roboto"
+  font-weight: bold
   font-size: 1.2rem
   color: yellow
   text-align: center
   border: 1px solid $button2
 
 .table-data-mobile-status
-  font-family: "PoppinsBold"
+  font-family: "Roboto"
+  font-weight: bold
   font-size: 1.3rem
   color: white
   text-align: center
@@ -647,14 +664,76 @@ const gotoHome = () => {
   font-size: 1.8rem
 
 .page-searchvalue
-  font-family: "PoppinsBold"
+  font-family: "Roboto"
+  font-weight: bold
   color: yellow
   font-size: 2rem
 
-// .button-back
-//   background-color: $negative
+.page-pc
+  display: grid
+  grid-template-columns: 0.3fr 0.7fr
+  grid-template-rows: 1fr
+  gap: 0px 0px
+  grid-template-areas: "left right"
+  max-width: 1920px
+  margin: 0 auto
 
-@media screen and (min-width: 900px)
+.left
+  display: grid
+  grid-template-columns: 1fr
+  grid-template-rows: 0.1fr 0.8fr 0.1fr
+  gap: 3rem 0px
+  grid-template-areas: "application" "details" "button-grid"
+  grid-area: left
+
+.application
+  grid-area: application
+  margin: 0 0 2rem 0
+
+.details
+  grid-area: details
+
+.button-grid
+  grid-area: button-grid
+
+.right
+  margin: 2rem 0 0 0
+  justify-self: center
+  align-self: center
+  grid-area: right
+
+.page-info--primary
+  // font-size: 2.8rem
+  paddinng: 0
+  margin: 0
+
+.page-label
+  opacity: 0.5
+
+.page-info
+  // font-size: 1.8rem
+  text-align: left
+
+.table-custom thead
+    background-color: transparent
+    font-size: 1.1rem
+
+.table-custom th
+  padding: 1.1rem 1.1rem 2rem 1.1rem
+
+.table-custom tbody
+  padding: 1rem
+
+.table-custom td
+  padding: 1rem
+  font-size: 1rem
+  border-bottom: 1px solid $text
+
+.table-limit
+  height: 800px
+  overflow-y: auto
+
+@media screen and (min-width: 768px)
   .button-group
     display: flex
     flex-direction: row
