@@ -99,6 +99,10 @@ const updatePage = (page) => {
   router.push(page)
 }
 
+const loadCurrentPage = () => {
+  router.push(_currentpage.getValue)
+}
+
 const gotoHome = () => {
   // controller.abort()
   updatePage('/')
@@ -107,6 +111,7 @@ const gotoHome = () => {
 
 ;(async () => {
   await detectDivision()
+  loadCurrentPage()
 })()
 </script>
 

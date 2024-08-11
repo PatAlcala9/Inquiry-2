@@ -131,10 +131,13 @@ const updatePage = (page) => {
   router.push(page)
 }
 
+const loadCurrentPage = () => {
+  router.push(_currentpage.getValue)
+}
 
-// ;(async () => {
-//   await replaceArray(statusList, rephrasedStatusList)
-// })()
+;(async () => {
+  // loadCurrentPage()
+})()
 </script>
 
 <style lang="sass" scoped>
