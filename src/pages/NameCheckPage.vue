@@ -7,24 +7,24 @@ q-page.page(padding)
       span.page-searchvalue {{_searchvalue.getValue.toUpperCase()}}
       span.secondary-title.number {{_tabledata.getTable.result.length}}
       span.secondary-title.sentence {{sentence}}
-      q-input.searchbar(rounded outlined v-model="specific" placeholder="Search Specific" bg-color="white" )
+      q-input.searchbar(rounded outlined v-model="specific" placeholder="Filter Search" bg-color="white")
         template(v-slot:prepend)
           q-icon(name="search")
 
     div.full-width.column.wrap.justify-center.items-center.content-center
       q-btn.button-back2(rounded label="Back" @click="gotoHome")
 
-      section(v-if="_tabledata.getTable.result.length > 0")
-        div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-align(v-for="(item, index) in _tabledata.getTable.result" :key="data")
-          span.table-data-mobile-date {{decrypt(item).toUpperCase()}}
-          span.table-data-mobile-status {{decrypt(_tabledata.getTable.result2[index]).toUpperCase()}}
-          q-btn.table-button-mobile(rounded @click="getName(decrypt(_tabledata.getTable.result3[index]), decrypt(_tabledata.getTable.result4[index]))") Check
+      section(v-if="dTableData.result.length > 0")
+        div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-align(v-for="(item, index) in dTableData.result" :key="data")
+          span.table-data-mobile-date {{item.toUpperCase()}}
+          span.table-data-mobile-status {{dTabledata.result2[index].toUpperCase()}}
+          q-btn.table-button-mobile(rounded @click="getName(dTableData.result3[index], dTableData.result4[index])") Check
 
   section.page-pc(v-else)
     section.page-title-group.left
       div.application
-        span.page-info--primary {{_tabledata.getTable.result.length}} {{sentence}}
-        q-input.searchbar(rounded outlined v-model="specific" placeholder="Search Specific" bg-color="white" )
+        span.page-info--primary {{dTableData.result.length}} {{sentence}}
+        q-input.searchbar(rounded outlined v-model="specific" placeholder="Filter Search" bg-color="white" )
           template(v-slot:prepend)
             q-icon(name="search")
 
@@ -44,7 +44,7 @@ q-page.page(padding)
 
 
     section.right
-      div.table-limit(v-if="_tabledata.getTable.result.length > 0")
+      div.table-limit(v-if="filteredData.result.length > 0")
         table.table-custom
           thead
             tr
@@ -52,11 +52,26 @@ q-page.page(padding)
               th Address
               th
           tbody
-            tr(v-for="(item, index) in _tabledata.getTable.result" :key="item")
-              td {{decrypt(item).toUpperCase()}}
-              td {{decrypt(_tabledata.getTable.result2[index]).toUpperCase()}}
+            tr(v-for="(item, index) in filteredData.result" :key="item")
+              td {{item.toUpperCase()}}
+              td {{filteredData.result2[index].toUpperCase()}}
               td
-                q-btn.table-button(rounded @click="getName(decrypt(_tabledata.getTable.result3[index]), decrypt(_tabledata.getTable.result4[index]))") Check
+                q-btn.table-button(rounded @click="getName(filteredData.result3[index], filteredData.result4[index])") Check
+
+    //- section.right(v-else)
+    //-   div.table-limit(v-if="dTableData.result.length > 0")
+    //-     table.table-custom
+    //-       thead
+    //-         tr
+    //-           th Name
+    //-           th Address
+    //-           th
+    //-       tbody
+    //-         tr(v-for="(item, index) in dTableData.result" :key="item")
+    //-           td {{item.toUpperCase()}}
+    //-           td {{dTableData.result2[index].toUpperCase()}}
+    //-           td
+    //-             q-btn.table-button(rounded @click="getName(dTableData.result3[index], dTableData.result4[index])") Check
 
 
   q-dialog.dialog(full-width v-model="dialog" position="top")
@@ -160,18 +175,53 @@ const router = useRouter()
 const _tabledata = useTableData()
 const _currentpage = useCurrentPage()
 const _searchvalue = useSearchValue()
+const dTableData = ref({
+  result: _tabledata.getTable.result.map((item) => decrypt(item)),
+  result2: _tabledata.getTable.result2.map((item) => decrypt(item)),
+  result3: _tabledata.getTable.result3.map((item) => decrypt(item)),
+  result4: _tabledata.getTable.result4.map((item) => decrypt(item)),
+})
 
 const controller = new AbortController()
 
-// let rows = ref(_tabledata.value)
+let rows = ref(dTableData.value)
 let specific = ref('')
-let sentence = ref(_tabledata.getTable.result.length <= 1 ? ' Application' : ' Applications')
+let sentence = ref(dTableData.value.result.length <= 1 ? ' Application' : ' Applications')
 
-// const newRows = computed(() => {
-//   return rows.value.filter((row) => {
-//     return row.result !== '' && row.result.toUpperCase().indexOf(specific.value.toUpperCase()) != -1
-//   })
-// })
+const dTableDataFilter = ref({
+  result: dTableData.value.result.filter((item) => item.includes(specific.value)),
+  result2: dTableData.value.result2.filter((item) => item.includes(specific.value)),
+  result3: dTableData.value.result3.filter((item) => item.includes(specific.value)),
+  result4: dTableData.value.result4.filter((item) => item.includes(specific.value)),
+})
+
+const filteredData = computed(() => {
+  const term = specific.value.toUpperCase()
+
+  if (!term) return dTableData.value
+
+  // return {
+  //   result: dTableData.value.result.filter((item) => itemMatchesSearch(item, term)),
+  //   result2: dTableData.value.result2.filter((item) => itemMatchesSearch(item, term)),
+  //   result3: dTableData.value.result3.filter((item) => itemMatchesSearch(item, term)),
+  //   result4: dTableData.value.result4.filter((item) => itemMatchesSearch(item, term)),
+  // }
+
+  const filteredResult = dTableData.value.result.filter((item) => item.name.toUpperCase().includes(term))
+
+  const filteredIndices = filteredResult.map((item) => dTableData.value.result.indexOf(item))
+
+  return {
+    result: filteredResult,
+    result2: dTableData.value.result2.filter((_, index) => filteredIndices.includes(index)),
+    result3: dTableData.value.result3.filter((_, index) => filteredIndices.includes(index)),
+    result4: dTableData.value.result4.filter((_, index) => filteredIndices.includes(index)),
+  }
+})
+
+const itemMatchesSearch = (item, term) => {
+  return Object.values(item).some((value) => String(value).toUpperCase().includes(term))
+}
 
 let selectedFirstName = ref(null)
 let selectedLastName = ref(null)
@@ -390,6 +440,7 @@ const countIDs = async () => {
 
   idCount.value = result
   searchComplete.value = true
+  console.log('yeah')
 }
 
 let applicationNo = ref(null)
