@@ -628,8 +628,8 @@ const gotoHome = () => {
 
 .table-button
   font-family: "Roboto"
-  background-color: #0f3057
-  color: white
+  background-color: $yellow
+  color: $darktext
   width: 8rem
 
 .table-button-mobile
