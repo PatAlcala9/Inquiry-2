@@ -39,7 +39,7 @@ q-page.page(padding)
         //-   span.page-label Latest Status:
         //-   span.page-info {{latestStatus}}
 
-      div.button-back-area.full-width.column.wrap.justify-center.items-center.content-center
+      div.button-grid
         q-btn.button-back2(rounded label="Back" @click="gotoHome")
 
 
