@@ -7,7 +7,7 @@ q-page.page(padding)
       span.page-searchvalue {{_searchvalue.getValue.toUpperCase()}}
       span.secondary-title.number {{_tabledata.getTable.result.length}}
       span.secondary-title.sentence {{sentence}}
-      q-input.searchbar(rounded outlined v-model="specific" placeholder="Filter Search" bg-color="white")
+      q-input.searchbar(rounded outlined v-model="specific" placeholder="Filter List" bg-color="white")
         template(v-slot:prepend)
           q-icon(name="search")
 
@@ -24,7 +24,7 @@ q-page.page(padding)
     section.page-title-group.left
       div.application
         span.page-info--primary {{dTableData.result.length}} {{sentence}}
-        q-input.searchbar(rounded outlined v-model="specific" placeholder="Filter Search" bg-color="white" )
+        q-input.searchbar(rounded outlined v-model="specific" placeholder="Filter List" bg-color="white" )
           template(v-slot:prepend)
             q-icon(name="search")
 
@@ -74,7 +74,7 @@ q-page.page(padding)
     //-             q-btn.table-button(rounded @click="getName(dTableData.result3[index], dTableData.result4[index])") Check
 
 
-  q-dialog.dialog(full-width v-model="dialog" position="top")
+  q-dialog.dialog(full-height v-model="dialog" position="left")
     q-card.card-dialog
       q-card-section
         section(v-if="searchComplete")
@@ -94,60 +94,60 @@ q-page.page(padding)
           div.full-width.column.justify-center.items-center.content-center(v-else-if="idCount > 1" )
             span.card-dialog-title Current Status
 
-            div(class="dialog-title-group")
-              span(class="card-dialog-title standard-font") Please select
-              span(class="card-dialog-title standard-font") which application
-              span(class="card-dialog-title standard-font") you want to check
+            div.dialog-title-group
+              span.card-dialog-title.standard-font Please select
+              span.card-dialog-title.standard-font which application
+              span.card-dialog-title.standard-font you want to check
 
-            div(class="button-group")
+            div.button-group
               q-btn.card-dialog-button(v-if="receivingid > 0" rounded size="lg" @click="openDialog2") Building
               q-btn.card-dialog-button(v-if="occupancyid > 0" rounded size="lg" @click="openDialog3") Occupancy
               q-btn.card-dialog-button(v-if="electricalid > 0" rounded size="lg" @click="openDialog4") Electrical
 
           div(v-else)
             section(v-if="receivingid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
-              span(class="card-dialog-title") Building Application Number:
-              span(class="card-dialog-status") {{applicationNo}}
+              span.card-dialog-title Building Application Number:
+              span.card-dialog-status {{applicationNo}}
               br
-              span(class="card-dialog-title") Current Status:
-              span(class="card-dialog-status") {{lastStatusBuilding}}
+              span.card-dialog-title Current Status:
+              span.card-dialog-status {{lastStatusBuilding}}
             section(v-else-if="occupancyid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
-              span(class="card-dialog-title") Occupancy Application Number:
-              span(class="card-dialog-status") {{applicationNo}}
+              span.card-dialog-title Occupancy Application Number:
+              span.card-dialog-status {{applicationNo}}
               br
-              span(class="card-dialog-title") Current Status:
-              span(class="card-dialog-status") {{lastStatusOccupancy}}
+              span.card-dialog-title Current Status:
+              span.card-dialog-status {{lastStatusOccupancy}}
             section(v-else-if="electricalid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
-              span(class="card-dialog-title") Electrical Application Number:
-              span(class="card-dialog-status") {{applicationNo}}
+              span.card-dialog-title Electrical Application Number:
+              span.card-dialog-status {{applicationNo}}
               br
-              span(class="card-dialog-title") Current Status:
-              span(class="card-dialog-status") {{lastStatusElectrical}}
+              span.card-dialog-title Current Status:
+              span.card-dialog-status {{lastStatusElectrical}}
             section(v-else)
-              span(class="card-dialog-title") No Application Found
+              span.card-dialog-title No Application Found
 
         section(v-else)
-          div.dialog-status-display.full-width.column.justify-center.content-center.items-center
-            span(class="card-dialog-status") Checking Data
-            span(class="card-dialog-third") Please Wait
+          div.dialog-status-display
+            span.card-dialog-status Checking Data
+            span.card-dialog-third Please Wait
 
-  q-dialog(class="dialog2" full-width v-model="dialog2" position="top")
-    q-card(class="card-dialog2")
-      div(class="button-group column items-center text-center")
-        span(class="card-dialog-title") Current Building Status
-        span(class="card-dialog-status") {{lastStatusBuilding}}
+  q-dialogdialog2(full-width v-model="dialog2" position="top")
+    q-card.card-dialog2
+      div.button-group.column.items-center.text-center
+        span.card-dialog-title Current Building Status
+        span.card-dialog-status {{lastStatusBuilding}}
 
-  q-dialog(class="dialog2" full-width v-model="dialog3" position="top")
-    q-card(class="card-dialog2")
-      div(class="button-group column items-center text-center")
-        span(class="card-dialog-title") Current Occupancy Status
-        span(class="card-dialog-status") {{lastStatusOccupancy}}
+  q-dialog.dialog2(full-width v-model="dialog3" position="top")
+    q-card.card-dialog2
+      div.button-group.column.tems-center.text-center
+        span.card-dialog-title Current Occupancy Status
+        span.card-dialog-status {{lastStatusOccupancy}}
 
-  q-dialog(class="dialog2" full-width v-model="dialog4" position="top")
-    q-card(class="card-dialog2")
-      div(class="button-group column items-center text-center")
-        span(class="card-dialog-title") Current Electrical Status
-        span(class="card-dialog-status") {{lastStatusElectrical}}
+  q-dialog.dialog2(full-width v-model="dialog4" position="top")
+    q-card.card-dialog2
+      div.button-group.column.items-center.text-center
+        span.card-dialog-title Current Electrical Status
+        span.card-dialog-status {{lastStatusElectrical}}
 </template>
 
 <script>
@@ -568,19 +568,28 @@ const gotoHome = () => {
 
 .dialog
   width: 100vw
-  // height: 100vh
+  height: 100vh
 
 .dialog2
   width: 100vw
 
 .card-dialog
-  background-color: $darktext
+  // background-color: $darktext
   color: #FFFFFF
   font-family: 'Roboto'
   font-weight: bold
   width: 100vw
   height: 150%
   opacity: 0.9
+  display: flex
+  flex-direction: column
+  flex-wrap: wrap
+  justify-content: center
+  align-items: center
+  align-content: flex-start
+  backdrop-filter: blur(16px) saturate(180%)
+  background-color: rgba(34, 51, 69, 0.75)
+  border: 1px solid $darktext
 
 .card-dialog2
   background-color: $button
