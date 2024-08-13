@@ -3,10 +3,10 @@
 q-page.page(padding)
   section(v-if="$q.screen.width <= 767")
     section.page-title-group.left
-      span.page-title Found for
-      span.page-searchvalue {{_searchvalue.getValue.toUpperCase()}}
-      span.secondary-title.number {{_tabledata.getTable.result.length}}
-      span.secondary-title.sentence {{sentence}}
+      span.page-title.flex.flex-center Found for
+      span.page-searchvalue.flex.flex-center {{_searchvalue.getValue.toUpperCase()}}
+      span.secondary-title.number.flex.flex-center {{dTableData.result.length}}
+      span.secondary-title.sentence.flex.flex-center {{sentence}}
       q-input.searchbar(rounded outlined v-model="specific" placeholder="Filter List" bg-color="white")
         template(v-slot:prepend)
           q-icon(name="search")
@@ -17,7 +17,7 @@ q-page.page(padding)
       section(v-if="dTableData.result.length > 0")
         div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-align(v-for="(item, index) in dTableData.result" :key="data")
           span.table-data-mobile-date {{item.toUpperCase()}}
-          span.table-data-mobile-status {{dTabledata.result2[index].toUpperCase()}}
+          span.table-data-mobile-status {{dTableData.result2[index].toUpperCase()}}
           q-btn.table-button-mobile(rounded @click="getName(dTableData.result3[index], dTableData.result4[index])") Check
 
   section.page-pc(v-else)
@@ -74,7 +74,7 @@ q-page.page(padding)
     //-             q-btn.table-button(rounded @click="getName(dTableData.result3[index], dTableData.result4[index])") Check
 
 
-  q-dialog.dialog(full-height v-model="dialog" position="left")
+  q-dialog.dialog(v-if="$q.screen.width <= 767" full-height v-model="dialog" position="top")
     q-card.card-dialog
       q-card-section
         section(v-if="searchComplete")
@@ -131,7 +131,64 @@ q-page.page(padding)
             span.card-dialog-status Checking Data
             span.card-dialog-third Please Wait
 
-  q-dialogdialog2(full-width v-model="dialog2" position="top")
+  q-dialog.dialog(v-else full-height v-model="dialog" position="left")
+    q-card.card-dialog
+      q-card-section
+        section(v-if="searchComplete")
+          div.dialog-status-display.full-width.column.justify-center.content-center.items-center(v-if="idCount === 0")
+            span.card-dialog-status No Application Found
+            span.card-dialog-third for
+            br
+            section.full-width.column.justify-center.content-center.items-center(v-if="selectedFirstName !== 'empty'")
+              span.card-dialog-third Lastname:
+              span.card-dialog-secondary {{selectedLastName}}
+              span.card-dialog-third Firstname:
+              span.card-dialog-secondary {{selectedFirstName}}
+            section.full-width.column.justify-center.content-center.items-center(v-else)
+              span.card-dialog-third Company Name:
+              span.card-dialog-status {{selectedLastName}}
+
+          div.full-width.column.justify-center.items-center.content-center(v-else-if="idCount > 1" )
+            span.card-dialog-title Current Status
+
+            div.dialog-title-group
+              span.card-dialog-title.standard-font Please select
+              span.card-dialog-title.standard-font which application
+              span.card-dialog-title.standard-font you want to check
+
+            div.button-group
+              q-btn.card-dialog-button(v-if="receivingid > 0" rounded size="lg" @click="openDialog2") Building
+              q-btn.card-dialog-button(v-if="occupancyid > 0" rounded size="lg" @click="openDialog3") Occupancy
+              q-btn.card-dialog-button(v-if="electricalid > 0" rounded size="lg" @click="openDialog4") Electrical
+
+          div(v-else)
+            section(v-if="receivingid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
+              span.card-dialog-title Building Application Number:
+              span.card-dialog-status {{applicationNo}}
+              br
+              span.card-dialog-title Current Status:
+              span.card-dialog-status {{lastStatusBuilding}}
+            section(v-else-if="occupancyid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
+              span.card-dialog-title Occupancy Application Number:
+              span.card-dialog-status {{applicationNo}}
+              br
+              span.card-dialog-title Current Status:
+              span.card-dialog-status {{lastStatusOccupancy}}
+            section(v-else-if="electricalid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
+              span.card-dialog-title Electrical Application Number:
+              span.card-dialog-status {{applicationNo}}
+              br
+              span.card-dialog-title Current Status:
+              span.card-dialog-status {{lastStatusElectrical}}
+            section(v-else)
+              span.card-dialog-title No Application Found
+
+        section(v-else)
+          div.dialog-status-display
+            span.card-dialog-status Checking Data
+            span.card-dialog-third Please Wait
+
+  q-dialog.dialog2(full-width v-model="dialog2" position="left")
     q-card.card-dialog2
       div.button-group.column.items-center.text-center
         span.card-dialog-title Current Building Status
@@ -568,7 +625,7 @@ const gotoHome = () => {
 
 .dialog
   width: 100vw
-  height: 100vh
+  // height: 100vh
 
 .dialog2
   width: 100vw
