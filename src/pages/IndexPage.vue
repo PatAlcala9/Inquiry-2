@@ -539,6 +539,10 @@ const runCommand = async () => {
       //   }
       //   this.currentpage = 'permit'
       //   this.$router.push('permit', () => {})
+
+    } else if (searched.value.toString().substring(0, 7) === printCommand) {
+      console.log('print')
+
     } else if (commands.includes(searched.value)) {
       gotoHelp()
     } else {
