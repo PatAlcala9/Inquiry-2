@@ -46,11 +46,11 @@ const updatePage = (page) => {
   router.push(page)
 }
 
-const checkMobile = () => {
-  console.log(screenWidth.value)
-  // if (screenWidth.value <= 767) return true
-  // else return false
-}
+// const checkMobile = () => {
+//   console.log(screenWidth.value)
+//   // if (screenWidth.value <= 767) return true
+//   // else return false
+// }
 
 ;(async () => {
   if (checkMobile()) gotoHome()

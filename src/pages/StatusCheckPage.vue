@@ -1,7 +1,7 @@
 <template lang="pug">
 
 q-page.page(padding)
-  section(v-if="$q.screen.width <= 899")
+  section(v-if="$q.screen.width <= 767")
     section.page-title-group.left
       div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
         span.page-label Application Number:
@@ -114,25 +114,7 @@ let tableData = ref(_tabledata.getTable)
 let latestStatus = ref(_lateststatus.getValue)
 let ready = ref(null)
 
-const statusList = [
-  'RECEIVING',
-  'FOR RE-ROUTING',
-  'FOR ASSESSMENT',
-  'FOR ORDER OF PAYMENT APPROVAL',
-  'FOR ORDER OF PAYMENT PRINT',
-  'ORDER OF PAYMENT RELEASED',
-  'OUT FOR COMPLIANCE',
-  'RECIEVE FOR COMPLIANCE',
-  'FOR BUILDING OFFICIAL APPROVAL',
-  'FOR RELEASE OF PERMIT',
-  'PERMIT ALREADY RELEASE',
-]
-const rephrasedStatusList = {
-  RECEIVING: 'APPLICATION RECEIVED',
-  'FOR RE-ROUTING': 'TO BE RE-ROUTE',
-  'FOR ASSESSMENT': 'ON GOING ASSESSMENT',
-  'FOR ORDER OF PAYMENT APPROVAL': 'ON GOING APPROVAL OF ',
-}
+
 
 const gotoHome = () => {
   // controller.abort()
@@ -149,12 +131,12 @@ const updatePage = (page) => {
   router.push(page)
 }
 
-const replaceArray = (array, newArray) => {
-  return array.map((item) => newArray[item] || item)
+const loadCurrentPage = () => {
+  router.push(_currentpage.getValue)
 }
 
 ;(async () => {
-  await replaceArray(statusList, rephrasedStatusList)
+  // loadCurrentPage()
 })()
 </script>
 
@@ -268,12 +250,14 @@ label
 .button-back-area
   padding-top: 2rem
 
+.page-label
+  opacity: 0.8
 // @media screen and (min-width: 400px)
 //   .button
 //     margin: 2rem
 //     width: 90%
 
-@media screen and (min-width: 1023px)
+@media screen and (min-width: 768px)
   .page-pc
     display: grid
     grid-template-columns: 0.6fr 0.4fr

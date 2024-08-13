@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { hash } from 'assets/js/OCBO'
 
 export const useNumberCode = defineStore('numbercode', {
   state: () => ({
@@ -12,7 +13,7 @@ export const useNumberCode = defineStore('numbercode', {
 
   actions: {
     updateValue(code) {
-      this.value = code.toString()
+      this.value = hash(code.toString())
     },
     clear() {
       this.value = '0'

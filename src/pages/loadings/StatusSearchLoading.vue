@@ -168,8 +168,8 @@ const getOwnerDetails = async () => {
         // const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
         const ffname = fname.length === 0 ? lname : fname + ' ' + (mname.length === 0 ? lname : mname + '. ' + lname)
         let addressresult = `${block.length === 0 ? '' : `BLOCK ${block} `}${lot.length === 0 ? '' : `LOT ${lot} `}${address}`
-        addressresult = addressresult.replace(/(\s|^)BLK/g, "BLOCK")
-        addressresult = addressresult.replace(/(\s|^)LT/g, "LOT")
+        addressresult = addressresult.replace(/(\s|^)BLK/g, 'BLOCK')
+        addressresult = addressresult.replace(/(\s|^)LT/g, 'LOT')
 
         _ownername.updateValue(ffname || '--No Name found on Database--')
         _owneraddress.updateValue(addressresult || '--No Address found on Database--')
@@ -216,6 +216,32 @@ const getTableData = async () => {
     _lateststatus.updateValue(null)
   }
 }
+
+const statusList = [
+  'RECEIVING',
+  'FOR RE-ROUTING',
+  'FOR ASSESSMENT',
+  'FOR ORDER OF PAYMENT APPROVAL',
+  'FOR ORDER OF PAYMENT PRINT',
+  // 'ORDER OF PAYMENT RELEASED',
+  // 'OUT FOR COMPLIANCE',
+  // 'RECIEVE FOR COMPLIANCE',
+  // 'FOR BUILDING OFFICIAL APPROVAL',
+  // 'FOR RELEASE OF PERMIT',
+  // 'PERMIT ALREADY RELEASE',
+]
+const rephrasedStatusList = {
+  RECEIVING: 'APPLICATION RECEIVED',
+  'FOR RE-ROUTING': 'RE-ROUTED',
+  'FOR ASSESSMENT': 'FOR CALCULATION OF FEES',
+  'FOR ORDER OF PAYMENT APPROVAL': 'ON GOING ORDER OF PAYMENT APPROVAL',
+  'FOR ORDER OF PAYMENT PRINT': 'ORDER OF PAYMENT READY FOR PRINT',
+}
+
+const replaceArray = (array, newArray) => {
+  return array.map((item) => newArray[item] || item)
+}
+
 
 const updatePage = (page) => {
   _currentpage.updateValue(page)

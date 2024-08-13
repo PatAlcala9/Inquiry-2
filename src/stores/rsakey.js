@@ -3,8 +3,8 @@ import { defineStore } from 'pinia'
 export const useRSAKey = defineStore('rsakey', {
   state: () => {
     return {
-      private: '',
-      public: ',
+      private: ``,
+      public: ``,
     }
   },
 

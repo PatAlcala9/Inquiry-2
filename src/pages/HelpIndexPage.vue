@@ -8,13 +8,14 @@ q-page.page(padding)
 
     q-img.image
 
-    div.flex.flex-center(v-if="screenWidth < 1280")
+    div.flex.flex-center(v-if="screenWidth < 767")
       q-list.list(bordered separator)
         //- q-item.list-item(clickable v-ripple @click="gotoApplicationHelp")
         //-   q-item-section.list-section Application Status
         LinkButton(text="Application Status" @click="gotoApplicationHelp")
+        LinkButton(text="Fees Details" @click="gotoFeesHelp")
+        LinkButton(text="Permit Details" @click="gotoPermitHelp")
         LinkButton(text="Name Record" @click="gotoNameHelp")
-        LinkButton(text="Approved Permits")
         //- q-item.list-item(clickable v-ripple @click="gotoNameHelp")
         //-   q-item-section Name Record
         //- q-item.list-item(clickable v-ripple)
@@ -40,8 +41,9 @@ q-page.page(padding)
           //- q-item.list-item(clickable v-ripple @click="gotoApplicationHelp")
           //-   q-item-section Application Status
         LinkButton.one(text="Application Status" @click="gotoApplicationHelp")
-        LinkButton.two(text="Name Record" @click="gotoNameHelp")
-        LinkButton.three(text="Approved Permits")
+        LinkButton.two(text="Fees Details" @click="gotoFeesHelp")
+        LinkButton.three(text="Permit Details" @click="gotoPermitHelp")
+        LinkButton.four(text="Name Record" @click="gotoNameHelp")
         //-   q-list.list(bordered separator)
         //-     q-item.list-item(clickable v-ripple @click="gotoNameHelp")
         //-       q-item-section Name Record
@@ -52,23 +54,22 @@ q-page.page(padding)
         //-   //- q-list.list(bordered separator)
         //-   //-   q-item.list-item(clickable v-ripple)
         //-   //-     q-item-section
-        div.advance-area
-
-          span(v-if="pin === false" @click="openPin").advance--text Open Advance Commands
-          section(v-else)
-            PinCodeBar(v-if="_numbercode.check === false")
-            div.grid2(v-else)
-              LinkButton.one2(glow="true" text="Generate List" )
-              LinkButton.two2(glow="true" text="Create Chart" )
-              LinkButton.three2(glow="true" text="Print PDF")
+      div.flex.flex-center.advance-area
+        span(v-if="pin === false" @click="openPin").advance--text Open Advance Commands
+        section(v-else)
+          PinCodeBar(v-if="_numbercode.check === false")
+          div.grid2(v-else)
+            LinkButton.one2(glow="true" text="Generate List" )
+            LinkButton.two2(glow="true" text="Create Chart" )
+            LinkButton.three2(glow="true" text="Print PDF")
         //-
 
         //- div.flex.flex-center.advance-area
         //-   span.advance--text(@click="vv = vv === 1 ? 0 : 1") Open Advance Commands
         //-   PinCodeBar(v-if="vv === 0")
 
-        div.flex.flex-center.button-area
-          q-btn.button-back2(rounded label="Home" @click="gotoHome")
+      div.flex.flex-center.button-area
+        q-btn.button-back2(rounded label="Home" @click="gotoHome")
 
     //- div(v-if="$q.screen.width <= 500")
     //-   div.full-width.column.no-wrap.justify-center.items-center.content-start
@@ -113,14 +114,26 @@ const _numbercode = useNumberCode()
 let screenWidth = ref(null)
 
 const gotoApplicationHelp = () => {
-  _currentpage.updateValue('helpapplication')
-  router.push('helpapplication')
+  // _currentpage.updateValue('helpapplication')
+  // router.push('helpapplication')
+  updatePage('helpapplication')
+}
+
+const gotoFeesHelp = () => {
+  // _currentpage.updateValue('helpfees')
+  // router.push('helpfees')
+  updatePage('helpfees')
+}
+
+const gotoPermitHelp = () => {
+  // _currentpage.updateValue('helppermit')
+  // router.push('helppermit')
+  updatePage('helppermit')
 }
 
 const gotoNameHelp = () => {
   // _currentpage.updateValue('helpname')
   // router.push('helpname')
-  console.log(_numbercode.check)
 }
 
 const onResize = () => {
@@ -154,9 +167,9 @@ const openPin = () => {
   grid-auto-rows: 1fr
   gap: 0px 0px
   grid-template-columns: 1fr 1fr 1fr
-  grid-template-rows: 1fr 1fr 1fr
+  grid-template-rows: 1fr 1fr
   grid-auto-flow: row
-  grid-template-areas: "one two three" "advance-area advance-area advance-area" "button-area button-area button-area"
+  grid-template-areas: "one two three" ". four ."
   justify-content: center
   align-content: center
   justify-items: center
@@ -171,11 +184,20 @@ const openPin = () => {
 .three
   grid-area: three
 
+.four
+  grid-area: four
+
 .advance-area
-  grid-area: advance-area
+  // margin: 2rem 0 0 0
+//   // display: flex
+//   // flex-direction: column
+//   // flex-wrap: wrap
+//   // justify-content: flex-start
+//   // align-items: center
+//   // align-content: center
 
 .button-area
-  grid-area: button-area
+  // grid-area: button-area
   margin: 2rem 0 0 0
 
 .advance--text
@@ -260,7 +282,7 @@ const openPin = () => {
   background-size: contain
   border: 2px solid rgba(255, 255, 255, 0.4)
 
-@media screen and (min-width: 900px)
+@media screen and (min-width: 768px)
   .list
     width: 35rem
     font-size: 1.8rem
@@ -272,17 +294,6 @@ const openPin = () => {
     font-size: 2.8rem
     // padding: 2rem 0 0 0
 
-@media screen and (min-width: 1280px)
-  .list
-    font-family: 'Roboto'
-    font-weight: bold
-    width: 16rem
-    margin: 1.5rem
-
-  .list-item
-    font-size: 1rem
-    padding: 0 2rem
-
   .image
     background-image: url('../assets/images/main_page.webp')
     @supports (background-image: url('../assets/images/main_page.avif'))
@@ -293,4 +304,15 @@ const openPin = () => {
     background-repeat: no-repeat
     background-size: contain
     border: 2px solid rgba(255, 255, 255, 0.4)
+
+@media screen and (min-width: 1024px)
+  .list
+    font-family: 'Roboto'
+    font-weight: bold
+    width: 16rem
+    margin: 1.5rem
+
+  .list-item
+    font-size: 1rem
+    padding: 0 2rem
 </style>

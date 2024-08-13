@@ -1,0 +1,8 @@
+{
+  "ssg": {
+    "scripts": false,
+    "IDE": true,
+    "inlineCriticalCss": true,
+    "inlineCssFromSFC": false
+  }
+}

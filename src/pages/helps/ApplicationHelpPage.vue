@@ -3,36 +3,52 @@
 q-page.page(padding)
   q-resize-observer(@resize="onResize")
 
-  div.fit.column.wrap.justify-center.items-center.content-center(v-if="screenWidth <= 500")
+  div.fit.column.wrap.justify-center.items-center.content-center.text-center(v-if="screenWidth <= 500")
     span.main-title2.center-text Application Status Guide
 
     section.step.fit.column.wrap.justify-center.items-center.content-center
       span.details Type the Application either with a dash
       //- span.details-extra as demonstated below
-      img.image(src="../../assets/images/mobile/app-mobile1.webp" alt="application_search_image")
+      //- img.image(src="../../assets/images/mobile/app-mobile1.webp" alt="application_search_image")
+      picture
+        source(srcset="../../assets/images/mobile/app-mobile1.avif" type="image/avif")
+        img.image(src="../../assets/images/mobile/app-mobile1.webp" type="image/webp" alt="Application search image")
+
 
     section.step.fit.column.wrap.justify-center.items-center.content-center
       span.details Or without a dash
       //- span.details-extra as demonstated below
-      img.image(src="../../assets/images/mobile/app-mobile2.webp" alt="application_search_image")
+      picture
+        source(srcset="../../assets/images/mobile/app-mobile2.avif" type="image/avif")
+        img.image(src="../../assets/images/mobile/app-mobile2.webp" type="image/webp" alt="Application search image")
 
     section.step.fit.column.wrap.justify-center.items-center.content-center
       span.details Then, press Enter on your keypad
       span.details At selection menu, choose the "Track Application"
       //- span.details-extra as demonstated below
-      img.image(src="../../assets/images/mobile/app-mobile3.webp" alt="application_search_image")
+      picture
+        source(srcset="../../assets/images/mobile/app-mobile3.avif" type="image/avif")
+        img.image(src="../../assets/images/mobile/app-mobile3.webp" type="image/webp" alt="Application search image")
 
     section.step.fit.column.wrap.justify-center.items-center.content-center
       span.details Wait for the data to be finish downloading
       //- span.details-extra as seen below
-      img.image(src="../../assets/images/mobile/app-mobile4.webp" alt="application_search_image")
+      picture
+        source(srcset="../../assets/images/mobile/app-mobile4.avif" type="image/avif")
+        img.image(src="../../assets/images/mobile/app-mobile4.webp" type="image/webp" alt="Application search image")
 
     section.step.fit.column.wrap.justify-center.items-center.content-center
       span.details Details completely rendered
-      span.details-extra as seen below
-      img.image(src="../../assets/images/mobile/application_search_mobile4.jpg" alt="application_search_image")
+      //- span.details-extra as seen below
+      picture
+        source(srcset="../../assets/images/mobile/app-mobile5.avif" type="image/avif")
+        img.image(src="../../assets/images/mobile/app-mobile5.webp" type="image/webp" alt="Application search image")
+      br
+      picture
+        source(srcset="../../assets/images/mobile/app-mobile6.avif" type="image/avif")
+        img.image(src="../../assets/images/mobile/app-mobile6.webp" type="image/webp" alt="Application search image")
 
-    q-btn.button(rounded label="Back" @click="returnHome")
+    q-btn.button-back2(rounded label="Back" @click="returnHome")
 
   //- div.fit.column.wrap.justify-center.items-center.content-center(v-if="screenWidth > 500 && screenWidth <= 1000")
   //-   h3.main-title2.center-text Application Status Guide
@@ -108,15 +124,20 @@ q-page.page(padding)
             source(srcset="../../assets/images/pc/app4.avif" type="image/avif")
             img.image(src="../../assets/images/pc/app4.webp" type="image/webp" alt="Application search image")
 
-    section.step.fit.column.wrap.justify-center.items-center.content-center
-      span.details Once finish downloading, you can view the latest status of your application
-      //- span.details-extra as demonstated below
-      img.image(src="../../assets/images/pc/app5.webp" alt="application_search_image")
+    section.step
+      div.grid
+        div.grid-right
+          span.details Once finish downloading, you can view the latest status of your application
+        //- span.details-extra as demonstated below
+        div.grid-left
+          picture.fit.column.wrap.justify-center.items-center.content-center
+            source(srcset="../../assets/images/pc/app5.avif" type="image/avif")
+            img.image(src="../../assets/images/pc/app5.webp" type="image/webp" alt="Application search image")
 
-    section.step.fit.column.wrap.justify-center.items-center.content-center
-      span.details You can also view the history
-      //- span.details-extra as demonstated below
-      img.image(src="../../assets/images/pc/app6.webp" alt="application_search_image")
+    //- section.step.fit.column.wrap.justify-center.items-center.content-center
+    //-   span.details You can also view the history
+    //-   //- span.details-extra as demonstated below
+    //-   img.image(src="../../assets/images/pc/app6.webp" alt="application_search_image")
 
     q-btn.button-back2(rounded label="Back" @click="returnHome")
 
@@ -160,10 +181,8 @@ const loadCurrentPage = () => {
 
 <style lang="sass" scoped>
 .main-title2
-  font-family: 'Roboto'
-  font-weight: bold
-  font-size: 2rem
-  margin-bottom: 2rem
+  font-size: 1.6rem
+  margin: 2rem
 
 .step
   margin-bottom: 1.5rem
@@ -171,7 +190,7 @@ const loadCurrentPage = () => {
 .details
   font-family: "Roboto"
   color: $text
-  font-size: 1.2rem
+  font-size: 1rem
   margin: 0 0 1rem 0
 
 // .details-extra
@@ -179,8 +198,11 @@ const loadCurrentPage = () => {
 //   color: rgba(255, 213, 107, 0.9)
 
 .image
-  box-shadow: -12px 11px 16px -5px rgba(0, 0, 0, 0.45)
-  width: 60vw
+  // box-shadow: -12px 11px 16px -5px rgba(255, 255, 255, 0.45)
+  width: 55vw
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 10px rgba(0, 0, 0, 0.1)
+  border: 1px solid #263240
+  border-radius: 2rem
 
 .button
   width: 90%
@@ -195,6 +217,13 @@ const loadCurrentPage = () => {
   align-content: center
 
 @media screen and (min-width: 1023px)
+  .main-title2
+    font-size: 2rem
+    margin-bottom: 2rem
+
+  .details
+    font-size: 1.2rem
+
   .image
     width: 40%
 
@@ -224,6 +253,9 @@ const loadCurrentPage = () => {
     align-content: center
 
   .image
-    box-shadow: -12px 11px 16px -5px rgba(0, 0, 0, 0.45)
-    width: 50vw
+    // box-shadow: -12px 11px 16px -5px rgba(255, 255, 255, 0.45)
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 10px rgba(0, 0, 0, 0.1)
+    border: 1px solid #263240
+    border-radius: 2rem
+    width: 40vw
 </style>

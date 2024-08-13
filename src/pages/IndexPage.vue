@@ -7,7 +7,7 @@ q-page.page(padding)
       img.logo(src="../assets/ocbologo.webp" type="image/webp" alt="OCBO Logo")
     h1.main-title(@click="sample") OCBO Inquiry
 
-    q-input.searchbar(v-if="$q.screen.width <= 899" icon="search" outlined rounded v-model="searched" placeholder="Search Here" @keydown.enter="runCommand" bg-color="white" input-style="font-size: 1.2rem; color: #424f60")
+    q-input.searchbar(v-if="$q.screen.width <= 767" icon="search" outlined rounded v-model="searched" placeholder="Search Here" @keydown.enter="runCommand" bg-color="white" input-style="font-size: 1.2rem; color: #424f60")
       template(v-slot:prepend)
         q-icon(name="search")
     q-input.searchbar(v-else icon="search" outlined rounded v-model="searched" placeholder="Type Application Number or Name Here" @keydown.enter="runCommand" bg-color="white" input-style="font-size: 1.2rem; color: #424f60")
@@ -16,7 +16,7 @@ q-page.page(padding)
 
     //- q-btn.button(rounded label="Search" @click="runCommand")
 
-    div(v-if="$q.screen.width <= 899")
+    div(v-if="$q.screen.width <= 767")
       div.flex.flex-center
         span(class="help-info") {{helpInfo}}
           span.bold(@click="gotoHelp") here
@@ -57,6 +57,7 @@ import { JSEncrypt } from 'jsencrypt'
 import { encrypt, decrypt } from 'assets/js/shield'
 
 import PinCodeBar from 'components/PinCodeBar.vue'
+import { hash } from 'src/assets/js/OCBO'
 
 const router = useRouter()
 const _currentpage = useCurrentPage()
@@ -718,7 +719,7 @@ h1, h2
   font-size: 0.9rem
 
 //**Tablet */
-@media screen and (min-width: 1023px)
+@media screen and (min-width: 768px)
   .logo
     width: 11rem
     height: auto
@@ -729,7 +730,7 @@ h1, h2
     border-radius: 15px
 
   .main-title
-    font-size: 4.6rem
+    font-size: 3.8rem
 
   .right-side
     width: 550px
@@ -792,7 +793,9 @@ h1, h2
   .footer--copyright
     font-size: 0.8rem
 
-@media screen and (min-width: 1400px)
+@media screen and (min-width: 1440px)
+  .main-title
+    font-size: 4.6rem
   .footer
     content: ""
     position: absolute

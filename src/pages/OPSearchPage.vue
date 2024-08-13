@@ -1,7 +1,7 @@
 <template lang="pug">
 
 q-page.page(padding)
-  section(v-if="$q.screen.width <= 899")
+  section(v-if="$q.screen.width <= 767")
     section.page-title-group
       div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
         span.page-label Application Number:
@@ -14,7 +14,7 @@ q-page.page(padding)
         span.page-info {{_owneraddress.getValue}}
       div.address-group.full-width.column.no-wrap.justify-center.items-center.content-start
         span.page-label Total Amount:
-        span.page-info
+        span.page-info--primary
           b &#8369; &#0032;
           a {{Intl.NumberFormat('en-US').format(getTotal()) }}
 
@@ -197,18 +197,16 @@ label
   padding: 2rem
 
 .table-data-mobile-desc
-  // font-family: 'LexendBold'
-  // font-size: 1rem
   font-family: 'Roboto'
   font-weight: bold
   font-size: 0.9rem
-  color: $text
-  background-color: $button
+  color: $darktext
+  background-color: $yellow
   width: 60%
   padding: 0.3rem
   text-align: center
   border-radius: 1rem
-  border: 1px solid $button2
+  border: 1px solid $darktext
 
 .table-data-mobile-amount
   // font-family: 'LexendBold'
@@ -231,9 +229,9 @@ label
   margin-top: 2rem
 
 .page-label
-    opacity: 0.5
+  opacity: 0.8
 
-@media screen and (min-width: 1023px)
+@media screen and (min-width: 768px)
   .page-pc
     display: grid
     grid-template-columns: 0.6fr 0.4fr
@@ -306,4 +304,7 @@ label
     padding: 10rem
     font-size: 1.4rem
     text-align: center
+
+  .page-label
+    opacity: 0.5
 </style>

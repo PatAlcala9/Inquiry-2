@@ -1,6 +1,6 @@
 import { boot } from 'quasar/wrappers'
 import axios from 'axios'
-import {encrypt} from 'assets/js/shield'
+import { encrypt } from 'assets/js/shield'
 
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;
@@ -9,27 +9,10 @@ import {encrypt} from 'assets/js/shield'
 // "export default () => {}" function below (which runs individually
 // for each client)
 
-// DEVELOPMENT
-// const api = axios.create({
-//   baseURL: '',
-//   headers: {
-//     'OCBO-ShieldConnection': encrypt('inquiry'),
-//   },
-// })
-
-//SERVER
-// const api = axios.create({
-//   baseURL: 'http://127.0.0.1:8081/',
-//   headers: {
-//     'OCBO-ShieldConnection': encrypt('inquiry'),
-//   },
-// })
-
-// SERVER
 const api = axios.create({
-  baseURL: 'http://192.168.7.160:8080/inquiry-server/',
+  baseURL: process.env.BACKEND_DEV,
   headers: {
-    'OCBO-ShieldConnection': encrypt('inquiry'),
+    'OCBO-ShieldConnection': encrypt(process.env.SHIELD),
   }
 })
 

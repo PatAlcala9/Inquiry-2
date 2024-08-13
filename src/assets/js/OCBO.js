@@ -1,5 +1,5 @@
 const GenerateMD5 = require('md5')
-const Cryptr = require('cryptr')
+// const Cryptr = require('cryptr')
 // const hasher = require('hashr')
 
 // const currentDate = new Date()
@@ -7,7 +7,7 @@ const Cryptr = require('cryptr')
 // const month = currentDate.getMonth()
 // const year = currentDate.getFullYear()
 
-export function encrypt (Password) {
+export function hash (Password) {
   const md51 = GenerateMD5(Password)
   let vowelCount = 0
   let cosnCount = 0
@@ -37,7 +37,7 @@ export function encrypt (Password) {
   return p2 + p21 + p4 + p23
 }
 
-export function Compare (dbPassword, strPassword) {
+export function compareHashes (dbPassword, strPassword) {
   let result
   const estrPassword = GenerateMD5(strPassword)
 
@@ -52,35 +52,35 @@ export function Compare (dbPassword, strPassword) {
 // const key = 'ÑªÙïjX¼n?¢+VB0ö'
 // const iv = 'V.ø!»þâ['
 
-export function encryptAES (network) {
-  const key = new Cryptr('ÑªÙïjX¼n?¢+VB0ö')
-  // this.series++
-  // const key = new Cryptr(hasher.hash(day + '-' + month + '-' + year, 'binary'))
-  const part1 = key.encrypt(network)
+// export function encryptAES (network) {
+//   const key = new Cryptr('ÑªÙïjX¼n?¢+VB0ö')
+//   // this.series++
+//   // const key = new Cryptr(hasher.hash(day + '-' + month + '-' + year, 'binary'))
+//   const part1 = key.encrypt(network)
 
-  function reverseString (str) {
-    let stringRev = ''
-    for (let i = 0; i < str.length; i++) {
-      stringRev = str[i] + stringRev
-    }
-    return stringRev
-  }
+//   function reverseString (str) {
+//     let stringRev = ''
+//     for (let i = 0; i < str.length; i++) {
+//       stringRev = str[i] + stringRev
+//     }
+//     return stringRev
+//   }
 
-  const reversed = reverseString(network)
-  const part2 = key.encrypt(reversed)
-  const combine = part2.substring(0, 4) + part1.substring(0, 4) + part2.substring(4, 8) + part1.substring(4)
+//   const reversed = reverseString(network)
+//   const part2 = key.encrypt(reversed)
+//   const combine = part2.substring(0, 4) + part1.substring(0, 4) + part2.substring(4, 8) + part1.substring(4)
 
-  return combine
-}
+//   return combine
+// }
 
-export function decryptAES (network) {
-  const key = new Cryptr('ÑªÙïjX¼n?¢+VB0ö')
-  // const key = new Cryptr(hasher.hash(day + '-' + month + '-' + year, 'binary'))
+// export function decryptAES (network) {
+//   const key = new Cryptr('ÑªÙïjX¼n?¢+VB0ö')
+//   // const key = new Cryptr(hasher.hash(day + '-' + month + '-' + year, 'binary'))
 
-  const part1 = network.toString().substring(4, 8)
-  const part2 = network.toString().substring(12)
-  const combine = part1 + part2
-  const decrypted = key.decrypt(combine)
+//   const part1 = network.toString().substring(4, 8)
+//   const part2 = network.toString().substring(12)
+//   const combine = part1 + part2
+//   const decrypted = key.decrypt(combine)
 
-  return decrypted
-}
+//   return decrypted
+// }

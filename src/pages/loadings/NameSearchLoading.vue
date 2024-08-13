@@ -1,13 +1,13 @@
 <template lang="pug">
 
 q-page.flex.flex-center.page(padding)
-  div.full-width.column.items-center.justify-center.text-center
+  div.loading-screen
     span.loading-title Searching for the name
     span.loading-value {{_searchvalue.getValue.toUpperCase()}}
     span.loading-division Please wait
 
     div.fit.column.items-center
-      q-btn.button(rounded @click="gotoHome") Cancel
+      q-btn.button-back2(rounded @click="gotoHome") Cancel
 
 </template>
 
@@ -102,14 +102,14 @@ const loadCurrentPage = () => {
 .button:click
   background-color: red
 
-.loading-title
-  font-size: 2.3rem
-  font-family: 'Roboto'
-  font-weight: bold
+// .loading-title
+//   font-size: 2.3rem
+//   font-family: 'Roboto'
+//   font-weight: bold
 
-.loading-type
-  font-size: 1.8rem
-  font-family: 'Roboto'
+// .loading-type
+//   font-size: 1.8rem
+//   font-family: 'Roboto'
 
 .loading-division
   font-size: 2rem
