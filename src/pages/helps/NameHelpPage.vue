@@ -109,8 +109,8 @@ const _currentpage = useCurrentPage()
 let screenWidth = ref(null)
 
 const returnHome = () => {
-  _currentpage.value = '/'
-  router.push('/', () => {})
+  _currentpage.updateValue('helpindex')
+  router.push('helpindex', () => {})
 }
 
 const onResize = () => {

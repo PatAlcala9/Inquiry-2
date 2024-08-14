@@ -166,8 +166,8 @@ const onResize = () => {
 }
 
 const returnHome = () => {
-  _currentpage.value = '/'
-  router.push('/', () => {})
+  _currentpage.updateValue('helpindex')
+  router.push('helpindex', () => {})
 }
 
 const loadCurrentPage = () => {
