@@ -11,6 +11,9 @@ importers:
       '@quasar/extras':
         specifier: ^1.16.11
         version: 1.16.11
+      '@rabbit-company/xchacha20':
+        specifier: ^2.2.0
+        version: 2.2.0(typescript@4.9.4)
       aes-js:
         specifier: ^3.1.2
         version: 3.1.2
@@ -883,6 +886,11 @@ packages:
   '@quasar/ssr-helpers@2.2.2':
     resolution: {integrity: sha512-lz30NGk5Qrl8YCOg3kg+1cqI+muFNs6cAokJcNjx4sR9MKsB25hgL8kUkWXhknPqfWHWnOujB1LR6AefdVaTUQ==}
     engines: {node: '>= 12.22.1'}
+
+  '@rabbit-company/xchacha20@2.2.0':
+    resolution: {integrity: sha512-sXxnk+pLVHrIb64XWTW+N8524PsPL9Uheq5Puc/wpuT+wb3yLlNMx36MNAh1e5yqbLNRD1zedM0w3uQlCAdrKw==}
+    peerDependencies:
+      typescript: ^5.0.0
 
   '@rollup/pluginutils@5.1.0':
     resolution: {integrity: sha512-XTIWOPPcpvyKI6L1NHo0lFlCyznUEyPmPY1mc3KpPVDYulHSTvyeLNVW00QTLIAFNhR3kYnJTQHeGqU4M3n09g==}
@@ -5672,6 +5680,10 @@ snapshots:
   '@quasar/ssr-helpers@2.2.2':
     dependencies:
       serialize-javascript: 6.0.2
+
+  '@rabbit-company/xchacha20@2.2.0(typescript@4.9.4)':
+    dependencies:
+      typescript: 4.9.4
 
   '@rollup/pluginutils@5.1.0(rollup@2.77.3)':
     dependencies:
