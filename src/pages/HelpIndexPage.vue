@@ -155,7 +155,10 @@ const updatePage = (page) => {
 const loadCurrentPage = () => {
   const currentPage = quasar.sessionStorage.hasItem(hash('page')) ? quasar.sessionStorage.getItem(hash('page')) : '/'
   const decryptedPage = decryptXCha(currentPage)
-  router.push(decryptedPage)
+
+  if (!decryptedPage.includes('help')) {
+    router.push(decryptedPage)
+  }
 }
 
 const openPin = () => {
