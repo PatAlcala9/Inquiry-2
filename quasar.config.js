@@ -166,7 +166,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ['AddressbarColor', 'Dialog', 'Notify'],
+      plugins: ['AddressbarColor', 'Dialog', 'Notify', 'SessionStorage'],
     },
 
     // animations: 'all', // --- includes all animations
