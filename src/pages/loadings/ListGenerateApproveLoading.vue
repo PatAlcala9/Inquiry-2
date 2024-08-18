@@ -40,10 +40,12 @@ import { useListYear } from 'stores/listyear'
 import { useListDate } from 'stores/listdate'
 import { useErrorMessage } from 'stores/errormessage'
 import { ref } from 'vue'
-import { date } from 'quasar'
-import { encrypt, decrypt } from 'src/assets/js/shield'
+import { date, useQuasar } from 'quasar'
+import { encrypt, decrypt, encryptXCha, decryptXCha } from 'assets/js/shield'
+import { hash } from 'assets/js/OCBO'
 
 const router = useRouter()
+const quasar = useQuasar()
 const _listtype = useListType()
 const _division = useDivision()
 const _currentpage = useCurrentPage()
@@ -269,12 +271,14 @@ const gotoHome = () => {
 }
 
 const updatePage = (page) => {
-  _currentpage.updateValue(page)
+  quasar.sessionStorage.setItem(hash('page'), encryptXCha(page))
   router.push(page)
 }
 
 const loadCurrentPage = () => {
-  router.push(_currentpage.getValue)
+  const currentPage = quasar.sessionStorage.hasItem(hash('page')) ? quasar.sessionStorage.getItem(hash('page')) : '/'
+  const decryptedPage = decryptXCha(currentPage)
+  router.push(decryptedPage)
 }
 
 ;(async () => {

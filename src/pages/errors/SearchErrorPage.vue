@@ -28,13 +28,17 @@ export default {
 <script setup>
 import { useErrorMessage } from 'stores/errormessage'
 // import { useErrorSubMessage } from 'stores/errorsubmessage'
-import { useCurrentPage } from 'stores/currentpage'
+// import { useCurrentPage } from 'stores/currentpage'
 import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
+import { encryptXCha, decryptXCha } from 'assets/js/shield'
+import { hash } from 'assets/js/OCBO'
 
 const router = useRouter()
+const quasar = useQuasar()
 const _errormessage = useErrorMessage()
 // const _errorsubmessage = useErrorSubMessage
-const _currentpage = useCurrentPage()
+// const _currentpage = useCurrentPage()
 
 const gotoHome = () => {
   // controller.abort()
@@ -47,9 +51,19 @@ const gotoHelp = () => {
 }
 
 const updatePage = (page) => {
-  _currentpage.updateValue(page)
+  quasar.sessionStorage.setItem(hash('page'), encryptXCha(page))
   router.push(page)
 }
+
+const loadCurrentPage = () => {
+  const currentPage = quasar.sessionStorage.hasItem(hash('page')) ? quasar.sessionStorage.getItem(hash('page')) : '/'
+  const decryptedPage = decryptXCha(currentPage)
+  router.push(decryptedPage)
+}
+
+;(() => {
+  loadCurrentPage()
+})()
 </script>
 
 <style lang="sass" scoped>

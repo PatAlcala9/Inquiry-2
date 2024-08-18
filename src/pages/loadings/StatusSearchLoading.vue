@@ -41,7 +41,8 @@ import { useLatestStatus } from 'stores/lateststatus'
 import { useErrorMessage } from 'stores/errormessage'
 import { useCurrentPage } from 'stores/currentpage'
 import { useTableData } from 'stores/tabledata'
-import { encrypt, decrypt } from 'assets/js/shield'
+import { encrypt, decrypt, encryptXCha, decryptXCha } from 'assets/js/shield'
+import { hash } from 'src/assets/js/OCBO'
 
 const router = useRouter()
 const quasar = useQuasar()
@@ -244,18 +245,20 @@ const replaceArray = (array, newArray) => {
 
 
 const updatePage = (page) => {
-  _currentpage.updateValue(page)
+  quasar.sessionStorage.setItem(hash('page'), encryptXCha(page))
   router.push(page)
+}
+
+const loadCurrentPage = () => {
+  const currentPage = quasar.sessionStorage.hasItem(hash('page')) ? quasar.sessionStorage.getItem(hash('page')) : '/'
+  const decryptedPage = decryptXCha(currentPage)
+  router.push(decryptedPage)
 }
 
 const gotoHome = () => {
   controller.abort()
   updatePage('/')
   // window.location.reload()
-}
-
-const loadCurrentPage = () => {
-  router.push(_currentpage.getValue)
 }
 
 ;(async () => {

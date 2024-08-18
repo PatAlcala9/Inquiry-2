@@ -102,6 +102,8 @@ import { useCurrentPage } from 'stores/currentpage'
 import { useNumberCode } from 'stores/numbercode'
 import LinkButton from 'components/LinkButton.vue'
 import PinCodeBar from 'components/PinCodeBar.vue'
+import { encryptXCha, decryptXCha } from 'assets/js/shield'
+import { hash } from 'assets/js/OCBO'
 
 let pin = ref(false)
 let picAccepted = ref(false)
@@ -146,13 +148,23 @@ const gotoHome = () => {
 }
 
 const updatePage = (page) => {
-  _currentpage.updateValue(page)
+  quasar.sessionStorage.setItem(hash('page'), encryptXCha(page))
   router.push(page)
+}
+
+const loadCurrentPage = () => {
+  const currentPage = quasar.sessionStorage.hasItem(hash('page')) ? quasar.sessionStorage.getItem(hash('page')) : '/'
+  const decryptedPage = decryptXCha(currentPage)
+  router.push(decryptedPage)
 }
 
 const openPin = () => {
   pin.value = true
 }
+
+;(() => {
+  loadCurrentPage()
+})()
 </script>
 
 <style lang="sass" scoped>

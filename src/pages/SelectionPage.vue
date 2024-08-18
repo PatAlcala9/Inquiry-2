@@ -40,7 +40,7 @@ import { ref } from 'vue'
 import { useSearchValue } from 'stores/searchvalue'
 import { useDivision } from 'stores/division'
 import { useRouter } from 'vue-router'
-// import { useQuasar } from 'quasar'
+import { useQuasar } from 'quasar'
 import { useListType } from 'stores/listtype'
 // import { useApplicationNo } from 'stores/applicationno'
 // import { useTableData } from 'stores/tabledata'
@@ -49,11 +49,14 @@ import { useListType } from 'stores/listtype'
 // import { useLatestStatus } from 'stores/lateststatus'
 // import { useErrorMessage } from 'stores/errormessage'
 import { useCurrentPage } from 'stores/currentpage'
+import { encryptXCha, decryptXCha } from 'src/assets/js/shield'
+import { hash } from 'src/assets/js/OCBO'
+
 import LinkButton from 'components/LinkButton.vue'
 import BackButton from 'components/BackButton.vue'
 
 const router = useRouter()
-// const quasar = useQuasar()
+const quasar = useQuasar()
 const _currentpage = useCurrentPage()
 const _searchvalue = useSearchValue()
 const _division = useDivision()
@@ -95,12 +98,14 @@ const gotoPermitSearch = () => {
 }
 
 const updatePage = (page) => {
-  _currentpage.updateValue(page)
+  quasar.sessionStorage.setItem(hash('page'), encryptXCha(page))
   router.push(page)
 }
 
 const loadCurrentPage = () => {
-  router.push(_currentpage.getValue)
+  const currentPage = quasar.sessionStorage.hasItem(hash('page')) ? quasar.sessionStorage.getItem(hash('page')) : '/'
+  const decryptedPage = decryptXCha(currentPage)
+  router.push(decryptedPage)
 }
 
 const gotoHome = () => {
@@ -110,8 +115,8 @@ const gotoHome = () => {
 }
 
 ;(async () => {
-  await detectDivision()
   loadCurrentPage()
+  await detectDivision()
 })()
 </script>
 

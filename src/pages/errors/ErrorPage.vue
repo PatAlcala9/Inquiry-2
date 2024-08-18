@@ -25,14 +25,24 @@ import { useErrorMessage } from 'stores/errormessage'
 // import { useErrorSubMessage } from 'stores/errorsubmessage'
 import { useCurrentPage } from 'stores/currentpage'
 import { useRouter } from 'vue-router'
+import { encryptXCha, decryptXCha } from 'src/assets/js/shield'
+import { hash } from 'src/assets/js/OCBO'
+import { useQuasar } from 'quasar'
 
 const router = useRouter()
+const quasar = useQuasar()
 const _errormessage = useErrorMessage()
 const _currentpage = useCurrentPage()
 
 const updatePage = (page) => {
-  _currentpage.updateValue(page)
+  quasar.sessionStorage.setItem(hash('page'), encryptXCha(page))
   router.push(page)
+}
+
+const loadCurrentPage = () => {
+  const currentPage = quasar.sessionStorage.hasItem(hash('page')) ? quasar.sessionStorage.getItem(hash('page')) : '/'
+  const decryptedPage = decryptXCha(currentPage)
+  router.push(decryptedPage)
 }
 
 const gotoHome = () => {
@@ -40,6 +50,10 @@ const gotoHome = () => {
   updatePage('/')
   // window.location.reload()
 }
+
+;(() => {
+  loadCurrentPage()
+})()
 </script>
 
 <style lang="sass" scoped>

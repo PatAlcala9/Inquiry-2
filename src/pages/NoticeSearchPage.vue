@@ -107,10 +107,11 @@ import { useTableData } from 'stores/tabledata'
 import { useOwnername } from 'stores/ownername'
 import { useOwneraddress } from 'stores/owneraddress'
 import { useCurrentPage } from 'stores/currentpage'
-import { date } from 'quasar'
-import { decrypt } from 'assets/js/shield'
+import { date, useQuasar } from 'quasar'
+import { decrypt, encryptXCha, decryptXCha } from 'assets/js/shield'
 
 const router = useRouter()
+const quasar = useQuasar()
 const _applicationno = useApplicationNo()
 const _tabledata = useTableData()
 const _ownername = useOwnername()
@@ -121,8 +122,14 @@ const _division = useDivision()
 // const controller = new AbortController()
 
 const updatePage = (page) => {
-  _currentpage.updateValue(page)
+  quasar.sessionStorage.setItem(hash('page'), encryptXCha(page))
   router.push(page)
+}
+
+const loadCurrentPage = () => {
+  const currentPage = quasar.sessionStorage.hasItem(hash('page')) ? quasar.sessionStorage.getItem(hash('page')) : '/'
+  const decryptedPage = decryptXCha(currentPage)
+  router.push(decryptedPage)
 }
 
 const gotoHome = () => {
@@ -134,6 +141,10 @@ const gotoHome = () => {
 const gotoSelection = () => {
   updatePage('selection')
 }
+
+;(() => {
+  loadCurrentPage()
+})()
 </script>
 
 <style lang="sass" scoped>
