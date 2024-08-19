@@ -645,6 +645,7 @@ h1, h2
 
 .main-title
   font-size: 2.3rem
+  letter-spacing: 0.1rem
 
 // .mobile-message
 //   font-size: 1rem
