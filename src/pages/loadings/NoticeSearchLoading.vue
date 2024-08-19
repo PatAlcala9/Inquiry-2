@@ -30,6 +30,7 @@ export default {
 import { ref } from 'vue'
 import { api } from 'boot/axios'
 import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
 import { useCurrentPage } from 'stores/currentpage'
 import { useListType } from 'stores/listtype'
 import { useSearchValue } from 'stores/searchvalue'
@@ -38,9 +39,11 @@ import { useApplicationNo } from 'stores/applicationno'
 import { useTableData } from 'stores/tabledata'
 import { useOwnername } from 'stores/ownername'
 import { useOwneraddress } from 'stores/owneraddress'
-import { encrypt, decrypt } from 'assets/js/shield'
+import { encrypt, decrypt, encryptXCha, decryptXCha } from 'assets/js/shield'
+import { hash } from 'src/assets/js/OCBO'
 
 const router = useRouter()
+const quasar = useQuasar()
 const _listtype = useListType()
 const _currentpage = useCurrentPage()
 const _searchvalue = useSearchValue()
@@ -164,12 +167,14 @@ const gotoHome = () => {
 }
 
 const updatePage = (page) => {
-  _currentpage.updateValue(page)
+  quasar.sessionStorage.setItem(hash('page'), encryptXCha(page))
   router.push(page)
 }
 
 const loadCurrentPage = () => {
-  router.push(_currentpage.getValue)
+  const currentPage = quasar.sessionStorage.hasItem(hash('page')) ? quasar.sessionStorage.getItem(hash('page')) : '/'
+  const decryptedPage = decryptXCha(currentPage)
+  router.push(decryptedPage)
 }
 
 ;(async () => {

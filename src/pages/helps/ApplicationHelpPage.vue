@@ -3,7 +3,7 @@
 q-page.page(padding)
   q-resize-observer(@resize="onResize")
 
-  div.fit.column.wrap.justify-center.items-center.content-center.text-center(v-if="screenWidth <= 500")
+  div.fit.column.wrap.justify-center.items-center.content-center.text-center(v-if="screenWidth <= 767")
     span.main-title2.center-text Application Status Guide
 
     section.step.fit.column.wrap.justify-center.items-center.content-center
@@ -75,7 +75,7 @@ q-page.page(padding)
 
   //-   q-btn.button(rounded label="Back" @click="returnHome")
 
-  div.fit.column.wrap.justify-center.items-center.content-center(v-if="screenWidth > 767")
+  div.fit.column.wrap.justify-center.items-center.content-center(v-else)
     h3.main-title2.center-text Application Status Guide
 
     section.step
@@ -166,17 +166,17 @@ const onResize = () => {
 }
 
 const returnHome = () => {
-  _currentpage.value = '/'
-  router.push('/', () => {})
+  // _currentpage.updateValue('helpindex')
+  router.push('helpindex', () => {})
 }
 
-const loadCurrentPage = () => {
-  router.push(_currentpage.getValue)
-}
+// const loadCurrentPage = () => {
+//   router.push(_currentpage.getValue)
+// }
 
-;(async () => {
-  loadCurrentPage()
-})()
+// ;(async () => {
+//   loadCurrentPage()
+// })()
 </script>
 
 <style lang="sass" scoped>

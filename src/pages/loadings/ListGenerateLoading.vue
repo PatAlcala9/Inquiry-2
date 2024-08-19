@@ -28,14 +28,18 @@ export default {
 <script setup>
 import { ref } from 'vue'
 import { api } from 'boot/axios'
-// import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
 // import { useListSubject } from 'stores/listsubject'
 import { useListType } from 'stores/listtype'
 import { useSearchValue } from 'stores/searchvalue'
 import { useDivision } from 'stores/division'
 import { useCurrentPage } from 'stores/currentpage'
+import { encryptXCha, decryptXCha } from 'assets/js/shield'
+import { hash } from 'assets/js/OCBO'
 
 const router = useRouter()
+const quasar = useQuasar()
 // const _listsubject = useListSubject
 const _listtype = useListType()
 const _searchvalue = useSearchValue()
@@ -45,18 +49,20 @@ const _currentpage = useCurrentPage()
 // const controller = new AbortController()
 
 const gotoHome = () => {
-  // controller.abort()
-  // updatePage('/')
-  window.location.reload()
+  controller.abort()
+  updatePage('/')
+  // window.location.reload()
 }
 
 const updatePage = (page) => {
-  _currentpage.updateValue(page)
+  quasar.sessionStorage.setItem(hash('page'), encryptXCha(page))
   router.push(page)
 }
 
 const loadCurrentPage = () => {
-  router.push(_currentpage.getValue)
+  const currentPage = quasar.sessionStorage.hasItem(hash('page')) ? quasar.sessionStorage.getItem(hash('page')) : '/'
+  const decryptedPage = decryptXCha(currentPage)
+  router.push(decryptedPage)
 }
 
 ;(() => {

@@ -52,14 +52,15 @@ import { useDivision } from 'stores/division'
 import { useListYear } from 'stores/listyear'
 import { useListDate } from 'stores/listdate'
 import { useRSAKey } from 'stores/rsakey'
-import { date } from 'quasar'
-import { JSEncrypt } from 'jsencrypt'
-import { encrypt, decrypt } from 'assets/js/shield'
+import { date, useQuasar } from 'quasar'
+// import { JSEncrypt } from 'jsencrypt'
+import { encrypt, decrypt, encryptXCha, decryptXCha } from 'assets/js/shield'
 
 import PinCodeBar from 'components/PinCodeBar.vue'
-import { hash } from 'src/assets/js/OCBO'
+import { hash } from 'assets/js/OCBO'
 
 const router = useRouter()
+const quasar = useQuasar()
 const _currentpage = useCurrentPage()
 const _applicationno = useApplicationNo()
 const _searchvalue = useSearchValue()
@@ -539,14 +540,12 @@ const runCommand = async () => {
       //   }
       //   this.currentpage = 'permit'
       //   this.$router.push('permit', () => {})
-
     } else if (searched.value.toString().substring(0, 7) === printCommand) {
       console.log('print')
-
     } else if (commands.includes(searched.value)) {
       gotoHelp()
     } else {
-      if (searched.value.length < 5 || searched.value.toUpperCase() === 'DAVAO') {
+      if (searched.value.length < 5 || searched.value.toUpperCase() === 'DAVAO' || searched.value.toUpperCase() === 'DAVAO CITY') {
         _errormessage.updateMessage('Invalid Search')
         _errormessage.updateSubMessage('Please be more specific in your search')
 
@@ -562,7 +561,9 @@ const runCommand = async () => {
 }
 
 const loadCurrentPage = () => {
-  router.push(_currentpage.getValue)
+  const currentPage = quasar.sessionStorage.hasItem(hash('page')) ? quasar.sessionStorage.getItem(hash('page')) : '/'
+  const decryptedPage = decryptXCha(currentPage)
+  router.push(decryptedPage)
 }
 
 const gotoHelp = () => {
@@ -580,7 +581,7 @@ const reset = () => {
 // }
 
 const updatePage = (page) => {
-  _currentpage.updateValue(page)
+  quasar.sessionStorage.setItem(hash('page'), encryptXCha(page))
   router.push(page)
 }
 
@@ -627,20 +628,20 @@ h1, h2
     box-shadow: 4px 8px 41px 2px rgba(66, 79, 96, 0.87)
     overflow: hidden
 
-.sample
-  letter-spacing: 22px !important
+// .sample
+//   letter-spacing: 22px !important
 
 .button
   display: none
 
-.table
-  margin-bottom: 2em
-  margin-top: 0.5em
-  width: 90vw
-  opacity: 0.9
+// .table
+//   margin-bottom: 2em
+//   margin-top: 0.5em
+//   width: 90vw
+//   opacity: 0.9
 
-.mobile
-  display: inline
+// .mobile
+//   display: inline
 
 .main-title
   font-size: 2.3rem
@@ -649,12 +650,12 @@ h1, h2
 //   font-size: 1rem
 //   font-family: 'Poppins', sans-serif
 
-.mobile-title
-  margin-top: 2rem
-  font-size: 1rem
-  font-family: 'Roboto'
-  font-weight: bold
-  opacity: 0.9
+// .mobile-title
+//   margin-top: 2rem
+//   font-size: 1rem
+//   font-family: 'Roboto'
+//   font-weight: bold
+//   opacity: 0.9
 
 .list
   margin-bottom: 3rem

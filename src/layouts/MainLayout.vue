@@ -1,7 +1,7 @@
 <template lang="pug">
 
-q-layout(view="lHh Lpr lFf" class="background")
-  q-header(elevated class="menu")
+q-layout.background(view="lHh Lpr lFf")
+  //- q-header.menu(elevated)
 
   q-page-container()
     router-view
@@ -9,8 +9,8 @@ q-layout(view="lHh Lpr lFf" class="background")
 </template>
 
 <style lang="sass" scoped>
-.menu
-  background-color: $orange-5
+// .menu
+//   background-color: $orange-5
 
 label
   padding-left: 15px

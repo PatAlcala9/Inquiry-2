@@ -63,8 +63,9 @@ import { useRouter } from 'vue-router'
 import { useCurrentPage } from 'stores/currentpage'
 import { useTableData } from 'stores/tabledata'
 import { useListDate } from 'stores/listdate'
-import { date } from 'quasar'
-import { decrypt } from 'assets/js/shield'
+import { date, useQuasar } from 'quasar'
+import { decrypt, encryptXCha, decryptXCha } from 'assets/js/shield'
+import { hash } from 'assets/js/OCBO'
 import { useListStatus } from 'stores/liststatus'
 import { useListSumPaid } from 'stores/listsumpaid'
 import { useDivision } from 'stores/division'
@@ -72,6 +73,7 @@ import { useListOPCount } from 'stores/listopcount'
 import { useListPermitCount } from 'stores/listpermitcount'
 
 const router = useRouter()
+const quasar = useQuasar()
 
 const _currentpage = useCurrentPage()
 const _tabledata = useTableData()
@@ -129,8 +131,14 @@ const countOPReleased = async () => {
 }
 
 const updatePage = (page) => {
-  _currentpage.updateValue(page)
+  quasar.sessionStorage.setItem(hash('page'), encryptXCha(page))
   router.push(page)
+}
+
+const loadCurrentPage = () => {
+  const currentPage = quasar.sessionStorage.hasItem(hash('page')) ? quasar.sessionStorage.getItem(hash('page')) : '/'
+  const decryptedPage = decryptXCha(currentPage)
+  router.push(decryptedPage)
 }
 
 const gotoHome = () => {
@@ -138,6 +146,7 @@ const gotoHome = () => {
 }
 
 ;(async () => {
+  loadCurrentPage()
   await countOPReleased()
 })()
 </script>

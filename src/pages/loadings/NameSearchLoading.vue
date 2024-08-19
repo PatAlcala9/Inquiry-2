@@ -28,11 +28,14 @@ import { ref } from 'vue'
 import { api } from 'boot/axios'
 import { useSearchValue } from 'stores/searchvalue'
 import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
 import { useTableData } from 'stores/tabledata'
 import { useCurrentPage } from 'stores/currentpage'
-import { encrypt, decrypt } from 'src/assets/js/shield'
+import { encrypt, decrypt, encryptXCha, decryptXCha } from 'assets/js/shield'
+import { hash } from 'assets/js/OCBO'
 
 const router = useRouter()
+const quasar = useQuasar()
 const _searchvalue = useSearchValue()
 const _tabledata = useTableData()
 const _currentpage = useCurrentPage()
@@ -77,18 +80,20 @@ const gotoNextPage = async () => {
 }
 
 const updatePage = (page) => {
-  _currentpage.updateValue(page)
+  quasar.sessionStorage.setItem(hash('page'), encryptXCha(page))
   router.push(page)
+}
+
+const loadCurrentPage = () => {
+  const currentPage = quasar.sessionStorage.hasItem(hash('page')) ? quasar.sessionStorage.getItem(hash('page')) : '/'
+  const decryptedPage = decryptXCha(currentPage)
+  router.push(decryptedPage)
 }
 
 const gotoHome = () => {
   controller.abort()
   updatePage('/')
   // window.location.reload()
-}
-
-const loadCurrentPage = () => {
-  router.push(_currentpage.getValue)
 }
 
 ;(async () => {

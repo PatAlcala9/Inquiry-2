@@ -21,32 +21,47 @@ export default {
 <script setup>
 import { useRouter } from 'vue-router'
 import { useCurrentPage } from 'stores/currentpage'
+import { encryptXCha, decryptXCha } from 'assets/js/shield'
+import { hash } from 'src/assets/js/OCBO'
+import { useQuasar } from 'quasar'
 
 const router = useRouter()
+const quasar = useQuasar()
 const _currentpage = useCurrentPage()
+
+const updatePage = (page) => {
+  quasar.sessionStorage.setItem(hash('page'), encryptXCha(page))
+  router.push(page)
+}
+
+const loadCurrentPage = () => {
+  const currentPage = quasar.sessionStorage.hasItem(hash('page')) ? quasar.sessionStorage.getItem(hash('page')) : '/'
+  const decryptedPage = decryptXCha(currentPage)
+  router.push(decryptedPage)
+}
 
 const gotoHome = () => {
   updatePage('/')
   // window.location.reload()
 }
 
-const updatePage = (page) => {
-  _currentpage.updateValue(page)
-  router.push(page)
-}
+;(() => {
+  loadCurrentPage()
+})()
 </script>
 
 <style lang="sass" scoped>
 .text
-  font-family: 'LexendBold'
-  font-size: 2.1rem
+  font-family: 'Roboto'
+  font-weight: bold
+  font-size: 1.8rem
   color: $text
   text-align: center
 
 .error-button
   margin-top: 2rem
 
-@media screen and (min-width: 900px)
+@media screen and (min-width: 768px)
   .text
-    font-size: 3rem
+    font-size: 2.8rem
 </style>

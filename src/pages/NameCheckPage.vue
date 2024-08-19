@@ -223,12 +223,15 @@ export default {
 import { ref, computed } from 'vue'
 import { api } from 'boot/axios'
 import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
 import { useTableData } from 'stores/tabledata'
 import { useCurrentPage } from 'stores/currentpage'
 import { useSearchValue } from 'stores/searchvalue'
-import { encrypt, decrypt } from 'assets/js/shield'
+import { encrypt, decrypt, encryptXCha, decryptXCha } from 'assets/js/shield'
+import { hash } from 'src/assets/js/OCBO'
 
 const router = useRouter()
+const quasar = useQuasar()
 const _tabledata = useTableData()
 const _currentpage = useCurrentPage()
 const _searchvalue = useSearchValue()
@@ -575,8 +578,14 @@ const getElectricalApplicationByID = async () => {
 // }
 
 const updatePage = (page) => {
-  _currentpage.updateValue(page)
+  quasar.sessionStorage.setItem(hash('page'), encryptXCha(page))
   router.push(page)
+}
+
+const loadCurrentPage = () => {
+  const currentPage = quasar.sessionStorage.hasItem(hash('page')) ? quasar.sessionStorage.getItem(hash('page')) : '/'
+  const decryptedPage = decryptXCha(currentPage)
+  router.push(decryptedPage)
 }
 
 const gotoHome = () => {
@@ -584,6 +593,10 @@ const gotoHome = () => {
   updatePage('/')
   // window.location.reload()
 }
+
+;(() => {
+  loadCurrentPage()
+})()
 </script>
 
 <style lang="sass" scoped>
