@@ -47,7 +47,7 @@ const controller = new AbortController()
 const getClientList = async () => {
   try {
     const encryptedEndpoint = encrypt('CheckConnection')
-    const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+    const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
 
     const connection = await api.get('/api/' + replacedEndpoint, { signal: controller.signal })
     const data = connection.data || null
@@ -55,9 +55,9 @@ const getClientList = async () => {
 
     if (result !== null) {
       const encryptedEndpoint = encrypt('GetListofClients')
-      const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+      const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
       const encryptedData = encrypt(_searchvalue.getValue.toUpperCase())
-      const replacedData = encryptedData.replaceAll('/', '~')
+      const replacedData = encryptedData.replace(/\//g, '~')
       const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
       const data = response.data.length !== 0 ? response.data : null
 

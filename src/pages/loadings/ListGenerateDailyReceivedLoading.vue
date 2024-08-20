@@ -74,7 +74,7 @@ const getDailyReceived = async () => {
   let data
 
   const encryptedEndpoint = encrypt('CheckConnection')
-  const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+  const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
   const connection = await api.get('/api/' + replacedEndpoint, { signal: controller.signal })
   const conn = connection.data || null
   const result = conn !== null ? decrypt(conn.result) : null
@@ -101,9 +101,9 @@ const getDailyReceived = async () => {
       encryptedEndpoint = null
     }
 
-    const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+    const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
     const encryptedData = encrypt(formattedDate)
-    const replacedData = encryptedData.replaceAll('/', '~')
+    const replacedData = encryptedData.replace(/\//g, '~')
     const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
     data = response.data.length !== 0 ? response.data : null
 
@@ -163,9 +163,9 @@ const getLatestStatus = async (application) => {
     encryptedEndpoint = null
   }
 
-  const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+  const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
   const encryptedData = encrypt(application)
-  const replacedData = encryptedData.replaceAll('/', '~')
+  const replacedData = encryptedData.replace(/\//g, '~')
   const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
   const data = response.data.length !== 0 ? response.data : null
 
@@ -184,9 +184,9 @@ const getSumPaid = async (application) => {
     encryptedEndpoint = null
   }
 
-  const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+  const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
   const encryptedData = encrypt(application)
-  const replacedData = encryptedData.replaceAll('/', '~')
+  const replacedData = encryptedData.replace(/\//g, '~')
   const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
   const data = response.data.length !== 0 ? response.data : null
   const result = decrypt(data.result)
