@@ -7,9 +7,9 @@ q-page.page(padding)
       span.page-searchvalue.flex.flex-center {{_searchvalue.getValue.toUpperCase()}}
       span.secondary-title.number.flex.flex-center {{dTableData.result.length}}
       span.secondary-title.sentence.flex.flex-center {{sentence}}
-      q-input.searchbar(rounded outlined v-model="specific" placeholder="Filter List" bg-color="white")
-        template(v-slot:prepend)
-          q-icon(name="search")
+      //- q-input.searchbar(rounded outlined v-model="specific" placeholder="Filter List" bg-color="white")
+      //-   template(v-slot:prepend)
+      //-     q-icon(name="search")
 
     div.full-width.column.wrap.justify-center.items-center.content-center
       q-btn.button-back2(rounded label="Back" @click="gotoHome")
@@ -24,9 +24,9 @@ q-page.page(padding)
     section.page-title-group.left
       div.application
         span.page-info--primary {{dTableData.result.length}} {{sentence}}
-        q-input.searchbar(rounded outlined v-model="specific" placeholder="Filter List" bg-color="white" )
-          template(v-slot:prepend)
-            q-icon(name="search")
+        //- q-input.searchbar(rounded outlined v-model="specific" placeholder="Filter List" bg-color="white" )
+        //-   template(v-slot:prepend)
+        //-     q-icon(name="search")
 
       section.details
         //- div.owner-group.full-width.column.wrap.justify-start.items-start.content-start
@@ -184,7 +184,7 @@ q-page.page(padding)
               span.card-dialog-title No Application Found
 
         section(v-else)
-          div.dialog-status-display
+          div.dialog-status-display.full-width.column.justify-content.content-center.items-center
             span.card-dialog-status Checking Data
             span.card-dialog-third Please Wait
 
@@ -260,6 +260,15 @@ const filteredData = computed(() => {
 
   if (!term) return dTableData.value
 
+  const filteredResult = dTableData.value.result.filter((item) => itemMatchesSearch(item, term))
+  const filteredIndices = filteredResult.map(item => dTableData.value.result.indexOf(item))
+
+  return {
+    result: filteredResult,
+    result2: filteredIndices.map(index => dTableData.value.result2[index]),
+    result3: filteredIndices.map(index => dTableData.value.result3[index]),
+    result4: filteredIndices.map(index => dTableData.value.result4[index]),
+  }
   // return {
   //   result: dTableData.value.result.filter((item) => itemMatchesSearch(item, term)),
   //   result2: dTableData.value.result2.filter((item) => itemMatchesSearch(item, term)),
@@ -267,16 +276,16 @@ const filteredData = computed(() => {
   //   result4: dTableData.value.result4.filter((item) => itemMatchesSearch(item, term)),
   // }
 
-  const filteredResult = dTableData.value.result.filter((item) => item.name.toUpperCase().includes(term))
+  // const filteredResult = dTableData.value.result.filter((item) => item.name.toUpperCase().includes(term))
 
-  const filteredIndices = filteredResult.map((item) => dTableData.value.result.indexOf(item))
+  // const filteredIndices = filteredResult.map((item) => dTableData.value.result.indexOf(item))
 
-  return {
-    result: filteredResult,
-    result2: dTableData.value.result2.filter((_, index) => filteredIndices.includes(index)),
-    result3: dTableData.value.result3.filter((_, index) => filteredIndices.includes(index)),
-    result4: dTableData.value.result4.filter((_, index) => filteredIndices.includes(index)),
-  }
+  // return {
+  //   result: filteredResult,
+  //   result2: dTableData.value.result2.filter((_, index) => filteredIndices.includes(index)),
+  //   result3: dTableData.value.result3.filter((_, index) => filteredIndices.includes(index)),
+  //   result4: dTableData.value.result4.filter((_, index) => filteredIndices.includes(index)),
+  // }
 })
 
 const itemMatchesSearch = (item, term) => {
