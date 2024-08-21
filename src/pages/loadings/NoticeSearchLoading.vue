@@ -61,16 +61,16 @@ const getProgressFlow = async () => {
 
     if (_division.isBuilding) {
       const encryptedEndpoint = encrypt('GetProgressFlowBuilding')
-      const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+      const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
       const encryptedData = encrypt(_searchvalue.getValue)
-      const replacedData = encryptedData.replaceAll('/', '~')
+      const replacedData = encryptedData.replace(/\//g, '~')
       const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
       data = response.data.length !== 0 ? response.data : null
     } else if (_division.isOccupancy) {
       const encryptedEndpoint = encrypt('GetProgressFlowOccupancy')
-      const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+      const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
       const encryptedData = encrypt(_searchvalue.getValue)
-      const replacedData = encryptedData.replaceAll('/', '~')
+      const replacedData = encryptedData.replace(/\//g, '~')
       const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
       data = response.data.length !== 0 ? response.data : null
     } else if (_division.isSignage) {
@@ -78,9 +78,9 @@ const getProgressFlow = async () => {
       data = null
     } else if (_division.isElectrical) {
       const encryptedEndpoint = encrypt('GetProgressFlowElectrical')
-      const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+      const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
       const encryptedData = encrypt(_searchvalue.getValue)
-      const replacedData = encryptedData.replaceAll('/', '~')
+      const replacedData = encryptedData.replace(/\//g, '~')
       const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
       data = response.data.length !== 0 ? response.data : null
     } else if (_division.isMechanical) {
@@ -115,16 +115,16 @@ const getOwnerDetails = async () => {
 
   try {
     const encryptedEndpoint = encrypt('CheckConnection')
-    const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+    const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
     const connection = await api.get('/api/' + replacedEndpoint, { signal: controller.signal })
     const connData = connection.data || null
     const result = connData !== null ? decrypt(connData.result) : null
 
     if (result !== null) {
       const encryptedEndpoint = encrypt('GetOwnerName' + method)
-      const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+      const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
       const encryptedData = encrypt(_searchvalue.getValue)
-      const replacedData = encryptedData.replaceAll('/', '~')
+      const replacedData = encryptedData.replace(/\//g, '~')
       const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
 
       const data = response.data.length !== 0 ? response.data : null

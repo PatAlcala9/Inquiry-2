@@ -69,9 +69,9 @@ const getApprovedPermitsDetails = async (id) => {
     encryptedEndpoint = encrypt('GetApprovedPermitsElectricalDetails')
   }
 
-  const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+  const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
   const encryptedData = encrypt(id)
-  const replacedData = encryptedData.replaceAll('/', '~')
+  const replacedData = encryptedData.replace(/\//g, '~')
   const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
   const data = response.data.length !== 0 ? response.data : null
 
@@ -174,7 +174,7 @@ const getDataofElectricalApplicationRelease = async (item) => {
 
 const getApplicationByDivision = async () => {
   const encryptedEndpoint = encrypt('CheckConnection')
-  const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
+  const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
   const connection = await api.get('/api/' + replacedEndpoint, { signal: controller.signal })
   const conn = connection.data || null
   const result = conn !== null ? decrypt(conn.result) : null
@@ -203,8 +203,8 @@ const getApplicationByDivision = async () => {
     }
     encryptedData = _listyear.isNull ? encrypt(_listdate.getValue) : encrypt(_listyear.getValue)
 
-    const replacedEndpoint = encryptedEndpoint.replaceAll('/', '~')
-    const replacedData = encryptedData.replaceAll('/', '~')
+    const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+    const replacedData = encryptedData.replace(/\//g, '~')
     const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
     const data = response.data.length !== 0 ? response.data : null
 
