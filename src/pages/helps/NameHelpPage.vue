@@ -15,56 +15,16 @@ q-page.page(padding)
     section.step.fit.column.wrap.justify-center.items-center.content-center
       span.details Wait for it to find the list
       picture
-        source(srcset="../../assets/images/mobile/name-mobile1.avif" type="image/avif")
-        img.image(src="../../assets/images/mobile/name-mobile1.webp" type="image/webp" alt="Name search image")
+        source(srcset="../../assets/images/mobile/name-mobile2.avif" type="image/avif")
+        img.image(src="../../assets/images/mobile/name-mobile2.webp" type="image/webp" alt="Name search image")
 
     section.step.fit.column.wrap.justify-center.items-center.content-center
       span.details Click the button to get Application Number
       picture
-        source(srcset="../../assets/images/mobile/name-mobile1.avif" type="image/avif")
-        img.image(src="../../assets/images/mobile/name-mobile1.webp" type="image/webp" alt="Name search image")
-        
-    //- section(class="step fit column wrap justify-center items-center content-center")
-    //-   span(class="details") Wait to finish downloading
-    //-   span(class="details-extra") as seen below
-    //-   img(class="image" src="../../assets/images/mobile/application_search_mobile2.jpg" alt="application_search_image")
-
-    //- section(class="step fit column wrap justify-center items-center content-center")
-    //-   span(class="details") Wait for List Generating to finish
-    //-   span(class="details-extra") as seen below
-    //-   img(class="image" src="../../assets/images/mobile/application_search_mobile3.jpg" alt="application_search_image")
-
-    //- section(class="step fit column wrap justify-center items-center content-center")
-    //-   span(class="details") Details completely rendered
-    //-   span(class="details-extra") as seen below
-    //-   img(class="image" src="../../assets/images/mobile/application_search_mobile4.jpg" alt="application_search_image")
+        source(srcset="../../assets/images/mobile/name-mobile3.avif" type="image/avif")
+        img.image(src="../../assets/images/mobile/name-mobile3.webp" type="image/webp" alt="Name search image")
 
     q-btn.button-back2(rounded label="Back" @click="returnHome")
-
-  //- div.fit.column.wrap.justify-center.items-center.content-center(v-else-if="screenWidth > 500 && screenWidth <= 1000" )
-  //-   //- h3(class="main-title2 center-text") Application Status Guide
-
-  //-   //- section(class="step fit column wrap justify-center items-center content-center")
-  //-   //-   span(class="details") Type the Application
-  //-   //-   span(class="details-extra") as demonstated below
-  //-   //-   img(class="image" srcset="../../assets/images/tablet/application_search_tablet.jpg" alt="application_search_image")
-
-  //-   //- section(class="step fit column wrap justify-center items-center content-center")
-  //-   //-   span(class="details") Wait to finish downloading
-  //-   //-   span(class="details-extra") as seen below
-  //-   //-   img(class="image" srcset="../../assets/images/tablet/application_search_tablet2.jpg" alt="application_search_image")
-
-  //-   //- section(class="step fit column wrap justify-center items-center content-center")
-  //-   //-   span(class="details") Wait for List Generating to finish
-  //-   //-   span(class="details-extra") as seen below
-  //-   //-   img(class="image" src="../../assets/images/tablet/application_search_tablet3.jpg" alt="application_search_image")
-
-  //-   //- section(class="step fit column wrap justify-center items-center content-center")
-  //-   //-   span(class="details") Details completely rendered
-  //-   //-   span(class="details-extra") as seen below
-  //-   //-   img(class="image" src="../../assets/images/tablet/application_search_tablet4.jpg" alt="application_search_image")
-
-  //-   q-btn.button(rounded label="Back" @click="returnHome")
 
   div.fit.column.wrap.justify-center.items-center.content-center(v-else)
     h3.main-title2.center-text Name Exist Guide
