@@ -5,8 +5,8 @@ div
     section.fit.column.wrap.justify-center.items-center.content-center
       input(type="text" v-model="applicationNo" placeholder="Application Number" @keypress.enter="activate" @keyup="formatInput").input
       button(@click="activate").button Generate
-    img(src="../assets/lungsod.png" alt="PNG Image" style="display: none" id="lungsod")
-    img(src="../assets/ocbologo2.png" alt="PNG Image" style="display: none" id="ocbo")
+    //- img(src="../assets/lungsod.png" alt="PNG Image" style="display: none" id="lungsod")
+    //- img(src="../assets/ocbologo2.png" alt="PNG Image" style="display: none" id="ocbo")
 
 q-dialog(v-model="alert" transition-show="slide-down" transition-hide="slide-up")
   q-card.alert
@@ -22,7 +22,7 @@ q-dialog(v-model="alert" transition-show="slide-down" transition-hide="slide-up"
 
 <script setup>
 import { jsPDF } from 'jspdf'
-import { date, useQuasar, QSpinnerOrbit } from 'quasar'
+// import { date, useQuasar, QSpinnerOrbit } from 'quasar'
 import { api } from 'boot/axios'
 // import { fullName } from 'src/js/functions'
 import { ref } from 'vue'
@@ -49,17 +49,17 @@ const permitType = 'BUILDING'
 let flocation = ''
 let occupancyType = ''
 
-const checkConnection = async () => {
-  try {
-    const response = await api.get('/api/CheckConnection')
-    const data = response.data.length !== 0 ? response.data : null
+// const checkConnection = async () => {
+//   try {
+//     const response = await api.get('/api/CheckConnection')
+//     const data = response.data.length !== 0 ? response.data : null
 
-    if (data !== null) return data.result === '1'
-    else return false
-  } catch {
-    return false
-  }
-}
+//     if (data !== null) return data.result === '1'
+//     else return false
+//   } catch {
+//     return false
+//   }
+// }
 
 const createPDF2 = async () => {
   const doc = new jsPDF({
@@ -78,7 +78,7 @@ const createPDF2 = async () => {
   const ocboLink = document.createElement('a')
   ocboLink.href = ocboSrc ?? ''
 
-  function getTextWidth(text: string, fontSize: number) {
+  function getTextWidth(text, fontSize) {
     doc.setFontSize(fontSize)
     return doc.getStringUnitWidth(text) * fontSize * 0.35
   }
@@ -853,7 +853,6 @@ const createPDF2 = async () => {
   doc.save('NTC(' + applicationNo.value + ')')
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const activate = async () => {
   quasar.loading.show({
     spinner: QSpinnerOrbit,

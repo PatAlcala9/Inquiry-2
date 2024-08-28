@@ -26,6 +26,8 @@ q-page.page(padding)
         span.help-info {{helpInfo}}
           span.bold(@click="gotoHelp") here
 
+      //- <PDFGen />
+
     //- PinCodeBar
 
     div.footer
@@ -55,6 +57,8 @@ import { useRSAKey } from 'stores/rsakey'
 import { date, useQuasar } from 'quasar'
 // import { JSEncrypt } from 'jsencrypt'
 import { encrypt, decrypt, encryptXCha, decryptXCha } from 'assets/js/shield'
+
+import PDFGen from 'components/PDFGen.vue'
 
 import PinCodeBar from 'components/PinCodeBar.vue'
 import { hash } from 'assets/js/OCBO'

@@ -157,21 +157,21 @@ label
 .address-group
   @extend .owner-group
 
-.owner-label
-  font-size: 1.2rem
-  color: #ffffff
+// .owner-label
+//   font-size: 1.2rem
+//   color: #ffffff
 
-.address-label
-  @extend .owner-label
+// .address-label
+//   @extend .owner-label
 
-.owner-name
-  font-family: 'LexendBold'
-  font-size: 1.6rem
-  margin-top: -1rem
-  text-align: center
+// .owner-name
+//   font-family: 'LexendBold'
+//   font-size: 1.6rem
+//   margin-top: -1rem
+//   text-align: center
 
-.address-name
-  @extend .owner-name
+// .address-name
+//   @extend .owner-name
 
 .table-title
   font-family: 'Roboto'

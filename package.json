@@ -15,7 +15,7 @@
     "ssg": "quasar ssg generate"
   },
   "dependencies": {
-    "@quasar/extras": "^1.16.11",
+    "@quasar/extras": "^1.16.12",
     "@rabbit-company/xchacha20": "^2.2.0",
     "aes-js": "^3.1.2",
     "axios": "^1.7.2",
@@ -26,13 +26,13 @@
     "jspdf-autotable": "^3.8.2",
     "md5": "^2.3.0",
     "pinia": "^2.1.7",
-    "quasar": "^2.16.5",
+    "quasar": "^2.16.9",
     "vue": "^3.4.31",
     "vue-router": "^4.4.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.24.7",
-    "@quasar/app-webpack": "^3.13.2",
+    "@quasar/app-webpack": "^3.13.4",
     "@vue/language-plugin-pug": "^2.0.26",
     "compression-webpack-plugin": "^11.1.0",
     "dotenv": "^16.4.5",

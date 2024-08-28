@@ -2,11 +2,11 @@
 
 q-page.page(padding)
   section(v-if="$q.screen.width <= 767")
-    section.page-title-group.left
-      span.page-title.flex.flex-center Found for
-      span.page-searchvalue.flex.flex-center {{_searchvalue.getValue.toUpperCase()}}
-      span.secondary-title.number.flex.flex-center {{dTableData.result.length}}
-      span.secondary-title.sentence.flex.flex-center {{sentence}}
+    section.page-title-group.full-width.column.wrap.justify-center.items-center.content-center.text-center
+      span.page-title Found for
+      span.page-searchvalue {{_searchvalue.getValue.toUpperCase()}}
+      span.secondary-title.number {{dTableData.result.length}}
+      span.secondary-title.sentence {{sentence}}
       //- q-input.searchbar(rounded outlined v-model="specific" placeholder="Filter List" bg-color="white")
       //-   template(v-slot:prepend)
       //-     q-icon(name="search")
@@ -629,14 +629,14 @@ const gotoHome = () => {
   font-family: 'Roboto', sans-serif
 
 .number
-  margin: -1rem
-  font-size: 4.5rem
+  margin: 0 0 -1rem 0
+  font-size: 4rem
 
 .sentence
   font-family: 'Roboto'
   // font-size: 2rem
   font-size: 1.6rem
-  padding-bottom: 1rem
+  padding: 0 0 1rem 0
 
 .button
   margin: 2rem
@@ -773,8 +773,8 @@ const gotoHome = () => {
 
 .table-button-mobile
   font-family: "Roboto"
-  background-color: #0f3057
-  color: white
+  background-color: $yellow
+  color: $darktext
   width: 8rem
   margin-bottom: 2rem
 
@@ -782,9 +782,16 @@ const gotoHome = () => {
   font-family: "Roboto"
   font-weight: bold
   font-size: 1.2rem
-  color: yellow
+  // color: yellow
+  // text-align: center
+  border: 1px solid $yellow
+  color: $yellow
+  background-color: transparent
+  // width: 60%
+  padding: 0.3rem 1rem
   text-align: center
-  border: 1px solid $button2
+  border-radius: 1rem
+  margin: 1rem 0 0 0
 
 .table-data-mobile-status
   font-family: "Roboto"
@@ -800,13 +807,14 @@ const gotoHome = () => {
 
 .page-title
   color: white
-  font-size: 1.8rem
+  font-size: 1.4rem
 
 .page-searchvalue
   font-family: "Roboto"
   font-weight: bold
   color: yellow
-  font-size: 2rem
+  font-size: 1.8rem
+  margin: 0 0 2rem 0
 
 .page-pc
   display: grid

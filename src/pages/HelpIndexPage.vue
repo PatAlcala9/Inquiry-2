@@ -136,6 +136,7 @@ const gotoPermitHelp = () => {
 const gotoNameHelp = () => {
   // _currentpage.updateValue('helpname')
   // router.push('helpname')
+  updatePage('helpname')
 }
 
 const onResize = () => {
