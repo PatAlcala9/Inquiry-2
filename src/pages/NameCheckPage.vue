@@ -148,40 +148,53 @@ q-page.page(padding)
               span.card-dialog-third Company Name:
               span.card-dialog-status {{selectedLastName}}
 
-          div.full-width.column.justify-center.items-center.content-center(v-else-if="idCount > 1" )
-            span.card-dialog-title Current Status
+          //- div.full-width.column.justify-center.items-center.content-center(v-else-if="idCount > 1" )
+          //-   //- span.card-dialog-title Current Status
 
-            div.dialog-title-group
-              span.card-dialog-title.standard-font Please select
-              span.card-dialog-title.standard-font which application
-              span.card-dialog-title.standard-font you want to check
+          //-   //- div.dialog-title-group
+          //-   //-   span.card-dialog-title.standard-font Please select
+          //-   //-   span.card-dialog-title.standard-font which application
+          //-   //-   span.card-dialog-title.standard-font you want to check
 
-            div.button-group
-              q-btn.card-dialog-button(v-if="receivingid > 0" rounded size="lg" @click="openDialog2") Building
-              q-btn.card-dialog-button(v-if="occupancyid > 0" rounded size="lg" @click="openDialog3") Occupancy
-              q-btn.card-dialog-button(v-if="electricalid > 0" rounded size="lg" @click="openDialog4") Electrical
+          //-   //- div.button-group
+          //-   //-   q-btn.card-dialog-button(v-if="receivingid > 0" rounded size="lg" @click="openDialog2") Building
+          //-   //-   q-btn.card-dialog-button(v-if="occupancyid > 0" rounded size="lg" @click="openDialog3") Occupancy
+          //-   //-   q-btn.card-dialog-button(v-if="electricalid > 0" rounded size="lg" @click="openDialog4") Electrical
+
+          //-   section(v-if="receivingid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
+          //-     span.card-dialog-title Building Application Number:
+          //-     span.card-dialog-status {{applicationNo}}
+          //-     q-btn.table-button-mobile(rounded @click="searchFromHere(applicationNo, 'Building')") Use this
+
+          //-   section(v-if="receivingid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
+          //-     span.card-dialog-title Occupancy Application Number:
+          //-     span.card-dialog-status {{applicationNo}}
+          //-     q-btn.table-button-mobile(rounded @click="searchFromHere(applicationNo, 'Building')") Use this
 
           div(v-else)
             section(v-if="receivingid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
               span.card-dialog-title Building Application Number:
               span.card-dialog-status {{applicationNo}}
+              q-btn.table-button-mobile(rounded @click="searchFromHere(applicationNo, 'Building')") Use this
               //- br
               //- span.card-dialog-title Current Status:
               //- span.card-dialog-status {{lastStatusBuilding}}
-            section(v-else-if="occupancyid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
+            section(v-if="occupancyid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
               span.card-dialog-title Occupancy Application Number:
-              span.card-dialog-status {{applicationNo}}
+              span.card-dialog-status {{applicationNoOccupancy}}
+              q-btn.table-button-mobile(rounded @click="searchFromHere(applicationNoOccupancy, 'Occupancy')") Use this
               //- br
               //- span.card-dialog-title Current Status:
               //- span.card-dialog-status {{lastStatusOccupancy}}
-            section(v-else-if="electricalid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
+            section(v-if="electricalid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
               span.card-dialog-title Electrical Application Number:
-              span.card-dialog-status {{applicationNo}}
+              span.card-dialog-status {{applicationNoElectrical}}
+              q-btn.table-button-mobile(rounded @click="searchFromHere(applicationNoElectrical, 'Electrical')") Use this
               //- br
               //- span.card-dialog-title Current Status:
               //- span.card-dialog-status {{lastStatusElectrical}}
-            section(v-else)
-              span.card-dialog-title No Application Found
+            //- section(v-else)
+            //-   span.card-dialog-title No Application Found
 
         section(v-else)
           div.dialog-status-display.full-width.column.justify-content.content-center.items-center
@@ -227,6 +240,7 @@ import { useQuasar } from 'quasar'
 import { useTableData } from 'stores/tabledata'
 import { useCurrentPage } from 'stores/currentpage'
 import { useSearchValue } from 'stores/searchvalue'
+import { useDivision } from 'stores/division'
 import { encrypt, decrypt, encryptXCha, decryptXCha } from 'assets/js/shield'
 import { hash } from 'src/assets/js/OCBO'
 
@@ -235,6 +249,7 @@ const quasar = useQuasar()
 const _tabledata = useTableData()
 const _currentpage = useCurrentPage()
 const _searchvalue = useSearchValue()
+const _division = useDivision()
 const dTableData = ref({
   result: _tabledata.getTable.result.map((item) => decrypt(item)),
   result2: _tabledata.getTable.result2.map((item) => decrypt(item)),
@@ -261,13 +276,13 @@ const filteredData = computed(() => {
   if (!term) return dTableData.value
 
   const filteredResult = dTableData.value.result.filter((item) => itemMatchesSearch(item, term))
-  const filteredIndices = filteredResult.map(item => dTableData.value.result.indexOf(item))
+  const filteredIndices = filteredResult.map((item) => dTableData.value.result.indexOf(item))
 
   return {
     result: filteredResult,
-    result2: filteredIndices.map(index => dTableData.value.result2[index]),
-    result3: filteredIndices.map(index => dTableData.value.result3[index]),
-    result4: filteredIndices.map(index => dTableData.value.result4[index]),
+    result2: filteredIndices.map((index) => dTableData.value.result2[index]),
+    result3: filteredIndices.map((index) => dTableData.value.result3[index]),
+    result4: filteredIndices.map((index) => dTableData.value.result4[index]),
   }
   // return {
   //   result: dTableData.value.result.filter((item) => itemMatchesSearch(item, term)),
@@ -325,19 +340,19 @@ const displayDetail = async () => {
 
   await searchByNameBuilding()
   if (receivingid.value > 0) {
-    await getLastStatusBuilding()
+    // await getLastStatusBuilding()
     await getApplicationByID()
   }
 
   await searchByNameOccupancy()
   if (occupancyid.value > 0) {
-    await getLastStatusOccupancy()
+    // await getLastStatusOccupancy()
     await getOccupancyApplicationByID()
   }
 
   await searchByNameElectrical()
   if (electricalid.value > 0) {
-    await getLastStatusElectrical()
+    // await getLastStatusElectrical()
     await getElectricalApplicationByID()
   }
 
@@ -513,6 +528,8 @@ const countIDs = async () => {
 }
 
 let applicationNo = ref(null)
+let applicationNoOccupancy = ref(null)
+let applicationNoElectrical = ref(null)
 
 const getApplicationByID = async () => {
   const encryptedEndpoint = encrypt('GetApplicationByID')
@@ -543,7 +560,7 @@ const getOccupancyApplicationByID = async () => {
   const data = response.data.length !== 0 ? response.data : null
 
   if (data !== null) {
-    applicationNo.value = decrypt(data.result) || null
+    applicationNoOccupancy.value = decrypt(data.result) || null
     // console.log(applicationNo.value)
   } else {
     // console.log('No record on Occupancy')
@@ -561,7 +578,7 @@ const getElectricalApplicationByID = async () => {
   const data = response.data.length !== 0 ? response.data : null
 
   if (data !== null) {
-    applicationNo.value = decrypt(data.result) || null
+    applicationNoElectrical.value = decrypt(data.result) || null
     // console.log(applicationNo.value)
   } else {
     // console.log('No record on Electrical')
@@ -601,6 +618,25 @@ const gotoHome = () => {
   // controller.abort();
   updatePage('/')
   // window.location.reload()
+}
+
+const searchFromHere = (application, division) => {
+  if (division === 'Building') {
+    _division.setBuilding()
+  } else if (division === 'Occupancy') {
+    _division.setOccupancy()
+  } else if (division === 'Electrical') {
+    _division.setElectrical()
+  } else if (division === 'Signage') {
+    _division.setSignage()
+  } else if (division === 'Mechanical') {
+    _division.setMechanical()
+  } else {
+    _division.setUndefined()
+  }
+  _searchvalue.updateValue(application)
+
+  updatePage('selection')
 }
 
 ;(() => {
@@ -654,7 +690,7 @@ const gotoHome = () => {
 
 .card-dialog
   // background-color: $darktext
-  color: #FFFFFF
+  color: $text
   font-family: 'Roboto'
   font-weight: bold
   width: 100vw
@@ -666,8 +702,9 @@ const gotoHome = () => {
   justify-content: center
   align-items: center
   align-content: center
-  backdrop-filter: blur(16px) saturate(180%)
   background-color: rgba(34, 51, 69, 0.75)
+  backdrop-filter: blur(16px) saturate(180%)
+  -webkit-backdrop-filter: blur(16px) saturate(180%)
   border: 1px solid $darktext
 
 .card-dialog2
