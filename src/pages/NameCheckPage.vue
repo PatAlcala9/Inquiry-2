@@ -165,21 +165,21 @@ q-page.page(padding)
             section(v-if="receivingid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
               span.card-dialog-title Building Application Number:
               span.card-dialog-status {{applicationNo}}
-              br
-              span.card-dialog-title Current Status:
-              span.card-dialog-status {{lastStatusBuilding}}
+              //- br
+              //- span.card-dialog-title Current Status:
+              //- span.card-dialog-status {{lastStatusBuilding}}
             section(v-else-if="occupancyid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
               span.card-dialog-title Occupancy Application Number:
               span.card-dialog-status {{applicationNo}}
-              br
-              span.card-dialog-title Current Status:
-              span.card-dialog-status {{lastStatusOccupancy}}
+              //- br
+              //- span.card-dialog-title Current Status:
+              //- span.card-dialog-status {{lastStatusOccupancy}}
             section(v-else-if="electricalid !== 0").dialog-status-display.full-width.column.justify-center.content-center.items-center
               span.card-dialog-title Electrical Application Number:
               span.card-dialog-status {{applicationNo}}
-              br
-              span.card-dialog-title Current Status:
-              span.card-dialog-status {{lastStatusElectrical}}
+              //- br
+              //- span.card-dialog-title Current Status:
+              //- span.card-dialog-status {{lastStatusElectrical}}
             section(v-else)
               span.card-dialog-title No Application Found
 
@@ -188,23 +188,23 @@ q-page.page(padding)
             span.card-dialog-status Checking Data
             span.card-dialog-third Please Wait
 
-  q-dialog.dialog2(full-width v-model="dialog2" position="left")
-    q-card.card-dialog2
-      div.button-group.column.items-center.text-center
-        span.card-dialog-title Current Building Status
-        span.card-dialog-status {{lastStatusBuilding}}
+  //- q-dialog.dialog2(full-width v-model="dialog2" position="left")
+  //-   q-card.card-dialog2
+  //-     div.button-group.column.items-center.text-center
+  //-       span.card-dialog-title Current Building Status
+  //-       span.card-dialog-status {{lastStatusBuilding}}
 
-  q-dialog.dialog2(full-width v-model="dialog3" position="top")
-    q-card.card-dialog2
-      div.button-group.column.tems-center.text-center
-        span.card-dialog-title Current Occupancy Status
-        span.card-dialog-status {{lastStatusOccupancy}}
+  //- q-dialog.dialog2(full-width v-model="dialog3" position="top")
+  //-   q-card.card-dialog2
+  //-     div.button-group.column.tems-center.text-center
+  //-       span.card-dialog-title Current Occupancy Status
+  //-       span.card-dialog-status {{lastStatusOccupancy}}
 
-  q-dialog.dialog2(full-width v-model="dialog4" position="top")
-    q-card.card-dialog2
-      div.button-group.column.items-center.text-center
-        span.card-dialog-title Current Electrical Status
-        span.card-dialog-status {{lastStatusElectrical}}
+  //- q-dialog.dialog2(full-width v-model="dialog4" position="top")
+  //-   q-card.card-dialog2
+  //-     div.button-group.column.items-center.text-center
+  //-       span.card-dialog-title Current Electrical Status
+  //-       span.card-dialog-status {{lastStatusElectrical}}
 </template>
 
 <script>
@@ -665,7 +665,7 @@ const gotoHome = () => {
   flex-wrap: wrap
   justify-content: center
   align-items: center
-  align-content: flex-start
+  align-content: center
   backdrop-filter: blur(16px) saturate(180%)
   background-color: rgba(34, 51, 69, 0.75)
   border: 1px solid $darktext
