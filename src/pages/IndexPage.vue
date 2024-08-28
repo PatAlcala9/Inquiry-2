@@ -27,7 +27,7 @@ q-page.page(padding)
           span.bold(@click="gotoHelp") here
 
       //- <PDFGen />
-
+    //- GraphGen
     //- PinCodeBar
 
     div.footer
@@ -59,6 +59,7 @@ import { date, useQuasar } from 'quasar'
 import { encrypt, decrypt, encryptXCha, decryptXCha } from 'assets/js/shield'
 
 import PDFGen from 'components/PDFGen.vue'
+import GraphGen from 'components/GraphGen.vue'
 
 import PinCodeBar from 'components/PinCodeBar.vue'
 import { hash } from 'assets/js/OCBO'
