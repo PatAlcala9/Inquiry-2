@@ -547,6 +547,8 @@ const runCommand = async () => {
       //   this.$router.push('permit', () => {})
     } else if (searched.value.toString().substring(0, 7) === printCommand) {
       console.log('print')
+    } else if (searched.value.toString().substring(0, 7) === graphCommand) {
+      updatePage('graph')
     } else if (commands.includes(searched.value)) {
       gotoHelp()
     } else {

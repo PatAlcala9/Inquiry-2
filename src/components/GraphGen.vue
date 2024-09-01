@@ -20,15 +20,17 @@ use([SVGRenderer, PieChart, TooltipComponent, LegendComponent])
 
 provide(THEME_KEY)
 
+const props = defineProps(['colorful'])
+
 const option = ref({
   // title: {
   //   text: 'Traffic Sources',
   //   left: 'center',
   // },
-  tooltip: {
-    trigger: 'item',
-    formatter: '{a} <br/>{b} : {c} ({d}%)',
-  },
+  // tooltip: {
+  //   trigger: 'item',
+  //   formatter: '{a} <br/>{b} : {c} ({d}%)',
+  // },
   // legend: {
   //   orient: 'vertical',
   //   left: 'left',
@@ -38,7 +40,7 @@ const option = ref({
     {
       name: 'Access From',
       type: 'pie',
-      radius: ['10%', '80%'],
+      radius: ['0%', '80%'],
       avoidLabelOverlap: false,
       data: [
         { value: 1048, name: 'Search Engine' },
@@ -52,8 +54,8 @@ const option = ref({
         shadowOffsetX: 0,
         shadowColor: 'rgba(0, 0, 0, 0.5)',
         borderRadius: 10,
-        borderColor: 'rgba(255, 255, 255, 0.5)',
-        borderWidth: 2,
+        borderColor: 'rgba(255, 255, 255, 0.2 )',
+        borderWidth: 1,
       },
       label: {
         fontFamily: 'Roboto',
@@ -62,13 +64,15 @@ const option = ref({
         fontWeight: 'bold',
         color: '#FFFFFF',
       },
+      color: ['#1E2F3E', '#26394F', '#2A3D54', '#1F3A4B', '#2C4158'],
       emphasis: {
         itemStyle: {
           borderColor: 'rgba(219, 179, 58, 0.5)',
-          borderWidth: 9,
+          borderWidth: 3,
         },
         label: {
           fontSize: 38,
+          color: 'rgba(219, 179, 58, 0.9)',
         },
       },
     },

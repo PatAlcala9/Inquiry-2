@@ -12,7 +12,7 @@
     "dev": "quasar dev",
     "debug": "quasar dev --debug",
     "build": "quasar build",
-    "ssg": "quasar ssg generate"
+    "ssr": "quasar build -m ssr"
   },
   "dependencies": {
     "@quasar/extras": "^1.16.12",
@@ -47,7 +47,6 @@
     "prettier": "^2.8.8",
     "pug": "^3.0.3",
     "pug-plain-loader": "^1.1.0",
-    "quasar-app-extension-ssg": "^5.2.0",
     "zlib": "^1.0.5"
   },
   "browserslist": [

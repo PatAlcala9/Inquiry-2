@@ -37,6 +37,7 @@ const routes = [
       { path: 'noconnection', component: () => import('pages/NoConnectionPage.vue') },
 
       { path: 'pincode', component: () => import('pages/PinCodePage.vue') },
+      { path: 'graph', component: () => import('pages/GraphPage.vue') },
     ],
   },
 
