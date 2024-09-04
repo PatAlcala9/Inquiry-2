@@ -1,10 +1,7 @@
 <template lang="pug">
 
-
-v-chart.chart.container(:option="option")
-//- picture
-//-   source(srcset="../assets/ocbologo.avif" type="image/avif")
-//-   img.logo(src="../assets/ocbologo.webp" type="image/webp" alt="OCBO Logo")
+div
+  v-chart.chart.container(:option="option")
 
 </template>
 
@@ -20,7 +17,7 @@ use([SVGRenderer, PieChart, TooltipComponent, LegendComponent])
 
 provide(THEME_KEY)
 
-const props = defineProps(['colorful'])
+// const props = defineProps(['colorful'])
 
 const option = ref({
   // title: {
@@ -47,7 +44,12 @@ const option = ref({
         { value: 735, name: 'Direct' },
         { value: 580, name: 'Email' },
         { value: 484, name: 'Union Ads' },
-        { value: 300, name: 'Video Ads' },
+        { value: 300, name: 'Video Ads1' },
+        { value: 300, name: 'Video Ads2' },
+        { value: 300, name: 'Video Ads3' },
+        { value: 300, name: 'Video Ads4' },
+        { value: 300, name: 'Video Ads5' },
+        { value: 300, name: 'Video Ads6' },
       ],
       itemStyle: {
         shadowBlur: 10,
@@ -64,7 +66,7 @@ const option = ref({
         fontWeight: 'bold',
         color: '#FFFFFF',
       },
-      color: ['#1E2F3E', '#26394F', '#2A3D54', '#1F3A4B', '#2C4158'],
+      // color: ['#1E2F3E', '#26394F', '#2A3D54', '#1F3A4B', '#2C4158'],
       emphasis: {
         itemStyle: {
           borderColor: 'rgba(219, 179, 58, 0.5)',
