@@ -1,6 +1,7 @@
 <template lang="pug">
 
 q-page.page(padding)
+  PageTitle(text="Permit Details")
   section(v-if="$q.screen.width <= 767")
     section.page-title-group
       div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
@@ -17,7 +18,7 @@ q-page.page(padding)
         span.page-info--primary {{_tabledata.getTable.result.length}}
 
     div.back-button.full-width.column.wrap.justify-center.items-center.content-center
-      q-btn.button-back2(rounded class="button-back" label="Back" @click="gotoSelection")
+      BackButton(text="Back" @click="gotoSelection")
 
     div(v-if="_tabledata.getTable !== null")
         section
@@ -52,10 +53,10 @@ q-page.page(padding)
           span.page-info {{_tabledata.getTable.result.length}}
 
       section.button-grid
-        q-btn.button-back2(rounded label="Back" @click="gotoSelection")
+        BackButton(text="Back" @click="gotoSelection")
 
-    section.right
-      div.table-limit(v-if="_tabledata.value !== null")
+    section.right(v-if="_tabledata.getTable.result.length > 0")
+      div.table-limit
         table.table-custom
           thead
             tr
@@ -71,9 +72,9 @@ q-page.page(padding)
               td(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result3[index])}}
               td(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result4[index])}}
 
-      div(v-else)
-        section.flex.flex-center
-          span.empty-table-message No Permit Found
+    section.right(v-else)
+      div.box
+        span No Permit Found
     //- section.table-area.full-width.column.content-center.items-center.justify-center
     //-   table.table-custom
     //-     thead
@@ -125,6 +126,8 @@ import { useListYear } from 'stores/listyear'
 import { decrypt, encryptXCha, decryptXCha } from 'assets/js/shield'
 import {hash} from 'assets/js/OCBO'
 import { useQuasar } from 'quasar'
+import PageTitle from 'components/PageTitle.vue'
+import BackButton from 'components/BackButton.vue'
 
 const router = useRouter()
 const quasar = useQuasar()
@@ -299,8 +302,8 @@ label
   .left
     display: grid
     grid-template-columns: 1fr
-    grid-template-rows: 0.1fr 0.8fr 0.1fr
-    gap: 2.5rem 0px
+    grid-template-rows: 0.1fr 0.7fr 0.1fr
+    gap: 1rem 0px
     grid-template-areas: "application" "details" "button-grid"
     grid-area: left
 
@@ -344,7 +347,7 @@ label
 
   .table-custom td
     padding: 1rem
-    font-size: 1rem
+    font-size: 0.9rem
     border-bottom: 1px solid $text
 
   .table-limit
@@ -362,4 +365,16 @@ label
 
   .address-name
     @extend .owner-name
+
+  .box
+    font-weight: bold
+    border: 1px solid white
+    border-radius: 2rem
+    padding: 10rem
+    font-size: 1.4rem
+    text-align: center
+
+@media screen and (min-width: 1440px)
+  .table-custom td
+    font-size: 1rem
 </style>
