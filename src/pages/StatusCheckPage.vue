@@ -1,6 +1,7 @@
 <template lang="pug">
 
 q-page.page(padding)
+  PageTitle(text="Status Details")
   section(v-if="$q.screen.width <= 767")
     section.page-title-group.left
       div.owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
@@ -17,7 +18,7 @@ q-page.page(padding)
         span.page-info {{latestStatus}}
 
     div.button-back-area.full-width.column.wrap.justify-center.items-center.content-center
-      q-btn.button-back2(rounded label="Back" @click="gotoSelection")
+      BackButton(text="Back" @click="gotoSelection")
 
     div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
       span Status Breakdown
@@ -44,7 +45,7 @@ q-page.page(padding)
           span.page-info {{latestStatus}}
 
       section.button-grid
-        q-btn.button-back2(rounded label="Back" @click="gotoSelection")
+        BackButton(text="Back" @click="gotoSelection")
         //- div.button-back-area.full-width.column.wrap.justify-start.items-start.content-start
 
 
@@ -96,6 +97,8 @@ import { useCurrentPage } from 'stores/currentpage'
 import { decrypt, encryptXCha, decryptXCha } from 'assets/js/shield'
 import { hash } from 'src/assets/js/OCBO'
 import { useQuasar } from 'quasar'
+import PageTitle from 'components/PageTitle.vue'
+import BackButton from 'components/BackButton.vue'
 
 const router = useRouter()
 const quasar = useQuasar()
@@ -275,8 +278,8 @@ label
   .left
     display: grid
     grid-template-columns: 1fr
-    grid-template-rows: 0.1fr 0.8fr 0.1fr
-    gap: 3rem 0px
+    grid-template-rows: 0.1fr 0.7fr 0.1fr
+    gap: 1rem 0px
     grid-template-areas: "application" "details" "button-grid"
     grid-area: left
 
@@ -320,7 +323,7 @@ label
 
   .table-custom td
     padding: 1rem
-    font-size: 1rem
+    font-size: 0.9rem
     border-bottom: 1px solid $text
 
   .table-limit
@@ -331,9 +334,7 @@ label
     width: 250px
     margin: 2rem 0 0 0
 
-  // .owner-name
-  //   font-family: 'LexendBold'
-  //   font-size: 2rem
-  // .address-name
-  //   @extend .owner-name
+@media screen and (min-width: 1440px)
+  .table-custom td
+    font-size: 1rem
 </style>
