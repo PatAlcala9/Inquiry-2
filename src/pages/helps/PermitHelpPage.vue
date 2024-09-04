@@ -4,7 +4,7 @@ q-page.page(padding)
   q-resize-observer(@resize="onResize")
 
   div.fit.column.wrap.justify-center.items-center.content-center.text-center(v-if="screenWidth <= 767")
-    span.main-title2.center-text Permit Details Guide
+    PageTitle(text="Permit Details Guide")
 
     section.step.fit.column.wrap.justify-center.items-center.content-center
       span.details Type the Application either with a dash
@@ -44,10 +44,10 @@ q-page.page(padding)
         source(srcset="../../assets/images/mobile/permit-mobile5.avif" type="image/avif")
         img.image(src="../../assets/images/mobile/permit-mobile5.webp" type="image/webp" alt="Application search image")
 
-    q-btn.button-back2(rounded label="Back" @click="returnHome")
+    BackButton(text="Back" @click="returnHome")
 
   div.fit.column.wrap.justify-center.items-center.content-center(v-else)
-    h3.main-title2.center-text Permit Details Guide
+    PageTitle(text="Permit Details Guide")
 
     section.step
       div.grid
@@ -110,7 +110,7 @@ q-page.page(padding)
     //-   //- span.details-extra as demonstated below
     //-   img.image(src="../../assets/images/pc/app6.webp" alt="application_search_image")
 
-    q-btn.button-back2(rounded label="Back" @click="returnHome")
+    BackButton(text="Back" @click="returnHome")
 
   //- div(v-if="$q.screen.width <= 1000")
   //-   div(class="full-width column no-wrap justify-center items-center content-start")
@@ -125,6 +125,8 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { useCurrentPage } from 'stores/currentpage'
+import PageTitle from 'components/PageTitle.vue'
+import BackButton from 'components/BackButton.vue'
 
 const router = useRouter()
 const quasar = useQuasar()

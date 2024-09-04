@@ -4,7 +4,7 @@ q-page.page(padding)
   q-resize-observer(@resize="onResize")
 
   div.page-title-group.column.wrap.justify-center.items-center.content-center.text-center
-    h1.helppage-title Help Page
+    PageTitle(text="Help Page")
 
     q-img.image
 
@@ -102,6 +102,7 @@ import { useCurrentPage } from 'stores/currentpage'
 import { useNumberCode } from 'stores/numbercode'
 import LinkButton from 'components/LinkButton.vue'
 import PinCodeBar from 'components/PinCodeBar.vue'
+import PageTitle from 'components/PageTitle.vue'
 import { encryptXCha, decryptXCha } from 'assets/js/shield'
 import { hash } from 'assets/js/OCBO'
 
