@@ -78,99 +78,99 @@ const getApprovedPermitsDetails = async (id) => {
   return data
 }
 
-let applicationNoList = []
-const getListofApplicationReleasedByYear = async () => {
-  const response = await api.get('/api/GetListofApplicationReleasedByYear/' + _listyear.getValue, { signal: controller.signal })
-  const data = response.data.length !== 0 ? response.data : null
+// let applicationNoList = []
+// const getListofApplicationReleasedByYear = async () => {
+//   const response = await api.get('/api/GetListofApplicationReleasedByYear/' + _listyear.getValue, { signal: controller.signal })
+//   const data = response.data.length !== 0 ? response.data : null
 
-  if (data !== null) {
-    applicationNoList = data
+//   if (data !== null) {
+//     applicationNoList = data
 
-    for (let item in data) {
-      await getDataofApplicationRelease(data[item].result)
+//     for (let item in data) {
+//       await getDataofApplicationRelease(data[item].result)
 
-      percentage.value = Math.round((parseInt(item) / data.length) * 100)
-    }
+//       percentage.value = Math.round((parseInt(item) / data.length) * 100)
+//     }
 
-    _tabledata.updateTable(tempTable)
-    updatePage('approvelist')
-  }
-}
+//     _tabledata.updateTable(tempTable)
+//     updatePage('approvelist')
+//   }
+// }
 
-let occupancyIDList = []
-const getListofOccupancyApplicationReleasedByYear = async () => {
-  const response = await api.get('/api/GetListofOccupancyApplicationReleasedByYear/' + _listyear.getValue, { signal: controller.signal })
-  const data = response.data.length !== 0 ? response.data : null
+// let occupancyIDList = []
+// const getListofOccupancyApplicationReleasedByYear = async () => {
+//   const response = await api.get('/api/GetListofOccupancyApplicationReleasedByYear/' + _listyear.getValue, { signal: controller.signal })
+//   const data = response.data.length !== 0 ? response.data : null
 
-  if (data !== null) {
-    occupancyIDList = data
+//   if (data !== null) {
+//     occupancyIDList = data
 
-    for (let item in data) {
-      await getDataofOccupancyApplicationRelease(data[item].result)
+//     for (let item in data) {
+//       await getDataofOccupancyApplicationRelease(data[item].result)
 
-      percentage.value = Math.round((parseInt(item) / data.length) * 100)
-    }
+//       percentage.value = Math.round((parseInt(item) / data.length) * 100)
+//     }
 
-    _tabledata.updateTable(tempTable)
-    updatePage('approvelist')
-  }
-}
+//     _tabledata.updateTable(tempTable)
+//     updatePage('approvelist')
+//   }
+// }
 
-let electricalIDList = []
-const getListofElectricalApplicationReleasedByYear = async () => {
-  const response = await api.get('/api/GetListofElectricalApplicationReleasedByYear/' + _listyear.getValue, { signal: controller.signal })
-  const data = response.data.length !== 0 ? response.data : null
+// let electricalIDList = []
+// const getListofElectricalApplicationReleasedByYear = async () => {
+//   const response = await api.get('/api/GetListofElectricalApplicationReleasedByYear/' + _listyear.getValue, { signal: controller.signal })
+//   const data = response.data.length !== 0 ? response.data : null
 
-  if (data !== null) {
-    electricalIDList = data
+//   if (data !== null) {
+//     electricalIDList = data
 
-    for (let item in data) {
-      await getDataofElectricalApplicationRelease(data[item].result)
+//     for (let item in data) {
+//       await getDataofElectricalApplicationRelease(data[item].result)
 
-      percentage.value = Math.round((parseInt(item) / data.length) * 100)
-    }
+//       percentage.value = Math.round((parseInt(item) / data.length) * 100)
+//     }
 
-    _tabledata.updateTable(tempTable)
-    updatePage('approvelist')
-  }
-}
+//     _tabledata.updateTable(tempTable)
+//     updatePage('approvelist')
+//   }
+// }
 
-let tempTable = []
-const getDataofApplicationRelease = async (item) => {
-  const response = await api.get('/api/GetDataofApplicationRelease/' + item)
-  const data = response.data.length !== 0 ? response.data : null
-  // console.log('data:', data)
-  if (data !== null) {
-    for (let item of data) {
-      // console.log('item:', item)
-      tempTable.push(item)
-    }
-  }
-}
+// let tempTable = []
+// const getDataofApplicationRelease = async (item) => {
+//   const response = await api.get('/api/GetDataofApplicationRelease/' + item)
+//   const data = response.data.length !== 0 ? response.data : null
+//   // console.log('data:', data)
+//   if (data !== null) {
+//     for (let item of data) {
+//       // console.log('item:', item)
+//       tempTable.push(item)
+//     }
+//   }
+// }
 
-const getDataofOccupancyApplicationRelease = async (item) => {
-  const response = await api.get('/api/GetDataofOccupancyApplicationRelease/' + item)
-  const data = response.data.length !== 0 ? response.data : null
-  // console.log('data:', data)
-  if (data !== null) {
-    for (let item of data) {
-      // console.log('item:', item)
-      tempTable.push(item)
-    }
-  }
-}
+// const getDataofOccupancyApplicationRelease = async (item) => {
+//   const response = await api.get('/api/GetDataofOccupancyApplicationRelease/' + item)
+//   const data = response.data.length !== 0 ? response.data : null
+//   // console.log('data:', data)
+//   if (data !== null) {
+//     for (let item of data) {
+//       // console.log('item:', item)
+//       tempTable.push(item)
+//     }
+//   }
+// }
 
-const getDataofElectricalApplicationRelease = async (item) => {
-  const response = await api.get('/api/GetDataofElectricalApplicationRelease/' + item)
-  const data = response.data.length !== 0 ? response.data : null
-  // console.log('data:', data)
-  if (data !== null) {
-    for (let item of data) {
-      // console.log('item:', item)
-      tempTable.push(item)
-    }
-  }
-}
+// const getDataofElectricalApplicationRelease = async (item) => {
+//   const response = await api.get('/api/GetDataofElectricalApplicationRelease/' + item)
+//   const data = response.data.length !== 0 ? response.data : null
+//   // console.log('data:', data)
+//   if (data !== null) {
+//     for (let item of data) {
+//       // console.log('item:', item)
+//       tempTable.push(item)
+//     }
+//   }
+// }
 
 const getApplicationByDivision = async () => {
   const encryptedEndpoint = encrypt('CheckConnection')
@@ -218,6 +218,7 @@ const getApplicationByDivision = async () => {
       for (let i = 0; i < decData.result.length; i++) {
         const permit = await getApprovedPermitsDetails(decData.result[i])
         permitList.push(permit)
+        percentage.value = Math.round((parseInt(i) / decData.result.length) * 100)
       }
 
       let decResultList = {}
