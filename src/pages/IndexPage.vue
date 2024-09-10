@@ -53,7 +53,6 @@ import { useListType } from 'stores/listtype'
 import { useDivision } from 'stores/division'
 import { useListYear } from 'stores/listyear'
 import { useListDate } from 'stores/listdate'
-import { useRSAKey } from 'stores/rsakey'
 import { date, useQuasar } from 'quasar'
 // import { JSEncrypt } from 'jsencrypt'
 import { encrypt, decrypt, encryptXCha, decryptXCha } from 'assets/js/shield'
@@ -75,7 +74,6 @@ const _listtype = useListType()
 const _division = useDivision()
 const _listyear = useListYear()
 const _listdate = useListDate()
-const _rsakey = useRSAKey()
 
 let helpInfo = ref('Need help? Click ')
 let searched = ref('')

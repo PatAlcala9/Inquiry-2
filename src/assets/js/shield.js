@@ -1,8 +1,6 @@
-import { useRSAKey } from 'stores/rsakey'
 import { JSEncrypt } from 'jsencrypt'
 import XChaCha20 from '@rabbit-company/xchacha20'
 
-const _rsakey = useRSAKey()
 const enc = new JSEncrypt()
 
 export const encrypt = (text) => {
