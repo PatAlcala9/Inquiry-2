@@ -1,6 +1,7 @@
 <template lang="pug">
 
 q-page.page(padding)
+  PageTitle(text="Name Search")
   section(v-if="$q.screen.width <= 767")
     section.page-title-group.full-width.column.wrap.justify-center.items-center.content-center.text-center
       span.page-title Found for
@@ -12,7 +13,7 @@ q-page.page(padding)
       //-     q-icon(name="search")
 
     div.full-width.column.wrap.justify-center.items-center.content-center
-      q-btn.button-back2(rounded label="Back" @click="gotoHome")
+      BackButton(text="Back" @click="gotoHome")
 
       section(v-if="dTableData.result.length > 0")
         div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-align(v-for="(item, index) in dTableData.result" :key="data")
@@ -40,8 +41,7 @@ q-page.page(padding)
         //-   span.page-info {{latestStatus}}
 
       div.button-grid
-        q-btn.button-back2(rounded label="Back" @click="gotoHome")
-
+        BackButton(text="Back" @click="gotoHome")
 
     section.right
       div.table-limit(v-if="filteredData.result.length > 0")
@@ -243,6 +243,8 @@ import { useSearchValue } from 'stores/searchvalue'
 import { useDivision } from 'stores/division'
 import { encrypt, decrypt, encryptXCha, decryptXCha } from 'assets/js/shield'
 import { hash } from 'src/assets/js/OCBO'
+import PageTitle from 'components/PageTitle.vue'
+import BackButton from 'components/BackButton.vue'
 
 const router = useRouter()
 const quasar = useQuasar()
@@ -865,8 +867,8 @@ const searchFromHere = (application, division) => {
 .left
   display: grid
   grid-template-columns: 1fr
-  grid-template-rows: 0.1fr 0.8fr 0.1fr
-  gap: 3rem 0px
+  grid-template-rows: 0.1fr 0.7fr 0.1fr
+  gap: 1rem 0px
   grid-template-areas: "application" "details" "button-grid"
   grid-area: left
 
@@ -910,7 +912,7 @@ const searchFromHere = (application, division) => {
 
 .table-custom td
   padding: 1rem
-  font-size: 1rem
+  font-size: 0.9rem
   border-bottom: 1px solid $text
 
 .table-limit
@@ -943,4 +945,8 @@ const searchFromHere = (application, division) => {
 
   .card-dialog
     height: 40vh
+
+@media screen and (min-width: 1440px)
+  .table-custom td
+    font-size: 1rem
 </style>
