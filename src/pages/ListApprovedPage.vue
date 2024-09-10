@@ -6,24 +6,18 @@ q-page.page(padding)
     span.subheader on
     span.header {{ properDate }}
 
-    section.fit.row.wrap.justify-between.items-center.content-center
+    section.fit.row.wrap.justify-center.items-center.content-center
       div.summary--count2
         span.label Total Count
         span.content {{ rowCount }}
 
-    //-   div.summary--count
-    //-     span.label Order of Payment Released
-    //-     span.content {{ _listopcount.getValue }}
+    section(v-if="quasar.screen.width <= 767")
+      div.table-data-mobile.fit.column.wrap.justify-center.items-center.content-center.text-align(v-for="(item, index) in _tabledata.getTable.result" :key="data")
+        span.application {{item}}
+        span.permit {{_tabledata.getTable.result6[index]}}
+        span.date {{date.formatDate(_tabledata.getTable.result7[index], 'MMMM DD, YYYY')}}
 
-    //-   div.summary--count
-    //-     span.label Permit Released
-    //-     span.content {{ _listpermitcount.getValue }}
-
-    //-   div.summary--count
-    //-     span.label Total Amount
-    //-     span.content &#8369; {{ Intl.NumberFormat('en-US').format(_listsumpaid.getTotal) }}
-
-    section.table-contain
+    section.table-contain(v-else)
       table.table-custom
         thead
           tr
@@ -211,19 +205,42 @@ const gotoHome = () => {
   border-radius: 2rem
   padding: 1.6rem 2.2rem
   margin: 0 0 1rem 0
-  background-color: transparent
-  color: $text
+  background-color: $yellow
+  color: $darktext
   font-size: 1.1rem
   opacity: 0.8
   // margin: 1rem 0
-  border: 1px solid $text
+  border: 1px solid $darktext
   & .label
-    font-size: 1rem
+    font-size: 0.9rem
     // margin: auto
   & .content
-    font-size: 2.8rem
+    font-size: 2rem
+    font-weight: bold
 
-@media screen and (min-width: 1023px)
+.table-data-mobile
+  padding: 1rem 3.2rem
+  margin: 0 0 1rem 0
+  border: 1px solid $text
+  border-radius: 1rem
+
+  & .application
+    font-size: 1.1rem
+    font-weight: bold
+
+  & .permit
+    font-size: 1.2rem
+
+  & .date
+    font-size: 1.1rem
+    color: $darktext
+    border: 1px solid $darktext
+    padding: 0.5rem 1rem
+    background-color: $yellow
+    border-radius: 1rem
+
+
+@media screen and (min-width: 1024px)
   .subheader
     font-family: 'Roboto'
     font-weight: bold
@@ -239,4 +256,30 @@ const gotoHome = () => {
     font-size: 1.6rem
     color: $text
     padding: 0 0 1rem 0
+
+  .summary--count2
+    display: flex
+    flex-direction: column
+    flex-wrap: wrap
+    justify-content: center
+    align-items: center
+    align-content: center
+    font-family: 'Roboto'
+    // width: 9rem
+    // height: 2rem
+    border-radius: 2rem
+    padding: 1.6rem 2.2rem
+    margin: 0 0 1rem 0
+    background-color: $yellow
+    color: $darktext
+    font-size: 1.1rem
+    opacity: 0.8
+    // margin: 1rem 0
+    border: 1px solid $darktext
+    & .label
+      font-size: 1rem
+      // margin: auto
+    & .content
+      font-size: 2rem
+      font-weight: bold
 </style>
