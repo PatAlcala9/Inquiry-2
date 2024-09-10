@@ -13,10 +13,14 @@ q-page.page(padding)
 
       div.summary--count2
         span.label Order of Payment Released
+        span.content {{ opPercentage() }}%
+        span.label Number of Released:
         span.content {{ _listopcount.getValue }}
 
       div.summary--count2
         span.label Permit Released
+        span.content {{ permitPercentage() }}%
+        span.label Number of Released:
         span.content {{ _listpermitcount.getValue }}
 
       div.summary--count2
@@ -145,6 +149,18 @@ const gotoHome = () => {
   updatePage('/')
 }
 
+const opPercentage = () => {
+  const division = _listopcount.getValue / rowCount.value
+  const percentage = division * 100
+  return percentage.toFixed(2)
+}
+
+const permitPercentage = () => {
+  const division = _listpermitcount.getValue / rowCount.value
+  const percentage = division * 100
+  return percentage.toFixed(2)
+}
+
 ;(async () => {
   loadCurrentPage()
   await countOPReleased()
@@ -226,7 +242,7 @@ const gotoHome = () => {
   & .content
     font-size: 1.8rem
 
-@media screen and (min-width: 1023px)
+@media screen and (min-width: 1024px)
   .subheader
     font-family: 'Roboto'
     font-weight: bold
@@ -242,4 +258,31 @@ const gotoHome = () => {
     font-size: 1.6rem
     color: $text
     padding: 0 0 1rem 0
+
+  .summary--count2
+    display: flex
+    flex-direction: column
+    flex-wrap: wrap
+    justify-content: center
+    align-items: center
+    align-content: center
+    font-family: 'Roboto'
+    // width: 9rem
+    // height: 2rem
+    border-radius: 2rem
+    padding: 1.6rem 2.2rem
+    margin: 0 0 1rem 0
+    background-color: $yellow
+    color: $darktext
+    font-size: 1.1rem
+    opacity: 0.8
+    // margin: 1rem 0
+    border: 1px solid $darktext
+
+    & .label
+      font-size: 1.1rem
+      // margin: auto
+    & .content
+      font-size: 2rem
+      font-weight: bold
 </style>
