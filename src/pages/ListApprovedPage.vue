@@ -11,8 +11,13 @@ q-page.page(padding)
         span.label Total Count
         span.content {{ rowCount }}
 
+
+
     section(v-if="quasar.screen.width <= 767")
-      div.table-data-mobile.fit.column.wrap.justify-center.items-center.content-center.text-align(v-for="(item, index) in _tabledata.getTable.result" :key="data")
+      div.back-button.full-width.column.wrap.justify-center.items-center.content-center
+        BackButton(text="Back" @click="gotoHome")
+
+      div.table-data-mobile.fit.column.wrap.justify-center.items-center.content-center.text-align(v-for="(item, index) in _tabledata.getTable.result" :key="item")
         span.application {{item}}
         span.permit {{_tabledata.getTable.result6[index]}}
         span.date {{date.formatDate(_tabledata.getTable.result7[index], 'MMMM DD, YYYY')}}
@@ -34,8 +39,8 @@ q-page.page(padding)
             td {{_tabledata.getTable.result6[index]}}
             td {{date.formatDate(_tabledata.getTable.result7[index], 'MMMM DD, YYYY')}}
 
-  div.back-button.full-width.column.wrap.justify-center.items-center.content-center
-    q-btn.button-back2(rounded label="Back" @click="gotoHome")
+      div.back-button.full-width.column.wrap.justify-center.items-center.content-center
+        BackButton(text="Back" @click="gotoHome")
 </template>
 
 <script>
@@ -64,6 +69,7 @@ import { useListSumPaid } from 'stores/listsumpaid'
 import { useDivision } from 'stores/division'
 import { useListOPCount } from 'stores/listopcount'
 import { useListPermitCount } from 'stores/listpermitcount'
+import BackButton from 'components/BackButton.vue'
 
 const router = useRouter()
 const quasar = useQuasar()

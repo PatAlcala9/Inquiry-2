@@ -1,35 +1,47 @@
 <template lang="pug">
 
 q-page.page(padding)
-  section.full-width.column.wrap.justify-center.items-center.content-center
+  div.flex.flex-center
     span.title List of Received {{ _division.getValue }} Application
     span.subheader on
     span.header {{ properDate }}
 
-    section.fit.row.wrap.justify-between.items-center.content-center
-      div.summary--count2
-        span.label Total Count
-        span.content {{ rowCount }}
+  div.grid
+    section.left
+      section
+        div.summary--count2
+          span.label Total Count
+          span.content {{ rowCount }}
 
-      div.summary--count2
-        span.label Order of Payment Released
-        span.content {{ opPercentage() }}%
-        span.label Number of Released:
-        span.content {{ _listopcount.getValue }}
+        div.summary--count2
+          span.label OP Released:
+          span.content {{ _listopcount.getValue }}
+          span.label Released Percentage
+          span.content {{ opPercentage() }}%
 
-      div.summary--count2
-        span.label Permit Released
-        span.content {{ permitPercentage() }}%
-        span.label Number of Released:
-        span.content {{ _listpermitcount.getValue }}
+        div.summary--count2
+          span.label Permit Released:
+          span.content {{ _listpermitcount.getValue }}
+          span.label Released Percentage
+          span.content {{ permitPercentage() }}%
 
-      div.summary--count2
-        span.label Total Amount
-        span.content
-          b &#8369; &#0032;
-          a {{ Intl.NumberFormat('en-US').format(_listsumpaid.getTotal) }}
+        div.summary--count2
+          span.label Total Amount
+          span.content
+            b &#8369; &#0032;
+            a {{ Intl.NumberFormat('en-US').format(_listsumpaid.getTotal) }}
 
-    section.table-contain
+
+
+    section(v-if="quasar.screen.width <= 767")
+      div.back-button.full-width.column.wrap.justify-center.items-center.content-center
+        BackButton(text="Back" @click="gotoHome")
+
+      div.table-data-mobile.fit.column.wrap.justify-center.items-center.content-center.text-align(v-for="(item, index) in _tabledata.getTable.result" :key="item")
+        span.application {{decrypt(item)}}
+        span.permit {{decrypt(_tabledata.getTable.result4[index])}}
+
+    section.table-contain.right(v-else)
       table.table-custom
         thead
           tr
@@ -45,8 +57,8 @@ q-page.page(padding)
             td {{decrypt(_tabledata.getTable.result3[index])}}
             td {{decrypt(_tabledata.getTable.result4[index])}}
 
-  div.back-button.full-width.column.wrap.justify-center.items-center.content-center
-    q-btn.button-back2(rounded label="Back" @click="gotoHome")
+      div.back-button
+        BackButton(text="Back" @click="gotoHome")
 </template>
 
 <script>
@@ -75,6 +87,7 @@ import { useListSumPaid } from 'stores/listsumpaid'
 import { useDivision } from 'stores/division'
 import { useListOPCount } from 'stores/listopcount'
 import { useListPermitCount } from 'stores/listpermitcount'
+import BackButton from 'components/BackButton.vue'
 
 const router = useRouter()
 const quasar = useQuasar()
@@ -168,6 +181,23 @@ const permitPercentage = () => {
 </script>
 
 <style lang="sass" scoped>
+.grid
+  display: flex
+  flex-direction: column
+  flex-wrap: wrap
+  justify-content: center
+  align-items: center
+  align-content: center
+
+// .left
+//   display: flex
+//   flex-direction: column
+//   flex-wrap: wrap
+//   justify-content: center
+//   align-items: center
+//   align-content: center
+//   text-align: center
+
 .subheader
   font-family: 'Roboto'
   font-weight: bold
@@ -175,6 +205,7 @@ const permitPercentage = () => {
   text-align: center
   font-size: 1.2rem
   color: $text
+
 .header
   font-family: 'Roboto'
   font-weight: bold
@@ -203,18 +234,18 @@ const permitPercentage = () => {
   font-size: 1rem
   border-bottom: 1px solid $text
 
-.summary--count
-  display: flex
-  flex-direction: column
-  flex-wrap: wrap
-  justify-content: center
-  align-items: center
-  align-content: center
-  // border: 1px solid white
-  border-radius: 2rem
-  padding: 2rem 3rem
-  margin: 0 0 1rem 0
-  background-color: $button2
+// .summary--count
+//   display: flex
+//   flex-direction: column
+//   flex-wrap: wrap
+//   justify-content: center
+//   align-items: center
+//   align-content: center
+//   // border: 1px solid white
+//   border-radius: 2rem
+//   padding: 2rem 3rem
+//   margin: 0 0 1rem 0
+//   background-color: $button2
 
 .summary--count2
   display: flex
@@ -229,20 +260,137 @@ const permitPercentage = () => {
   border-radius: 2rem
   padding: 1.6rem 2.2rem
   margin: 0 0 1rem 0
-  background-color: transparent
-  color: $text
-  font-size: 1.1rem
+  background-color: $yellow
+  color: $darktext
   opacity: 0.8
   // margin: 1rem 0
-  border: 1px solid $text
+  border: 1px solid $darktext
 
   & .label
-    font-size: 0.9rem
+    font-size: 1rem
     // margin: auto
   & .content
     font-size: 1.8rem
+    font-weight: bold
+
+.table-data-mobile
+  padding: 1rem 3.2rem
+  margin: 0 0 1rem 0
+  border: 1px solid $text
+  border-radius: 1rem
+
+  & .application
+    font-size: 1.1rem
+    font-weight: bold
+
+  & .permit
+    font-size: 1.2rem
+
+  & .date
+    font-size: 1.1rem
+    color: $darktext
+    border: 1px solid $darktext
+    padding: 0.5rem 1rem
+    background-color: $yellow
+    border-radius: 1rem
 
 @media screen and (min-width: 1024px)
+  .grid
+    display: grid
+    grid-template-columns: 0.3fr 1.7fr
+    grid-template-rows: 1fr
+    gap: 0px 1rem
+    grid-template-areas: "left right"
+    max-width: 1920px
+
+  .left
+    display: flex
+    flex-direction: column
+    flex-wrap: wrap
+    justify-content: center
+    align-items: center
+    align-content: center
+    text-align: center
+
+  .subheader
+    font-family: 'Roboto'
+    font-weight: bold
+    width: 100%
+    text-align: center
+    font-size: 1.4rem
+    color: $text
+  .header
+    font-family: 'Roboto'
+    font-weight: bold
+    width: 100%
+    text-align: center
+    font-size: 1.6rem
+    color: $text
+    padding: 0 0 1rem 0
+
+  .table-contain
+    height: 500px
+    overflow-y: auto
+
+  .table-custom thead
+    background-color: transparent
+    font-size: 0.9rem
+
+  .table-custom th
+    padding: 1rem 1rem 1.8rem 1rem
+
+  .table-custom tbody
+    padding: 1rem
+
+  .table-custom td
+    padding: 1rem
+    font-size: 0.9rem
+    border-bottom: 1px solid $text
+
+  .summary--count2
+    display: flex
+    flex-direction: column
+    flex-wrap: wrap
+    justify-content: center
+    align-items: center
+    align-content: center
+    font-family: 'Roboto'
+    // width: 9rem
+    // height: 2rem
+    border-radius: 2rem
+    padding: 1.6rem 2.2rem
+    margin: 0 0 1rem 0
+    background-color: $yellow
+    color: $darktext
+    opacity: 0.8
+    // margin: 1rem 0
+    border: 1px solid $darktext
+
+    & .label
+      font-size: 0.9rem
+      // margin: auto
+    & .content
+      font-size: 1.6rem
+      font-weight: bold
+
+@media screen and (min-width: 1440px)
+  .grid
+    display: grid
+    grid-template-columns: 0.3fr 1.7fr
+    grid-template-rows: 1fr
+    gap: 0px 1rem
+    grid-template-areas: "left right"
+    max-width: 1920px
+
+  .left
+    display: flex
+    flex-direction: column
+    flex-wrap: wrap
+    justify-content: center
+    align-items: center
+    align-content: center
+    text-align: center
+
   .subheader
     font-family: 'Roboto'
     font-weight: bold
