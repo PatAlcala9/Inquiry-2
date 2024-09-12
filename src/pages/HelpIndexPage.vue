@@ -31,7 +31,7 @@ q-page.page(padding)
               LinkButton.three2(glow="true" text="Print PDF")
 
         div.flex.flex-center.button-area
-          q-btn.button-back2(rounded label="Home" @click="gotoHome")
+          BackButton(text="Home" @click="gotoHome")
 
     div.fit.column.justify-center.items-center.content-center(v-else)
 
@@ -69,14 +69,14 @@ q-page.page(padding)
         //-   PinCodeBar(v-if="vv === 0")
 
       div.flex.flex-center.button-area
-        q-btn.button-back2(rounded label="Home" @click="gotoHome")
+        BackButton(text="Home" @click="gotoHome")
 
     //- div(v-if="$q.screen.width <= 500")
     //-   div.full-width.column.no-wrap.justify-center.items-center.content-start
-    //-     q-btn.button-back2(rounded label="Home" @click="gotoHome")
+    //-     BackButton(text="Home" @click="gotoHome")
 
     //- div.flex.flex-center(v-else)
-    //-   q-btn.button-back2(rounded label="Home" @click="gotoHome")
+    //-   BackButton(text="Home" @click="gotoHome")
 
 q-dialog
 
@@ -105,6 +105,7 @@ import PinCodeBar from 'components/PinCodeBar.vue'
 import PageTitle from 'components/PageTitle.vue'
 import { encryptXCha, decryptXCha } from 'assets/js/shield'
 import { hash } from 'assets/js/OCBO'
+import BackButton from 'components/BackButton.vue'
 
 let pin = ref(false)
 let picAccepted = ref(false)

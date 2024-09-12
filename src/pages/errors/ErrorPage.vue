@@ -3,8 +3,7 @@
 q-page.fit.column.items-center.justify-center.text-center.content-center(padding)
   span.error-title {{ _errormessage.getMessage }}
   span.error-subtitle {{ _errormessage.getSubMessage}}
-
-  q-btn.button-back2(rounded label="Back" @click="gotoHome")
+  BackButton(text="Back" @click="gotoHome")
 
 </template>
 
@@ -28,6 +27,7 @@ import { useRouter } from 'vue-router'
 import { encryptXCha, decryptXCha } from 'src/assets/js/shield'
 import { hash } from 'src/assets/js/OCBO'
 import { useQuasar } from 'quasar'
+import BackButton from 'components/BackButton.vue'
 
 const router = useRouter()
 const quasar = useQuasar()

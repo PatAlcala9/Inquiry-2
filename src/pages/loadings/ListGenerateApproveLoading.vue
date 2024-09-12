@@ -13,7 +13,7 @@ q-page.flex.flex-center.page(padding)
     span.loading-division(v-if="percentage > 0") {{percentage}} %
 
     div.fit.column.items-center
-      q-btn.button-back2(rounded @click="gotoHome") Cancel
+      BackButton(text="Cancel" @click="gotoHome")
 
 </template>
 
@@ -43,6 +43,7 @@ import { ref } from 'vue'
 import { date, useQuasar } from 'quasar'
 import { encrypt, decrypt, encryptXCha, decryptXCha } from 'assets/js/shield'
 import { hash } from 'assets/js/OCBO'
+import BackButton from 'components/BackButton.vue'
 
 const router = useRouter()
 const quasar = useQuasar()

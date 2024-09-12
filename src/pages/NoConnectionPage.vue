@@ -2,7 +2,7 @@
 
 q-page.fit.column.wrap.justify-center.items-center.content-center(padding)
   span.text No Connection on Server
-  q-btn.button-back2(rounded label="Back" @click="gotoHome")
+  BackButton(text="Back" @click="gotoHome")
 
 </template>
 
@@ -24,6 +24,7 @@ import { useCurrentPage } from 'stores/currentpage'
 import { encryptXCha, decryptXCha } from 'assets/js/shield'
 import { hash } from 'src/assets/js/OCBO'
 import { useQuasar } from 'quasar'
+import BackButton from 'components/BackButton.vue'
 
 const router = useRouter()
 const quasar = useQuasar()

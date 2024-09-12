@@ -10,7 +10,7 @@ q-page.flex.flex-center.page(padding)
     span.loading-value {{_searchvalue.getValue}}
 
     div.fit.column.items-center
-      q-btn.button-back2(rounded @click="gotoHome") Cancel
+      BackButton(text="Cancel" @click="gotoHome")
 
 </template>
 
@@ -42,6 +42,7 @@ import { useOwnername } from 'stores/ownername'
 import { useOwneraddress } from 'stores/owneraddress'
 import { encrypt, decrypt, encryptXCha, decryptXCha } from 'assets/js/shield'
 import { hash } from 'src/assets/js/OCBO'
+import BackButton from 'components/BackButton.vue'
 
 const router = useRouter()
 const quasar = useQuasar()

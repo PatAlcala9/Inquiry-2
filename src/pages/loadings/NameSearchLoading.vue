@@ -7,7 +7,7 @@ q-page.flex.flex-center.page(padding)
     span.loading-division Please wait
 
     div.fit.column.items-center
-      q-btn.button-back2(rounded @click="gotoHome") Cancel
+      BackButton(text="Cancel" @click="gotoHome")
 
 </template>
 
@@ -33,6 +33,7 @@ import { useTableData } from 'stores/tabledata'
 import { useCurrentPage } from 'stores/currentpage'
 import { encrypt, decrypt, encryptXCha, decryptXCha } from 'assets/js/shield'
 import { hash } from 'assets/js/OCBO'
+import BackButton from 'components/BackButton.vue'
 
 const router = useRouter()
 const quasar = useQuasar()

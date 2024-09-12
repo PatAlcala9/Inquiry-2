@@ -9,7 +9,7 @@ q-page.flex.flex-center(padding)
     span.footer If you need help,&nbsp;
       a.link(@click="gotoHelp") click here
     br
-    q-btn.button-back2(rounded label="Back" @click="gotoHome")
+    BackButton(text="Back" @click="gotoHome")
 
 </template>
 
@@ -33,6 +33,7 @@ import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { encryptXCha, decryptXCha } from 'assets/js/shield'
 import { hash } from 'assets/js/OCBO'
+import BackButton from 'components/BackButton.vue'
 
 const router = useRouter()
 const quasar = useQuasar()

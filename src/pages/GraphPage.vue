@@ -4,7 +4,7 @@ q-page.page(padding)
   GraphGen
 
   div.flex.flex-center.button-area
-    q-btn.button-back2(rounded label="Home" @click="gotoHome")
+    BackButton(text="Home" @click="gotoHome")
 
 </template>
 
@@ -19,6 +19,7 @@ import PinCodeBar from 'components/PinCodeBar.vue'
 import { encryptXCha, decryptXCha } from 'assets/js/shield'
 import { hash } from 'assets/js/OCBO'
 import GraphGen from 'components/GraphGen.vue'
+import BackButton from 'components/BackButton.vue'
 
 const quasar = useQuasar()
 const router = useRouter()

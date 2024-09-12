@@ -14,7 +14,7 @@ q-page.page(padding)
         span.page-info {{_owneraddress.getValue}}
 
     div.back-button.full-width.column.wrap.justify-center.items-center.content-center
-      q-btn.button-back2(rounded class="button-back" label="Back" @click="gotoSelection")
+      BackButton(text="Back" @click="gotoSelection")
 
       //- div(v-if="_tabledata.getTable.result5[0] !== ''").owner-group.full-width.column.no-wrap.justify-center.items-center.content-start
       //-   label.owner-label OR:
@@ -47,7 +47,7 @@ q-page.page(padding)
           sapn.page-info {{_owneraddress.getValue}}
 
       section.button-grid
-        q-btn.button-back2(rounded label="Back" @click="gotoSelection")
+        BackButton(text="Back" @click="gotoSelection")
 
     section.right
       div.table-limit
@@ -109,6 +109,7 @@ import { useOwneraddress } from 'stores/owneraddress'
 import { useCurrentPage } from 'stores/currentpage'
 import { date, useQuasar } from 'quasar'
 import { decrypt, encryptXCha, decryptXCha } from 'assets/js/shield'
+import BackButton from 'components/BackButton.vue'
 
 const router = useRouter()
 const quasar = useQuasar()
