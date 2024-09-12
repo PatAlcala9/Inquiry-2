@@ -7,7 +7,7 @@ q-page.page(padding)
     span.header {{ properDate }}
 
   div.grid
-    section.left
+    section.bar-area
       section
         div.summary--count2
           span.label Total Count
@@ -33,7 +33,7 @@ q-page.page(padding)
 
 
 
-    section(v-if="quasar.screen.width <= 767")
+    section.button-area(v-if="quasar.screen.width <= 767")
       div.back-button.full-width.column.wrap.justify-center.items-center.content-center
         BackButton(text="Back" @click="gotoHome")
 
@@ -41,7 +41,7 @@ q-page.page(padding)
         span.application {{decrypt(item)}}
         span.permit {{decrypt(_tabledata.getTable.result4[index])}}
 
-    section.table-contain.right(v-else)
+    section.table-contain.right.table-area(v-else)
       table.table-custom
         thead
           tr
@@ -57,8 +57,8 @@ q-page.page(padding)
             td {{decrypt(_tabledata.getTable.result3[index])}}
             td {{decrypt(_tabledata.getTable.result4[index])}}
 
-      div.back-button
-        BackButton(text="Back" @click="gotoHome")
+    div.back-button.button-area
+      BackButton(text="Back" @click="gotoHome")
 </template>
 
 <script>
@@ -298,12 +298,14 @@ const permitPercentage = () => {
   .grid
     display: grid
     grid-template-columns: 0.3fr 1.7fr
-    grid-template-rows: 1fr
+    grid-template-rows: 1.7fr 0.3fr
     gap: 0px 1rem
-    grid-template-areas: "left right"
+    grid-template-areas: "bar-area table-area" "bar-area button-area"
     max-width: 1920px
 
-  .left
+
+  .bar-area
+    grid-area: bar-area
     display: flex
     flex-direction: column
     flex-wrap: wrap
@@ -311,6 +313,14 @@ const permitPercentage = () => {
     align-items: center
     align-content: center
     text-align: center
+
+  .table-area
+    grid-area: table-area
+    justify-self: start
+    align-self: start
+
+  .button-area
+    grid-area: button-area
 
   .subheader
     font-family: 'Roboto'
@@ -329,7 +339,7 @@ const permitPercentage = () => {
     padding: 0 0 1rem 0
 
   .table-contain
-    height: 500px
+    height: 600px
     overflow-y: auto
 
   .table-custom thead
@@ -374,14 +384,6 @@ const permitPercentage = () => {
       font-weight: bold
 
 @media screen and (min-width: 1440px)
-  .grid
-    display: grid
-    grid-template-columns: 0.3fr 1.7fr
-    grid-template-rows: 1fr
-    gap: 0px 1rem
-    grid-template-areas: "left right"
-    max-width: 1920px
-
   .left
     display: flex
     flex-direction: column
@@ -433,4 +435,23 @@ const permitPercentage = () => {
     & .content
       font-size: 2rem
       font-weight: bold
+
+  .table-contain
+    height: 600px
+    overflow-y: auto
+
+  .table-custom thead
+    background-color: transparent
+    font-size: 1.1rem
+
+  .table-custom th
+    padding: 1.1rem 1.1rem 2rem 1.1rem
+
+  .table-custom tbody
+    padding: 1rem
+
+  .table-custom td
+    padding: 1rem
+    font-size: 1rem
+    border-bottom: 1px solid $text
 </style>
