@@ -12,7 +12,7 @@ q-page.flex.flex-center.page(padding)
     span.loading-division(v-if="percentage > 0") {{percentage}} %
 
     div.fit.column.items-center
-      q-btn.button-back2(rounded @click="gotoHome") Cancel
+      BackButton(text="Cancel" @click="gotoHome")
 
 </template>
 
@@ -46,6 +46,7 @@ import { ref } from 'vue'
 import { date, useQuasar } from 'quasar'
 import { encrypt, decrypt, encryptXCha, decryptXCha } from 'assets/js/shield'
 import { hash } from 'assets/js/OCBO'
+import BackButton from 'components/BackButton.vue'
 
 const router = useRouter()
 const quasar = useQuasar()
@@ -273,7 +274,7 @@ const loadCurrentPage = () => {
 .loading-title
   font-family: 'Roboto'
   font-weight: bold
-  font-size: 1.8rem
+  font-size: 1.6rem
 
 .loading-type
   font-size: 1.8rem
@@ -295,6 +296,23 @@ const loadCurrentPage = () => {
   color: $yellow
 
 @media screen and (min-width: 1023px)
+  .loading-title
+    font-size: 2rem
+
+  .loading-type
+    font-size: 1.8rem
+
+  .minor
+    font-size: 1.4rem
+
+  .loading-division
+    font-size: 2rem
+
+  .loading-value
+    margin-top: 3rem
+    font-size: 2.6rem
+
+@media screen and (min-width: 1440px)
   .loading-title
     font-size: 2rem
 
