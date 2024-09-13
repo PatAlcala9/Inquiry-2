@@ -10,7 +10,7 @@ q-page.flex.flex-center.page(padding)
     span.loading-value {{_searchvalue.getValue}}
 
     div.fit.column.items-center
-      BackButtonn(text="Cancel" @click="gotoHome")
+      BackButton(text="Cancel" @click="gotoHome")
 
 </template>
 
