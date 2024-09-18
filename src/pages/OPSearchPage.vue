@@ -65,7 +65,6 @@ q-page.page(padding)
         //-   span.page-info {{latestStatus}}
 
       section.button-grid
-        //- q-btn.button-back2(rounded label="Back" @click="gotoSelection")
         BackButton(text="Back" @click="gotoSelection")
 
     section.right(v-if="_tabledata.getTable.result.length > 0")
