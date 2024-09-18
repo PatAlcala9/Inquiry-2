@@ -1,10 +1,10 @@
 <template lang="pug">
 
 q-page.page(padding)
-  div.flex.flex-center
-    span.title List of Received {{ _division.getValue }} Application
-    span.subheader on
-    span.header {{ properDate }}
+  div.title-area
+    span.main Received {{ _division.getValue }} Application
+    span.submain on
+    span.date {{ properDate }}
 
   div.grid
     section.bar-area
@@ -181,6 +181,27 @@ const permitPercentage = () => {
 </script>
 
 <style lang="sass" scoped>
+.title-area
+  display: flex
+  flex-direction: column
+  flex-wrap: wrap
+  justify-content: center
+  align-items: center
+  align-content: center
+  padding: 1rem 0 0 0
+  color: $text
+  font-family: 'Roboto'
+  font-weight: bold
+
+  & .main
+    font-size: 1.2rem
+
+  & .submain
+    font-size: 1.1rem
+
+  & .date
+    font-size: 1.4rem
+    margin: 0 0 2rem 0
 .grid
   display: flex
   flex-direction: column
@@ -188,6 +209,7 @@ const permitPercentage = () => {
   justify-content: center
   align-items: center
   align-content: center
+  text-align: center
 
 // .left
 //   display: flex
@@ -280,11 +302,18 @@ const permitPercentage = () => {
   border-radius: 1rem
 
   & .application
-    font-size: 1.1rem
+    font-size: 1.2rem
     font-weight: bold
+    border: 1px solid $yellow
+    border-radius: 1rem
+    background-color: $yellow
+    color: $darktext
+    padding: 0.5rem 1rem
+    margin: 0 0 1rem 0
+
 
   & .permit
-    font-size: 1.2rem
+    font-size: 1rem
 
   & .date
     font-size: 1.1rem
@@ -295,6 +324,26 @@ const permitPercentage = () => {
     border-radius: 1rem
 
 @media screen and (min-width: 1024px)
+  .title-area
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: flex-start
+    align-items: center
+    align-content: center
+    gap: 1rem
+    margin: 0 0 1rem 1rem
+
+    & .main
+      font-size: 2rem
+
+    & .submain
+      font-size: 1.8rem
+
+    & .date
+      font-size: 2rem
+      margin: 0
+
   .grid
     display: grid
     grid-template-columns: 0.3fr 1.7fr
@@ -302,7 +351,6 @@ const permitPercentage = () => {
     gap: 0px 1rem
     grid-template-areas: "bar-area table-area" "bar-area button-area"
     max-width: 1920px
-
 
   .bar-area
     grid-area: bar-area
@@ -356,6 +404,7 @@ const permitPercentage = () => {
     padding: 1rem
     font-size: 0.9rem
     border-bottom: 1px solid $text
+    text-align: left
 
   .summary--count2
     display: flex
