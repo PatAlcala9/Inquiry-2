@@ -20,6 +20,7 @@ const routes = [
       { path: 'helpfees', component: () => import('pages/helps/FeesHelpPage.vue') },
       { path: 'helppermit', component: () => import('pages/helps/PermitHelpPage.vue') },
       { path: 'helpname', component: () => import('pages/helps/NameHelpPage.vue') },
+      { path: 'helplist', component: () => import('pages/helps/ListHelpPage.vue') },
 
       { path: 'statussearch', component: () => import('pages/loadings/StatusSearchLoading.vue') },
       { path: 'namesearch', component: () => import('pages/loadings/NameSearchLoading.vue') },
