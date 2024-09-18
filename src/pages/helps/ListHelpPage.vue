@@ -98,8 +98,8 @@ q-page.page(padding)
           //- img.image(src="../../assets/images/pc/app4.webp" alt="application_search_image")
         div.grid-right
           picture.fit.column.wrap.justify-center.items-center.content-center
-            source(srcset="../../assets/images/pc/fees4.avif" type="image/avif")
-            img.image(src="../../assets/images/pc/fees4.webp" type="image/webp" alt="Application search image")
+            source(srcset="../../assets/images/pc/list4.avif" type="image/avif")
+            img.image(src="../../assets/images/pc/list4.webp" type="image/webp" alt="List creation image")
 
     section.step
       div.grid
