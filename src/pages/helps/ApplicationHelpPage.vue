@@ -260,4 +260,9 @@ const returnHome = () => {
     border: 1px solid #263240
     border-radius: 2rem
     width: 40vw
+    transition: transform 0.5s
+
+    &:hover
+      transform: scale(1.4)
+
 </style>
