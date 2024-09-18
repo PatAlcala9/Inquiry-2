@@ -93,7 +93,10 @@ q-page.page(padding)
     section.step
       div.grid
         div.grid-left
-          span.details Wait for the data to be finish downloading
+          span.details You can either use 'today' and 'yesterday'
+          span.details Or you can specify the exact date, just make sure to type the correct spelling
+          span.details No special characters needed, just space, and all small letters
+          span.details For example: december 25 2025
           //- span.details-extra as demonstated below
           //- img.image(src="../../assets/images/pc/app4.webp" alt="application_search_image")
         div.grid-right
