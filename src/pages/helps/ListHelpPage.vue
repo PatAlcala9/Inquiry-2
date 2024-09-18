@@ -107,12 +107,12 @@ q-page.page(padding)
     section.step
       div.grid
         div.grid-right
-          span.details Once finish downloading, you can view the latest status of your application
+          span.details Wait for it to 
         //- span.details-extra as demonstated below
         div.grid-left
           picture.fit.column.wrap.justify-center.items-center.content-center
-            source(srcset="../../assets/images/pc/fees5.avif" type="image/avif")
-            img.image(src="../../assets/images/pc/fees5.webp" type="image/webp" alt="Application search image")
+            source(srcset="../../assets/images/pc/list5.avif" type="image/avif")
+            img.image(src="../../assets/images/pc/list5.webp" type="image/webp" alt="Application search image")
 
     //- section.step.fit.column.wrap.justify-center.items-center.content-center
     //-   span.details You can also view the history
