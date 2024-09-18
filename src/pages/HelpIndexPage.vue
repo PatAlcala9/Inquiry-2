@@ -26,7 +26,7 @@ q-page.page(padding)
           section(v-else)
             PinCodeBar(v-if="_numbercode.check === false")
             div.list(v-else)
-              LinkButton.one2(glow="true" text="Generate List" )
+              LinkButton.one2(glow="true" text="Generate List" @click="gotoListHelp")
               LinkButton.two2(glow="true" text="Create Chart" )
               LinkButton.three2(glow="true" text="Print PDF")
 
@@ -59,7 +59,7 @@ q-page.page(padding)
         section(v-else)
           PinCodeBar(v-if="_numbercode.check === false")
           div.grid2(v-else)
-            LinkButton.one2(glow="true" text="Generate List" )
+            LinkButton.one2(glow="true" text="Generate List" @click="gotoListHelp")
             LinkButton.two2(glow="true" text="Create Chart" )
             LinkButton.three2(glow="true" text="Print PDF")
         //-
@@ -139,6 +139,10 @@ const gotoNameHelp = () => {
   // _currentpage.updateValue('helpname')
   // router.push('helpname')
   updatePage('helpname')
+}
+
+const gotoListHelp = () => {
+  updatePage('helplist')
 }
 
 const onResize = () => {
