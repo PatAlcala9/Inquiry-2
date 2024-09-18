@@ -66,7 +66,7 @@ const option = ref({
         fontWeight: 'bold',
         color: '#FFFFFF',
       },
-      // color: ['#1E2F3E', '#26394F', '#2A3D54', '#1F3A4B', '#2C4158'],
+      color: ['#1E2F3E', '#26394F', '#2A3D54', '#1F3A4B', '#2C4158'],
       emphasis: {
         itemStyle: {
           borderColor: 'rgba(219, 179, 58, 0.5)',
