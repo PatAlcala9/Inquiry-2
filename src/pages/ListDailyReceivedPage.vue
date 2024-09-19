@@ -22,8 +22,9 @@ q-page.page(padding)
         div.summary--count2
           span.label Permit Released:
           span.content {{ _listpermitcount.getValue }}
-          span.label Released Percentage
-          span.content {{ permitPercentage() }}%
+          section(v-if="permitPercentageValue.value > 0")
+            span.label Released Percentage
+            span.content {{ permitPercentageValue.value }}%
 
         div.summary--count2
           span.label Total Amount
@@ -34,7 +35,7 @@ q-page.page(padding)
 
 
     section.button-area(v-if="quasar.screen.width <= 767")
-      div.back-button.full-width.column.wrap.justify-center.items-center.content-center
+      div.full-width.column.wrap.justify-center.items-center.content-center
         BackButton(text="Back" @click="gotoHome")
 
       div.table-data-mobile.fit.column.wrap.justify-center.items-center.content-center.text-align(v-for="(item, index) in _tabledata.getTable.result" :key="item")
@@ -57,7 +58,7 @@ q-page.page(padding)
             td {{decrypt(_tabledata.getTable.result3[index])}}
             td {{decrypt(_tabledata.getTable.result4[index])}}
 
-    div.back-button.button-area
+    div.button-area
       BackButton(text="Back" @click="gotoHome")
 </template>
 
@@ -111,7 +112,10 @@ const rowCount = ref(Object.values(_tabledata.value).map((arr) => arr.length)[0]
 //     ['ORDER OF PAYMENT RELEASED', 'OR NUMBER VERIFIED', 'RECEIVED FOR PROCESSING', 'FOR BUILDING OFFICIAL APPROVAL', 'PERMIT APPROVE AND READY FOR RELEASE', 'PERMIT ALREADY RELEASE'].includes(stat)
 //   ).length
 // )
+
 const opReleasedCount = ref(0)
+const opPercentageValue = ref(0)
+const permitPercentageValue = ref(0)
 
 const permitReleasedCount = ref(_liststatus.allStatusArray.filter((stat) => stat === 'PERMIT ALREADY RELEASE').length)
 
@@ -165,13 +169,13 @@ const gotoHome = () => {
 const opPercentage = () => {
   const division = _listopcount.getValue / rowCount.value
   const percentage = division * 100
-  return percentage.toFixed(2)
+  opPercentageValue.value = percentage.toFixed(0)
 }
 
 const permitPercentage = () => {
   const division = _listpermitcount.getValue / rowCount.value
   const percentage = division * 100
-  return percentage.toFixed(2)
+  permitPercentageValue.value =  percentage.toFixed(0)
 }
 
 ;(async () => {
