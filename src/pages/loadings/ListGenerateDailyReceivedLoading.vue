@@ -232,7 +232,7 @@ const countPermitRelease = async () => {
   let result = 0
 
   if (_division.isBuilding) {
-    result = _liststatus.allStatusArray.filter((stat) => stat === 'PERMIT ALREADY RELEASE').length
+    result = _liststatus.allStatusArray.filter((stat) => stat === 'PERMIT RELEASED').length
   } else if (_division.isOccupancy) {
     result = _liststatus.allStatusArray.filter((stat) => /OCCUPANCY PERMIT RELEASED TO/.test(stat)).length
   } else if (_division.isElectrical) {
