@@ -50,14 +50,14 @@ div.fullscreen.q-pa-md.flex.flex-center.background
   left: 0
   right: 0
   bottom: 0
-  background-image: url('../assets/images/bg.webp')
-  @supports (background-image: url('../assets/images/bg.avif'))
-    background-image: url('../assets/images/bg.avif')
+  opacity: 0.5
+  mix-blend-mode: overlay
   background-size: cover
   background-attachment: fixed
   background-repeat: no-repeat
-  opacity: 0.5
-  mix-blend-mode: overlay
+  background-image: url('../assets/images/bg.webp')
+  @supports (background-image: url('../assets/images/bg.avif'))
+    background-image: url('../assets/images/bg.avif')
 
 .body
   display: flex

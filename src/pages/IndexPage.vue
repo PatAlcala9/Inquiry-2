@@ -807,6 +807,7 @@ h1, h2
 @media screen and (min-width: 1440px)
   .main-title
     font-size: 4.6rem
+    
   .footer
     content: ""
     position: absolute
@@ -847,14 +848,14 @@ h1, h2
     opacity: 0.3
 
   .footer--image
-    background-image: url('../assets/images/davao.webp')
-    @supports (background-image: url('../assets/images/davao.avif'))
-      background-image: url('../assets/images/davao.avif')
     width: 16rem
     height: auto
     background-position: center
     background-repeat: no-repeat
     background-size: contain
+    background-image: url('../assets/images/davao.webp')
+    @supports (background-image: url('../assets/images/davao.avif'))
+      background-image: url('../assets/images/davao.avif')
 
   .footer--copyright
     font-size: 1rem

@@ -317,15 +317,15 @@ const openPin = () => {
     // padding: 2rem 0 0 0
 
   .image
-    background-image: url('../assets/images/main_page.webp')
-    @supports (background-image: url('../assets/images/main_page.avif'))
-      background-image: url('../assets/images/main_page.avif')
     width: 500px
     height: auto
+    border: 2px solid rgba(255, 255, 255, 0.4)
     background-position: center
     background-repeat: no-repeat
     background-size: contain
-    border: 2px solid rgba(255, 255, 255, 0.4)
+    background-image: url('../assets/images/main_page.webp')
+    @supports (background-image: url('../assets/images/main_page.avif'))
+      background-image: url('../assets/images/main_page.avif')
 
 @media screen and (min-width: 1024px)
   .list
