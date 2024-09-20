@@ -62,7 +62,7 @@ importers:
         version: 7.25.1(@babel/core@7.24.7)(eslint@8.57.1)
       '@quasar/app-webpack':
         specifier: ^3.14.0
-        version: 3.14.0(eslint@8.57.1)(pinia@2.2.2(typescript@4.9.4)(vue@3.5.6(typescript@4.9.4)))(quasar@2.17.0)(sass@1.77.4)(vue-router@4.4.5(vue@3.5.6(typescript@4.9.4)))(vue@3.5.6(typescript@4.9.4))
+        version: 3.14.0(eslint@8.57.1)(pinia@2.2.2(typescript@4.9.4)(vue@3.5.6(typescript@4.9.4)))(quasar@2.17.0)(sass@1.79.3)(vue-router@4.4.5(vue@3.5.6(typescript@4.9.4)))(vue@3.5.6(typescript@4.9.4))
       '@vue/language-plugin-pug':
         specifier: ^2.1.6
         version: 2.1.6
@@ -93,6 +93,9 @@ importers:
       pug-plain-loader:
         specifier: ^1.1.0
         version: 1.1.0(pug@3.0.3)
+      sass:
+        specifier: ^1.79.3
+        version: 1.79.3
       zlib:
         specifier: ^1.0.5
         version: 1.0.5
@@ -1392,6 +1395,10 @@ packages:
   chokidar@3.6.0:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
     engines: {node: '>= 8.10.0'}
+
+  chokidar@4.0.0:
+    resolution: {integrity: sha512-mxIojEAQcuEvT/lyXq+jf/3cO/KoA6z4CeNDGGevTybECPOMFCnQy3OPahluUkbqgPNGw5Bi78UC7Po6Lhy+NA==}
+    engines: {node: '>= 14.16.0'}
 
   chrome-trace-event@1.0.4:
     resolution: {integrity: sha512-rNjApaLzuwaOTjCiT8lSDdGN1APCiqkChLMJxJPWLunPAt5fy8xgU9/jNOchV84wfIxrA0lRQB7oCT8jrn/wrQ==}
@@ -3205,6 +3212,10 @@ packages:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
     engines: {node: '>=8.10.0'}
 
+  readdirp@4.0.1:
+    resolution: {integrity: sha512-GkMg9uOTpIWWKbSsgwb5fA4EavTR+SG/PMPoAY8hkhHfEEY0/vqljY+XHqtDf2cr2IJtoNRDbrrEpZUiZCkYRw==}
+    engines: {node: '>= 14.16.0'}
+
   regenerate-unicode-properties@10.1.1:
     resolution: {integrity: sha512-X007RyZLsCJVVrjgEFVpLUTZwyOZk3oiL75ZcuYjlIWd6rNJtOjkBwQc5AsRrpbKVkxN6sklw/k/9m2jJYOf8Q==}
     engines: {node: '>=4'}
@@ -3448,8 +3459,8 @@ packages:
       webpack:
         optional: true
 
-  sass@1.77.4:
-    resolution: {integrity: sha512-vcF3Ckow6g939GMA4PeU7b2K/9FALXk2KF9J87txdHzXbUF9XRQRwSxcAs/fGaTnJeBFd7UoV22j3lzMLdM0Pw==}
+  sass@1.79.3:
+    resolution: {integrity: sha512-m7dZxh0W9EZ3cw50Me5GOuYm/tVAJAn91SUnohLRo9cXBixGUOdvmryN+dXpwR831bhoY3Zv7rEFt85PUwTmzA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -5000,7 +5011,7 @@ snapshots:
 
   '@polka/url@1.0.0-next.25': {}
 
-  '@quasar/app-webpack@3.14.0(eslint@8.57.1)(pinia@2.2.2(typescript@4.9.4)(vue@3.5.6(typescript@4.9.4)))(quasar@2.17.0)(sass@1.77.4)(vue-router@4.4.5(vue@3.5.6(typescript@4.9.4)))(vue@3.5.6(typescript@4.9.4))':
+  '@quasar/app-webpack@3.14.0(eslint@8.57.1)(pinia@2.2.2(typescript@4.9.4)(vue@3.5.6(typescript@4.9.4)))(quasar@2.17.0)(sass@1.79.3)(vue-router@4.4.5(vue@3.5.6(typescript@4.9.4)))(vue@3.5.6(typescript@4.9.4))':
     dependencies:
       '@quasar/babel-preset-app': 2.0.3(webpack@5.91.0)
       '@quasar/render-ssr-error': 1.0.3
@@ -5049,7 +5060,7 @@ snapshots:
       quasar: 2.17.0
       register-service-worker: 1.7.2
       sass-embedded: 1.79.2
-      sass-loader: 16.0.1(sass-embedded@1.79.2)(sass@1.77.4)(webpack@5.91.0)
+      sass-loader: 16.0.1(sass-embedded@1.79.2)(sass@1.79.3)(webpack@5.91.0)
       semver: 7.6.3
       table: 6.8.2
       terser-webpack-plugin: 5.3.10(webpack@5.91.0)
@@ -5777,6 +5788,10 @@ snapshots:
       readdirp: 3.6.0
     optionalDependencies:
       fsevents: 2.3.3
+
+  chokidar@4.0.0:
+    dependencies:
+      readdirp: 4.0.1
 
   chrome-trace-event@1.0.4: {}
 
@@ -6709,8 +6724,7 @@ snapshots:
 
   immutable@4.3.6: {}
 
-  immutable@4.3.7:
-    optional: true
+  immutable@4.3.7: {}
 
   import-fresh@3.3.0:
     dependencies:
@@ -7632,6 +7646,8 @@ snapshots:
     dependencies:
       picomatch: 2.3.1
 
+  readdirp@4.0.1: {}
+
   regenerate-unicode-properties@10.1.1:
     dependencies:
       regenerate: 1.4.2
@@ -7816,20 +7832,19 @@ snapshots:
       sass-embedded-win32-ia32: 1.79.2
       sass-embedded-win32-x64: 1.79.2
 
-  sass-loader@16.0.1(sass-embedded@1.79.2)(sass@1.77.4)(webpack@5.91.0):
+  sass-loader@16.0.1(sass-embedded@1.79.2)(sass@1.79.3)(webpack@5.91.0):
     dependencies:
       neo-async: 2.6.2
     optionalDependencies:
-      sass: 1.77.4
+      sass: 1.79.3
       sass-embedded: 1.79.2
       webpack: 5.91.0
 
-  sass@1.77.4:
+  sass@1.79.3:
     dependencies:
-      chokidar: 3.6.0
+      chokidar: 4.0.0
       immutable: 4.3.7
       source-map-js: 1.2.1
-    optional: true
 
   sax@1.1.4: {}
 
