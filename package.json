@@ -35,6 +35,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.25.7",
     "@quasar/app-webpack": "^3.14.0",
+    "@quasar/quasar-app-extension-testing-e2e-cypress": "^6.1.0",
     "@vue/language-plugin-pug": "^2.1.6",
     "compression-webpack-plugin": "^11.1.0",
     "dotenv": "^16.4.5",
