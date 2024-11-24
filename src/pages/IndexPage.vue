@@ -210,51 +210,62 @@ const detectDivision = async (value) => {
 const checkApplication = async (application) => {
   try {
     let response
-    const encryptedEndpoint = encrypt('CheckConnection')
-    const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
-    const connection = await api.get('/api/' + replacedEndpoint)
+    // const encryptedEndpoint = encrypt('CheckConnection')
+    // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+    const endpoint = 'CheckConnection'
+    const connection = await api.get('/api/' + endpoint)
     const data = connection.data || null
-    const result = data !== null ? decrypt(data.result) : null
+    const result = data !== null ? data.result : null
 
     if (result !== null) {
       await detectDivision(application)
 
       if (_division.isBuilding) {
-        const encryptedEndpoint = encrypt('CheckBuilding')
-        const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
-        const encryptedData = encrypt(application)
-        const replacedData = encryptedData.replace(/\//g, '~')
-        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+        // const encryptedEndpoint = encrypt('CheckBuilding')
+        // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+        const endpoint = 'CheckBuilding'
+        // const encryptedData = encrypt(application)
+        // const replacedData = encryptedData.replace(/\//g, '~')
+        const plainData = application
+        response = await api.get('/api/' + endpoint + '/' + plainData)
       } else if (_division.isOccupancy) {
-        const encryptedEndpoint = encrypt('CheckOccupancy')
-        const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
-        const encryptedData = encrypt(application)
-        const replacedData = encryptedData.replace(/\//g, '~')
-        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+        // const encryptedEndpoint = encrypt('CheckOccupancy')
+        // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+        const endpoint = 'CheckOccupancy'
+        // const encryptedData = encrypt(application)
+        // const replacedData = encryptedData.replace(/\//g, '~')
+        const plainData = application
+        response = await api.get('/api/' + endpoint + '/' + plainData)
       } else if (_division.isSignage) {
-        const encryptedEndpoint = encrypt('CheckSignage')
-        const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
-        const encryptedData = encrypt(application)
-        const replacedData = encryptedData.replace(/\//g, '~')
-        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+        // const encryptedEndpoint = encrypt('CheckSignage')
+        // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+        const endpoint = 'CheckSignage'
+        // const encryptedData = encrypt(application)
+        // const replacedData = encryptedData.replace(/\//g, '~')
+        const plainData = application
+        response = await api.get('/api/' + endpoint + '/' + plainData)
       } else if (_division.isElectrical) {
-        const encryptedEndpoint = encrypt('CheckElectrical')
-        const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
-        const encryptedData = encrypt(application)
-        const replacedData = encryptedData.replace(/\//g, '~')
-        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+        // const encryptedEndpoint = encrypt('CheckElectrical')
+        // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+        const endpoint = 'CheckElectrical'
+        // const encryptedData = encrypt(application)
+        // const replacedData = encryptedData.replace(/\//g, '~')
+        const plainData = application
+        response = await api.get('/api/' + endpoint + '/' + plainData)
       } else if (_division.isMechanical) {
-        const encryptedEndpoint = encrypt('CheckMechanical')
-        const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
-        const encryptedData = encrypt(application)
-        const replacedData = encryptedData.replace(/\//g, '~')
-        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData)
+        // const encryptedEndpoint = encrypt('CheckMechanical')
+        // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+        const endpoint = 'CheckMechanical'
+        // const encryptedData = encrypt(application)
+        // const replacedData = encryptedData.replace(/\//g, '~')
+        const plainData = application
+        response = await api.get('/api/' + endpoint + '/' + plainData)
       } else {
         return false
       }
 
       const data = response.data.length !== 0 ? response.data : null
-      const result = data !== null ? decrypt(data.result) : null
+      const result = data !== null ? data.result : null
 
       if (result !== null) {
         if (result > 0) {
@@ -807,7 +818,7 @@ h1, h2
 @media screen and (min-width: 1440px)
   .main-title
     font-size: 4.6rem
-    
+
   .footer
     content: ""
     position: absolute

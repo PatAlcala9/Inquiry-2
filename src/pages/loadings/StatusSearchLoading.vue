@@ -64,19 +64,22 @@ const searchData = async () => {
   const searched = _searchvalue.getValue
   try {
     let response
-    const encryptedEndpoint = encrypt('CheckConnection')
-    const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
-    const connection = await api.get('/api/' + replacedEndpoint, { signal: controller.signal })
+    // const encryptedEndpoint = encrypt('CheckConnection')
+    // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+    const endpoint = 'CheckConnection'
+    const connection = await api.get('/api/' + endpoint, { signal: controller.signal })
     const data = connection.data || null
-    const result = data !== null ? decrypt(data.result) : null
+    const result = data !== null ? (data.result) : null
 
     if (result !== null) {
       if (_division.isBuilding) {
-        const encryptedEndpoint = encrypt('CheckBuilding')
-        const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
-        const encryptedData = encrypt(searched)
-        const replacedData = encryptedData.replace(/\//g, '~')
-        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+        // const encryptedEndpoint = encrypt('CheckBuilding')
+        // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+        const endpoint = 'CheckBuilding'
+        // const encryptedData = encrypt(searched)
+        // const replacedData = encryptedData.replace(/\//g, '~')
+        const data = searched
+        response = await api.get('/api/' + endpoint + '/' + data, { signal: controller.signal })
       } else if (_division.isOccupancy) {
         const encryptedEndpoint = encrypt('CheckOccupancy')
         const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
@@ -108,7 +111,7 @@ const searchData = async () => {
       }
 
       const data = response.data.length !== 0 ? response.data : null
-      const result = data !== null ? decrypt(data.result) : null
+      const result = data !== null ? (data.result) : null
       if (result !== null) {
         if (result.length > 0) {
           _applicationno.updateValue(searched)
@@ -150,23 +153,25 @@ const getOwnerDetails = async () => {
   }
 
   try {
-    const encryptedEndpoint = encrypt('GetOwnerName' + method)
-    const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+    // const encryptedEndpoint = encrypt('GetOwnerName' + method)
+    // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+    const endpoint = `GetOwnerName${method}`
 
-    const encryptedData = encrypt(_searchvalue.getValue)
-    const replacedData = encryptedData.replace(/\//g, '~')
-    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+    // const encryptedData = encrypt(_searchvalue.getValue)
+    // const replacedData = encryptedData.replace(/\//g, '~')
+    const plainData = _searchvalue.getValue
+    const response = await api.get('/api/' + endpoint + '/' + plainData, { signal: controller.signal })
     const data = response.data.length !== 0 ? response.data : null
     if (data !== null) {
       const result = data || null
 
       if (result !== null) {
-        const fname = decrypt(result.result)
-        const mname = decrypt(result.result2)
-        const lname = decrypt(result.result3)
-        const block = decrypt(result.result4)
-        const lot = decrypt(result.result5)
-        const address = decrypt(result.result6)
+        const fname = (result.result)
+        const mname = (result.result2)
+        const lname = (result.result3)
+        const block = (result.result4)
+        const lot = (result.result5)
+        const address = (result.result6)
         // const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
         const ffname = fname.length === 0 ? lname : fname + ' ' + (mname.length === 0 ? lname : mname + '. ' + lname)
         let addressresult = `${block.length === 0 ? '' : `BLOCK ${block} `}${lot.length === 0 ? '' : `LOT ${lot} `}${address}`
@@ -200,18 +205,20 @@ const getTableData = async () => {
   }
 
   try {
-    const encryptedEndpoint = encrypt('GetTableData' + method)
-    const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+    // const encryptedEndpoint = encrypt('GetTableData' + method)
+    // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+    const endpoint = `GetTableData${method}`
 
-    const encryptedData = encrypt(appno)
-    const replacedData = encryptedData.replace(/\//g, '~')
-    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+    // const encryptedData = encrypt(appno)
+    // const replacedData = encryptedData.replace(/\//g, '~')
+    const plainData = appno
+    const response = await api.get('/api/' + endpoint + '/' + plainData, { signal: controller.signal })
     const data = response.data.length !== 0 ? response.data : null
 
     if (data !== null) {
       // _tabledata.value = data
       _tabledata.updateTable(data)
-      _lateststatus.updateValue(decrypt(data.result2[0]))
+      _lateststatus.updateValue((data.result2[0]))
     }
   } catch {
     _tabledata.updateTable({})
