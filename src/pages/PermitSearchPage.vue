@@ -27,10 +27,10 @@ q-page.page(padding)
             span(v-else) Permit
 
           div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="(item, index) in _tabledata.getTable.result" :key="item")
-            span.table-data-mobile-desc.last(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(item)}}
-            span.table-data-mobile-desc(v-else) {{decrypt(item)}}
-            span.table-data-mobile-info(v-if="_tabledata.getTable.result4 !== undefined") Block {{decrypt(_tabledata.getTable.result2[index])}} Lot {{decrypt(_tabledata.getTable.result3[index])}}
-            span.table-data-mobile-info.last(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result4[index])}}
+            span.table-data-mobile-desc.last(v-if="_tabledata.getTable.result4 !== undefined") {{(item)}}
+            span.table-data-mobile-desc(v-else) {{(item)}}
+            span.table-data-mobile-info(v-if="_tabledata.getTable.result4 !== undefined") Block {{(_tabledata.getTable.result2[index])}} Lot {{(_tabledata.getTable.result3[index])}}
+            span.table-data-mobile-info.last(v-if="_tabledata.getTable.result4 !== undefined") {{(_tabledata.getTable.result4[index])}}
 
     div(v-else)
       section.flex.flex-center
@@ -67,10 +67,10 @@ q-page.page(padding)
               th(v-if="_tabledata.getTable.result4 !== undefined") Address
           tbody
             tr(v-for="(item, index) in _tabledata.getTable.result" :key="item")
-              td {{decrypt(item)}}
-              td(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result2[index])}}
-              td(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result3[index])}}
-              td(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result4[index])}}
+              td {{(item)}}
+              td(v-if="_tabledata.getTable.result4 !== undefined") {{(_tabledata.getTable.result2[index])}}
+              td(v-if="_tabledata.getTable.result4 !== undefined") {{(_tabledata.getTable.result3[index])}}
+              td(v-if="_tabledata.getTable.result4 !== undefined") {{(_tabledata.getTable.result4[index])}}
 
     section.right(v-else)
       div.box
@@ -86,10 +86,10 @@ q-page.page(padding)
     //-         th(v-if="_tabledata.getTable.result4 !== undefined") Address
     //-     tbody
     //-       tr(v-for="(item, index) in _tabledata.getTable.result" :key="item")
-    //-         td {{decrypt(item)}}
-    //-         td(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result2[index])}}
-    //-         td(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result3[index])}}
-    //-         td(v-if="_tabledata.getTable.result4 !== undefined") {{decrypt(_tabledata.getTable.result4[index])}}
+    //-         td {{(item)}}
+    //-         td(v-if="_tabledata.getTable.result4 !== undefined") {{(_tabledata.getTable.result2[index])}}
+    //-         td(v-if="_tabledata.getTable.result4 !== undefined") {{(_tabledata.getTable.result3[index])}}
+    //-         td(v-if="_tabledata.getTable.result4 !== undefined") {{(_tabledata.getTable.result4[index])}}
 
 
 
@@ -124,7 +124,7 @@ import { useLatestStatus } from 'stores/lateststatus'
 import { useCurrentPage } from 'stores/currentpage'
 import { useListYear } from 'stores/listyear'
 import { decrypt, encryptXCha, decryptXCha } from 'assets/js/shield'
-import {hash} from 'assets/js/OCBO'
+import { hash } from 'assets/js/OCBO'
 import { useQuasar } from 'quasar'
 import PageTitle from 'components/PageTitle.vue'
 import BackButton from 'components/BackButton.vue'

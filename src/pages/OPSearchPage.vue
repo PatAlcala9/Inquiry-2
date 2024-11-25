@@ -33,11 +33,11 @@ q-page.page(padding)
         span.table-title Order of Payment
 
       div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center.text-center(v-for="(item, index) in _tabledata.getTable.result" :key="item")
-        span.table-data-mobile-desc {{decrypt(item)}}
+        span.table-data-mobile-desc {{(item)}}
         span.table-data-mobile-amount
           b &#8369; &#0032;
-          a {{Intl.NumberFormat('en-US').format(decrypt(_tabledata.getTable.result2[index]))}}
-        span.table-data-mobile-paid.last {{decrypt(_tabledata.getTable.result3[index]) === '1' ? 'PAID' : 'UNPAID'}}
+          a {{Intl.NumberFormat('en-US').format((_tabledata.getTable.result2[index]))}}
+        span.table-data-mobile-paid.last {{(_tabledata.getTable.result3[index]) === '1' ? 'PAID' : 'UNPAID'}}
 
     section(v-else)
       div.table-title-group-mobile.fit.row.wrap.justify-around.items-start.content-start
@@ -77,11 +77,11 @@ q-page.page(padding)
               th Paid
           tbody
             tr(v-for="(item, index) in _tabledata.getTable.result" :key="item")
-              td {{decrypt(item)}}
+              td {{(item)}}
               td
                 b &#8369; &#0032;
-                a {{Intl.NumberFormat('en-US').format(decrypt(_tabledata.getTable.result2[index]))}}
-              td {{decrypt(_tabledata.getTable.result3[index]) === '1' ? 'YES' : 'NO'}}
+                a {{Intl.NumberFormat('en-US').format((_tabledata.getTable.result2[index]))}}
+              td {{(_tabledata.getTable.result3[index]) === '1' ? 'YES' : 'NO'}}
 
     section.right(v-else)
       div.box
@@ -96,9 +96,9 @@ q-page.page(padding)
     //-       th Paid
     //-   tbody
     //-     tr(v-for="(item, index) in _tabledata.getTable.result" :key="item")
-    //-       td {{decrypt(item)}}
-    //-       td &#8369; {{Intl.NumberFormat('en-US').format(decrypt(_tabledata.getTable.result2[index]))}}
-    //-       td {{decrypt(_tabledata.getTable.result3[index]) === '1' ? 'YES' : 'NO'}}
+    //-       td {{(item)}}
+    //-       td &#8369; {{Intl.NumberFormat('en-US').format((_tabledata.getTable.result2[index]))}}
+    //-       td {{(_tabledata.getTable.result3[index]) === '1' ? 'YES' : 'NO'}}
 
   //- div.full-width.column.no-wrap.justify-center.items-center.content-start
   //-   q-btn.button(rounded @click="gotoHome") Back
@@ -150,7 +150,7 @@ const _currentpage = useCurrentPage()
 const getTotal = () => {
   let total = 0
   for (let i = 0; i < _tabledata.getTable.result2.length; i++) {
-    total = total + parseFloat(decrypt(_tabledata.getTable.result2[i]))
+    total = total + parseFloat((_tabledata.getTable.result2[i]))
   }
   return total
 }
