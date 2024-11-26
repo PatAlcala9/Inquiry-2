@@ -67,9 +67,9 @@ const searchData = async () => {
     // const encryptedEndpoint = encrypt('CheckConnection')
     // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
     const endpoint = 'CheckConnection'
-    const connection = await api.get('/api/' + endpoint, { signal: controller.signal })
+    const connection = await api.get(`/api/${endpoint}`, { signal: controller.signal })
     const data = connection.data || null
-    const result = data !== null ? (data.result) : null
+    const result = data !== null ? data.result : null
 
     if (result !== null) {
       if (_division.isBuilding) {
@@ -79,31 +79,39 @@ const searchData = async () => {
         // const encryptedData = encrypt(searched)
         // const replacedData = encryptedData.replace(/\//g, '~')
         const data = searched
-        response = await api.get('/api/' + endpoint + '/' + data, { signal: controller.signal })
+        response = await api.get(`/api/${endpoint}/${data}`, { signal: controller.signal })
       } else if (_division.isOccupancy) {
-        const encryptedEndpoint = encrypt('CheckOccupancy')
-        const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
-        const encryptedData = encrypt(searched)
-        const replacedData = encryptedData.replace(/\//g, '~')
-        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+        // const encryptedEndpoint = encrypt('CheckOccupancy')
+        // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+        const endpoint = 'CheckOccupancy'
+        // const encryptedData = encrypt(searched)
+        // const replacedData = encryptedData.replace(/\//g, '~')
+        const plainData = searched
+        response = await api.get(`/api/${endpoint}/${data}`, { signal: controller.signal })
       } else if (_division.isSignage) {
-        const encryptedEndpoint = encrypt('CheckSignage')
-        const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
-        const encryptedData = encrypt(searched)
-        const replacedData = encryptedData.replace(/\//g, '~')
-        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+        // const encryptedEndpoint = encrypt('CheckSignage')
+        // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+        const endpoint = 'CheckSignage'
+        // const encryptedData = encrypt(searched)
+        // const replacedData = encryptedData.replace(/\//g, '~')
+        const plainData = searched
+        response = await api.get(`/api/${endpoint}/${data}`, { signal: controller.signal })
       } else if (_division.isElectrical) {
-        const encryptedEndpoint = encrypt('CheckElectrical')
-        const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
-        const encryptedData = encrypt(searched)
-        const replacedData = encryptedData.replace(/\//g, '~')
-        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+        // const encryptedEndpoint = encrypt('CheckElectrical')
+        // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+        const endpoint = 'CheckElectrical'
+        // const encryptedData = encrypt(searched)
+        // const replacedData = encryptedData.replace(/\//g, '~')
+        const plainData = searched
+        response = await api.get(`/api/${endpoint}/${data}`, { signal: controller.signal })
       } else if (_division.isMechanical) {
-        const encryptedEndpoint = encrypt('CheckMechanical')
-        const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
-        const encryptedData = encrypt(searched)
-        const replacedData = encryptedData.replace(/\//g, '~')
-        response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+        // const encryptedEndpoint = encrypt('CheckMechanical')
+        // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+        const endpoint = 'CheckMechanical'
+        // const encryptedData = encrypt(searched)
+        // const replacedData = encryptedData.replace(/\//g, '~')
+        const plainData = searched
+        response = await api.get(`/api/${endpoint}/${data}`, { signal: controller.signal })
       } else {
         _errormessage.updateMessage('Invalid Search')
         updatePage('searcherror')
@@ -111,7 +119,7 @@ const searchData = async () => {
       }
 
       const data = response.data.length !== 0 ? response.data : null
-      const result = data !== null ? (data.result) : null
+      const result = data !== null ? data.result : null
       if (result !== null) {
         if (result.length > 0) {
           _applicationno.updateValue(searched)
@@ -141,15 +149,15 @@ const getOwnerDetails = async () => {
   let method = ''
 
   if (_division.isBuilding) {
-    method = 'Bldg'
+    method = 'Building'
   } else if (_division.isOccupancy) {
-    method = 'Occ'
+    method = 'Occupancy'
   } else if (_division.isSignage) {
-    method = 'Sign'
+    method = 'Signage'
   } else if (_division.isElectrical) {
-    method = 'Elec'
+    method = 'Electrical'
   } else if (_division.isMechanical) {
-    method = 'Mech'
+    method = 'Mechanical'
   }
 
   try {
@@ -160,18 +168,18 @@ const getOwnerDetails = async () => {
     // const encryptedData = encrypt(_searchvalue.getValue)
     // const replacedData = encryptedData.replace(/\//g, '~')
     const plainData = _searchvalue.getValue
-    const response = await api.get('/api/' + endpoint + '/' + plainData, { signal: controller.signal })
+    const response = await api.get(`/api/${endpoint}/${plainData}`, { signal: controller.signal })
     const data = response.data.length !== 0 ? response.data : null
     if (data !== null) {
       const result = data || null
 
       if (result !== null) {
-        const fname = (result.result)
-        const mname = (result.result2)
-        const lname = (result.result3)
-        const block = (result.result4)
-        const lot = (result.result5)
-        const address = (result.result6)
+        const fname = result.result
+        const mname = result.result2
+        const lname = result.result3
+        const block = result.result4
+        const lot = result.result5
+        const address = result.result6
         // const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
         const ffname = fname.length === 0 ? lname : fname + ' ' + (mname.length === 0 ? lname : mname + '. ' + lname)
         let addressresult = `${block.length === 0 ? '' : `BLOCK ${block} `}${lot.length === 0 ? '' : `LOT ${lot} `}${address}`
@@ -193,32 +201,32 @@ const getTableData = async () => {
   let method = ''
 
   if (_division.isBuilding) {
-    method = 'Bldg'
+    method = 'Building'
   } else if (_division.isOccupancy) {
-    method = 'Occ'
+    method = 'Occupancy'
   } else if (_division.isSignage) {
-    method = 'Sign'
+    method = 'Signage'
   } else if (_division.isElectrical) {
-    method = 'Elec'
+    method = 'Electrical'
   } else if (_division.isMechanical) {
-    method = 'Mech'
+    method = 'Mechanical'
   }
 
   try {
     // const encryptedEndpoint = encrypt('GetTableData' + method)
     // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
-    const endpoint = `GetTableData${method}`
+    const endpoint = `GetStatus${method}`
 
     // const encryptedData = encrypt(appno)
     // const replacedData = encryptedData.replace(/\//g, '~')
     const plainData = appno
-    const response = await api.get('/api/' + endpoint + '/' + plainData, { signal: controller.signal })
+    const response = await api.get(`/api/${endpoint}/${plainData}`, { signal: controller.signal })
     const data = response.data.length !== 0 ? response.data : null
 
     if (data !== null) {
       // _tabledata.value = data
       _tabledata.updateTable(data)
-      _lateststatus.updateValue((data.result2[0]))
+      _lateststatus.updateValue(data.result2[0])
     }
   } catch {
     _tabledata.updateTable({})
@@ -250,7 +258,6 @@ const rephrasedStatusList = {
 const replaceArray = (array, newArray) => {
   return array.map((item) => newArray[item] || item)
 }
-
 
 const updatePage = (page) => {
   quasar.sessionStorage.setItem(hash('page'), encryptXCha(page))

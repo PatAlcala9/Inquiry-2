@@ -61,28 +61,34 @@ const getProgressFlow = async () => {
     let data = null
 
     if (_division.isBuilding) {
-      const encryptedEndpoint = encrypt('GetProgressFlowBuilding')
-      const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
-      const encryptedData = encrypt(_searchvalue.getValue)
-      const replacedData = encryptedData.replace(/\//g, '~')
-      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+      // const encryptedEndpoint = encrypt('GetProgressFlowBuilding')
+      // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+      const endpoint = 'GetProgressFlowBuilding'
+      // const encryptedData = encrypt(_searchvalue.getValue)
+      // const replacedData = encryptedData.replace(/\//g, '~')
+      const plainData = _searchvalue.getValue
+      const response = await api.get(`/api/${endpoint}/${plainData}`, { signal: controller.signal })
       data = response.data.length !== 0 ? response.data : null
     } else if (_division.isOccupancy) {
-      const encryptedEndpoint = encrypt('GetProgressFlowOccupancy')
-      const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
-      const encryptedData = encrypt(_searchvalue.getValue)
-      const replacedData = encryptedData.replace(/\//g, '~')
-      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+      // const encryptedEndpoint = encrypt('GetProgressFlowOccupancy')
+      // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+      const endpoint = 'GetProgressFlowOccupancy'
+      // const encryptedData = encrypt(_searchvalue.getValue)
+      // const replacedData = encryptedData.replace(/\//g, '~')
+      const plainData = _searchvalue.getValue
+      const response = await api.get(`/api/${endpoint}/${plainData}`, { signal: controller.signal })
       data = response.data.length !== 0 ? response.data : null
     } else if (_division.isSignage) {
       // const response = await api.get('/api/GetProgressFlowOccupancy/' + _searchvalue.value)
       data = null
     } else if (_division.isElectrical) {
-      const encryptedEndpoint = encrypt('GetProgressFlowElectrical')
-      const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
-      const encryptedData = encrypt(_searchvalue.getValue)
-      const replacedData = encryptedData.replace(/\//g, '~')
-      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+      // const encryptedEndpoint = encrypt('GetProgressFlowElectrical')
+      // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+      const endpoint = 'GetProgressFlowElectrical'
+      // const encryptedData = encrypt(_searchvalue.getValue)
+      // const replacedData = encryptedData.replace(/\//g, '~')
+      const plainData = _searchvalue.getValue
+      const response = await api.get(`/api/${endpoint}/${plainData}`, { signal: controller.signal })
       data = response.data.length !== 0 ? response.data : null
     } else if (_division.isMechanical) {
       // const response = await api.get('/api/GetProgressFlowOccupancy/' + _searchvalue.value)
@@ -103,30 +109,33 @@ const getOwnerDetails = async () => {
   let method = ''
 
   if (_division.isBuilding) {
-    method = 'Bldg'
+    method = 'Building'
   } else if (_division.isOccupancy) {
-    method = 'Occ'
+    method = 'Occupany'
   } else if (_division.isSignage) {
-    method = 'Sign'
+    method = 'Signage'
   } else if (_division.isElectrical) {
-    method = 'Elec'
+    method = 'Electrical'
   } else if (_division.isMechanical) {
-    method = 'Mech'
+    method = 'Mechanical'
   }
 
   try {
-    const encryptedEndpoint = encrypt('CheckConnection')
-    const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
-    const connection = await api.get('/api/' + replacedEndpoint, { signal: controller.signal })
+    // const encryptedEndpoint = encrypt('CheckConnection')
+    // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+    const endpoint = 'CheckConnection'
+    const connection = await api.get(`/api/${endpoint}`, { signal: controller.signal })
     const connData = connection.data || null
-    const result = connData !== null ? decrypt(connData.result) : null
+    const result = connData !== null ? (connData.result) : null
 
     if (result !== null) {
-      const encryptedEndpoint = encrypt('GetOwnerName' + method)
-      const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
-      const encryptedData = encrypt(_searchvalue.getValue)
-      const replacedData = encryptedData.replace(/\//g, '~')
-      const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+      // const encryptedEndpoint = encrypt('GetOwnerName' + method)
+      // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+      const endpoint = `GetOwnerName${method}`
+      // const encryptedData = encrypt(_searchvalue.getValue)
+      // const replacedData = encryptedData.replace(/\//g, '~')
+      const plainData = _searchvalue.getValue
+      const response = await api.get(`/api/${endpoint}/${plainData}`, { signal: controller.signal })
 
       const data = response.data.length !== 0 ? response.data : null
 
@@ -134,12 +143,12 @@ const getOwnerDetails = async () => {
         const result = data || null
 
         if (result !== null) {
-          const fname = decrypt(data.result)
-          const mname = decrypt(data.result2)
-          const lname = decrypt(data.result3)
-          const block = decrypt(data.result4)
-          const lot = decrypt(data.result5)
-          const address = decrypt(data.result6)
+          const fname = (data.result)
+          const mname = (data.result2)
+          const lname = (data.result3)
+          const block = (data.result4)
+          const lot = (data.result5)
+          const address = (data.result6)
           // const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
           const ffname = fname.length === 0 ? lname : fname + ' ' + (mname.length === 0 ? lname : mname + '. ' + lname)
           let addressresult = `${block.length === 0 ? '' : `BLOCK ${block} `}${lot.length === 0 ? '' : `LOT ${lot} `}${address}`

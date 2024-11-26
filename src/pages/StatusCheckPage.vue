@@ -25,8 +25,8 @@ q-page.page(padding)
 
     section
       div.table-data-group-mobile.fit.column.wrap.justify-center.items-center.content-center(v-for="(item, index) in tableData.result" :key="item")
-        span.table-data-mobile-date {{decrypt(item).toUpperCase()}}
-        span.table-data-mobile-status.last {{decrypt(tableData.result2[index]).toUpperCase()}}
+        span.table-data-mobile-date {{(item).toUpperCase()}}
+        span.table-data-mobile-status.last {{(tableData.result2[index]).toUpperCase()}}
 
   section.page-pc(v-else)
     section.page-title-group.left
@@ -61,8 +61,8 @@ q-page.page(padding)
               th Status
           tbody
             tr(v-for="(item, index) in tableData.result" :key="item")
-              td {{decrypt(item)}}
-              td {{decrypt(tableData.result2[index])}}
+              td {{(item)}}
+              td {{(tableData.result2[index])}}
               //- td {{tableData.result2[index]}}
 
   //- div.button-area.full-width.column.no-wrap.justify-center.items-center.content-start

@@ -81,7 +81,7 @@ const getPermits = async () => {
       // const encryptedData = encrypt(_searchvalue.getValue)
       // const replacedData = encryptedData.replace(/\//g, '~')
       const plainData = _searchvalue.getValue
-      const response = await api.get('/api/' + endpoint + '/' + plainData, { signal: controller.signal })
+      const response = await api.get(`/api/${endpoint}/${plainData}`, { signal: controller.signal })
       data = response.data.length !== 0 ? response.data : null
     } else if (_division.isOccupancy) {
       // const encryptedEndpoint = encrypt('GetPermitsOccupancy')
@@ -90,7 +90,7 @@ const getPermits = async () => {
       // const encryptedData = encrypt(_searchvalue.getValue)
       // const replacedData = encryptedData.replace(/\//g, '~')
       const plainData = _searchvalue.getValue
-      const response = await api.get('/api/' + endpoint + '/' + plainData, { signal: controller.signal })
+      const response = await api.get(`/api/${endpoint}/${plainData}`, { signal: controller.signal })
       data = response.data.length !== 0 ? response.data : null
     } else if (_division.isSignage) {
       // const response = await api.get('/api/GetProgressFlowOccupancy/' + _searchvalue.value)
@@ -102,7 +102,7 @@ const getPermits = async () => {
       // const encryptedData = encrypt(_searchvalue.getValue)
       // const replacedData = encryptedData.replace(/\//g, '~')
       const plainData = _searchvalue.getValue
-      const response = await api.get('/api/' + endpoint + '/' + plainData, { signal: controller.signal })
+      const response = await api.get(`/api/${endpoint}/${plainData}`, { signal: controller.signal })
       data = response.data.length !== 0 ? response.data : null
     } else if (_division.isMechanical) {
       // const response = await api.get('/api/GetProgressFlowOccupancy/' + _searchvalue.value)
@@ -147,22 +147,22 @@ const getOwnerDetails = async () => {
   let method = ''
 
   if (_division.isBuilding) {
-    method = 'Bldg'
+    method = 'Building'
   } else if (_division.isOccupancy) {
-    method = 'Occ'
+    method = 'Occupancy'
   } else if (_division.isSignage) {
-    method = 'Sign'
+    method = 'Signage'
   } else if (_division.isElectrical) {
-    method = 'Elec'
+    method = 'Electrical'
   } else if (_division.isMechanical) {
-    method = 'Mech'
+    method = 'Mechanical'
   }
 
   try {
     // const encryptedEndpoint = encrypt('CheckConnection')
     // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
     const endpoint = 'CheckConnection'
-    const connection = await api.get('/api/' + endpoint, { signal: controller.signal })
+    const connection = await api.get(`/api/${endpoint}`, { signal: controller.signal })
     const connData = connection.data || null
     const result = connData !== null ? connData.result : null
 
@@ -173,7 +173,7 @@ const getOwnerDetails = async () => {
       // const encryptedData = encrypt(_searchvalue.getValue)
       // const replacedData = encryptedData.replace(/\//g, '~')
       const plainData = _searchvalue.getValue
-      const response = await api.get('/api/' + endpoint + '/' + plainData, { signal: controller.signal })
+      const response = await api.get(`/api/${endpoint}/${plainData}`, { signal: controller.signal })
       const data = response.data.length !== 0 ? response.data : null
 
       if (data !== null) {
