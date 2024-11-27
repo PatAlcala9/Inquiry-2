@@ -563,14 +563,12 @@ const runCommand = async () => {
     } else {
       if (searched.value.length < 5 || searched.value.toUpperCase() === 'DAVAO' || searched.value.toUpperCase() === 'DAVAO CITY') {
         _errormessage.updateMessage('Invalid Search')
-        _errormessage.updateSubMessage('Please be more specific in your search')
+        _errormessage.updateSubMessage('Please, be specific with your search')
 
         updatePage('error')
       } else {
         _searchvalue.updateValue(searched.value)
         updatePage('namesearch')
-        // _currentpage.value = 'namesearch'
-        // router.push('namesearch', () => {})
       }
     }
   }
