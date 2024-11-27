@@ -253,10 +253,10 @@ const _currentpage = useCurrentPage()
 const _searchvalue = useSearchValue()
 const _division = useDivision()
 const dTableData = ref({
-  result: _tabledata.getTable.result.map((item) => decrypt(item)),
-  result2: _tabledata.getTable.result2.map((item) => decrypt(item)),
-  result3: _tabledata.getTable.result3.map((item) => decrypt(item)),
-  result4: _tabledata.getTable.result4.map((item) => decrypt(item)),
+  result: _tabledata.getTable.result.map((item) => (item)),
+  result2: _tabledata.getTable.result2.map((item) => (item)),
+  result3: _tabledata.getTable.result3.map((item) => (item)),
+  result4: _tabledata.getTable.result4.map((item) => (item)),
 })
 
 const controller = new AbortController()
@@ -373,22 +373,25 @@ const searchByNameBuilding = async () => {
   }
 
   try {
-    const encryptedEndpoint = encrypt('SearchByNameBuilding')
-    const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+    // const encryptedEndpoint = encrypt('SearchByNameBuilding')
+    // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+    const endpoint = 'SearchByNameBuilding'
 
-    const encryptedData = encrypt(selectedLastName.value)
-    const replacedData = encryptedData.replace(/\//g, '~')
+    // const encryptedData = encrypt(selectedLastName.value)
+    // const replacedData = encryptedData.replace(/\//g, '~')
+    const plainData = selectedLastName.value
 
-    const encryptedData2 = encrypt(selectedFirstName.value)
-    const replacedData2 = encryptedData2.replace(/\//g, '~')
+    // const encryptedData2 = encrypt(selectedFirstName.value)
+    // const replacedData2 = encryptedData2.replace(/\//g, '~')
+    const plainData2 = selectedFirstName.value
 
-    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData + '/' + replacedData2, { signal: controller.signal })
+    const response = await api.get(`/api/${endpoint}/${plainData}/${plainData2}`, { signal: controller.signal })
     const data = response.data.length !== 0 ? response.data : null
 
     if (data === null) {
       receivingid.value = 0
     } else {
-      receivingid.value = decrypt(data.result) || 0
+      receivingid.value = (data.result) || 0
     }
   } catch (err) {
     receivingid.value = 0
@@ -397,19 +400,21 @@ const searchByNameBuilding = async () => {
 }
 
 const getLastStatusBuilding = async () => {
-  const encryptedEndpoint = encrypt('GetLastStatusBuilding')
-  const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+  // const encryptedEndpoint = encrypt('GetLastStatusBuilding')
+  // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+  const endpoint = 'GetLastStatusBuilding'
 
-  const encryptedData = encrypt(receivingid.value)
-  const replacedData = encryptedData.replace(/\//g, '~')
+  // const encryptedData = encrypt(receivingid.value)
+  // const replacedData = encryptedData.replace(/\//g, '~')
+  const plainData = receivingid.value
 
-  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+  const response = await api.get(`/api/${endpoint}/${plainData}`, { signal: controller.signal })
   const data = response.data.length !== 0 ? response.data : null
 
   if (data === null) {
     lastStatusBuilding.value = 'No Status Found'
   } else {
-    lastStatusBuilding.value = decrypt(data.result) || 'No Status Found'
+    lastStatusBuilding.value = (data.result) || 'No Status Found'
   }
 }
 
@@ -425,22 +430,25 @@ const searchByNameOccupancy = async () => {
   }
 
   try {
-    const encryptedEndpoint = encrypt('SearchByNameOccupancy')
-    const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+    // const encryptedEndpoint = encrypt('SearchByNameOccupancy')
+    // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+    const endpoint = 'SearchByNameOccupancy'
 
-    const encryptedData = encrypt(selectedLastName.value)
-    const replacedData = encryptedData.replace(/\//g, '~')
+    // const encryptedData = encrypt(selectedLastName.value)
+    // const replacedData = encryptedData.replace(/\//g, '~')
+    const plainData = selectedLastName.value
 
-    const encryptedData2 = encrypt(selectedFirstName.value)
-    const replacedData2 = encryptedData2.replace(/\//g, '~')
+    // const encryptedData2 = encrypt(selectedFirstName.value)
+    // const replacedData2 = encryptedData2.replace(/\//g, '~')
+    const plainData2 = selectedFirstName.value
 
-    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData + '/' + replacedData2, { signal: controller.signal })
+    const response = await api.get(`/api/${endpoint}/${plainData}/${plainData2}`, { signal: controller.signal })
     const data = response.data.length !== 0 ? response.data : null
 
     if (data === null) {
       occupancyid.value = 0
     } else {
-      occupancyid.value = decrypt(data.result) || 0
+      occupancyid.value = (data.result) || 0
     }
   } catch {
     occupancyid.value = 0
@@ -449,19 +457,21 @@ const searchByNameOccupancy = async () => {
 }
 
 const getLastStatusOccupancy = async () => {
-  const encryptedEndpoint = encrypt('GetLastStatusOccupancy')
-  const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+  // const encryptedEndpoint = encrypt('GetLastStatusOccupancy')
+  // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+  const endpoint = 'GetLastStatusOccupancy'
 
-  const encryptedData = encrypt(occupancyid.value)
-  const replacedData = encryptedData.replace(/\//g, '~')
+  // const encryptedData = encrypt(occupancyid.value)
+  // const replacedData = encryptedData.replace(/\//g, '~')
+  const plainData = occupancyid.value
 
-  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+  const response = await api.get(`/api/${endpoint}/${plainData}`, { signal: controller.signal })
   const data = response.data.length !== 0 ? response.data : null
 
   if (data === null) {
     lastStatusOccupancy.value = 'No Status Found'
   } else {
-    lastStatusOccupancy.value = decrypt(data.result) || 'No Status Found'
+    lastStatusOccupancy.value = (data.result) || 'No Status Found'
   }
 }
 
@@ -477,22 +487,25 @@ const searchByNameElectrical = async () => {
   }
 
   try {
-    const encryptedEndpoint = encrypt('SearchByNameElectrical')
-    const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+    // const encryptedEndpoint = encrypt('SearchByNameElectrical')
+    // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+    const endpoint = 'SearchByNameElectrical'
 
-    const encryptedData = encrypt(selectedLastName.value)
-    const replacedData = encryptedData.replace(/\//g, '~')
+    // const encryptedData = encrypt(selectedLastName.value)
+    // const replacedData = encryptedData.replace(/\//g, '~')
+    const plainData = selectedLastName.value
 
-    const encryptedData2 = encrypt(selectedFirstName.value)
-    const replacedData2 = encryptedData2.replace(/\//g, '~')
+    // const encryptedData2 = encrypt(selectedFirstName.value)
+    // const replacedData2 = encryptedData2.replace(/\//g, '~')
+    const plainData2 = selectedFirstName.value
 
-    const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData + '/' + replacedData2, { signal: controller.signal })
+    const response = await api.get(`/api/${endpoint}/${plainData}/${plainData2}`, { signal: controller.signal })
     const data = response.data.length !== 0 ? response.data : null
 
     if (data === null) {
       electricalid.value = 0
     } else {
-      electricalid.value = decrypt(data.result) || 0
+      electricalid.value = (data.result) || 0
     }
   } catch {
     electricalid.value = 0
@@ -500,19 +513,21 @@ const searchByNameElectrical = async () => {
 }
 
 const getLastStatusElectrical = async () => {
-  const encryptedEndpoint = encrypt('GetLastStatusElectrical')
-  const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+  // const encryptedEndpoint = encrypt('GetLastStatusElectrical')
+  // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+  const endpoint = 'GetLastStatusElectrical'
 
-  const encryptedData = encrypt(electricalid.value)
-  const replacedData = encryptedData.replace(/\//g, '~')
+  // const encryptedData = encrypt(electricalid.value)
+  // const replacedData = encryptedData.replace(/\//g, '~')
+  const plainData = electricalid.value
 
-  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+  const response = await api.get(`/api/${endpoint}/${plainData}`, { signal: controller.signal })
   const data = response.data.length !== 0 ? response.data : null
 
   if (data === null) {
     lastStatusElectrical.value = 'No Status Found'
   } else {
-    lastStatusElectrical.value = decrypt(data.result) || 'No Status Found'
+    lastStatusElectrical.value = (data.result) || 'No Status Found'
   }
 }
 
@@ -534,17 +549,19 @@ let applicationNoOccupancy = ref(null)
 let applicationNoElectrical = ref(null)
 
 const getApplicationByID = async () => {
-  const encryptedEndpoint = encrypt('GetApplicationByID')
-  const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+  // const encryptedEndpoint = encrypt('GetApplicationByID')
+  // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+  const endpoint = 'GetApplicationByID'
 
-  const encryptedData = encrypt(receivingid.value)
-  const replacedData = encryptedData.replace(/\//g, '~')
+  // const encryptedData = encrypt(receivingid.value)
+  // const replacedData = encryptedData.replace(/\//g, '~')
+  const plainData = receivingid.value
 
-  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+  const response = await api.get(`/api/${endpoint}/${plainData}`, { signal: controller.signal })
   const data = response.data.length !== 0 ? response.data : null
 
   if (data !== null) {
-    applicationNo.value = decrypt(data.result) || null
+    applicationNo.value = (data.result) || null
     // console.log(applicationNo.value)
   } else {
     // console.log('No record on Building')
@@ -552,17 +569,19 @@ const getApplicationByID = async () => {
 }
 
 const getOccupancyApplicationByID = async () => {
-  const encryptedEndpoint = encrypt('GetOccupancyApplicationByID')
-  const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+  // const encryptedEndpoint = encrypt('GetOccupancyApplicationByID')
+  // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+  const endpoint = 'GetOccupancyApplicationByID'
 
-  const encryptedData = encrypt(occupancyid.value)
-  const replacedData = encryptedData.replace(/\//g, '~')
+  // const encryptedData = encrypt(occupancyid.value)
+  // const replacedData = encryptedData.replace(/\//g, '~')
+  const plainData = occupancyid.value
 
-  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+  const response = await api.get(`/api/${endpoint}/${plainData}`, { signal: controller.signal })
   const data = response.data.length !== 0 ? response.data : null
 
   if (data !== null) {
-    applicationNoOccupancy.value = decrypt(data.result) || null
+    applicationNoOccupancy.value = (data.result) || null
     // console.log(applicationNo.value)
   } else {
     // console.log('No record on Occupancy')
@@ -570,17 +589,19 @@ const getOccupancyApplicationByID = async () => {
 }
 
 const getElectricalApplicationByID = async () => {
-  const encryptedEndpoint = encrypt('GetElectricalApplicationByID')
-  const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+  // const encryptedEndpoint = encrypt('GetElectricalApplicationByID')
+  // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
+  const endpoint = 'GetElectricalApplicationByID'
 
-  const encryptedData = encrypt(electricalid.value)
-  const replacedData = encryptedData.replace(/\//g, '~')
+  // const encryptedData = encrypt(electricalid.value)
+  // const replacedData = encryptedData.replace(/\//g, '~')
+  const plainData = electricalid.value
 
-  const response = await api.get('/api/' + replacedEndpoint + '/' + replacedData, { signal: controller.signal })
+  const response = await api.get(`/api/${endpoint}/${plainData}`, { signal: controller.signal })
   const data = response.data.length !== 0 ? response.data : null
 
   if (data !== null) {
-    applicationNoElectrical.value = decrypt(data.result) || null
+    applicationNoElectrical.value = (data.result) || null
     // console.log(applicationNo.value)
   } else {
     // console.log('No record on Electrical')

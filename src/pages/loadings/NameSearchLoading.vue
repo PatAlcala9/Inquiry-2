@@ -58,7 +58,7 @@ const getClientList = async () => {
     if (result !== null) {
       // const encryptedEndpoint = encrypt('GetListofClients')
       // const replacedEndpoint = encryptedEndpoint.replace(/\//g, '~')
-      const endpoint = 'GetListofClients'
+      const endpoint = 'GetListOfClients'
       // const encryptedData = encrypt(_searchvalue.getValue.toUpperCase())
       // const replacedData = encryptedData.replace(/\//g, '~')
       const plainData = _searchvalue.getValue.toUpperCase()
