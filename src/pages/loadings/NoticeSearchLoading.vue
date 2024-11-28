@@ -27,7 +27,7 @@ export default {
 </script>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { api } from 'boot/axios'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
@@ -126,7 +126,7 @@ const getOwnerDetails = async () => {
     const endpoint = 'CheckConnection'
     const connection = await api.get(`/api/${endpoint}`, { signal: controller.signal })
     const connData = connection.data || null
-    const result = connData !== null ? (connData.result) : null
+    const result = connData !== null ? connData.result : null
 
     if (result !== null) {
       // const encryptedEndpoint = encrypt('GetOwnerName' + method)
@@ -143,12 +143,12 @@ const getOwnerDetails = async () => {
         const result = data || null
 
         if (result !== null) {
-          const fname = (data.result)
-          const mname = (data.result2)
-          const lname = (data.result3)
-          const block = (data.result4)
-          const lot = (data.result5)
-          const address = (data.result6)
+          const fname = data.result
+          const mname = data.result2
+          const lname = data.result3
+          const block = data.result4
+          const lot = data.result5
+          const address = data.result6
           // const ffname = fname.length === 0 ? lname : fname + ' ' + mname + '. ' + lname
           const ffname = fname.length === 0 ? lname : fname + ' ' + (mname.length === 0 ? lname : mname + '. ' + lname)
           let addressresult = `${block.length === 0 ? '' : `BLOCK ${block} `}${lot.length === 0 ? '' : `LOT ${lot} `}${address}`
@@ -187,10 +187,10 @@ const loadCurrentPage = () => {
   router.push(decryptedPage)
 }
 
-;(async () => {
+onMounted(async () => {
   loadCurrentPage()
   await getOwnerDetails()
-})()
+})
 </script>
 
 <!-- <style lang="sass" scoped>

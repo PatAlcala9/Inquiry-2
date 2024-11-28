@@ -27,7 +27,7 @@ export default {
 </script>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { api } from 'boot/axios'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
@@ -230,8 +230,8 @@ const loadCurrentPage = () => {
   router.push(decryptedPage)
 }
 
-;(async () => {
+onMounted(async () => {
   loadCurrentPage()
   await getOwnerDetails()
-})()
+})
 </script>

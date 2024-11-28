@@ -27,7 +27,7 @@ export default {
 </script>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { api } from 'boot/axios'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
@@ -276,10 +276,10 @@ const gotoHome = () => {
   // window.location.reload()
 }
 
-;(async () => {
+onMounted(async () => {
   loadCurrentPage()
   await searchData()
-})()
+})
 </script>
 
 <style lang="sass" scoped>

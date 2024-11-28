@@ -24,7 +24,7 @@ export default {
 </script>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { api } from 'boot/axios'
 import { useSearchValue } from 'stores/searchvalue'
 import { useRouter } from 'vue-router'
@@ -53,7 +53,7 @@ const getClientList = async () => {
 
     const connection = await api.get(`/api/${endpoint}`, { signal: controller.signal })
     const data = connection.data || null
-    const result = data !== null ? (data.result) : null
+    const result = data !== null ? data.result : null
 
     if (result !== null) {
       // const encryptedEndpoint = encrypt('GetListofClients')
@@ -100,11 +100,11 @@ const gotoHome = () => {
   // window.location.reload()
 }
 
-;(async () => {
+onMounted(async () => {
   loadCurrentPage()
   await getClientList()
   await gotoNextPage()
-})()
+})
 </script>
 
 <style lang="sass" scoped>
