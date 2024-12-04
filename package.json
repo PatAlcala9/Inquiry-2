@@ -15,7 +15,7 @@
     "ssr": "quasar build -m ssr"
   },
   "dependencies": {
-    "@quasar/extras": "^1.16.13",
+    "@quasar/extras": "^1.16.14",
     "@rabbit-company/xchacha20": "^2.3.0",
     "aes-js": "^3.1.2",
     "axios": "^1.7.8",
@@ -37,15 +37,15 @@
     "@quasar/app-webpack": "^3.15.1",
     "@vue/language-plugin-pug": "^2.1.10",
     "compression-webpack-plugin": "^11.1.0",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.7",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^8.10.0",
-    "eslint-plugin-vue": "^9.31.0",
+    "eslint-plugin-vue": "^9.32.0",
     "eslint-webpack-plugin": "^3.2.0",
     "prettier": "^2.8.8",
     "pug": "^3.0.3",
     "pug-plain-loader": "^1.1.0",
-    "sass": "^1.81.0",
+    "sass-embedded": "^1.82.0",
     "zlib": "^1.0.5"
   },
   "browserslist": [
