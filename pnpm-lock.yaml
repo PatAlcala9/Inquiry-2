@@ -18,8 +18,8 @@ importers:
         specifier: ^3.1.2
         version: 3.1.2
       axios:
-        specifier: ^1.7.8
-        version: 1.7.8
+        specifier: ^1.7.9
+        version: 1.7.9
       chance:
         specifier: ^1.1.12
         version: 1.1.12
@@ -42,8 +42,8 @@ importers:
         specifier: ^2.3.0
         version: 2.3.0
       pinia:
-        specifier: ^2.2.8
-        version: 2.2.8(typescript@4.9.4)(vue@3.5.13(typescript@4.9.4))
+        specifier: ^2.3.0
+        version: 2.3.0(typescript@4.9.4)(vue@3.5.13(typescript@4.9.4))
       quasar:
         specifier: ^2.17.4
         version: 2.17.4
@@ -62,7 +62,7 @@ importers:
         version: 7.25.9(@babel/core@7.24.7)(eslint@8.57.1)
       '@quasar/app-webpack':
         specifier: ^3.15.1
-        version: 3.15.1(eslint@8.57.1)(pinia@2.2.8(typescript@4.9.4)(vue@3.5.13(typescript@4.9.4)))(quasar@2.17.4)(sass@1.82.0)(vue-router@4.5.0(vue@3.5.13(typescript@4.9.4)))(vue@3.5.13(typescript@4.9.4))
+        version: 3.15.1(eslint@8.57.1)(pinia@2.3.0(typescript@4.9.4)(vue@3.5.13(typescript@4.9.4)))(quasar@2.17.4)(sass@1.82.0)(vue-router@4.5.0(vue@3.5.13(typescript@4.9.4)))(vue@3.5.13(typescript@4.9.4))
       '@vue/language-plugin-pug':
         specifier: ^2.1.10
         version: 2.1.10
@@ -1338,8 +1338,8 @@ packages:
     peerDependencies:
       postcss: ^8.1.0
 
-  axios@1.7.8:
-    resolution: {integrity: sha512-Uu0wb7KNqK2t5K+YQyVCLM76prD5sRFjKHbJYCP1J7JFGEQ6nN7HWn9+04LAeiJ3ji54lgS/gZCH1oxyrf1SPw==}
+  axios@1.7.9:
+    resolution: {integrity: sha512-LhLcE7Hbiryz8oMDdDptSrWowmB4Bl6RCt6sIJKpRB4XtVf0iEgewX3au/pJqm+Py1kCASkb/FFKjxQaLtxJvw==}
 
   babel-loader@9.1.3:
     resolution: {integrity: sha512-xG3ST4DglodGf8qSwv0MdeWLhrDsw/32QMdTO5T1ZIp9gQur0HkCyFs7Awskr10JKXFXwpAhiCuYX5oGXnRGbw==}
@@ -1491,8 +1491,8 @@ packages:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
     engines: {node: '>= 8.10.0'}
 
-  chokidar@4.0.0:
-    resolution: {integrity: sha512-mxIojEAQcuEvT/lyXq+jf/3cO/KoA6z4CeNDGGevTybECPOMFCnQy3OPahluUkbqgPNGw5Bi78UC7Po6Lhy+NA==}
+  chokidar@4.0.1:
+    resolution: {integrity: sha512-n8enUVCED/KVRQlab1hr3MVpcVMvxtZjmEa956u+4YijlmQED223XMSYj2tLuKvr4jcCTzNNMpQDUer72MMmzA==}
     engines: {node: '>= 14.16.0'}
 
   chrome-trace-event@1.0.4:
@@ -2996,15 +2996,12 @@ packages:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
 
-  pinia@2.2.8:
-    resolution: {integrity: sha512-NRTYy2g+kju5tBRe0oNlriZIbMNvma8ZJrpHsp3qudyiMEA8jMmPPKQ2QMHg0Oc4BkUyQYWagACabrwriCK9HQ==}
+  pinia@2.3.0:
+    resolution: {integrity: sha512-ohZj3jla0LL0OH5PlLTDMzqKiVw2XARmC1XYLdLWIPBMdhDW/123ZWr4zVAhtJm+aoSkFa13pYXskAvAscIkhQ==}
     peerDependencies:
-      '@vue/composition-api': ^1.4.0
       typescript: '>=4.4.4'
-      vue: ^2.6.14 || ^3.5.11
+      vue: ^2.7.0 || ^3.5.11
     peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
       typescript:
         optional: true
 
@@ -3338,8 +3335,8 @@ packages:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
     engines: {node: '>=8.10.0'}
 
-  readdirp@4.0.1:
-    resolution: {integrity: sha512-GkMg9uOTpIWWKbSsgwb5fA4EavTR+SG/PMPoAY8hkhHfEEY0/vqljY+XHqtDf2cr2IJtoNRDbrrEpZUiZCkYRw==}
+  readdirp@4.0.2:
+    resolution: {integrity: sha512-yDMz9g+VaZkqBYS/ozoBJwaBhTbZo3UNYQHNRw1D3UFQB8oHB4uS/tAODO+ZLjGWmUbKnIlOWO+aaIiAxrUWHA==}
     engines: {node: '>= 14.16.0'}
 
   regenerate-unicode-properties@10.1.1:
@@ -5211,7 +5208,7 @@ snapshots:
 
   '@polka/url@1.0.0-next.25': {}
 
-  '@quasar/app-webpack@3.15.1(eslint@8.57.1)(pinia@2.2.8(typescript@4.9.4)(vue@3.5.13(typescript@4.9.4)))(quasar@2.17.4)(sass@1.82.0)(vue-router@4.5.0(vue@3.5.13(typescript@4.9.4)))(vue@3.5.13(typescript@4.9.4))':
+  '@quasar/app-webpack@3.15.1(eslint@8.57.1)(pinia@2.3.0(typescript@4.9.4)(vue@3.5.13(typescript@4.9.4)))(quasar@2.17.4)(sass@1.82.0)(vue-router@4.5.0(vue@3.5.13(typescript@4.9.4)))(vue@3.5.13(typescript@4.9.4))':
     dependencies:
       '@quasar/babel-preset-app': 2.0.3(webpack@5.91.0)
       '@quasar/render-ssr-error': 1.0.3
@@ -5278,7 +5275,7 @@ snapshots:
       webpack-merge: 5.10.0
       webpack-node-externals: 3.0.0
     optionalDependencies:
-      pinia: 2.2.8(typescript@4.9.4)(vue@3.5.13(typescript@4.9.4))
+      pinia: 2.3.0(typescript@4.9.4)(vue@3.5.13(typescript@4.9.4))
     transitivePeerDependencies:
       - '@parcel/css'
       - '@rspack/core'
@@ -5787,7 +5784,7 @@ snapshots:
       postcss: 8.4.47
       postcss-value-parser: 4.2.0
 
-  axios@1.7.8:
+  axios@1.7.9:
     dependencies:
       follow-redirects: 1.15.6
       form-data: 4.0.0
@@ -5991,9 +5988,9 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  chokidar@4.0.0:
+  chokidar@4.0.1:
     dependencies:
-      readdirp: 4.0.1
+      readdirp: 4.0.2
     optional: true
 
   chrome-trace-event@1.0.4: {}
@@ -7510,13 +7507,15 @@ snapshots:
 
   picomatch@2.3.1: {}
 
-  pinia@2.2.8(typescript@4.9.4)(vue@3.5.13(typescript@4.9.4)):
+  pinia@2.3.0(typescript@4.9.4)(vue@3.5.13(typescript@4.9.4)):
     dependencies:
       '@vue/devtools-api': 6.6.3
       vue: 3.5.13(typescript@4.9.4)
       vue-demi: 0.14.10(vue@3.5.13(typescript@4.9.4))
     optionalDependencies:
       typescript: 4.9.4
+    transitivePeerDependencies:
+      - '@vue/composition-api'
 
   pkg-dir@7.0.0:
     dependencies:
@@ -7873,7 +7872,7 @@ snapshots:
     dependencies:
       picomatch: 2.3.1
 
-  readdirp@4.0.1:
+  readdirp@4.0.2:
     optional: true
 
   regenerate-unicode-properties@10.1.1:
@@ -8071,7 +8070,7 @@ snapshots:
 
   sass@1.82.0:
     dependencies:
-      chokidar: 4.0.0
+      chokidar: 4.0.1
       immutable: 5.0.3
       source-map-js: 1.2.1
     optionalDependencies:
