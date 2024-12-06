@@ -360,7 +360,6 @@ const displayDetail = async () => {
 
   await countIDs()
 }
-
 const searchByNameBuilding = async () => {
   if (selectedLastName.value.includes('/')) {
     const arraylastName = selectedLastName.value.split('/')
