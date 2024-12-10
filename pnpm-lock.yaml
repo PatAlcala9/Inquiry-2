@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@quasar/extras':
-        specifier: ^1.16.14
-        version: 1.16.14
+        specifier: ^1.16.15
+        version: 1.16.15
       '@rabbit-company/xchacha20':
         specifier: ^2.3.0
         version: 2.3.0(typescript@4.9.4)
@@ -955,8 +955,8 @@ packages:
     resolution: {integrity: sha512-PYvVXU/TBwF1JU+nEKw8VTsbNi4mdhu7l+l9HIqfY0XZGWbDQLOGjBR8TO6A8dn5SUoilvRh85TG3ZQV01VCBQ==}
     engines: {node: '>= 10.0.0', npm: '>= 5.6.0', yarn: '>= 1.6.0'}
 
-  '@quasar/extras@1.16.14':
-    resolution: {integrity: sha512-kXVCX9GAV2l/av9EQJFRhJ3yp/sshOvc6quo+hGJYnCYj47061sxHXP6amw1vCIlVnyCFjBPeqZP2WcKmGwsOw==}
+  '@quasar/extras@1.16.15':
+    resolution: {integrity: sha512-ZM8rUAagZ3Gm7Thu6DjKdGfkyFBv61RaCeVSIWdve6+q300yN+6aouxttf2RmxCk12RsSqEyzBnIg7BlF1s7MA==}
 
   '@quasar/render-ssr-error@1.0.3':
     resolution: {integrity: sha512-A8RF99q6/sOSe1Ighnh5syEIbliD3qUYEJd2HyfFyBPSMF+WYGXon5dmzg4nUoK662NgOggInevkDyBDJcZugg==}
@@ -5323,7 +5323,7 @@ snapshots:
       - supports-color
       - webpack
 
-  '@quasar/extras@1.16.14': {}
+  '@quasar/extras@1.16.15': {}
 
   '@quasar/render-ssr-error@1.0.3':
     dependencies:

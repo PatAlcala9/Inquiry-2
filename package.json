@@ -15,7 +15,7 @@
     "ssr": "quasar build -m ssr"
   },
   "dependencies": {
-    "@quasar/extras": "^1.16.14",
+    "@quasar/extras": "^1.16.15",
     "@rabbit-company/xchacha20": "^2.3.0",
     "aes-js": "^3.1.2",
     "axios": "^1.7.9",
